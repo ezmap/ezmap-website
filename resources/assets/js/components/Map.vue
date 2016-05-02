@@ -14,10 +14,10 @@
 <template>
     <div v-show="false">
         <div id="markerInfoWindow">
-            <h1 id="infoTitle">{{ infoTitle }}</h1>
-            <p id="infoTelephone">{{ infoTelephone }}</p>
-            <p id="infoEmail">{{ infoEmail }}</p>
-            <p id="infoWebsite">{{ infoWebsite }}</p>
+            <h3 id="infoTitle">{{ infoTitle }}</h3>
+            <p id="infoWebsite">W: <a href="{{ infoWebsite }}">{{ infoWebsite }}</a><br>
+                E: <a href="mailto:{{ infoEmail }}">{{ infoEmail }}</a><br>
+                T: {{ infoTelephone }}</p>
             <p id="infoDescription">{{{ infoDescription | nl2br }}}</p>
         </div>
     </div>
@@ -454,6 +454,10 @@ function init() {
                 document.execCommand('copy');
                 event.target.blur();
                 this.codeCopied = true;
+                setTimeout(this.clearCopied,2000);
+            },
+            clearCopied: function () {
+                this.codeCopied = false;
             },
             zoomchanged: function () {
                 this.map.setZoom(parseInt(this.mapOptions.zoom));
