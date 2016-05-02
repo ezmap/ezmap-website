@@ -10,9 +10,11 @@
 
 <template>
     <div class="col-sm-4 form">
-        <h3>Settings</h3>
-        <hr>
 
+        <div class="row">
+            <h3>Settings</h3>
+            <hr>
+        </div>
 
         <div class="form-group row">
             <div class="row">
