@@ -5,6 +5,7 @@
         min-height: 50px;
         min-width: 50px;
         transition: all .25s ease .2s;
+        margin: 0 auto;
     }
 </style>
 
@@ -194,6 +195,7 @@
     <div class="col-sm-7 results col-sm-offset-1">
         <div class="row">
             <h3>Your Map Result</h3>
+            <hr>
             <div id="map" class="map" v-show="show" :style="styleObject"></div>
         </div>
         <div class="row">
