@@ -16,9 +16,9 @@
         <div id="markerInfoWindow">
             <h3 v-if="infoTitle">{{ infoTitle }}</h3>
             <p>
-                <span v-if="infoWebsite != ''">W: <a href="{{ infoWebsite }}">{{ infoWebsite }}</a><br></span>
-                <span v-if="infoEmail != '' ">E: <a href="mailto:{{ infoEmail }}">{{ infoEmail }}</a><br></span>
-                <span v-if="infoTelephone != ''">T: {{ infoTelephone }}</span>
+                <span v-if="infoWebsite">W: <a href="{{ infoWebsite }}">{{ infoWebsite }}</a><br></span>
+                <span v-if="infoEmail">E: <a href="mailto:{{ infoEmail }}">{{ infoEmail }}</a><br></span>
+                <span v-if="infoTelephone">T: {{ infoTelephone }}</span>
             </p>
             <p id="infoDescription">{{{ infoDescription | nl2br }}}</p>
         </div>
