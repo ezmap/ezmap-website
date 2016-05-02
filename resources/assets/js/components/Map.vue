@@ -197,12 +197,17 @@
                     </div>
                     <div class="form-group" v-show="markers.length">
                         <button class="form-control btn btn-danger" @click="removeAllMarkers"><i
-                                class="fa fa-trash"></i> All Markers?
+                                class="fa fa-trash"></i> Delete All Markers?
                         </button>
+                    </div>
+                    <div class="form-group">
                         <div v-for="(index, marker) in markers" class="col-sm-6">
-                            <button @click="removeMarker(index)" class="btn btn-danger"><i class="fa fa-trash"></i> {{
-                                marker.title }}
-                            </button>
+                            <div class="form-group">
+                                <button @click="removeMarker(index)" class="btn btn-danger btn-sm form-control"><i
+                                        class="fa fa-trash"></i> {{
+                                    marker.title }}
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
