@@ -1,4 +1,14 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+module.exports = { "default": require("core-js/library/fn/json/stringify"), __esModule: true };
+},{"core-js/library/fn/json/stringify":2}],2:[function(require,module,exports){
+var core = require('../../modules/$.core');
+module.exports = function stringify(it){ // eslint-disable-line no-unused-vars
+  return (core.JSON && core.JSON.stringify || JSON.stringify).apply(JSON, arguments);
+};
+},{"../../modules/$.core":3}],3:[function(require,module,exports){
+var core = module.exports = {version: '1.2.6'};
+if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
+},{}],4:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -91,7 +101,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],2:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 var Vue // late bind
 var map = Object.create(null)
 var shimmed = false
@@ -391,7 +401,7 @@ function format (id) {
   return id.match(/[^\/]+\.vue$/)[0]
 }
 
-},{}],3:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 (function (process,global){
 /*!
  * Vue.js v1.0.21
@@ -10317,7 +10327,7 @@ setTimeout(function () {
 
 module.exports = Vue;
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":1}],4:[function(require,module,exports){
+},{"_process":4}],7:[function(require,module,exports){
 var inserted = exports.cache = {}
 
 exports.insert = function (css) {
@@ -10337,46 +10347,39 @@ exports.insert = function (css) {
   return elem
 }
 
-},{}],5:[function(require,module,exports){
-var __vueify_style__ = require("vueify-insert-css").insert("\n.map {\n    background: #eee;\n    border: 1px solid #aaa;\n    min-height: 50px;\n    min-width: 50px;\n    -webkit-transition: all .25s ease .2s;\n    transition: all .25s ease .2s;\n    margin: 0 auto;\n}\n")
+},{}],8:[function(require,module,exports){
+var __vueify_style__ = require("vueify-insert-css").insert("\n.map {\n    background: #eee;\n    border: 1px solid #aaa;\n    min-height: 50px;\n    min-width: 50px;\n    -webkit-transition: all .25s ease .2s;\n    transition: all .25s ease .2s;\n    margin: 0 auto;\n}\n\n\n")
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _stringify = require('babel-runtime/core-js/json/stringify');
 
-// This stuff goes in the map code textarea just after var map = new goo.... etc.
-//    var locations = [];
-//    for (i = 0; i < locations.length; i++) {
-//        if (locations[i][1] =='undefined'){ description ='';} else { description = locations[i][1];}
-//        if (locations[i][2] =='undefined'){ telephone ='';} else { telephone = locations[i][2];}
-//        if (locations[i][3] =='undefined'){ email ='';} else { email = locations[i][3];}
-//        if (locations[i][4] =='undefined'){ web ='';} else { web = locations[i][4];}
-//        if (locations[i][7] =='undefined'){ markericon ='';} else { markericon = locations[i][7];}
-//        marker = new google.maps.Marker({
-//            icon: markericon,
-//            position: new google.maps.LatLng(locations[i][5], locations[i][6]),
-//            map: map,
-//            title: locations[i][0],
-//            desc: description,
-//            tel: telephone,
-//            email: email,
-//            web: web
-//        });
-//        link = '';
-//    }
+var _stringify2 = _interopRequireDefault(_stringify);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 exports.default = {
     data: function data() {
         return {
             apikey: '',
+            addingPin: false,
             codeCopied: false,
             show: true,
             width: 560,
             height: 420,
+            infoTitle: '',
+            infoEmail: '',
+            infoWebsite: '',
+            infoTelephone: '',
+            infoDescription: '',
+            infoWindows: [],
             mapLoaded: false,
             map: {},
             mapcontainer: 'map',
+            markers: [],
             lat: 54,
             lng: -2,
             doubleClickZoom: true,
@@ -10385,9 +10388,12 @@ exports.default = {
                     lat: this.lat,
                     lng: this.lng
                 },
+                clickableIcons: true,
                 disableDoubleClickZoom: false,
                 draggable: true,
+                fullscreenControl: true,
                 keyboardShortcuts: true,
+                mapMaker: false,
                 mapTypeControl: true,
                 mapTypeControlOptions: {
                     style: 0
@@ -10413,6 +10419,18 @@ exports.default = {
         }
     },
     methods: {
+        markersLoop: function markersLoop() {
+            var str = '';
+            for (var i = 0; i < this.markers.length; i++) {
+                var marker = this.markers[i];
+                str += 'var marker' + i + ' = new google.maps.Marker({' + "\n" + '    position: new google.maps.LatLng(' + marker.position.lat() + ', ' + marker.position.lng() + '),' + "\n" + '    map: map});' + "\n";
+                if (marker.infoWindow) {
+                    str += 'var infowindow' + i + ' = new google.maps.InfoWindow({' + "\n" + '    content: ' + (0, _stringify2.default)(marker.infoWindow.content) + ',\n' + '    map: map});' + "\n";
+                    str += "marker" + i + ".addListener('click', function () { infowindow" + i + ".open(map, marker" + i + ") ;});\ninfowindow" + i + ".close();\n";
+                }
+            }
+            return str;
+        },
         mapresized: function mapresized() {
             if (!this.mapLoaded) {
                 this.initMap();
@@ -10450,6 +10468,45 @@ exports.default = {
         maptypeidchanged: function maptypeidchanged() {
             this.mapOptions.mapTypeId = this.map.getMapTypeId();
         },
+        addInfoBox: function addInfoBox(marker) {
+            marker = this.markers[this.markers.length - 1];
+            var infowindow = new google.maps.InfoWindow({
+                content: $('#markerInfoWindow').html()
+            });
+            marker.infoWindow = infowindow;
+            marker.title = this.infoTitle;
+            var map = this.map;
+            marker.addListener('click', function () {
+                infowindow.open(map, marker);
+            });
+            $('#markerModal').modal('hide');
+            this.centerchanged();
+        },
+        removeMarker: function removeMarker(item) {
+            this.markers[item].setMap(null);
+            this.markers.splice(item, 1);
+        },
+        removeAllMarkers: function removeAllMarkers() {
+            for (var i = 0; i < this.markers.length; i++) {
+                this.markers[i].setMap(null);
+            }
+            this.markers = [];
+        },
+        placeMarker: function placeMarker(event) {
+            if (this.addingPin) {
+                var marker = new google.maps.Marker({
+                    position: event.latLng,
+                    map: this.map,
+                    draggable: true,
+                    title: 'No Title'
+                });
+                this.markers.push(marker);
+                $('#marker-form')[0].reset();
+                $('#markerId').val(this.markers.length - 1);
+                $('#markerModal').modal('show');
+                this.addingPin = false;
+            }
+        },
         initMap: function initMap() {
 
             this.mapOptions.center = new google.maps.LatLng(this.lat, this.lng);
@@ -10467,18 +10524,19 @@ exports.default = {
             google.maps.event.addListener(this.map, 'center_changed', this.mapmoved);
             google.maps.event.addListener(this.map, 'zoom_changed', this.mapzoomed);
             google.maps.event.addListener(this.map, 'maptypeid_changed', this.maptypeidchanged);
+            google.maps.event.addListener(this.map, 'click', this.placeMarker);
         }
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <div class=\"col-sm-4 form\">\n\n        <div class=\"row\">\n            <h3>Settings</h3>\n            <hr>\n        </div>\n\n        <div class=\"form-group row\">\n            <div class=\"row\">\n                <div class=\"col-sm-12\">\n                    <label for=\"apikey\">API key</label>\n                    <small><a target=\"_blank\" href=\"https://developers.google.com/maps/documentation/javascript/\">Get an\n                        API key</a></small>\n                    <input id=\"apikey\" name=\"apikey\" class=\"form-control\" type=\"text\" placeholder=\"API Key\" v-model=\"apikey\">\n                    <div class=\"form-group\">\n                        <label for=\"mapcontainer\">Map Container ID</label>\n                        <div class=\"input-group\">\n                            <div class=\"input-group-addon\"><i class=\"fa fa-hashtag fa-fw\"></i></div>\n                            <input id=\"mapcontainer\" class=\"form-control\" type=\"text\" placeholder=\"map\" v-model=\"mapcontainer\">\n                        </div>\n                    </div>\n                </div>\n\n            </div>\n        </div>\n\n\n        <div class=\"form-group row\">\n            <label>Dimensions</label>\n            <div class=\"row\">\n                <div class=\"col-sm-6\">\n                    <div class=\"input-group\">\n                        <div class=\"input-group-addon\"><i class=\"fa fa-arrows-h fa-fw\"></i></div>\n                        <label for=\"width\"></label><input class=\"form-control\" id=\"width\" v-model=\"width\" type=\"number\" @change=\"mapresized | debounce 500\" @keyup=\"mapresized | debounce 500\">\n                        <div class=\"input-group-addon\">px</div>\n                    </div>\n                </div>\n                <div class=\"col-sm-6\">\n                    <div class=\"input-group\">\n                        <div class=\"input-group-addon\"><i class=\"fa fa-arrows-v fa-fw\"></i></div>\n                        <label for=\"height\"></label><input class=\"form-control\" id=\"height\" v-model=\"height\" type=\"number\" @change=\"mapresized | debounce 500\" @keyup=\"mapresized | debounce 500\">\n                        <div class=\"input-group-addon\">px</div>\n                    </div>\n                </div>\n            </div>\n        </div>\n\n        <div class=\"form-group row\">\n            <div class=\"row\">\n                <div class=\"col-sm-6\">\n                    <label for=\"latitude\">Latitude</label>\n                    <input id=\"latitude\" name=\"latitude\" class=\"form-control\" type=\"number\" placeholder=\"Latitude\" v-model=\"lat\" number=\"\" @change=\"centerchanged\" @keyup=\"centerchanged\">\n                </div>\n                <div class=\"col-sm-6\">\n                    <label for=\"longitude\">Longitude</label>\n                    <input id=\"longitude\" name=\"longitude\" class=\"form-control\" type=\"number\" placeholder=\"Longitude\" v-model=\"lng\" number=\"\" @change=\"centerchanged\" @keyup=\"centerchanged\">\n                </div>\n            </div>\n        </div>\n\n        <div class=\"form-group row\">\n            <div class=\"checkbox\">\n                <label for=\"maptypecontrol\">\n                    <input id=\"maptypecontrol\" type=\"checkbox\" v-model=\"mapOptions.mapTypeControl\" @change=\"optionschange\">\n                    <strong>Map Type Control</strong></label>\n            </div>\n            <select name=\"maptypecontrol\" class=\"form-control\" v-model=\"mapOptions.mapTypeControlOptions.style\" @change=\"optionschange\" number=\"\">\n                <option value=\"0\">Default (depends on viewport size\n                    etc.)\n                </option>\n                <option value=\"1\">Buttons</option>\n                <option value=\"2\">Drop Down</option>\n            </select>\n        </div>\n        <div class=\"form-group row\">\n            <div class=\"row\">\n                <div class=\"col-sm-6\">\n                    <label for=\"mapTypeId\">Map Type</label>\n                    <select id=\"mapTypeId\" name=\"maptypecontrol\" class=\"form-control\" v-model=\"mapOptions.mapTypeId\" @change=\"optionschange\" number=\"\">\n                        {ROADMAP: \"roadmap\", SATELLITE: \"satellite\", HYBRID: \"hybrid\", TERRAIN: \"terrain\"}\n                        <option value=\"roadmap\">Road Map</option>\n                        <option value=\"satellite\">Satellite</option>\n                        <option value=\"hybrid\">Hybrid</option>\n                        <option value=\"terrain\">Terrain</option>\n                    </select>\n                </div>\n                <div class=\"col-sm-6\">\n                    <label for=\"zoom\">Zoom Level</label>\n                    <input id=\"zoom\" name=\"zoom\" class=\"form-control\" type=\"number\" placeholder=\"Zoom\" v-model=\"mapOptions.zoom\" number=\"\" @change=\"zoomchanged | debounce 500\" @keyup=\"centerchanged | debounce 500\">\n                </div>\n            </div>\n        </div>\n        <div class=\"form-group row\">\n            <h4>Other Options</h4>\n            <div class=\"col-sm-6\">\n                <div class=\"row\">\n                    <div class=\"checkbox\">\n                        <label for=\"streetViewControl\">\n                            <input id=\"streetViewControl\" type=\"checkbox\" v-model=\"mapOptions.streetViewControl\" @change=\"optionschange\">\n                            Streetview Control</label>\n                    </div>\n\n                </div>\n                <div class=\"row\">\n                    <div class=\"checkbox\">\n                        <label for=\"scalecontrol\">\n                            <input id=\"scalecontrol\" type=\"checkbox\" v-model=\"mapOptions.scaleControl\" @change=\"optionschange\">\n                            Scale Control\n                        </label>\n                    </div>\n                </div>\n                <div class=\"row\">\n                    <div class=\"checkbox\">\n                        <label for=\"draggable\">\n                            <input id=\"draggable\" type=\"checkbox\" v-model=\"mapOptions.draggable\" @change=\"optionschange\">\n                            Draggable Map\n                        </label>\n                    </div>\n                </div>\n                <div class=\"row\">\n                    <div class=\"checkbox\">\n                        <label for=\"keyboardShortcuts\">\n                            <input id=\"keyboardShortcuts\" type=\"checkbox\" v-model=\"mapOptions.keyboardShortcuts\" @change=\"optionschange\">\n                            Keyboard Shortcuts\n                        </label>\n                    </div>\n                </div>\n            </div>\n            <div class=\"col-sm-6\">\n\n                <!--<div class=\"row\">-->\n                <!--<label for=\"rotateControl\">Rotate Control</label>-->\n                <!--<input id=\"rotateControl\"type=\"checkbox\" v-model=\"mapOptions.rotateControl\" @change=\"optionschange\">-->\n                <!--</div>-->\n                <div class=\"row\">\n                    <div class=\"checkbox\">\n                        <label for=\"zoomcontrol\">\n                            <input id=\"zoomcontrol\" type=\"checkbox\" v-model=\"mapOptions.zoomControl\" @change=\"optionschange\">\n                            Zoom Control\n                        </label>\n                    </div>\n                </div>\n                <div class=\"row\">\n                    <div class=\"checkbox\">\n                        <label for=\"doubleClickZoom\">\n                            <input id=\"doubleClickZoom\" type=\"checkbox\" v-model=\"doubleClickZoom\" @change=\"optionschange\">\n                            Doubleclick Zoom\n                        </label>\n                    </div>\n                </div>\n                <div class=\"row\">\n                    <div class=\"checkbox\">\n                        <label for=\"scrollwheel\">\n                            <input id=\"scrollwheel\" type=\"checkbox\" v-model=\"mapOptions.scrollwheel\" @change=\"optionschange\">\n                            Scrollwheel To Zoom\n                        </label>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"col-sm-7 results col-sm-offset-1\">\n        <div class=\"row\">\n            <h3>Your Map Result</h3>\n            <hr>\n            <div id=\"map\" class=\"map\" v-show=\"show\" :style=\"styleObject\"></div>\n        </div>\n        <div class=\"row\">\n            <h3>Your map code\n                <small>Click to copy</small>\n            </h3>\n            <div v-if=\"codeCopied\" class=\"alert alert-success fade in\">\n                Your code has been copied to your clipboard!\n            </div>\n        <textarea class=\"form-control\" rows=\"10\" @click=\"copied\" readonly=\"\">&lt;script src='https://maps.googleapis.com/maps/api/js?key={{ apikey }}'&gt;&lt;/script&gt;\n&lt;script&gt;\ngoogle.maps.event.addDomListener(window, 'load', init);\nvar map;\nfunction init() {\n    var mapOptions = {{ mapOptions | json }}\n    var mapElement = document.getElementById('{{ mapcontainer }}');\n    var map = new google.maps.Map(mapElement, mapOptions);\n}\n&lt;/script&gt;\n&lt;style&gt;\n    #{{ mapcontainer }} {\n        height: {{ styleObject.height }};\n        width: {{ styleObject.width }};\n    }\n&lt;/style&gt;\n\n&lt;div id='{{ mapcontainer }}'&gt;&lt;/div&gt;\n        </textarea>\n        </div>\n    </div>\n\n    <div class=\"row\">\n        <hr class=\"invisible\">\n    </div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <div v-show=\"false\">\n        <div id=\"markerInfoWindow\">\n            <h1 id=\"infoTitle\">{{ infoTitle }}</h1>\n            <p id=\"infoTelephone\">{{ infoTelephone }}</p>\n            <p id=\"infoEmail\">{{ infoEmail }}</p>\n            <p id=\"infoWebsite\">{{ infoWebsite }}</p>\n            <p id=\"infoDescription\">{{{ infoDescription | nl2br }}}</p>\n        </div>\n    </div>\n    <div class=\"modal fade\" id=\"markerModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\">\n        <div class=\"modal-dialog\" role=\"document\">\n            <div class=\"modal-content\">\n                <div class=\"modal-header\">\n                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">×</span></button>\n                    <h4 class=\"modal-title\" id=\"myModalLabel\">Marker Info</h4>\n                </div>\n                <div class=\"modal-body\">\n                    <div class=\"form\">\n                        <form action=\"#\" id=\"marker-form\">\n                            <input type=\"hidden\" id=\"markerId\">\n                            <div class=\"col-sm-6\">\n                                <div class=\"form-group\">\n                                    <label for=\"title\">Title</label>\n                                    <input id=\"title\" class=\"form-control\" type=\"text\" placeholder=\"My Awesome Place\" v-model=\"infoTitle\">\n                                </div>\n                                <div class=\"form-group\">\n                                    <label for=\"telephone\">Telephone</label>\n                                    <input id=\"telephone\" class=\"form-control\" type=\"text\" placeholder=\"01234 567 890\" v-model=\"infoTelephone\">\n                                </div>\n                            </div>\n                            <div class=\"col-sm-6\">\n                                <div class=\"form-group\">\n                                    <label for=\"email\">Email Address</label>\n                                    <input id=\"email\" class=\"form-control\" type=\"email\" placeholder=\"info@example.com\" v-model=\"infoEmail\">\n                                </div>\n                                <div class=\"form-group\">\n                                    <label for=\"website\">Website</label>\n                                    <input id=\"website\" class=\"form-control\" type=\"text\" placeholder=\"http://www.example.com\" v-model=\"infoWebsite\">\n                                </div>\n                            </div>\n                            <div class=\"col-sm-12\">\n                            <textarea name=\"description\" id=\"description\" cols=\"30\" rows=\"10\" class=\"form-control\" placeholder=\"Write a short description here, if you want.\" v-model=\"infoDescription\"></textarea>\n                            </div>\n                        </form>\n                    </div>\n                    <div class=\"clearfix\"></div>\n                </div>\n                <div class=\"modal-footer\">\n                    <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Cancel\n                    </button>\n                    <button type=\"button\" class=\"btn btn-primary\" @click=\"addInfoBox\">Add Info Box</button>\n                </div>\n            </div>\n        </div>\n    </div>\n\n\n    <div class=\"col-sm-4 form\">\n\n        <div class=\"row\">\n            <h3>Settings</h3>\n            <hr>\n        </div>\n\n        <div class=\"form-group row\">\n            <div class=\"row\">\n                <div class=\"col-sm-12\">\n                    <label for=\"apikey\">API key</label>\n                    <small><a target=\"_blank\" href=\"https://developers.google.com/maps/documentation/javascript/\">Get an\n                        API key</a></small>\n                    <input id=\"apikey\" name=\"apikey\" class=\"form-control\" type=\"text\" placeholder=\"API Key\" v-model=\"apikey\">\n                    <div class=\"form-group\">\n                        <label for=\"mapcontainer\">Map Container ID</label>\n                        <div class=\"input-group\">\n                            <div class=\"input-group-addon\"><i class=\"fa fa-hashtag fa-fw\"></i></div>\n                            <input id=\"mapcontainer\" class=\"form-control\" type=\"text\" placeholder=\"map\" v-model=\"mapcontainer\">\n                        </div>\n                    </div>\n                </div>\n\n            </div>\n        </div>\n\n\n        <div class=\"form-group row\">\n            <label>Dimensions</label>\n            <div class=\"row\">\n                <div class=\"col-sm-6\">\n                    <div class=\"input-group\">\n                        <div class=\"input-group-addon\"><i class=\"fa fa-arrows-h fa-fw\"></i></div>\n                        <label for=\"width\"></label><input class=\"form-control\" id=\"width\" v-model=\"width\" type=\"number\" @change=\"mapresized | debounce 500\" @keyup=\"mapresized | debounce 500\">\n                        <div class=\"input-group-addon\">px</div>\n                    </div>\n                </div>\n                <div class=\"col-sm-6\">\n                    <div class=\"input-group\">\n                        <div class=\"input-group-addon\"><i class=\"fa fa-arrows-v fa-fw\"></i></div>\n                        <label for=\"height\"></label><input class=\"form-control\" id=\"height\" v-model=\"height\" type=\"number\" @change=\"mapresized | debounce 500\" @keyup=\"mapresized | debounce 500\">\n                        <div class=\"input-group-addon\">px</div>\n                    </div>\n                </div>\n            </div>\n        </div>\n\n        <div class=\"form-group row\">\n            <div class=\"row\">\n                <div class=\"col-sm-6\">\n                    <label for=\"latitude\">Latitude</label>\n                    <input id=\"latitude\" name=\"latitude\" class=\"form-control\" type=\"number\" placeholder=\"Latitude\" v-model=\"lat\" number=\"\" @change=\"centerchanged\" @keyup=\"centerchanged\">\n                </div>\n                <div class=\"col-sm-6\">\n                    <label for=\"longitude\">Longitude</label>\n                    <input id=\"longitude\" name=\"longitude\" class=\"form-control\" type=\"number\" placeholder=\"Longitude\" v-model=\"lng\" number=\"\" @change=\"centerchanged\" @keyup=\"centerchanged\">\n                </div>\n            </div>\n        </div>\n\n        <div class=\"form-group row\">\n            <div class=\"checkbox\">\n                <label for=\"maptypecontrol\">\n                    <input id=\"maptypecontrol\" type=\"checkbox\" v-model=\"mapOptions.mapTypeControl\" @change=\"optionschange\">\n                    <strong>Map Type Control</strong></label>\n            </div>\n            <select name=\"maptypecontrol\" class=\"form-control\" v-model=\"mapOptions.mapTypeControlOptions.style\" @change=\"optionschange\" number=\"\">\n                <option value=\"0\">Default (depends on viewport size\n                    etc.)\n                </option>\n                <option value=\"1\">Buttons</option>\n                <option value=\"2\">Drop Down</option>\n            </select>\n        </div>\n        <div class=\"form-group row\">\n            <div class=\"row\">\n                <div class=\"col-sm-6\">\n                    <label for=\"mapTypeId\">Map Type</label>\n                    <select id=\"mapTypeId\" name=\"maptypecontrol\" class=\"form-control\" v-model=\"mapOptions.mapTypeId\" @change=\"optionschange\" number=\"\">\n                        {ROADMAP: \"roadmap\", SATELLITE: \"satellite\", HYBRID: \"hybrid\", TERRAIN: \"terrain\"}\n                        <option value=\"roadmap\">Road Map</option>\n                        <option value=\"terrain\">Road Map with Terrain</option>\n                        <option value=\"satellite\">Satellite</option>\n                        <option value=\"hybrid\">Satellite with Labels</option>\n                    </select>\n                </div>\n                <div class=\"col-sm-6\">\n                    <label for=\"zoom\">Zoom Level</label>\n                    <input id=\"zoom\" name=\"zoom\" class=\"form-control\" type=\"number\" placeholder=\"Zoom\" v-model=\"mapOptions.zoom\" number=\"\" @change=\"zoomchanged | debounce 500\" @keyup=\"centerchanged | debounce 500\">\n                </div>\n            </div>\n        </div>\n\n\n        <div class=\"form-group row\">\n            <h4>Add Markers</h4>\n            <div class=\"row\">\n                <div class=\"col-xs-12\">\n                    <div class=\"form-group\">\n                        <input type=\"button\" class=\"form-control btn btn-default\" @click=\"this.addingPin=true\" value=\"Add a Marker\">\n                    </div>\n                    <div class=\"form-group\" v-show=\"markers.length\">\n                        <button class=\"form-control btn btn-danger\" @click=\"removeAllMarkers\"><i class=\"fa fa-trash\"></i> All Markers?\n                        </button>\n                        <div v-for=\"(index, marker) in markers\" class=\"col-sm-6\">\n                            <button @click=\"removeMarker(index)\" class=\"btn btn-danger\"><i class=\"fa fa-trash\"></i> {{\n                                marker.title }}\n                            </button>\n                        </div>\n                    </div>\n                </div>\n            </div>\n            <div class=\"row\">\n                <div class=\"col-xs-12\">\n                    <div class=\"alert alert-info\" v-show=\"addingPin\"><p><i class=\"fa fa-info\"></i> Click the map where\n                        you want your pin!</p></div>\n                </div>\n            </div>\n\n        </div>\n\n\n        <div class=\"form-group row\">\n            <h4>Other Options</h4>\n            <div class=\"col-sm-6\">\n                <div class=\"row\">\n                    <div class=\"checkbox\">\n                        <label for=\"streetViewControl\">\n                            <input id=\"streetViewControl\" type=\"checkbox\" v-model=\"mapOptions.streetViewControl\" @change=\"optionschange\">\n                            Streetview Control\n                        </label>\n                    </div>\n                </div>\n                <div class=\"row\">\n                    <div class=\"checkbox\">\n                        <label for=\"mapMaker\">\n                            <input id=\"mapMaker\" type=\"checkbox\" v-model=\"mapOptions.mapMaker\" @change=\"optionschange\">\n                            Use \"<a href=\"http://www.google.com/mapmaker\" target=\"_blank\">MapMaker</a>\" Tiles\n                        </label>\n                    </div>\n                </div>\n                <div class=\"row\">\n                    <div class=\"checkbox\">\n                        <label for=\"scalecontrol\">\n                            <input id=\"scalecontrol\" type=\"checkbox\" v-model=\"mapOptions.scaleControl\" @change=\"optionschange\">\n                            Scale Control\n                        </label>\n                    </div>\n                </div>\n                <div class=\"row\">\n                    <div class=\"checkbox\">\n                        <label for=\"fullscreenControl\">\n                            <input id=\"fullscreenControl\" type=\"checkbox\" v-model=\"mapOptions.fullscreenControl\" @change=\"optionschange\">\n                            Fullscreen Control\n                        </label>\n                    </div>\n                </div>\n                <div class=\"row\">\n                    <div class=\"checkbox\">\n                        <label for=\"draggable\">\n                            <input id=\"draggable\" type=\"checkbox\" v-model=\"mapOptions.draggable\" @change=\"optionschange\">\n                            Draggable Map\n                        </label>\n                    </div>\n                </div>\n                <div class=\"row\">\n                    <div class=\"checkbox\">\n                        <label for=\"keyboardShortcuts\">\n                            <input id=\"keyboardShortcuts\" type=\"checkbox\" v-model=\"mapOptions.keyboardShortcuts\" @change=\"optionschange\">\n                            Keyboard Shortcuts\n                        </label>\n                    </div>\n                </div>\n            </div>\n            <div class=\"col-sm-6\">\n\n                <!--<div class=\"row\">-->\n                <!--<label for=\"rotateControl\">Rotate Control</label>-->\n                <!--<input id=\"rotateControl\"type=\"checkbox\" v-model=\"mapOptions.rotateControl\" @change=\"optionschange\">-->\n                <!--</div>-->\n                <div class=\"row\">\n                    <div class=\"checkbox\">\n                        <label for=\"clickableIcons\">\n                            <input id=\"clickableIcons\" type=\"checkbox\" v-model=\"mapOptions.clickableIcons\" @change=\"optionschange\">\n                            Clickable Points of Interest\n                        </label>\n                    </div>\n                </div>\n                <div class=\"row\">\n                    <div class=\"checkbox\">\n                        <label for=\"zoomcontrol\">\n                            <input id=\"zoomcontrol\" type=\"checkbox\" v-model=\"mapOptions.zoomControl\" @change=\"optionschange\">\n                            Zoom Control\n                        </label>\n                    </div>\n                </div>\n                <div class=\"row\">\n                    <div class=\"checkbox\">\n                        <label for=\"doubleClickZoom\">\n                            <input id=\"doubleClickZoom\" type=\"checkbox\" v-model=\"doubleClickZoom\" @change=\"optionschange\">\n                            Doubleclick Zoom\n                        </label>\n                    </div>\n                </div>\n                <div class=\"row\">\n                    <div class=\"checkbox\">\n                        <label for=\"scrollwheel\">\n                            <input id=\"scrollwheel\" type=\"checkbox\" v-model=\"mapOptions.scrollwheel\" @change=\"optionschange\">\n                            Scrollwheel Zoom\n                        </label>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"col-sm-7 results col-sm-offset-1\">\n        <div class=\"row\">\n            <h3>Your Map Result</h3>\n            <hr>\n            <div id=\"map\" class=\"map\" v-show=\"show\" :style=\"styleObject\"></div>\n        </div>\n        <div class=\"row\">\n            <h3>Your map code\n                <small>Click to copy</small>\n            </h3>\n            <div v-if=\"codeCopied\" class=\"alert alert-success fade in\">\n                Your code has been copied to your clipboard!\n            </div>\n        <textarea class=\"form-control\" rows=\"10\" @click=\"copied\" readonly=\"\">&lt;script src='https://maps.googleapis.com/maps/api/js?key={{ apikey }}'&gt;&lt;/script&gt;\n&lt;script&gt;\ngoogle.maps.event.addDomListener(window, 'load', init);\nvar map;\nfunction init() {\n    var mapOptions = {{ mapOptions | json }}\n    var mapElement = document.getElementById('{{ mapcontainer }}');\n    var map = new google.maps.Map(mapElement, mapOptions);\n{{ markersLoop() }}\n}\n&lt;/script&gt;\n&lt;style&gt;\n    #{{ mapcontainer }} {\n        height: {{ styleObject.height }};\n        width: {{ styleObject.width }};\n    }\n&lt;/style&gt;\n\n&lt;div id='{{ mapcontainer }}'&gt;&lt;/div&gt;\n        </textarea>\n        </div>\n    </div>\n\n    <div class=\"row\">\n        <hr class=\"invisible\">\n    </div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   var id = "/Users/billythekid/sites/mapper/resources/assets/js/components/Map.vue"
   module.hot.dispose(function () {
-    require("vueify-insert-css").cache["\n.map {\n    background: #eee;\n    border: 1px solid #aaa;\n    min-height: 50px;\n    min-width: 50px;\n    -webkit-transition: all .25s ease .2s;\n    transition: all .25s ease .2s;\n    margin: 0 auto;\n}\n"] = false
+    require("vueify-insert-css").cache["\n.map {\n    background: #eee;\n    border: 1px solid #aaa;\n    min-height: 50px;\n    min-width: 50px;\n    -webkit-transition: all .25s ease .2s;\n    transition: all .25s ease .2s;\n    margin: 0 auto;\n}\n\n\n"] = false
     document.head.removeChild(__vueify_style__)
   })
   if (!module.hot.data) {
@@ -10487,7 +10545,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":3,"vue-hot-reload-api":2,"vueify-insert-css":4}],6:[function(require,module,exports){
+},{"babel-runtime/core-js/json/stringify":1,"vue":6,"vue-hot-reload-api":5,"vueify-insert-css":7}],9:[function(require,module,exports){
 'use strict';
 
 var _vue = require('vue');
@@ -10500,11 +10558,15 @@ var _Map2 = _interopRequireDefault(_Map);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+_vue2.default.filter('nl2br', function (value) {
+    return value.replace(/\n/g, "<br>");
+});
+
 new _vue2.default({
     el: '#app',
     components: { Map: _Map2.default }
 });
 
-},{"./components/Map.vue":5,"vue":3}]},{},[6]);
+},{"./components/Map.vue":8,"vue":6}]},{},[9]);
 
 //# sourceMappingURL=main.js.map

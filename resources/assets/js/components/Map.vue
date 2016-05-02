@@ -7,9 +7,76 @@
         transition: all .25s ease .2s;
         margin: 0 auto;
     }
+
+
 </style>
 
 <template>
+    <div v-show="false">
+        <div id="markerInfoWindow">
+            <h1 id="infoTitle">{{ infoTitle }}</h1>
+            <p id="infoTelephone">{{ infoTelephone }}</p>
+            <p id="infoEmail">{{ infoEmail }}</p>
+            <p id="infoWebsite">{{ infoWebsite }}</p>
+            <p id="infoDescription">{{{ infoDescription | nl2br }}}</p>
+        </div>
+    </div>
+    <div class="modal fade" id="markerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Marker Info</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form">
+                        <form action="#" id="marker-form">
+                            <input type="hidden" id="markerId">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="title">Title</label>
+                                    <input id="title" class="form-control" type="text" placeholder="My Awesome Place"
+                                           v-model="infoTitle">
+                                </div>
+                                <div class="form-group">
+                                    <label for="telephone">Telephone</label>
+                                    <input id="telephone" class="form-control" type="text" placeholder="01234 567 890"
+                                           v-model="infoTelephone">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="email">Email Address</label>
+                                    <input id="email" class="form-control" type="email" placeholder="info@example.com"
+                                           v-model="infoEmail">
+                                </div>
+                                <div class="form-group">
+                                    <label for="website">Website</label>
+                                    <input id="website" class="form-control" type="text"
+                                           placeholder="http://www.example.com" v-model="infoWebsite">
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                            <textarea name="description" id="description" cols="30" rows="10"
+                                      class="form-control"
+                                      placeholder="Write a short description here, if you want."
+                                      v-model="infoDescription"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel
+                    </button>
+                    <button type="button" class="btn btn-primary" @click="addInfoBox">Add Info Box</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div class="col-sm-4 form">
 
         <div class="row">
@@ -46,15 +113,18 @@
                     <div class="input-group">
                         <div class="input-group-addon"><i class="fa fa-arrows-h fa-fw"></i></div>
                         <label for="width"></label><input class="form-control" id="width" v-model="width" type="number"
-                               @change="mapresized | debounce 500" @keyup="mapresized | debounce 500">
+                                                          @change="mapresized | debounce 500"
+                                                          @keyup="mapresized | debounce 500">
                         <div class="input-group-addon">px</div>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="input-group">
                         <div class="input-group-addon"><i class="fa fa-arrows-v fa-fw"></i></div>
-                        <label for="height"></label><input class="form-control" id="height" v-model="height" type="number"
-                               @change="mapresized | debounce 500" @keyup="mapresized | debounce 500">
+                        <label for="height"></label><input class="form-control" id="height" v-model="height"
+                                                           type="number"
+                                                           @change="mapresized | debounce 500"
+                                                           @keyup="mapresized | debounce 500">
                         <div class="input-group-addon">px</div>
                     </div>
                 </div>
@@ -102,9 +172,9 @@
                             @change="optionschange" number>
                         {ROADMAP: "roadmap", SATELLITE: "satellite", HYBRID: "hybrid", TERRAIN: "terrain"}
                         <option value="roadmap">Road Map</option>
+                        <option value="terrain">Road Map with Terrain</option>
                         <option value="satellite">Satellite</option>
-                        <option value="hybrid">Hybrid</option>
-                        <option value="terrain">Terrain</option>
+                        <option value="hybrid">Satellite with Labels</option>
                     </select>
                 </div>
                 <div class="col-sm-6">
@@ -115,6 +185,38 @@
                 </div>
             </div>
         </div>
+
+
+        <div class="form-group row">
+            <h4>Add Markers</h4>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <input type="button" class="form-control btn btn-default" @click="this.addingPin=true"
+                               value="Add a Marker">
+                    </div>
+                    <div class="form-group" v-show="markers.length">
+                        <button class="form-control btn btn-danger" @click="removeAllMarkers"><i
+                                class="fa fa-trash"></i> All Markers?
+                        </button>
+                        <div v-for="(index, marker) in markers" class="col-sm-6">
+                            <button @click="removeMarker(index)" class="btn btn-danger"><i class="fa fa-trash"></i> {{
+                                marker.title }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="alert alert-info" v-show="addingPin"><p><i class="fa fa-info"></i> Click the map where
+                        you want your pin!</p></div>
+                </div>
+            </div>
+
+        </div>
+
+
         <div class="form-group row">
             <h4>Other Options</h4>
             <div class="col-sm-6">
@@ -123,9 +225,18 @@
                         <label for="streetViewControl">
                             <input id="streetViewControl" type="checkbox" v-model="mapOptions.streetViewControl"
                                    @change="optionschange">
-                            Streetview Control</label>
+                            Streetview Control
+                        </label>
                     </div>
-
+                </div>
+                <div class="row">
+                    <div class="checkbox">
+                        <label for="mapMaker">
+                            <input id="mapMaker" type="checkbox" v-model="mapOptions.mapMaker"
+                                   @change="optionschange">
+                            Use "<a href="http://www.google.com/mapmaker" target="_blank">MapMaker</a>" Tiles
+                        </label>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="checkbox">
@@ -133,6 +244,15 @@
                             <input id="scalecontrol" type="checkbox" v-model="mapOptions.scaleControl"
                                    @change="optionschange">
                             Scale Control
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="checkbox">
+                        <label for="fullscreenControl">
+                            <input id="fullscreenControl" type="checkbox" v-model="mapOptions.fullscreenControl"
+                                   @change="optionschange">
+                            Fullscreen Control
                         </label>
                     </div>
                 </div>
@@ -163,6 +283,15 @@
                 <!--</div>-->
                 <div class="row">
                     <div class="checkbox">
+                        <label for="clickableIcons">
+                            <input id="clickableIcons" type="checkbox" v-model="mapOptions.clickableIcons"
+                                   @change="optionschange">
+                            Clickable Points of Interest
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="checkbox">
                         <label for="zoomcontrol">
                             <input id="zoomcontrol" type="checkbox" v-model="mapOptions.zoomControl"
                                    @change="optionschange">
@@ -184,7 +313,7 @@
                         <label for="scrollwheel">
                             <input id="scrollwheel" type="checkbox" v-model="mapOptions.scrollwheel"
                                    @change="optionschange">
-                            Scrollwheel To Zoom
+                            Scrollwheel Zoom
                         </label>
                     </div>
                 </div>
@@ -214,6 +343,7 @@ function init() {
     var mapOptions = {{ mapOptions | json }}
     var mapElement = document.getElementById('{{ mapcontainer }}');
     var map = new google.maps.Map(mapElement, mapOptions);
+{{ markersLoop() }}
 }
 &lt;/script>
 &lt;style>
@@ -234,37 +364,25 @@ function init() {
 </template>
 
 <script>
-    // This stuff goes in the map code textarea just after var map = new goo.... etc.
-    //    var locations = [];
-    //    for (i = 0; i < locations.length; i++) {
-    //        if (locations[i][1] =='undefined'){ description ='';} else { description = locations[i][1];}
-    //        if (locations[i][2] =='undefined'){ telephone ='';} else { telephone = locations[i][2];}
-    //        if (locations[i][3] =='undefined'){ email ='';} else { email = locations[i][3];}
-    //        if (locations[i][4] =='undefined'){ web ='';} else { web = locations[i][4];}
-    //        if (locations[i][7] =='undefined'){ markericon ='';} else { markericon = locations[i][7];}
-    //        marker = new google.maps.Marker({
-    //            icon: markericon,
-    //            position: new google.maps.LatLng(locations[i][5], locations[i][6]),
-    //            map: map,
-    //            title: locations[i][0],
-    //            desc: description,
-    //            tel: telephone,
-    //            email: email,
-    //            web: web
-    //        });
-    //        link = '';
-    //    }
     export default {
         data () {
             return {
                 apikey: '',
+                addingPin: false,
                 codeCopied: false,
                 show: true,
                 width: 560,
                 height: 420,
+                infoTitle: '',
+                infoEmail: '',
+                infoWebsite: '',
+                infoTelephone: '',
+                infoDescription: '',
+                infoWindows: [],
                 mapLoaded: false,
                 map: {},
                 mapcontainer: 'map',
+                markers: [],
                 lat: 54,
                 lng: -2,
                 doubleClickZoom: true,
@@ -273,9 +391,12 @@ function init() {
                         lat: this.lat,
                         lng: this.lng
                     },
+                    clickableIcons: true,
                     disableDoubleClickZoom: false,
                     draggable: true,
+                    fullscreenControl: true,
                     keyboardShortcuts: true,
+                    mapMaker: false,
                     mapTypeControl: true,
                     mapTypeControlOptions: {
                         style: 0
@@ -300,6 +421,22 @@ function init() {
             }
         },
         methods: {
+            markersLoop: function () {
+                var str = '';
+                for (var i = 0; i < this.markers.length; i++) {
+                    var marker = this.markers[i];
+                    str += 'var marker' + i + ' = new google.maps.Marker({' + "\n" +
+                            '    position: new google.maps.LatLng(' + marker.position.lat() + ', ' + marker.position.lng() + '),' + "\n" +
+                            '    map: map});' + "\n";
+                    if (marker.infoWindow) {
+                        str += 'var infowindow' + i + ' = new google.maps.InfoWindow({' + "\n" +
+                                '    content: ' + JSON.stringify(marker.infoWindow.content) + ',\n' +
+                                '    map: map});' + "\n";
+                        str += "marker" + i + ".addListener('click', function () { infowindow" + i + ".open(map, marker" + i + ") ;});\ninfowindow" + i + ".close();\n";
+                    }
+                }
+                return str;
+            },
             mapresized: function () {
                 if (!this.mapLoaded) {
                     this.initMap();
@@ -337,6 +474,45 @@ function init() {
             maptypeidchanged: function () {
                 this.mapOptions.mapTypeId = this.map.getMapTypeId();
             },
+            addInfoBox: function (marker) {
+                marker = this.markers[this.markers.length - 1];
+                var infowindow = new google.maps.InfoWindow({
+                    content: $('#markerInfoWindow').html()
+                });
+                marker.infoWindow = infowindow;
+                marker.title = this.infoTitle;
+                var map = this.map;
+                marker.addListener('click', function () {
+                    infowindow.open(map, marker);
+                });
+                $('#markerModal').modal('hide');
+                this.centerchanged();
+            },
+            removeMarker: function (item) {
+                this.markers[item].setMap(null);
+                this.markers.splice(item, 1);
+            },
+            removeAllMarkers: function () {
+                for (var i = 0; i < this.markers.length; i++) {
+                    this.markers[i].setMap(null);
+                }
+                this.markers = [];
+            },
+            placeMarker: function (event) {
+                if (this.addingPin) {
+                    var marker = new google.maps.Marker({
+                        position: event.latLng,
+                        map: this.map,
+                        draggable: true,
+                        title: 'No Title'
+                    });
+                    this.markers.push(marker);
+                    $('#marker-form')[0].reset();
+                    $('#markerId').val(this.markers.length - 1);
+                    $('#markerModal').modal('show');
+                    this.addingPin = false;
+                }
+            },
             initMap: function () {
 
                 this.mapOptions.center = new google.maps.LatLng(this.lat, this.lng);
@@ -355,6 +531,7 @@ function init() {
                 google.maps.event.addListener(this.map, 'center_changed', this.mapmoved);
                 google.maps.event.addListener(this.map, 'zoom_changed', this.mapzoomed);
                 google.maps.event.addListener(this.map, 'maptypeid_changed', this.maptypeidchanged);
+                google.maps.event.addListener(this.map, 'click', this.placeMarker);
             }
         }
     }
