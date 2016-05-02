@@ -14,10 +14,12 @@
 <template>
     <div v-show="false">
         <div id="markerInfoWindow">
-            <h3 id="infoTitle">{{ infoTitle }}</h3>
-            <p id="infoWebsite">W: <a href="{{ infoWebsite }}">{{ infoWebsite }}</a><br>
-                E: <a href="mailto:{{ infoEmail }}">{{ infoEmail }}</a><br>
-                T: {{ infoTelephone }}</p>
+            <h3 v-if="infoTitle">{{ infoTitle }}</h3>
+            <p>
+                <span v-if="infoWebsite">W: <a href="{{ infoWebsite }}">{{ infoWebsite }}</a><br></span>
+                <span v-if="infoEmail">E: <a href="mailto:{{ infoEmail }}">{{ infoEmail }}</a><br></span>
+                <span v-if="infoTelephone">T: {{ infoTelephone }}</span>
+            </p>
             <p id="infoDescription">{{{ infoDescription | nl2br }}}</p>
         </div>
     </div>
