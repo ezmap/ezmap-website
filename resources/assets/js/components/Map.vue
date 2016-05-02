@@ -18,13 +18,14 @@
             <div class="row">
                 <div class="col-sm-12">
                     <label for="apikey">API key</label>
-                    <small><a target="_blank" href="https://developers.google.com/maps/documentation/javascript/">Get an API key</a></small>
+                    <small><a target="_blank" href="https://developers.google.com/maps/documentation/javascript/">Get an
+                        API key</a></small>
                     <input id="apikey" name="apikey" class="form-control" type="text" placeholder="API Key"
                            v-model="apikey">
                     <div class="form-group">
                         <label for="mapcontainer">Map Container ID</label>
                         <div class="input-group">
-                            <div class="input-group-addon">#</div>
+                            <div class="input-group-addon"><i class="fa fa-hashtag fa-fw"></i></div>
                             <input id="mapcontainer" class="form-control" type="text" placeholder="map"
                                    v-model="mapcontainer">
                         </div>
@@ -36,20 +37,20 @@
 
 
         <div class="form-group row">
-            <h5>Dimensions</h5>
+            <label>Dimensions</label>
             <div class="row">
                 <div class="col-sm-6">
                     <div class="input-group">
-                        <div class="input-group-addon">w</div>
-                        <input class="form-control" id="width" v-model="width" type="number"
+                        <div class="input-group-addon"><i class="fa fa-arrows-h fa-fw"></i></div>
+                        <label for="width"></label><input class="form-control" id="width" v-model="width" type="number"
                                @change="mapresized | debounce 500" @keyup="mapresized | debounce 500">
                         <div class="input-group-addon">px</div>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="input-group">
-                        <div class="input-group-addon">h</div>
-                        <input class="form-control" id="height" v-model="height" type="number"
+                        <div class="input-group-addon"><i class="fa fa-arrows-v fa-fw"></i></div>
+                        <label for="height"></label><input class="form-control" id="height" v-model="height" type="number"
                                @change="mapresized | debounce 500" @keyup="mapresized | debounce 500">
                         <div class="input-group-addon">px</div>
                     </div>
@@ -75,8 +76,12 @@
         </div>
 
         <div class="form-group row">
-            <label for="maptypecontrol">Map Type Control</label>
-            <input id="maptypecontrol" type="checkbox" v-model="mapOptions.mapTypeControl" @change="optionschange">
+            <div class="checkbox">
+                <label for="maptypecontrol">
+                    <input id="maptypecontrol" type="checkbox" v-model="mapOptions.mapTypeControl"
+                           @change="optionschange">
+                    <strong>Map Type Control</strong></label>
+            </div>
             <select name="maptypecontrol" class="form-control" v-model="mapOptions.mapTypeControlOptions.style"
                     @change="optionschange" number>
                 <option value="0">Default (depends on viewport size
@@ -111,22 +116,40 @@
             <h4>Other Options</h4>
             <div class="col-sm-6">
                 <div class="row">
-                    <label for="streetViewControl">Streetview Control</label>
-                    <input id="streetViewControl" type="checkbox" v-model="mapOptions.streetViewControl"
-                           @change="optionschange">
+                    <div class="checkbox">
+                        <label for="streetViewControl">
+                            <input id="streetViewControl" type="checkbox" v-model="mapOptions.streetViewControl"
+                                   @change="optionschange">
+                            Streetview Control</label>
+                    </div>
+
                 </div>
                 <div class="row">
-                    <label for="scalecontrol">Scale Control</label>
-                    <input id="scalecontrol" type="checkbox" v-model="mapOptions.scaleControl" @change="optionschange">
+                    <div class="checkbox">
+                        <label for="scalecontrol">
+                            <input id="scalecontrol" type="checkbox" v-model="mapOptions.scaleControl"
+                                   @change="optionschange">
+                            Scale Control
+                        </label>
+                    </div>
                 </div>
                 <div class="row">
-                    <label for="draggable">Draggable Map</label>
-                    <input id="draggable" type="checkbox" v-model="mapOptions.draggable" @change="optionschange">
+                    <div class="checkbox">
+                        <label for="draggable">
+                            <input id="draggable" type="checkbox" v-model="mapOptions.draggable"
+                                   @change="optionschange">
+                            Draggable Map
+                        </label>
+                    </div>
                 </div>
                 <div class="row">
-                    <label for="keyboardShortcuts">Keyboard Shortcuts</label>
-                    <input id="keyboardShortcuts" id="keyboardShortcuts" type="checkbox"
-                           v-model="mapOptions.keyboardShortcuts" @change="optionschange">
+                    <div class="checkbox">
+                        <label for="keyboardShortcuts">
+                            <input id="keyboardShortcuts" id="keyboardShortcuts" type="checkbox"
+                                   v-model="mapOptions.keyboardShortcuts" @change="optionschange">
+                            Keyboard Shortcuts
+                        </label>
+                    </div>
                 </div>
             </div>
             <div class="col-sm-6">
@@ -136,16 +159,31 @@
                 <!--<input id="rotateControl"type="checkbox" v-model="mapOptions.rotateControl" @change="optionschange">-->
                 <!--</div>-->
                 <div class="row">
-                    <label for="zoomcontrol">Zoom Control</label>
-                    <input id="zoomcontrol" type="checkbox" v-model="mapOptions.zoomControl" @change="optionschange">
+                    <div class="checkbox">
+                        <label for="zoomcontrol">
+                            <input id="zoomcontrol" type="checkbox" v-model="mapOptions.zoomControl"
+                                   @change="optionschange">
+                            Zoom Control
+                        </label>
+                    </div>
                 </div>
                 <div class="row">
-                    <label for="doubleClickZoom">Doubleclick Zoom</label>
-                    <input id="doubleClickZoom" type="checkbox" v-model="doubleClickZoom" @change="optionschange">
+                    <div class="checkbox">
+                        <label for="doubleClickZoom">
+                            <input id="doubleClickZoom" type="checkbox" v-model="doubleClickZoom"
+                                   @change="optionschange">
+                            Doubleclick Zoom
+                        </label>
+                    </div>
                 </div>
                 <div class="row">
-                    <label for="scrollwheel">Scrollwheel To Zoom</label>
-                    <input id="scrollwheel" type="checkbox" v-model="mapOptions.scrollwheel" @change="optionschange">
+                    <div class="checkbox">
+                        <label for="scrollwheel">
+                            <input id="scrollwheel" type="checkbox" v-model="mapOptions.scrollwheel"
+                                   @change="optionschange">
+                            Scrollwheel To Zoom
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>
@@ -163,36 +201,15 @@
             <div v-if="codeCopied" class="alert alert-success fade in">
                 Your code has been copied to your clipboard!
             </div>
-        <textarea class="form-control" rows="50" @click="copied" readonly>
+        <textarea class="form-control" rows="10" @click="copied" readonly>
 &lt;script src='https://maps.googleapis.com/maps/api/js?key={{ apikey }}'>&lt;/script>
 &lt;script>
 google.maps.event.addDomListener(window, 'load', init);
 var map;
 function init() {
-    var mapOptions = {{ mapOptions | json 0 }}
+    var mapOptions = {{ mapOptions | json }}
     var mapElement = document.getElementById('{{ mapcontainer }}');
     var map = new google.maps.Map(mapElement, mapOptions);
-    var locations = [
-
-    ];
-    for (i = 0; i < locations.length; i++) {
-        if (locations[i][1] =='undefined'){ description ='';} else { description = locations[i][1];}
-        if (locations[i][2] =='undefined'){ telephone ='';} else { telephone = locations[i][2];}
-        if (locations[i][3] =='undefined'){ email ='';} else { email = locations[i][3];}
-        if (locations[i][4] =='undefined'){ web ='';} else { web = locations[i][4];}
-        if (locations[i][7] =='undefined'){ markericon ='';} else { markericon = locations[i][7];}
-        marker = new google.maps.Marker({
-            icon: markericon,
-            position: new google.maps.LatLng(locations[i][5], locations[i][6]),
-            map: map,
-            title: locations[i][0],
-            desc: description,
-            tel: telephone,
-            email: email,
-            web: web
-        });
-        link = '';
-    }
 }
 &lt;/script>
 &lt;style>
@@ -200,7 +217,6 @@ function init() {
         height: {{ styleObject.height }};
         width: {{ styleObject.width }};
     }
-
 &lt;/style>
 
 &lt;div id='{{ mapcontainer }}'>&lt;/div>
@@ -208,9 +224,32 @@ function init() {
         </div>
     </div>
 
+    <div class="row">
+        <hr class="invisible">
+    </div>
 </template>
 
 <script>
+    // This stuff goes in the map code textarea just after var map = new goo.... etc.
+    //    var locations = [];
+    //    for (i = 0; i < locations.length; i++) {
+    //        if (locations[i][1] =='undefined'){ description ='';} else { description = locations[i][1];}
+    //        if (locations[i][2] =='undefined'){ telephone ='';} else { telephone = locations[i][2];}
+    //        if (locations[i][3] =='undefined'){ email ='';} else { email = locations[i][3];}
+    //        if (locations[i][4] =='undefined'){ web ='';} else { web = locations[i][4];}
+    //        if (locations[i][7] =='undefined'){ markericon ='';} else { markericon = locations[i][7];}
+    //        marker = new google.maps.Marker({
+    //            icon: markericon,
+    //            position: new google.maps.LatLng(locations[i][5], locations[i][6]),
+    //            map: map,
+    //            title: locations[i][0],
+    //            desc: description,
+    //            tel: telephone,
+    //            email: email,
+    //            web: web
+    //        });
+    //        link = '';
+    //    }
     export default {
         data () {
             return {
