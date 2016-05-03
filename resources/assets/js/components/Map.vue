@@ -190,7 +190,7 @@
 
 
         <div class="form-group row">
-            <h4>Add Markers</h4>
+            <h4>Markers</h4>
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group">
@@ -216,8 +216,11 @@
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="alert alert-info" v-show="addingPin"><p><i class="fa fa-info"></i> Click the map where
-                        you want your pin!</p></div>
+                    <div class="alert alert-info" v-show="addingPin">
+                        <p><i class="fa fa-info"></i></p>
+                        <p>Click the map where you want your pin!</p>
+                        <p>Don't worry, you can reposition it if you're a bit off.</p>
+                    </div>
                 </div>
             </div>
 
