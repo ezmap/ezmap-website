@@ -13,15 +13,7 @@
 
 <template>
     <div v-show="false">
-        <div id="markerInfoWindow">
-            <h3 v-if="infoTitle">{{ infoTitle }}</h3>
-            <p>
-                <span v-if="infoWebsite">W: <a href="{{ infoWebsite }}">{{ infoWebsite }}</a><br></span>
-                <span v-if="infoEmail">E: <a href="mailto:{{ infoEmail }}">{{ infoEmail }}</a><br></span>
-                <span v-if="infoTelephone">T: {{ infoTelephone }}</span>
-            </p>
-            <p id="infoDescription">{{{ infoDescription | nl2br }}}</p>
-        </div>
+        <div id="markerInfoWindow"><h3 v-if="infoTitle">{{ infoTitle }}</h3><p><span v-if="infoWebsite">W: <a href="{{ infoWebsite }}">{{ infoWebsite }}</a><br></span><span v-if="infoEmail">E: <a href="mailto:{{ infoEmail }}">{{ infoEmail }}</a><br></span><span v-if="infoTelephone">T: {{ infoTelephone }}</span></p><p id="infoDescription">{{{ infoDescription | nl2br }}}</p></div>
     </div>
     <div class="modal fade" id="markerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
@@ -435,13 +427,13 @@ function init() {
                 var str = '';
                 for (var i = 0; i < this.markers.length; i++) {
                     var marker = this.markers[i];
-                    str += 'var marker' + i + ' = new google.maps.Marker({' + "\n" +
-                            '    position: new google.maps.LatLng(' + marker.position.lat() + ', ' + marker.position.lng() + '),' + "\n" +
+                    str += 'var marker' + i + ' = new google.maps.Marker({' +
+                            '    position: new google.maps.LatLng(' + marker.position.lat() + ', ' + marker.position.lng() + '),' +
                             '    map: map});' + "\n";
                     if (marker.infoWindow) {
-                        str += 'var infowindow' + i + ' = new google.maps.InfoWindow({' + "\n" +
-                                '    content: ' + JSON.stringify(marker.infoWindow.content) + ',\n' +
-                                '    map: map});' + "\n";
+                        str += 'var infowindow' + i + ' = new google.maps.InfoWindow({' +
+                                '    content: ' + JSON.stringify(marker.infoWindow.content) + ',' +
+                                '    map: map});\n';
                         str += "marker" + i + ".addListener('click', function () { infowindow" + i + ".open(map, marker" + i + ") ;});\ninfowindow" + i + ".close();\n";
                     }
                 }
