@@ -405,8 +405,8 @@
                 map: {},
                 mapcontainer: 'map',
                 markers: [],
-                lat: 54,
-                lng: -2,
+                lat: 57.51175171450925,
+                lng: -1.812046766281128,
                 doubleClickZoom: true,
                 mapOptions: {
                     center: {
@@ -429,7 +429,7 @@
                     scrollwheel: true,
                     streetViewControl: true,
                     styles: [],
-                    zoom: 4,
+                    zoom: 3,
                     zoomControl: true
                 }
             },
