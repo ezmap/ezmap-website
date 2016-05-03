@@ -10478,7 +10478,7 @@ exports.default = {
                 content: $('#markerInfoWindow').html()
             });
             marker.infoWindow = infowindow;
-            marker.title = this.infoTitle;
+            marker.title = this.infoTitle != '' ? this.infoTitle : marker.title;
             var map = this.map;
             marker.addListener('click', function () {
                 infowindow.open(map, marker);
