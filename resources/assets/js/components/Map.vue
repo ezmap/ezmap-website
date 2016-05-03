@@ -456,7 +456,7 @@ function init() {
                 document.execCommand('copy');
                 event.target.blur();
                 this.codeCopied = true;
-                setTimeout(this.clearCopied,2000);
+                setTimeout(this.clearCopied, 2000);
             },
             clearCopied: function () {
                 this.codeCopied = false;
@@ -518,8 +518,12 @@ function init() {
                         title: 'No Title'
                     });
                     this.markers.push(marker);
-                    $('#marker-form')[0].reset();
                     $('#markerId').val(this.markers.length - 1);
+                    this.infoTitle = '';
+                    this.infoEmail = '';
+                    this.infoWebsite = '';
+                    this.infoTelephone = '';
+                    this.infoDescription = '';
                     $('#markerModal').modal('show');
                     this.addingPin = false;
                 }

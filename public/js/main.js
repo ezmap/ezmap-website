@@ -10505,8 +10505,12 @@ exports.default = {
                     title: 'No Title'
                 });
                 this.markers.push(marker);
-                $('#marker-form')[0].reset();
                 $('#markerId').val(this.markers.length - 1);
+                this.infoTitle = '';
+                this.infoEmail = '';
+                this.infoWebsite = '';
+                this.infoTelephone = '';
+                this.infoDescription = '';
                 $('#markerModal').modal('show');
                 this.addingPin = false;
             }
