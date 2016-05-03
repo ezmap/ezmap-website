@@ -198,11 +198,10 @@
                             </div>
                         </div>
                     </div>
-
+                    <button v-show="markers.length" class="form-control btn btn-danger" @click="removeAllMarkers"><i
+                            class="fa fa-trash"></i> Delete All Markers?
+                    </button>
                     <table class="table table-hover table-condensed" v-show="markers.length">
-                        <button class="form-control btn btn-danger" @click="removeAllMarkers"><i
-                                class="fa fa-trash"></i> Delete All Markers?
-                        </button>
                         <tr>
                             <th>Marker Title</th>
                             <th>Center Here</th>
