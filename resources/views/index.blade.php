@@ -189,38 +189,45 @@
                         <input type="button" class="form-control btn btn-default" @click="this.addingPin=true"
                         value="Add a Marker">
                     </div>
-                    <div class="form-group" v-show="markers.length">
-                        <button class="form-control btn btn-danger" @click="removeAllMarkers"><i
-                                class="fa fa-trash"></i> Delete All Markers?
-                        </button>
-                    </div>
-                    <div class="form-group">
-                        <div v-for="(index, marker) in markers" class="col-sm-12">
-                            <div class="form-group">
-                                <div class="col-sm-6">
-                                    <button @click="removeMarker(index)" class="btn btn-danger btn-sm form-control"><i
-                                            class="fa fa-trash"></i> @{{ marker.title }}
-                                    </button>
-                                </div>
-                                <div class="col-sm-6">
-                                    <button @click="centerOnMarker(index)" class="btn btn-info btn-sm form-control"><i
-                                            class="fa fa-crosshairs"></i> @{{ marker.title }}
-                                    </button>
-                                </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="alert alert-info" v-show="addingPin">
+                                <p><i class="fa fa-info"></i></p>
+                                <p>Click the map where you want your pin!</p>
+                                <p>Don't worry, you can reposition it if you're a bit off.</p>
                             </div>
                         </div>
                     </div>
+
+                    <table class="table table-hover table-condensed" v-show="markers.length">
+                        <button class="form-control btn btn-danger" @click="removeAllMarkers"><i
+                                class="fa fa-trash"></i> Delete All Markers?
+                        </button>
+                        <tr>
+                            <th>Marker Title</th>
+                            <th>Center Here</th>
+                            <th>Delete Marker</th>
+                        </tr>
+                        <tr v-for="(index, marker) in markers">
+                            <td>
+                                <strong>@{{ marker.title }}</strong>
+                            </td>
+                            <td>
+                                <button @click="centerOnMarker(index)" class="btn btn-info btn-sm form-control"><i
+                                        class="fa fa-crosshairs fa-fw"></i>
+                                </button>
+                            </td>
+                            <td>
+                                <button @click="removeMarker(index)" class="btn btn-danger btn-sm form-control"><i
+                                        class="fa fa-trash fa-fw"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+
                 </div>
             </div>
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="alert alert-info" v-show="addingPin">
-                        <p><i class="fa fa-info"></i></p>
-                        <p>Click the map where you want your pin!</p>
-                        <p>Don't worry, you can reposition it if you're a bit off.</p>
-                    </div>
-                </div>
-            </div>
+
 
         </div>
 
