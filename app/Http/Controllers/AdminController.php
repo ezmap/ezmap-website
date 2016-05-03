@@ -16,7 +16,7 @@ class AdminController extends Controller
 
     public function index()
     {
-        $themes = Theme::orderBy('name')->get();
+        $themes = Theme::orderBy('name')->paginate(24);
         return view('admin.index', compact('themes'));
     }
 }
