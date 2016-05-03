@@ -1,32 +1,28 @@
 @extends('layouts.master')
 
 @section('appcontent')
+    @spaceless
     <div v-show="false" class="hidden">
         @include('partials.infowindow')
     </div>
     @include('partials.infoformmodal')
 
     <div class="col-sm-4 form">
-
         <div class="row">
             <h3>Settings</h3>
             <hr>
         </div>
-
         <div class="form-group row">
             <div class="row">
                 <div class="col-sm-12">
                     <label for="apikey">API key</label>
-                    <small><a target="_blank" href="https://developers.google.com/maps/documentation/javascript/">Get an
-                            API key</a></small>
-                    <input id="apikey" name="apikey" class="form-control" type="text" placeholder="API Key"
-                           v-model="apikey">
+                    <small><a target="_blank" href="https://developers.google.com/maps/documentation/javascript/">Get an API key</a></small>
+                    <input id="apikey" name="apikey" class="form-control" type="text" placeholder="API Key" v-model="apikey">
                     <div class="form-group">
                         <label for="mapcontainer">Map Container ID</label>
                         <div class="input-group">
                             <div class="input-group-addon"><i class="fa fa-hashtag fa-fw"></i></div>
-                            <input id="mapcontainer" class="form-control" type="text" placeholder="map"
-                                   v-model="mapcontainer">
+                            <input id="mapcontainer" class="form-control" type="text" placeholder="map" v-model="mapcontainer">
                         </div>
                     </div>
                 </div>
@@ -34,26 +30,20 @@
             </div>
         </div>
 
-
         <div class="form-group row">
             <label>Dimensions</label>
             <div class="row">
                 <div class="col-sm-6">
                     <div class="input-group">
                         <div class="input-group-addon"><i class="fa fa-arrows-h fa-fw"></i></div>
-                        <label for="width"></label><input class="form-control" id="width" v-model="width" type="number"
-                        @change="mapresized | debounce 500"
-                        @keyup="mapresized | debounce 500">
+                        <label for="width"></label><input class="form-control" id="width" v-model="width" type="number" v-on:change="mapresized | debounce 500" v-on:keyup="mapresized | debounce 500">
                         <div class="input-group-addon">px</div>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="input-group">
                         <div class="input-group-addon"><i class="fa fa-arrows-v fa-fw"></i></div>
-                        <label for="height"></label><input class="form-control" id="height" v-model="height"
-                                                           type="number"
-                        @change="mapresized | debounce 500"
-                        @keyup="mapresized | debounce 500">
+                        <label for="height"></label><input class="form-control" id="height" v-model="height" type="number" v-on:change="mapresized | debounce 500" v-on:keyup="mapresized | debounce 500">
                         <div class="input-group-addon">px</div>
                     </div>
                 </div>
@@ -64,15 +54,11 @@
             <div class="row">
                 <div class="col-sm-6">
                     <label for="latitude">Latitude</label>
-                    <input id="latitude" name="latitude" class="form-control" type="number" placeholder="Latitude"
-                           v-model="lat"
-                           number @change="centerchanged" @keyup="centerchanged">
+                    <input id="latitude" name="latitude" class="form-control" type="number" placeholder="Latitude" v-model="lat" number v-on:change="centerchanged" v-on:keyup="centerchanged">
                 </div>
                 <div class="col-sm-6">
                     <label for="longitude">Longitude</label>
-                    <input id="longitude" name="longitude" class="form-control" type="number" placeholder="Longitude"
-                           v-model="lng"
-                           number @change="centerchanged" @keyup="centerchanged">
+                    <input id="longitude" name="longitude" class="form-control" type="number" placeholder="Longitude" v-model="lng" number v-on:change="centerchanged" v-on:keyup="centerchanged">
                 </div>
             </div>
         </div>
@@ -80,37 +66,29 @@
         <div class="form-group row">
             <div class="checkbox">
                 <label for="maptypecontrol">
-                    <input id="maptypecontrol" type="checkbox" v-model="mapOptions.mapTypeControl"
-                    @change="optionschange">
+                    <input id="maptypecontrol" type="checkbox" v-model="mapOptions.mapTypeControl" v-on:change="optionschange">
                     <strong>Map Type Control</strong></label>
             </div>
-            <select name="maptypecontrol" class="form-control" v-model="mapOptions.mapTypeControlOptions.style"
-            @change="optionschange" number>
-            <option value="0">Default (depends on viewport size
-                etc.)
-            </option>
-            <option value="1">Buttons</option>
-            <option value="2">Drop Down</option>
+            <select name="maptypecontrol" class="form-control" v-model="mapOptions.mapTypeControlOptions.style" v-on:change="optionschange" number>
+                <option value="0">Default (depends on viewport size etc.)</option>
+                <option value="1">Buttons</option>
+                <option value="2">Drop Down</option>
             </select>
         </div>
         <div class="form-group row">
             <div class="row">
                 <div class="col-sm-6">
                     <label for="mapTypeId">Map Type</label>
-                    <select id="mapTypeId" name="maptypecontrol" class="form-control" v-model="mapOptions.mapTypeId"
-                    @change="optionschange" number>
-                    {ROADMAP: "roadmap", SATELLITE: "satellite", HYBRID: "hybrid", TERRAIN: "terrain"}
-                    <option value="roadmap">Road Map</option>
-                    <option value="terrain">Road Map with Terrain</option>
-                    <option value="satellite">Satellite</option>
-                    <option value="hybrid">Satellite with Labels</option>
+                    <select id="mapTypeId" name="maptypecontrol" class="form-control" v-model="mapOptions.mapTypeId" v-on:change="optionschange" number>
+                        <option value="roadmap">Road Map</option>
+                        <option value="terrain">Road Map with Terrain</option>
+                        <option value="satellite">Satellite</option>
+                        <option value="hybrid">Satellite with Labels</option>
                     </select>
                 </div>
                 <div class="col-sm-6">
                     <label for="zoom">Zoom Level</label>
-                    <input id="zoom" name="zoom" class="form-control" type="number" placeholder="Zoom"
-                           v-model="mapOptions.zoom" number
-                           @change="zoomchanged | debounce 500" @keyup="centerchanged | debounce 500">
+                    <input id="zoom" name="zoom" class="form-control" type="number" placeholder="Zoom" v-model="mapOptions.zoom" number v-on:change="zoomchanged | debounce 500" v-on:keyup="centerchanged | debounce 500">
                 </div>
             </div>
         </div>
@@ -121,8 +99,7 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group">
-                        <input type="button" class="form-control btn btn-default" @click="this.addingPin=true"
-                        value="Add a Marker">
+                        <input type="button" class="form-control btn btn-default" v-on:click="this.addingPin=true"value="Add a Marker">
                     </div>
                     <div class="row">
                         <div class="col-xs-12">
@@ -133,9 +110,7 @@
                             </div>
                         </div>
                     </div>
-                    <button v-show="markers.length" class="form-control btn btn-danger" @click="removeAllMarkers"><i
-                            class="fa fa-trash"></i> Delete All Markers?
-                    </button>
+                    <button v-show="markers.length" class="form-control btn btn-danger" v-on:click="removeAllMarkers"><i class="fa fa-trash"></i> Delete All Markers?</button>
                     <table class="table table-hover table-condensed" v-show="markers.length">
                         <tr>
                             <th>Marker Title</th>
@@ -147,13 +122,13 @@
                                 <strong>@{{ marker.title }}</strong>
                             </td>
                             <td>
-                                <button @click="centerOnMarker(index)" class="btn btn-info btn-sm form-control"><i
-                                        class="fa fa-crosshairs fa-fw"></i>
+                                <button v-on:click="centerOnMarker(index)" class="btn btn-info btn-sm form-control">
+                                    <i class="fa fa-crosshairs fa-fw"></i>
                                 </button>
                             </td>
                             <td>
-                                <button @click="removeMarker(index)" class="btn btn-danger btn-sm form-control"><i
-                                        class="fa fa-trash fa-fw"></i>
+                                <button v-on:click="removeMarker(index)" class="btn btn-danger btn-sm form-control">
+                                    <i class="fa fa-trash fa-fw"></i>
                                 </button>
                             </td>
                         </tr>
@@ -168,56 +143,32 @@
             <div class="col-sm-6">
                 <div class="row">
                     <div class="checkbox">
-                        <label for="streetViewControl">
-                            <input id="streetViewControl" type="checkbox" v-model="mapOptions.streetViewControl"
-                            @change="optionschange">
-                            Streetview Control
-                        </label>
+                        <label for="streetViewControl"><input id="streetViewControl" type="checkbox" v-model="mapOptions.streetViewControl" v-on:change="optionschange">Streetview Control</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="checkbox">
-                        <label for="mapMaker">
-                            <input id="mapMaker" type="checkbox" v-model="mapOptions.mapMaker"
-                            @change="optionschange">
-                            Use "<a href="http://www.google.com/mapmaker" target="_blank">MapMaker</a>" Tiles
-                        </label>
+                        <label for="mapMaker"><input id="mapMaker" type="checkbox" v-model="mapOptions.mapMaker" v-on:change="optionschange">Use "<a href="http://www.google.com/mapmaker" target="_blank">MapMaker</a>" Tiles</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="checkbox">
-                        <label for="scalecontrol">
-                            <input id="scalecontrol" type="checkbox" v-model="mapOptions.scaleControl"
-                            @change="optionschange">
-                            Scale Control
-                        </label>
+                        <label for="scalecontrol"><input id="scalecontrol" type="checkbox" v-model="mapOptions.scaleControl" v-on:change="optionschange">Scale Control</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="checkbox">
-                        <label for="fullscreenControl">
-                            <input id="fullscreenControl" type="checkbox" v-model="mapOptions.fullscreenControl"
-                            @change="optionschange">
-                            Fullscreen Control
-                        </label>
+                        <label for="fullscreenControl"><input id="fullscreenControl" type="checkbox" v-model="mapOptions.fullscreenControl" v-on:change="optionschange">Fullscreen Control</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="checkbox">
-                        <label for="draggable">
-                            <input id="draggable" type="checkbox" v-model="mapOptions.draggable"
-                            @change="optionschange">
-                            Draggable Map
-                        </label>
+                        <label for="draggable"><input id="draggable" type="checkbox" v-model="mapOptions.draggable" v-on:change="optionschange">Draggable Map</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="checkbox">
-                        <label for="keyboardShortcuts">
-                            <input id="keyboardShortcuts" id="keyboardShortcuts" type="checkbox"
-                                   v-model="mapOptions.keyboardShortcuts" @change="optionschange">
-                            Keyboard Shortcuts
-                        </label>
+                        <label for="keyboardShortcuts"><input id="keyboardShortcuts" id="keyboardShortcuts" type="checkbox" v-model="mapOptions.keyboardShortcuts" v-on:change="optionschange">Keyboard Shortcuts</label>
                     </div>
                 </div>
             </div>
@@ -225,47 +176,30 @@
 
                 <!--<div class="row">-->
                 <!--<label for="rotateControl">Rotate Control</label>-->
-                <!--<input id="rotateControl"type="checkbox" v-model="mapOptions.rotateControl" @change="optionschange">-->
+                <!--<input id="rotateControl"type="checkbox" v-model="mapOptions.rotateControl" v-on:change="optionschange">-->
                 <!--</div>-->
                 <div class="row">
                     <div class="checkbox">
-                        <label for="clickableIcons">
-                            <input id="clickableIcons" type="checkbox" v-model="mapOptions.clickableIcons"
-                            @change="optionschange">
-                            Clickable Points of Interest
-                        </label>
+                        <label for="clickableIcons"><input id="clickableIcons" type="checkbox" v-model="mapOptions.clickableIcons" v-on:change="optionschange">Clickable Points of Interest</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="checkbox">
-                        <label for="zoomcontrol">
-                            <input id="zoomcontrol" type="checkbox" v-model="mapOptions.zoomControl"
-                            @change="optionschange">
-                            Zoom Control
-                        </label>
+                        <label for="zoomcontrol"><input id="zoomcontrol" type="checkbox" v-model="mapOptions.zoomControl" v-on:change="optionschange">Zoom Control</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="checkbox">
-                        <label for="doubleClickZoom">
-                            <input id="doubleClickZoom" type="checkbox" v-model="doubleClickZoom"
-                            @change="optionschange">
-                            Doubleclick Zoom
-                        </label>
+                        <label for="doubleClickZoom"><input id="doubleClickZoom" type="checkbox" v-model="doubleClickZoom" v-on:change="optionschange">Doubleclick Zoom</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="checkbox">
-                        <label for="scrollwheel">
-                            <input id="scrollwheel" type="checkbox" v-model="mapOptions.scrollwheel"
-                            @change="optionschange">
-                            Scrollwheel Zoom
-                        </label>
+                        <label for="scrollwheel"><input id="scrollwheel" type="checkbox" v-model="mapOptions.scrollwheel" v-on:change="optionschange">Scrollwheel Zoom</label>
                     </div>
                 </div>
                 <div class="row">
-                    <button class="btn btn-primary" v-show="themeApplied" @click="clearTheme">Clear Applied
-                    Theme</button>
+                    <button class="btn btn-primary" v-show="themeApplied" v-on:click="clearTheme">Clear Applied Theme</button>
                 </div>
             </div>
         </div>
@@ -278,13 +212,11 @@
             <div id="map" class="map" v-show="show" :style="styleObject"></div>
         </div>
         <div class="row">
-            <h3>Your map code
-                <small>Click to copy</small>
-            </h3>
+            <h3>Your map code <small>Click to copy</small></h3>
             <div v-if="codeCopied" class="alert alert-success fade in">
-                Your code has been copied to your clipboard!
+                <p>Your code has been copied to your clipboard!</p>
             </div>
-            <textarea class="form-control" rows="10" @click="copied" readonly>
+            <textarea class="form-control" rows="10" v-on:click="copied" readonly>
             @include('partials.textareacode')
             </textarea>
         </div>
@@ -294,10 +226,9 @@
         <hr class="invisible">
     </div>
     @include('partials.snazzymaps')
+    @endspaceless
 @endsection
-
 @push('scripts')
-
 <script>
     (function () {
         Vue.filter('nl2br', function (value) {
