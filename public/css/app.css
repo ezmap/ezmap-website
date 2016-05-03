@@ -5749,4 +5749,20 @@ button.close {
   .hidden-print {
     display: none !important; } }
 
+div.map {
+  background: #eee;
+  border: 1px solid #aaa;
+  min-height: 50px;
+  min-width: 50px;
+  transition: all .25s ease .2s;
+  margin: 0 auto; }
+
+h4.theme-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; }
+
+img.theme-thumb {
+  cursor: pointer; }
+
 /*# sourceMappingURL=app.css.map */

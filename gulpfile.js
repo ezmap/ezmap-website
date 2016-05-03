@@ -14,5 +14,8 @@ require('laravel-elixir-vueify');
 
 elixir(function (mix) {
     mix.sass('app.scss')
-        .browserify('main.js')
+        .scripts([
+            'vue.min.js',
+            'main.js'
+        ])
 });
