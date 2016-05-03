@@ -1,7 +1,6 @@
 @extends('layouts.master')
 
 @section('appcontent')
-    @spaceless
     <div v-show="false" class="hidden">
         @include('partials.infowindow')
     </div>
@@ -16,7 +15,9 @@
             <div class="row">
                 <div class="col-sm-12">
                     <label for="apikey">API key</label>
-                    <small><a target="_blank" href="https://developers.google.com/maps/documentation/javascript/">Get an API key</a></small>
+                    <small>
+                        <a target="_blank" href="https://developers.google.com/maps/documentation/javascript/">Get an API key</a>
+                    </small>
                     <input id="apikey" name="apikey" class="form-control" type="text" placeholder="API Key" v-model="apikey">
                     <div class="form-group">
                         <label for="mapcontainer">Map Container ID</label>
@@ -99,7 +100,7 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group">
-                        <input type="button" class="form-control btn btn-default" v-on:click="this.addingPin=true"value="Add a Marker">
+                        <input type="button" class="form-control btn btn-default" v-on:click="this.addingPin=true" value="Add a Marker">
                     </div>
                     <div class="row">
                         <div class="col-xs-12">
@@ -212,13 +213,11 @@
             <div id="map" class="map" v-show="show" :style="styleObject"></div>
         </div>
         <div class="row">
-            <h3>Your map code <small>Click to copy</small></h3>
+            <h3>Your map code<small>Click to copy</small></h3>
             <div v-if="codeCopied" class="alert alert-success fade in">
                 <p>Your code has been copied to your clipboard!</p>
             </div>
-            <textarea class="form-control" rows="10" v-on:click="copied" readonly>
-            @include('partials.textareacode')
-            </textarea>
+            <textarea class="form-control" rows="10" v-on:click="copied" readonly>@include('partials.textareacode')</textarea>
         </div>
     </div>
 
@@ -226,7 +225,6 @@
         <hr class="invisible">
     </div>
     @include('partials.snazzymaps')
-    @endspaceless
 @endsection
 @push('scripts')
 <script>

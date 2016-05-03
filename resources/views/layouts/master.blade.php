@@ -1,4 +1,4 @@
-@spaceless<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <title>@yield('title', 'EZ Map')</title>
@@ -50,4 +50,4 @@
 <script src="/js/all.js"></script>
 @stack('scripts')
 </body>
-</html>@endspaceless
+</html>

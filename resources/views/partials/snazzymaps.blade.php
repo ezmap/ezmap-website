@@ -1,4 +1,3 @@
-@spaceless
 <div id="snazzthemes" class="col-xs-12">
     <div class="snazzyMapsThemes">
         <h3>Themes from <a href="https://snazzymaps.com/">Snazzy Maps</a></h3>
@@ -14,4 +13,3 @@
         </div>
     </div>
 </div>
-@endspaceless
