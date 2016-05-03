@@ -2,8 +2,9 @@
 @section('title', 'Admin Panel')
 
 @section('content')
-    <div class="col-md-6">
+    <div class="col-md-6 col-md-offset-3">
         <h2>Populate Snazzy Themes</h2>
+        <p>There are currently <strong>{{ \App\Theme::count() }}</strong> Snazzy Themes installed</p>
         <form action="{{ route('populateThemes') }}" method="POST">
             {{ method_field('POST') }}
             {{ csrf_field() }}
