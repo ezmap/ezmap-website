@@ -1,15 +1,8 @@
 @extends('layouts.master')
 
 @section('appcontent')
-    <div v-show="false">
-        <div id="markerInfoWindow"><h3 v-if="infoTitle" class="infoTitle">@{{ infoTitle }}</h3>
-            <p><span v-if="infoWebsite" class="infoWebsite">W: <a
-                            href="@{{ infoWebsite }}">@{{ infoWebsite }}</a><br></span><span v-if="infoEmail"
-                                                                                             class="infoEmail">E: <a
-                            href="mailto:@{{ infoEmail }}">@{{ infoEmail }}</a><br></span><span v-if="infoTelephone"
-                                                                                                class="infoTelephone">T: @{{ infoTelephone }}</span>
-            </p>
-            <p v-if="infoDescription" class="infoDescription">@{{{ infoDescription | nl2br }}}</p></div>
+    <div v-show="false" class="hidden">
+        @include('partials.infowindow')
     </div>
     <div class="modal fade" id="markerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
@@ -223,11 +216,8 @@
                             </td>
                         </tr>
                     </table>
-
                 </div>
             </div>
-
-
         </div>
 
 
@@ -382,7 +372,9 @@
 
 <script>
     (function () {
-
+        Vue.filter('nl2br', function (value) {
+            return value.replace(/\n/g,'<br>');
+        });
         new Vue({
             el: '#app',
             data: {
