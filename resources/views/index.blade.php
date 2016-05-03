@@ -213,7 +213,7 @@
             <div id="map" class="map" v-show="show" :style="styleObject"></div>
         </div>
         <div class="row">
-            <h3>Your map code<small>Click to copy</small></h3>
+            <h3>Your map code <small>Click to copy</small></h3>
             <div v-if="codeCopied" class="alert alert-success fade in">
                 <p>Your code has been copied to your clipboard!</p>
             </div>
