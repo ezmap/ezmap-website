@@ -8,7 +8,7 @@
 
     <div class="col-sm-4 form">
         <div class="row">
-            <h3>Settings</h3>
+            <h3>Settings <i class="fa fa-compass"></i></h3>
             <hr>
         </div>
         <div class="form-group row">
@@ -32,7 +32,7 @@
         </div>
 
         <div class="form-group row">
-            <label>Dimensions</label>
+            <label>Dimensions <i class="fa fa-arrows-alt"></i></label>
             <div class="row">
                 <div class="col-sm-6">
                     <div class="input-group">
@@ -54,11 +54,11 @@
         <div class="form-group row">
             <div class="row">
                 <div class="col-sm-6">
-                    <label for="latitude">Latitude</label>
+                    <label for="latitude">Latitude <i class="fa fa-arrow-circle-o-up"></i></label>
                     <input id="latitude" name="latitude" class="form-control" type="number" placeholder="Latitude" v-model="lat" number v-on:change="centerchanged" v-on:keyup="centerchanged">
                 </div>
                 <div class="col-sm-6">
-                    <label for="longitude">Longitude</label>
+                    <label for="longitude">Longitude <i class="fa fa-arrow-circle-o-right"></i></label>
                     <input id="longitude" name="longitude" class="form-control" type="number" placeholder="Longitude" v-model="lng" number v-on:change="centerchanged" v-on:keyup="centerchanged">
                 </div>
             </div>
@@ -96,7 +96,7 @@
 
 
         <div class="form-group row">
-            <h4>Markers</h4>
+            <h4>Markers <i class="fa fa-map-marker"></i></h4>
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group">
@@ -140,7 +140,7 @@
 
 
         <div class="form-group row">
-            <h4>Other Options</h4>
+            <h4>Other Options <i class="fa fa-sliders"></i></h4>
             <div class="col-sm-6">
                 <div class="row">
                     <div class="checkbox">
@@ -213,11 +213,11 @@
             <div id="map" class="map" v-show="show" :style="styleObject"></div>
         </div>
         <div class="row">
-            <h3>Your map code <small>Click to copy</small></h3>
+            <h3>Your map code <small v-on:click="copied" style="cursor: pointer;">Click to copy</small></h3>
             <div v-if="codeCopied" class="alert alert-success fade in">
                 <p>Your code has been copied to your clipboard!</p>
             </div>
-            <textarea class="form-control" rows="10" v-on:click="copied" readonly>@include('partials.textareacode')</textarea>
+            <textarea class="form-control code resultcode" rows="10" v-on:click="copied" readonly style="cursor: pointer;">@include('partials.textareacode')</textarea>
         </div>
     </div>
 
@@ -334,10 +334,11 @@
                     google.maps.event.trigger(map, "resize");
                 },
                 copied: function (event) {
-                    event.target.focus();
-                    event.target.select();
+                    var target = $('.resultcode')[0];
+                    target.focus();
+                    target.select();
                     document.execCommand('copy');
-                    event.target.blur();
+                    target.blur();
                     this.codeCopied = true;
                     setTimeout(this.clearCopied, 2000);
                 },
