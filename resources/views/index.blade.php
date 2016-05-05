@@ -447,7 +447,7 @@
             }
         }
     });
-    $(document).pjax('a', '#snazzthemes', {scrollTo: $('#snazzthemes').position().top});
+    $(document).pjax('a', '#snazzthemes', {scrollTo: false});
     if ("createEvent" in document) {
         var evt = document.createEvent("HTMLEvents");
         evt.initEvent("change", false, true);
