@@ -1,6 +1,7 @@
 <div id="snazzthemes" class="col-xs-12" v-on:click="setTheme" >
     <div class="snazzyMapsThemes" id="snazzyMapsThemes"  >
         <h3>Themes from <a target="_blank" href="https://snazzymaps.com/">Snazzy Maps</a></h3>
+        <p>Click on a map's image to apply the theme to your map.</p>
         <div class="col-xs-12">
             {!! $themes->links() !!}
         </div>
