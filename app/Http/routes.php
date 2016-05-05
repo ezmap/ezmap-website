@@ -11,23 +11,23 @@
 |
 */
 
-Route::group(['middleware' => [GrahamCampbell\HTMLMin\Http\Middleware\MinifyMiddleware::class, 'pjax']], function() {
-    Route::get('/', function () {
-        $themes = App\Theme::orderBy('name')->paginate(24);
+Route::get('/', function ()
+{
+    $themes = App\Theme::orderBy('name')->paginate(24);
 
-        return view('index', compact('themes'));
-    })->middleware(['guest']);
+    return view('index', compact('themes'));
+})->middleware(['guest']);
 
 
-    Route:: get('test', function () {
-        return view('test');
-    });
-
-    Route::auth();
-
-    Route::get('/home', 'HomeController@index');
-
-    Route::get('admin', 'AdminController@index');
-    Route::post('admin', 'SnazzyMapsController@populateThemes')->name('populateThemes');
-    Route::get('snazzymaps', 'SnazzyMapsController@index')->name('snazzymaps');
+Route:: get('test', function ()
+{
+    return view('test');
 });
+
+Route::auth();
+
+Route::get('/home', 'HomeController@index');
+
+Route::get('admin', 'AdminController@index');
+Route::post('admin', 'SnazzyMapsController@populateThemes')->name('populateThemes');
+Route::get('snazzymaps', 'SnazzyMapsController@index')->name('snazzymaps');
