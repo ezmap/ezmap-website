@@ -18,6 +18,7 @@ elixir(function (mix) {
             'jquery.min.js',
             'bootstrap.min.js',
             'vue.min.js',
+            'pjax.js',
             'main.js'
         ])
 });

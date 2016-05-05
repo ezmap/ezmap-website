@@ -111,7 +111,9 @@
                             </div>
                         </div>
                     </div>
-                    <button v-show="markers.length" class="form-control btn btn-danger" v-on:click="removeAllMarkers"><i class="fa fa-trash"></i> Delete All Markers?</button>
+                    <button v-show="markers.length" class="form-control btn btn-danger" v-on:click="removeAllMarkers">
+                        <i class="fa fa-trash"></i> Delete All Markers?
+                    </button>
                     <table class="table table-hover table-condensed" v-show="markers.length">
                         <tr>
                             <th>Marker Title</th>
@@ -213,7 +215,9 @@
             <div id="map" class="map" v-show="show" :style="styleObject"></div>
         </div>
         <div class="row">
-            <h3>Your map code <small v-on:click="copied" style="cursor: pointer;">Click to copy</small></h3>
+            <h3>Your map code
+                <small v-on:click="copied" style="cursor: pointer;">Click to copy</small>
+            </h3>
             <div v-if="codeCopied" class="alert alert-success fade in">
                 <p>Your code has been copied to your clipboard!</p>
             </div>
@@ -228,78 +232,82 @@
 @endsection
 @push('scripts')
 <script>
-    (function () {
-        Vue.filter('nl2br', function (value) {
-            return value.replace(/\n/g, '<br>');
-        });
-        new Vue({
-            el: '#app',
-            data: {
-                themes: [
-                        @foreach($themes as $theme)
-                    {
-                        id: "{{ $theme->id }}",
-                        name: "{{ $theme->name }}",
-                        json: {!! $theme->json !!}
-                    }@if($themes->last()->name != $theme->name),@endif
-                    @endforeach
-                ],
-                currentTheme: {},
-                apikey: '',
-                themeApplied: false,
-                addingPin: false,
-                codeCopied: false,
-                show: true,
-                width: 560,
-                height: 420,
-                infoTitle: '',
-                infoEmail: '',
-                infoWebsite: '',
-                infoTelephone: '',
-                infoDescription: '',
-                infoWindows: [],
-                mapLoaded: false,
-                map: {},
-                mapcontainer: 'ez-map',
-                markers: [],
-                lat: 57.51175171450925,
-                lng: -1.812046766281128,
-                doubleClickZoom: true,
-                mapOptions: {
-                    center: {
-                        lat: this.lat,
-                        lng: this.lng
-                    },
-                    clickableIcons: true,
-                    disableDoubleClickZoom: false,
-                    draggable: true,
-                    fullscreenControl: true,
-                    keyboardShortcuts: true,
-                    mapMaker: false,
-                    mapTypeControl: true,
-                    mapTypeControlOptions: {
-                        style: 0
-                    },
-                    mapTypeId: "roadmap",
-                    rotateControl: true,
-                    scaleControl: true,
-                    scrollwheel: true,
-                    streetViewControl: true,
-                    styles: [],
-                    zoom: 3,
-                    zoomControl: true
+
+    Vue.filter('nl2br', function (value) {
+        return value.replace(/\n/g, '<br>');
+    });
+    var mainVue = new Vue({
+        el: '#app',
+        data: {
+            themes: [
+                    @foreach($themes as $theme)
+                {
+                    id: "{{ $theme->id }}",
+                    name: "{{ $theme->name }}",
+                    json: {!! $theme->json !!}
+                }@if($themes->last()->name != $theme->name),@endif
+                @endforeach
+            ],
+            currentTheme: {},
+            apikey: '',
+            themeApplied: false,
+            addingPin: false,
+            codeCopied: false,
+            show: true,
+            width: 560,
+            height: 420,
+            infoTitle: '',
+            infoEmail: '',
+            infoWebsite: '',
+            infoTelephone: '',
+            infoDescription: '',
+            infoWindows: [],
+            mapLoaded: false,
+            map: {},
+            mapcontainer: 'ez-map',
+            markers: [],
+            lat: 57.51175171450925,
+            lng: -1.812046766281128,
+            doubleClickZoom: true,
+            mapOptions: {
+                center: {
+                    lat: this.lat,
+                    lng: this.lng
+                },
+                clickableIcons: true,
+                disableDoubleClickZoom: false,
+                draggable: true,
+                fullscreenControl: true,
+                keyboardShortcuts: true,
+                mapMaker: false,
+                mapTypeControl: true,
+                mapTypeControlOptions: {
+                    style: 0
+                },
+                mapTypeId: "roadmap",
+                rotateControl: true,
+                scaleControl: true,
+                scrollwheel: true,
+                streetViewControl: true,
+                styles: [],
+                zoom: 3,
+                zoomControl: true
+            }
+        },
+        computed: {
+            styleObject: function () {
+                return {
+                    height: this.height + 'px',
+                    width: this.width + 'px'
                 }
-            },
-            computed: {
-                styleObject: function () {
-                    return {
-                        height: this.height + 'px',
-                        width: this.width + 'px'
-                    }
-                }
-            },
-            methods: {
-                setTheme: function (id) {
+            }
+        },
+
+        methods: {
+            setTheme: function (event) {
+                element = $(event.target);
+                if (element.hasClass('theme-thumb')) {
+                    var id = element.data('themeid');
                     for (var i = 0; i < this.themes.length; i++) {
                         var theme = this.themes[i];
                         if (theme.id == id) {
@@ -309,142 +317,144 @@
                             this.optionschange();
                         }
                     }
-                },
-                clearTheme: function () {
-                    this.mapOptions.styles = [];
-                    this.themeApplied = false;
-                    this.optionschange();
-                },
-                markersLoop: function () {
-                    var str = '';
-                    for (var i = 0; i < this.markers.length; i++) {
-                        var marker = this.markers[i];
-                        str += 'var marker' + i + ' = new google.maps.Marker({position: new google.maps.LatLng(' + marker.position.lat() + ', ' + marker.position.lng() + '), map: map});\n';
-                        if (marker.infoWindow) {
-                            str += 'var infowindow' + i + ' = new google.maps.InfoWindow({content: ' + JSON.stringify(marker.infoWindow.content) + ',map: map});\n';
-                            str += "marker" + i + ".addListener('click', function () { infowindow" + i + ".open(map, marker" + i + ") ;});infowindow" + i + ".close();\n";
-                        }
-                    }
-                    return str;
-                },
-                mapresized: function () {
-                    if (!this.mapLoaded) {
-                        this.initMap();
-                    }
-                    google.maps.event.trigger(map, "resize");
-                },
-                copied: function (event) {
-                    var target = $('.resultcode')[0];
-                    target.focus();
-                    target.select();
-                    document.execCommand('copy');
-                    target.blur();
-                    this.codeCopied = true;
-                    setTimeout(this.clearCopied, 2000);
-                },
-                clearCopied: function () {
-                    this.codeCopied = false;
-                },
-                zoomchanged: function () {
-                    this.map.setZoom(parseInt(this.mapOptions.zoom));
-                },
-
-                centerchanged: function () {
-                    // this happens when we resize the map
-                    this.map.setCenter(new google.maps.LatLng(this.lat, this.lng));
-                    this.optionschange();
-                },
-                mapmoved: function () {
-                    // this happens when we move the map or change the zoom in the map
-                    this.mapOptions.center = this.map.getCenter();
-                    this.lat = this.mapOptions.center.lat();
-                    this.lng = this.mapOptions.center.lng();
-                },
-                mapzoomed: function () {
-                    this.mapOptions.zoom = this.map.getZoom();
-                },
-                optionschange: function () {
-                    this.mapOptions.disableDoubleClickZoom = !this.doubleClickZoom;
-                    this.map.setOptions(this.mapOptions);
-                },
-                maptypeidchanged: function () {
-                    this.mapOptions.mapTypeId = this.map.getMapTypeId();
-                },
-                addInfoBox: function (marker) {
-                    marker = this.markers[this.markers.length - 1];
-                    var infowindow = new google.maps.InfoWindow({
-                        content: $('#markerInfoWindow').html()
-                    });
-                    marker.infoWindow = infowindow;
-                    marker.title = this.infoTitle != '' ? this.infoTitle : marker.title;
-                    var map = this.map;
-                    marker.addListener('click', function () {
-                        infowindow.open(map, marker);
-                    });
-                    $('#markerModal').modal('hide');
-                    this.centerchanged();
-                },
-                removeMarker: function (item) {
-                    this.markers[item].setMap(null);
-                    this.markers.splice(item, 1);
-                },
-                removeAllMarkers: function () {
-                    for (var i = 0; i < this.markers.length; i++) {
-                        this.markers[i].setMap(null);
-                    }
-                    this.markers = [];
-                },
-                centerOnMarker: function (item) {
-                    this.map.setCenter(this.markers[item].position);
-                },
-                placeMarker: function (event) {
-                    if (this.addingPin) {
-                        var marker = new google.maps.Marker({
-                            position: event.latLng,
-                            map: this.map,
-                            draggable: true,
-                            title: 'No Title'
-                        });
-                        this.markers.push(marker);
-                        $('#markerId').val(this.markers.length - 1);
-                        this.infoTitle = '';
-                        this.infoEmail = '';
-                        this.infoWebsite = '';
-                        this.infoTelephone = '';
-                        this.infoDescription = '';
-                        $('#markerModal').modal('show');
-                        this.addingPin = false;
-                    }
-                },
-                initMap: function () {
-
-                    this.mapOptions.center = new google.maps.LatLng(this.lat, this.lng);
-                    this.mapOptions.mapTypeControl = true;
-                    this.mapOptions.navigationControl = true;
-                    this.mapOptions.navigationControlOptions = {
-                        style: google.maps.NavigationControlStyle.SMALL
-                    };
-
-                    this.map = new google.maps.Map(document.getElementById('map'), this.mapOptions);
-                    this.mapLoaded = true;
-                    this.mapmoved();
-
-
-                    google.maps.event.addListener(this.map, 'resize', this.centerchanged);
-                    google.maps.event.addListener(this.map, 'center_changed', this.mapmoved);
-                    google.maps.event.addListener(this.map, 'zoom_changed', this.mapzoomed);
-                    google.maps.event.addListener(this.map, 'maptypeid_changed', this.maptypeidchanged);
-                    google.maps.event.addListener(this.map, 'click', this.placeMarker);
                 }
+            },
+            clearTheme: function () {
+                this.mapOptions.styles = [];
+                this.themeApplied = false;
+                this.optionschange();
+            },
+            markersLoop: function () {
+                var str = '';
+                for (var i = 0; i < this.markers.length; i++) {
+                    var marker = this.markers[i];
+                    str += 'var marker' + i + ' = new google.maps.Marker({position: new google.maps.LatLng(' + marker.position.lat() + ', ' + marker.position.lng() + '), map: map});\n';
+                    if (marker.infoWindow) {
+                        str += 'var infowindow' + i + ' = new google.maps.InfoWindow({content: ' + JSON.stringify(marker.infoWindow.content) + ',map: map});\n';
+                        str += "marker" + i + ".addListener('click', function () { infowindow" + i + ".open(map, marker" + i + ") ;});infowindow" + i + ".close();\n";
+                    }
+                }
+                return str;
+            },
+            mapresized: function () {
+                if (!this.mapLoaded) {
+                    this.initMap();
+                }
+                google.maps.event.trigger(map, "resize");
+            },
+            copied: function (event) {
+                var target = $('.resultcode')[0];
+                target.focus();
+                target.select();
+                document.execCommand('copy');
+                target.blur();
+                this.codeCopied = true;
+                setTimeout(this.clearCopied, 2000);
+            },
+            clearCopied: function () {
+                this.codeCopied = false;
+            },
+            zoomchanged: function () {
+                this.map.setZoom(parseInt(this.mapOptions.zoom));
+            },
+
+            centerchanged: function () {
+                // this happens when we resize the map
+                this.map.setCenter(new google.maps.LatLng(this.lat, this.lng));
+                this.optionschange();
+            },
+            mapmoved: function () {
+                // this happens when we move the map or change the zoom in the map
+                this.mapOptions.center = this.map.getCenter();
+                this.lat = this.mapOptions.center.lat();
+                this.lng = this.mapOptions.center.lng();
+            },
+            mapzoomed: function () {
+                this.mapOptions.zoom = this.map.getZoom();
+            },
+            optionschange: function () {
+                this.mapOptions.disableDoubleClickZoom = !this.doubleClickZoom;
+                this.map.setOptions(this.mapOptions);
+            },
+            maptypeidchanged: function () {
+                this.mapOptions.mapTypeId = this.map.getMapTypeId();
+            },
+            addInfoBox: function (marker) {
+                marker = this.markers[this.markers.length - 1];
+                var infowindow = new google.maps.InfoWindow({
+                    content: $('#markerInfoWindow').html()
+                });
+                marker.infoWindow = infowindow;
+                marker.title = this.infoTitle != '' ? this.infoTitle : marker.title;
+                var map = this.map;
+                marker.addListener('click', function () {
+                    infowindow.open(map, marker);
+                });
+                $('#markerModal').modal('hide');
+                this.centerchanged();
+            },
+            removeMarker: function (item) {
+                this.markers[item].setMap(null);
+                this.markers.splice(item, 1);
+            },
+            removeAllMarkers: function () {
+                for (var i = 0; i < this.markers.length; i++) {
+                    this.markers[i].setMap(null);
+                }
+                this.markers = [];
+            },
+            centerOnMarker: function (item) {
+                this.map.setCenter(this.markers[item].position);
+            },
+            placeMarker: function (event) {
+                if (this.addingPin) {
+                    var marker = new google.maps.Marker({
+                        position: event.latLng,
+                        map: this.map,
+                        draggable: true,
+                        title: 'No Title'
+                    });
+                    this.markers.push(marker);
+                    $('#markerId').val(this.markers.length - 1);
+                    this.infoTitle = '';
+                    this.infoEmail = '';
+                    this.infoWebsite = '';
+                    this.infoTelephone = '';
+                    this.infoDescription = '';
+                    $('#markerModal').modal('show');
+                    this.addingPin = false;
+                }
+            },
+            initMap: function () {
+
+                this.mapOptions.center = new google.maps.LatLng(this.lat, this.lng);
+                this.mapOptions.mapTypeControl = true;
+                this.mapOptions.navigationControl = true;
+                this.mapOptions.navigationControlOptions = {
+                    style: google.maps.NavigationControlStyle.SMALL
+                };
+
+                this.map = new google.maps.Map(document.getElementById('map'), this.mapOptions);
+                this.mapLoaded = true;
+                this.mapmoved();
+
+
+                google.maps.event.addListener(this.map, 'resize', this.centerchanged);
+                google.maps.event.addListener(this.map, 'center_changed', this.mapmoved);
+                google.maps.event.addListener(this.map, 'zoom_changed', this.mapzoomed);
+                google.maps.event.addListener(this.map, 'maptypeid_changed', this.maptypeidchanged);
+                google.maps.event.addListener(this.map, 'click', this.placeMarker);
             }
-        });
-        if ("createEvent" in document) {
-            var evt = document.createEvent("HTMLEvents");
-            evt.initEvent("change", false, true);
-            document.getElementById('width').dispatchEvent(evt);
         }
-        else
-            document.getElementById('width').fireEvent("onchange");
-    })();
+    });
+    $(document).pjax('a', '#snazzthemes', {scrollTo: $('#snazzthemes').position().top});
+    if ("createEvent" in document) {
+        var evt = document.createEvent("HTMLEvents");
+        evt.initEvent("change", false, true);
+        document.getElementById('width').dispatchEvent(evt);
+    }
+    else {
+        document.getElementById('width').fireEvent("onchange");
+    }
 </script>
 @endpush

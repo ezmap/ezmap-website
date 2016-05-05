@@ -11,7 +11,7 @@
 |
 */
 
-Route::group(['middleware' => [GrahamCampbell\HTMLMin\Http\Middleware\MinifyMiddleware::class]], function() {
+Route::group(['middleware' => [GrahamCampbell\HTMLMin\Http\Middleware\MinifyMiddleware::class, 'pjax']], function() {
     Route::get('/', function () {
         $themes = App\Theme::orderBy('name')->paginate(24);
 

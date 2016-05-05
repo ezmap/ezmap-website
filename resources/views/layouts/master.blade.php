@@ -6,6 +6,7 @@
     <link href='https://fonts.googleapis.com/css?family=Kanit|Cutive Mono' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="css/app.css">
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5AXVyYFfagDPR4xi9U-ti9u5v_0iIbk8"></script>
+    <script src="/js/all.js"></script>
 </head>
 <body id="app-layout">
 <nav class="navbar navbar-default navbar-static-top">
@@ -48,7 +49,6 @@
     </div>
     @yield('content')
 </div>
-<script src="/js/all.js"></script>
 @stack('scripts')
 </body>
 </html>
