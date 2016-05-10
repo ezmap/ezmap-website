@@ -12,4 +12,5 @@ class Theme extends Model
         'tags'   => 'object',
         'colors' => 'object',
     ];
+
 }

@@ -320,7 +320,7 @@
                     id: "{{ $theme->id }}",
                     name: "{{ $theme->name }}",
                     json: {!! $theme->json !!}
-                }@if($themes->last()->name != $theme->name),@endif
+                },
                 @endforeach
             ]
         },

@@ -34,7 +34,7 @@ class SnazzyMapsController extends Controller
             $snazzyTheme->description = $theme->description;
             $snazzyTheme->url = $theme->url;
             $snazzyTheme->imageUrl = $theme->imageUrl;
-            $snazzyTheme->json = $theme->json;
+            $snazzyTheme->json = json_encode(json_decode($theme->json));
             $snazzyTheme->author = $theme->createdBy;
             $snazzyTheme->save();
         }
