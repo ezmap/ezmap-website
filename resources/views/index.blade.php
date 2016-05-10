@@ -319,7 +319,7 @@
                 {
                     id: "{{ $theme->id }}",
                     name: "{{ $theme->name }}",
-                    json: {!! $theme->json !!} +'' // this string cast is just to stop my editor squawking
+                    json: {!! $theme->json !!}
                 }@if($themes->last()->name != $theme->name),@endif
                 @endforeach
             ]
