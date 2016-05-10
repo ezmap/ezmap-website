@@ -70,7 +70,7 @@
                     </div>
                     <div class="col-xs-12" v-show="responsive">
                         <p>For a fully-responsive map, check out the styling code at
-                            <a href="http://codepen.io/RyanRoberts/pen/GZgKJd">this pen</a>
+                            <a target="_blank" href="http://codepen.io/RyanRoberts/pen/GZgKJd">this pen</a>
                         </p>
                     </div>
                 </div>

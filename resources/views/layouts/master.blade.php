@@ -21,9 +21,9 @@
             <a class="navbar-brand" href="{{ url('/') }}">EZ Map <i class="fa fa-map-o"></i></a>
         </div>
         <div class="collapse navbar-collapse" id="app-navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li><a href="{{ url('/home') }}">Home</a></li>
-            </ul>
+            {{--<ul class="nav navbar-nav">--}}
+                {{--<li><a href="{{ url('/home') }}">Home</a></li>--}}
+            {{--</ul>--}}
             <ul class="nav navbar-nav navbar-right">
                 @if (Auth::guest())
                     <li><a href="{{ url('/login') }}">Login</a></li>

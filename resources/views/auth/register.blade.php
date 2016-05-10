@@ -4,6 +4,9 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
+                <h2>Registration</h2>
+                <p>Registering an account allows you to save and edit your maps.</p>
+            <hr>
             <div class="panel panel-default">
                 <div class="panel-heading">Register</div>
                 <div class="panel-body">
