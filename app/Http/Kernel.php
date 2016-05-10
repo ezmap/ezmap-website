@@ -15,7 +15,7 @@ class Kernel extends HttpKernel
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
         \Spatie\Pjax\Middleware\FilterIfPjax::class,
-        \GrahamCampbell\HTMLMin\Http\Middleware\MinifyMiddleware::class,
+//        \GrahamCampbell\HTMLMin\Http\Middleware\MinifyMiddleware::class,
     ];
 
     /**

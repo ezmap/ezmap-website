@@ -1,1 +1,1 @@
-@include('index')
+<a href="{{ route('map.create') }}">Make a new map</a>

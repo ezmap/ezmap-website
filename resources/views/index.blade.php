@@ -6,213 +6,241 @@
     </div>
     @include('partials.infoformmodal')
 
-    <div class="col-sm-4 form">
-        <div class="row">
-            <h3>Settings <i class="fa fa-compass"></i></h3>
-            <hr>
-        </div>
-        <div class="form-group row">
+    <form action="{{ !empty($map) ? route('map.update',  $map) : route('map.store') }}" method="POST">
+        @if(!empty($map))
+            {{ method_field('PUT') }}
+        @endif
+        {{ csrf_field() }}
+        <input type="hidden" name="theme_id" v-model="currentTheme.id">
+        <input type="hidden" name="markers" v-model="markersToString">
+        <div class="col-sm-4 form">
             <div class="row">
-                <div class="col-sm-12">
-                    <label for="apikey">API key</label>
-                    <small>
-                        <a target="_blank" href="https://developers.google.com/maps/documentation/javascript/">Get an API key</a>
-                    </small>
-                    <input id="apikey" name="apikey" class="form-control" type="text" placeholder="API Key" v-model="apikey">
-                    <div class="form-group">
-                        <label for="mapcontainer">Map Container ID</label>
-                        <div class="input-group">
-                            <div class="input-group-addon"><i class="fa fa-hashtag fa-fw"></i></div>
-                            <input id="mapcontainer" class="form-control" type="text" placeholder="map" v-model="mapcontainer">
-                        </div>
-                    </div>
-                </div>
-
+                <h3>Settings <i class="fa fa-compass"></i></h3>
+                <hr>
             </div>
-        </div>
-
-        <div class="form-group row">
-            <label>Dimensions <i class="fa fa-arrows-alt"></i></label>
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="input-group">
-                        <div class="input-group-addon"><i class="fa fa-arrows-h fa-fw"></i></div>
-                        <label for="width"></label><input class="form-control" id="width" v-model="width" type="number" v-on:change="mapresized | debounce 500" v-on:keyup="mapresized | debounce 500">
-                        <div class="input-group-addon">px</div>
-                    </div>
+            @if(Auth::check())
+                <div class="form-group row">
+                    <label for="title">Map Title</label>
+                    <input id="title" name="title" class="form-control" type="text" placeholder="Title" value="{{ $map->title ?? '' }}">
                 </div>
-                <div class="col-sm-6">
-                    <div class="input-group">
-                        <div class="input-group-addon"><i class="fa fa-arrows-v fa-fw"></i></div>
-                        <label for="height"></label><input class="form-control" id="height" v-model="height" type="number" v-on:change="mapresized | debounce 500" v-on:keyup="mapresized | debounce 500">
-                        <div class="input-group-addon">px</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <div class="row">
-                <div class="col-sm-6">
-                    <label for="latitude">Latitude <i class="fa fa-arrow-circle-o-up"></i></label>
-                    <input id="latitude" name="latitude" class="form-control" type="number" placeholder="Latitude" v-model="lat" number v-on:change="centerchanged" v-on:keyup="centerchanged">
-                </div>
-                <div class="col-sm-6">
-                    <label for="longitude">Longitude <i class="fa fa-arrow-circle-o-right"></i></label>
-                    <input id="longitude" name="longitude" class="form-control" type="number" placeholder="Longitude" v-model="lng" number v-on:change="centerchanged" v-on:keyup="centerchanged">
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <div class="checkbox">
-                <label for="maptypecontrol">
-                    <input id="maptypecontrol" type="checkbox" v-model="mapOptions.mapTypeControl" v-on:change="optionschange">
-                    <strong>Map Type Control</strong></label>
-            </div>
-            <select name="maptypecontrol" class="form-control" v-model="mapOptions.mapTypeControlOptions.style" v-on:change="optionschange" number>
-                <option value="0">Default (depends on viewport size etc.)</option>
-                <option value="1">Buttons</option>
-                <option value="2">Drop Down</option>
-            </select>
-        </div>
-        <div class="form-group row">
-            <div class="row">
-                <div class="col-sm-6">
-                    <label for="mapTypeId">Map Type</label>
-                    <select id="mapTypeId" name="maptypecontrol" class="form-control" v-model="mapOptions.mapTypeId" v-on:change="optionschange" number>
-                        <option value="roadmap">Road Map</option>
-                        <option value="terrain">Road Map with Terrain</option>
-                        <option value="satellite">Satellite</option>
-                        <option value="hybrid">Satellite with Labels</option>
-                    </select>
-                </div>
-                <div class="col-sm-6">
-                    <label for="zoom">Zoom Level</label>
-                    <input id="zoom" name="zoom" class="form-control" type="number" placeholder="Zoom" v-model="mapOptions.zoom" number v-on:change="zoomchanged | debounce 500" v-on:keyup="centerchanged | debounce 500">
-                </div>
-            </div>
-        </div>
-
-
-        <div class="form-group row">
-            <h4>Markers <i class="fa fa-map-marker"></i></h4>
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="form-group">
-                        <input type="button" class="form-control btn btn-default" v-on:click="this.addingPin=true" value="Add a Marker">
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="alert alert-info" v-show="addingPin">
-                                <p class="pull-right"><i class="fa fa-info"></i></p>
-                                <p>Click the map where you want your pin!</p>
-                                <p>Don't worry, you can reposition it if you're a bit off.</p>
+            @endif
+            <div class="form-group row">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label for="apikey">API key</label>
+                        <small>
+                            <a target="_blank" href="https://developers.google.com/maps/documentation/javascript/">Get an API key</a>
+                        </small>
+                        <input id="apikey" name="apiKey" class="form-control" type="text" placeholder="API Key" v-model="apikey">
+                        <div class="form-group">
+                            <label for="mapcontainer">Map Container ID</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-hashtag fa-fw"></i></div>
+                                <input id="mapcontainer" name="mapContainer" class="form-control" type="text" placeholder="map" v-model="mapcontainer">
                             </div>
                         </div>
                     </div>
-                    <button v-show="markers.length" class="form-control btn btn-danger" v-on:click="removeAllMarkers">
-                        <i class="fa fa-trash"></i> Delete All Markers?
-                    </button>
-                    <table class="table table-hover table-condensed" v-show="markers.length">
-                        <tr>
-                            <th>Marker Title</th>
-                            <th>Center Here</th>
-                            <th>Delete Marker</th>
-                        </tr>
-                        <tr v-for="(index, marker) in markers">
-                            <td>
-                                <strong>@{{ marker.title }}</strong>
-                            </td>
-                            <td>
-                                <button v-on:click="centerOnMarker(index)" class="btn btn-info btn-sm form-control">
-                                    <i class="fa fa-crosshairs fa-fw"></i>
-                                </button>
-                            </td>
-                            <td>
-                                <button v-on:click="removeMarker(index)" class="btn btn-danger btn-sm form-control">
-                                    <i class="fa fa-trash fa-fw"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    </table>
+
                 </div>
+            </div>
+
+            <div class="form-group row">
+                <label>Dimensions <i class="fa fa-arrows-alt"></i></label>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="input-group" v-show="!responsive">
+                            <div class="input-group-addon"><i class="fa fa-arrows-h fa-fw"></i></div>
+                            <label for="width"></label>
+                            <input class="form-control" id="width" name="width" v-model="width" type="number" v-on:change="mapresized | debounce 500" v-on:keyup="mapresized | debounce 500">
+                            <div class="input-group-addon">px</div>
+                        </div>
+                        <div class="checkbox">
+                            <label for="responsivemap">
+                                <input id="responsivemap" name="responsiveMap" type="checkbox" v-model="responsive" v-on:click="mapresized | debounce 500">
+                                <strong>Responsive width?</strong></label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-arrows-v fa-fw"></i></div>
+                            <label for="height"></label><input class="form-control" id="height" name="height" v-model="height" type="number" v-on:change="mapresized | debounce 500" v-on:keyup="mapresized | debounce 500">
+                            <div class="input-group-addon">px</div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12" v-show="responsive">
+                        <p>For a fully-responsive map, check out the styling code at
+                            <a href="http://codepen.io/RyanRoberts/pen/GZgKJd">this pen</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label for="latitude">Latitude <i class="fa fa-arrow-circle-o-up"></i></label>
+                        <input id="latitude" name="latitude" class="form-control" type="number" step=".0000000000000001" placeholder="Latitude" v-model="lat" number v-on:change="centerchanged" v-on:keyup="centerchanged">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="longitude">Longitude <i class="fa fa-arrow-circle-o-right"></i></label>
+                        <input id="longitude" name="longitude" class="form-control" type="number" step=".0000000000000001" placeholder="Longitude" v-model="lng" number v-on:change="centerchanged" v-on:keyup="centerchanged">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="checkbox">
+                    <label for="maptypecontrol">
+                        <input id="maptypecontrol" name="mapOptions[showMapTypeControl]" type="checkbox" v-model="mapOptions.mapTypeControl" v-on:change="optionschange">
+                        <strong>Map Type Control</strong></label>
+                </div>
+                <select name="mapOptions[mapTypeControlStyle]" class="form-control" v-model="mapOptions.mapTypeControlOptions.style" v-on:change="optionschange" number>
+                    <option value="0">Default (depends on viewport size etc.)</option>
+                    <option value="1">Buttons</option>
+                    <option value="2">Drop Down</option>
+                </select>
+            </div>
+            <div class="form-group row">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label for="mapTypeId">Map Type</label>
+                        <select id="mapTypeId" name="mapOptions[mapTypeId]" class="form-control" v-model="mapOptions.mapTypeId" v-on:change="optionschange" number>
+                            <option value="roadmap">Road Map</option>
+                            <option value="terrain">Road Map with Terrain</option>
+                            <option value="satellite">Satellite</option>
+                            <option value="hybrid">Satellite with Labels</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="zoom">Zoom Level</label>
+                        <input id="zoom" name="mapOptions[zoomLevel]" class="form-control" type="number" placeholder="Zoom" v-model="mapOptions.zoom" number v-on:change="zoomchanged | debounce 500" v-on:keyup="centerchanged | debounce 500">
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group row">
+                <h4>Markers <i class="fa fa-map-marker"></i></h4>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <input type="button" class="form-control btn btn-default" v-on:click="this.addingPin=true" value="Add a Marker">
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="alert alert-info" v-show="addingPin">
+                                    <p class="pull-right"><i class="fa fa-info"></i></p>
+                                    <p>Click the map where you want your pin!</p>
+                                    <p>Don't worry, you can reposition it if you're a bit off.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button v-show="markers.length" class="form-control btn btn-danger" v-on:click.prevent="removeAllMarkers">
+                            <i class="fa fa-trash"></i> Delete All Markers?
+                        </button>
+                        <table class="table table-hover table-condensed" v-show="markers.length">
+                            <tr>
+                                <th>Marker Title</th>
+                                <th>Center Here</th>
+                                <th>Delete Marker</th>
+                            </tr>
+                            <tr v-for="(index, marker) in markers">
+                                <td>
+                                    <strong>@{{ marker.title }}</strong>
+                                </td>
+                                <td>
+                                    <button v-on:click.prevent="centerOnMarker(index)" class="btn btn-info btn-sm form-control">
+                                        <i class="fa fa-crosshairs fa-fw"></i>
+                                    </button>
+                                </td>
+                                <td>
+                                    <button v-on:click.prevent="removeMarker(index)" class="btn btn-danger btn-sm form-control">
+                                        <i class="fa fa-trash fa-fw"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group row">
+                <h4>Other Options <i class="fa fa-sliders"></i></h4>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="checkbox">
+                            <label for="streetViewControl"><input id="streetViewControl" name="mapOptions[showStreetViewControl]" type="checkbox" v-model="mapOptions.streetViewControl" v-on:change="optionschange">Streetview Control</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="checkbox">
+                            <label for="mapMaker"><input id="mapMaker" name="mapOptions[mapMakerTiles]" type="checkbox" v-model="mapOptions.mapMaker" v-on:change="optionschange">Use "<a href="http://www.google.com/mapmaker" target="_blank">MapMaker</a>" Tiles</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="checkbox">
+                            <label for="scalecontrol"><input id="scalecontrol" name="mapOptions[showScaleControl]" type="checkbox" v-model="mapOptions.scaleControl" v-on:change="optionschange">Scale Control</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="checkbox">
+                            <label for="fullscreenControl"><input id="fullscreenControl" name="mapOptions[showFullScreenControl]" type="checkbox" v-model="mapOptions.fullscreenControl" v-on:change="optionschange">Fullscreen Control</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="checkbox">
+                            <label for="draggable"><input id="draggable" name="mapOptions[draggable]" type="checkbox" v-model="mapOptions.draggable" v-on:change="optionschange">Draggable Map</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="checkbox">
+                            <label for="keyboardShortcuts"><input id="keyboardShortcuts" name="mapOptions[keyboardShortcuts]" id="keyboardShortcuts" type="checkbox" v-model="mapOptions.keyboardShortcuts" v-on:change="optionschange">Keyboard Shortcuts</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+
+                    <div class="row">
+                        <div class="checkbox">
+                            <label for="clickableIcons"><input id="clickableIcons" name="mapOptions[clickableIcons]" type="checkbox" v-model="mapOptions.clickableIcons" v-on:change="optionschange">Clickable Points of Interest</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="checkbox">
+                            <label for="zoomcontrol"><input id="zoomcontrol" name="mapOptions[showZoomControl]" type="checkbox" v-model="mapOptions.zoomControl" v-on:change="optionschange">Zoom Control</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="checkbox">
+                            <label for="doubleClickZoom"><input id="doubleClickZoom" name="mapOptions[doubleClickZoom]" type="checkbox" v-model="doubleClickZoom" v-on:change="optionschange">Doubleclick Zoom</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="checkbox">
+                            <label for="scrollwheel"><input id="scrollwheel" name="mapOptions[scrollWheel]" type="checkbox" v-model="mapOptions.scrollwheel" v-on:change="optionschange">Scrollwheel Zoom</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <button class="btn btn-primary" v-show="themeApplied" v-on:click.prevent="clearTheme">Clear Applied Theme</button>
+                    </div>
+                </div>
+                @if(Auth::check())
+                    <div class="col-xs-12">
+                        <button class="btn btn-primary btn-lg "><i class="fa fa-save"></i> Save Map</button>
+                    </div>
+                @endif
             </div>
         </div>
-
-
-        <div class="form-group row">
-            <h4>Other Options <i class="fa fa-sliders"></i></h4>
-            <div class="col-sm-6">
-                <div class="row">
-                    <div class="checkbox">
-                        <label for="streetViewControl"><input id="streetViewControl" type="checkbox" v-model="mapOptions.streetViewControl" v-on:change="optionschange">Streetview Control</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="checkbox">
-                        <label for="mapMaker"><input id="mapMaker" type="checkbox" v-model="mapOptions.mapMaker" v-on:change="optionschange">Use "<a href="http://www.google.com/mapmaker" target="_blank">MapMaker</a>" Tiles</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="checkbox">
-                        <label for="scalecontrol"><input id="scalecontrol" type="checkbox" v-model="mapOptions.scaleControl" v-on:change="optionschange">Scale Control</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="checkbox">
-                        <label for="fullscreenControl"><input id="fullscreenControl" type="checkbox" v-model="mapOptions.fullscreenControl" v-on:change="optionschange">Fullscreen Control</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="checkbox">
-                        <label for="draggable"><input id="draggable" type="checkbox" v-model="mapOptions.draggable" v-on:change="optionschange">Draggable Map</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="checkbox">
-                        <label for="keyboardShortcuts"><input id="keyboardShortcuts" id="keyboardShortcuts" type="checkbox" v-model="mapOptions.keyboardShortcuts" v-on:change="optionschange">Keyboard Shortcuts</label>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6">
-
-                <!--<div class="row">-->
-                <!--<label for="rotateControl">Rotate Control</label>-->
-                <!--<input id="rotateControl"type="checkbox" v-model="mapOptions.rotateControl" v-on:change="optionschange">-->
-                <!--</div>-->
-                <div class="row">
-                    <div class="checkbox">
-                        <label for="clickableIcons"><input id="clickableIcons" type="checkbox" v-model="mapOptions.clickableIcons" v-on:change="optionschange">Clickable Points of Interest</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="checkbox">
-                        <label for="zoomcontrol"><input id="zoomcontrol" type="checkbox" v-model="mapOptions.zoomControl" v-on:change="optionschange">Zoom Control</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="checkbox">
-                        <label for="doubleClickZoom"><input id="doubleClickZoom" type="checkbox" v-model="doubleClickZoom" v-on:change="optionschange">Doubleclick Zoom</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="checkbox">
-                        <label for="scrollwheel"><input id="scrollwheel" type="checkbox" v-model="mapOptions.scrollwheel" v-on:change="optionschange">Scrollwheel Zoom</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <button class="btn btn-primary" v-show="themeApplied" v-on:click="clearTheme">Clear Applied Theme</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    </form>
     <div class="col-sm-7 results col-sm-offset-1">
         <div class="row">
             <h3>Your Map Result</h3>
             <hr>
-            <div id="map" class="map" v-show="show" :style="styleObject"></div>
+            <div id="map-container" class="map-container">
+                <div id="map" class="map" v-show="show" :style="styleObject"></div>
+            </div>
         </div>
         <div class="row">
             <h3>Your map code
@@ -239,70 +267,95 @@
     var mainVue = new Vue({
         el: '#app',
         data: {
-            themes: [
-                    @foreach($themes as $theme)
-                {
-                    id: "{{ $theme->id }}",
-                    name: "{{ $theme->name }}",
-                    json: {!! $theme->json !!}
-                }@if($themes->last()->name != $theme->name),@endif
-                @endforeach
-            ],
-            currentTheme: {},
-            apikey: '',
-            themeApplied: false,
             addingPin: false,
+            apikey: '{{ $map->apiKey ?? '' }}',
             codeCopied: false,
-            show: true,
-            width: 560,
-            height: 420,
-            infoTitle: '',
-            infoEmail: '',
-            infoWebsite: '',
-            infoTelephone: '',
+            currentTheme: {
+                id: "{{ $map->theme_id ?? 0 }}"
+            },
+            doubleClickZoom: {{ $map->mapOptions->doubleClickZoom ?? 'true' }},
+            height: {{ $map->height ?? 420 }} +0,
             infoDescription: '',
-            infoWindows: [],
-            mapLoaded: false,
+            infoEmail: '',
+            infoTelephone: '',
+            infoTitle: '',
+            infoWebsite: '',
+            lat: {{ $map->latitude ?? 57.51175171450925 }} +0,
+            lng: {{ $map->longitude ?? -1.812046766281128 }} +0,
             map: {},
-            mapcontainer: 'ez-map',
+            mapcontainer: '{!! $map->mapContainer ?? 'ez-map' !!}',
+            mapLoaded: false,
             markers: [],
-            lat: 57.51175171450925,
-            lng: -1.812046766281128,
-            doubleClickZoom: true,
+            responsive: @if( !empty($map) && ($map->responsiveMap) ) true @else false @endif,
+            show: true,
+            width: {{ $map->width ?? 560 }} +0,
+            themeApplied: @if( !empty($map) && ($map->theme_id != "0") ) true @else false @endif,
             mapOptions: {
                 center: {
                     lat: this.lat,
                     lng: this.lng
                 },
-                clickableIcons: true,
-                disableDoubleClickZoom: false,
-                draggable: true,
-                fullscreenControl: true,
-                keyboardShortcuts: true,
-                mapMaker: false,
-                mapTypeControl: true,
+                clickableIcons: {{ $map->mapOptions->clickableIcons ?? 'true' }},
+                disableDoubleClickZoom: !this.doubleClickZoom,
+                draggable: {{ $map->mapOptions->draggable ?? 'true' }},
+                fullscreenControl: {{ $map->mapOptions->showFullScreenControl ?? 'true' }},
+                keyboardShortcuts: {{ $map->mapOptions->keyboardShortcuts ?? 'true' }},
+                mapMaker: {{ $map->mapOptions->mapMakerTiles ?? 'false' }},
+                mapTypeControl: {{ $map->mapOptions->showMapTypeControl ?? 'true' }},
                 mapTypeControlOptions: {
-                    style: 0
+                    style: {{ $map->mapOptions->mapTypeControlStyle ?? 0 }}
                 },
-                mapTypeId: "roadmap",
+                mapTypeId: "{!! $map->mapOptions->mapTypeId ?? 'roadmap' !!}",
                 rotateControl: true,
-                scaleControl: true,
-                scrollwheel: true,
-                streetViewControl: true,
-                styles: [],
-                zoom: 3,
-                zoomControl: true
-            }
+                scaleControl: {{ $map->mapOptions->showScaleControl ?? 'true' }},
+                scrollwheel: {{ $map->mapOptions->scrollWheel ?? 'true' }},
+                streetViewControl: {{ $map->mapOptions->showStreetViewControl ?? 'true' }},
+                styles: @if( !empty($map) && ($map->theme_id != "0") ) {!! $map->theme->json !!} @else false @endif,
+                zoom: {{ $map->mapOptions->zoomLevel ?? 3 }},
+                zoomControl: {{ $map->mapOptions->showZoomControl ?? 'true' }}
+            },
+            themes: [
+                    @foreach($themes as $theme)
+                {
+                    id: "{{ $theme->id }}",
+                    name: "{{ $theme->name }}",
+                    json: {!! $theme->json !!} +'' // this string cast is just to stop my editor squawking
+                }@if($themes->last()->name != $theme->name),@endif
+                @endforeach
+            ]
         },
         computed: {
+
             styleObject: function () {
+                if (this.responsive) {
+                    return {
+                        'height': this.height + 'px',
+                        width: '100%'
+                    }
+                }
                 return {
                     height: this.height + 'px',
                     width: this.width + 'px'
                 }
+            },
+            markersToString: function () {
+                var out = [];
+                var markers = this.markers;
+                for (var i = 0; i < markers.length; i++) {
+                    var marker = this.markers[i];
+                    out.push({
+                        title: marker.title,
+                        lat: marker.position.lat(),
+                        lng: marker.position.lng(),
+                        infoWindow: {
+                            content: marker.infoWindow.content || ''
+                        }
+                    });
+                }
+
+                return JSON.stringify(out);
             }
         },
-
         methods: {
             setTheme: function (event) {
                 element = $(event.target);
@@ -321,6 +374,7 @@
             },
             clearTheme: function () {
                 this.mapOptions.styles = [];
+                this.currentTheme = {id: "0"};
                 this.themeApplied = false;
                 this.optionschange();
             },
@@ -336,11 +390,23 @@
                 }
                 return str;
             },
+            responsiveOutput: function () {
+                if (this.responsive) {
+                    return 'google.maps.event.addDomListener(window, "resize", function() { var center = map.getCenter(); google.maps.event.trigger(map, "resize"); map.setCenter(center); });';
+                }
+                return '';
+            },
+            mapStyling: function () {
+                var str = '#' + this.mapcontainer + '{\n';
+                str += 'height: ' + this.styleObject.height + ';\nwidth: ' + this.styleObject.width + ';';
+                str += '}';
+                return str
+            },
             mapresized: function () {
                 if (!this.mapLoaded) {
                     this.initMap();
                 }
-                google.maps.event.trigger(map, "resize");
+                google.maps.event.trigger(this.map, "resize");
             },
             copied: function (event) {
                 var target = $('.resultcode')[0];
@@ -380,7 +446,7 @@
                 this.mapOptions.mapTypeId = this.map.getMapTypeId();
             },
             addInfoBox: function (marker) {
-                marker = this.markers[this.markers.length - 1];
+                var marker = this.markers[this.markers.length - 1];
                 var infowindow = new google.maps.InfoWindow({
                     content: $('#markerInfoWindow').html()
                 });
@@ -412,7 +478,8 @@
                         position: event.latLng,
                         map: this.map,
                         draggable: true,
-                        title: 'No Title'
+                        title: 'No Title',
+                        infoWindow: {content: ''}
                     });
                     this.markers.push(marker);
                     $('#markerId').val(this.markers.length - 1);
@@ -425,6 +492,7 @@
                     this.addingPin = false;
                 }
             },
+
             initMap: function () {
 
                 this.mapOptions.center = new google.maps.LatLng(this.lat, this.lng);
@@ -436,8 +504,27 @@
 
                 this.map = new google.maps.Map(document.getElementById('map'), this.mapOptions);
                 this.mapLoaded = true;
-                this.mapmoved();
+                this.mapmoved();@if( !empty($map) )
 
+                var savedMarkers = {!! $map->markers !!};
+                for(var i = 0; i < savedMarkers.length; i++)
+                {
+                    var savedMarker = savedMarkers[i];
+                    var marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(savedMarker.lat,savedMarker.lng),
+                        map: this.map,
+                        draggable: true,
+                        title: savedMarker.title,
+                        infoWindow: savedMarker.infoWindow
+                    });
+                    this.markers.push(marker);
+                    infowindow = new google.maps.InfoWindow(marker.infoWindow);
+                    var map = this.map;
+                    marker.addListener('click', function () {
+                        infowindow.open(map, marker);
+                    });
+                }
+                @endif
 
                 google.maps.event.addListener(this.map, 'resize', this.centerchanged);
                 google.maps.event.addListener(this.map, 'center_changed', this.mapmoved);

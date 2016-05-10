@@ -31,3 +31,5 @@ Route::get('/home', 'HomeController@index');
 Route::get('admin', 'AdminController@index');
 Route::post('admin', 'SnazzyMapsController@populateThemes')->name('populateThemes');
 Route::get('snazzymaps', 'SnazzyMapsController@index')->name('snazzymaps');
+
+Route::resource('map', 'MapController');

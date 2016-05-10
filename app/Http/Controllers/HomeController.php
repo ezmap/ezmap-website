@@ -25,8 +25,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $themes = Theme::orderBy('name')->paginate(24);
-
-        return view('home', compact('themes'));
+        return redirect()->route('map.index');
     }
 }
