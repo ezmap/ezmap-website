@@ -19,6 +19,12 @@
   @media (min-width: $screen-lg-min) {
     width: $container-lg;
   }
+  @media (min-width: $screen-xlg-min) {
+    width: $container-xlg;
+  }
+  @media (min-width: $screen-xxlg-min) {
+    width: $container-xxlg;
+  }
 }
 
 

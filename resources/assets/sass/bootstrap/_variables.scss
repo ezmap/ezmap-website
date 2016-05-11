@@ -314,6 +314,16 @@ $screen-lg-min: $screen-lg !default;
 //** Deprecated `$screen-lg-desktop` as of v3.0.1
 $screen-lg-desktop: $screen-lg-min !default;
 
+$screen-xlg: 1400px !default;
+$screen-xlg-min: $screen-xlg !default;
+//** Deprecated `$screen-lg-desktop` as of v3.0.1
+$screen-xlg-desktop: $screen-xlg-min !default;
+
+$screen-xxlg: 1600px !default;
+$screen-xxlg-min: $screen-xxlg !default;
+//** Deprecated `$screen-lg-desktop` as of v3.0.1
+$screen-xxlg-desktop: $screen-xxlg-min !default;
+
 // So media queries don't overlap when required, provide a maximum
 $screen-xs-max: ($screen-sm-min - 1) !default;
 $screen-sm-max: ($screen-md-min - 1) !default;
@@ -351,6 +361,16 @@ $container-md: $container-desktop !default;
 $container-large-desktop: (1140px + $grid-gutter-width) !default;
 //** For `$screen-lg-min` and up.
 $container-lg: $container-large-desktop !default;
+
+// Large screen / wide desktop
+$container-x-large-desktop: (1350px + $grid-gutter-width) !default;
+//** For `$screen-lg-min` and up.
+$container-xlg: $container-x-large-desktop !default;
+
+// Large screen / wide desktop
+$container-xx-large-desktop: (1570px + $grid-gutter-width) !default;
+//** For `$screen-lg-min` and up.
+$container-xxlg: $container-xx-large-desktop !default;
 
 //== Navbar
 //

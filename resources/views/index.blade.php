@@ -8,12 +8,12 @@
     @include('partials.markerpinmodal')
 
 
-    <div class="col-sm-4 form">
+    <div class="col-sm-4 theform form">
         <div class="row">
             <h3>Settings <i class="fa fa-compass"></i></h3>
             <hr>
         </div>
-        <form id="mainForm" action="{{ !empty($map) ? route('map.update',  $map) : route('map.store') }}" method="POST">
+        <form class="form" id="mainForm" action="{{ !empty($map) ? route('map.update',  $map) : route('map.store') }}" method="POST">
             @if(!empty($map))
                 {{ method_field('PUT') }}
             @endif
@@ -265,7 +265,7 @@
             </form>
         @endif
     </div>
-    <div class="col-sm-7 results col-sm-offset-1">
+    <div class="col-sm-7 col-sm-offset-1 theresults">
         <div class="row">
             <h3>Your Map Result</h3>
             <p>What you see here is pretty much what your code will give you, with the exception that your marker pins won't be draggable.</p>

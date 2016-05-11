@@ -1512,6 +1512,12 @@ pre {
   @media (min-width: 1200px) {
     .container {
       width: 1170px; } }
+  @media (min-width: 1400px) {
+    .container {
+      width: 1380px; } }
+  @media (min-width: 1600px) {
+    .container {
+      width: 1600px; } }
 
 .container-fluid {
   margin-right: auto;

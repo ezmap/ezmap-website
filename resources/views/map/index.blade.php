@@ -2,14 +2,14 @@
 @section('title', 'Your Maps')
 
 @section('content')
-    <div class="col-xs-12">
+    <div class="col-sm-6 col-sm-offset-3">
         <a href="{{ route('map.create') }}" class="btn btn-primary form-control"><i class="fa fa-plus"></i> Make a new map</a>
+        <hr>
     </div>
 
 
     @if(Auth::user()->maps)
-        <div class="col-sm-6">
-            <hr>
+        <div class="col-sm-6 col-sm-offset-3">
             <h2>Your Saved Maps</h2>
             @foreach(Auth::user()->maps as $map)
                 <div class="col-xs-10">
