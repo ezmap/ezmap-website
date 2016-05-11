@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>@yield('title', 'EZ Map')</title>
+    <title>@yield('title', 'EZ Map - Google Maps Made Easy')</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
     <link rel="icon" type="image/png" href="{{ url('favicon.png') }}" />
     <link href='https://fonts.googleapis.com/css?family=Kanit|Cutive Mono' rel='stylesheet' type='text/css'>
