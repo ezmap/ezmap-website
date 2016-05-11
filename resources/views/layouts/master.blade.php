@@ -52,8 +52,8 @@
 </div>
 <footer class="footer">
     <div class="container">
-        <p>© {{ date('Y') }} Billy Fagan. This tool abides by the
-            <a href="https://www.google.co.uk/permissions/geoguidelines.html">Google Permissions Guidelines</a>.</p>
+        <p style="margin-top:1.25em;">© {{ date('Y') }} Billy Fagan. This tool abides by the
+            <a target="_blank" href="https://www.google.co.uk/permissions/geoguidelines.html">Google Permissions Guidelines</a>.</p>
     </div>
 </footer>
 @stack('scripts')
