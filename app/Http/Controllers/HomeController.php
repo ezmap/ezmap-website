@@ -36,10 +36,25 @@ class HomeController extends Controller
             'url'     => $request->input('newIconURL'),
             'name'    => $request->input('newIconName'),
         ];
-        $icon = Icon::firstOrCreate($params);
+        $icon   = Icon::firstOrCreate($params);
         if ($request->ajax())
         {
             return response()->json(['success' => true, 'icon' => $icon]);
+        }
+
+        return redirect()->back();
+    }
+
+    public function deleteIcon(Request $request)
+    {
+        $icon = Icon::where([
+            'user_id' => $request->user()->id,
+            'id'      => $request->input('icon-id'),
+        ])->delete();
+
+        if ($request->ajax())
+        {
+            return response()->json(['success' => true, 'icon' => ['id' => $request->input('icon-id')]]);
         }
 
         return redirect()->back();

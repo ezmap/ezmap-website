@@ -32,6 +32,7 @@ Route::get('admin', 'AdminController@index');
 Route::post('admin', 'SnazzyMapsController@populateThemes')->name('populateThemes');
 
 Route::post('addNewIcon', 'HomeController@addNewIcon')->name('addNewIcon');
+Route::post('deleteIcon', 'HomeController@deleteIcon')->name('deleteIcon');
 
 Route::post('addMarkerIcon', 'AdminController@addMarkerIcon')->name('addMarkerIcon');
 Route::get('AZPopulate', 'AdminController@AZPopulate')->name('AZPopulate');

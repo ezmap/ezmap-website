@@ -8,6 +8,6 @@ class Icon extends Model
 {
     protected $fillable = ['name', 'url', 'user_id'];
 
-    protected $visible = ['name', 'url'];
+    protected $visible = ['id', 'name', 'url'];
 
 }

@@ -8,21 +8,31 @@
     $siteIcons = \App\Icon::where('user_id',1)->get();
     @endphp
     <div class="icon-uploads">
-        <h4>Your Uploaded Icons</h4>
-        @for($i = 0; $i < $userIcons->count(); $i++)
-            @php
-            $icon = $userIcons[$i];
-            @endphp
-            @if(($i+2) % 6 == 0)
-                <div class="row">
-                    @endif
-                    <div class="col-xs-2 text-center">
-                        <img class="img img-thumbnail markericon" src="{{ $icon->url }}" alt="{{ $icon->name }}" title="{{ $icon->name }}" v-on:click="setMarkerIcon" data-for-marker="0" data-dismiss="modal">
+        <h4>Your Icons</h4>
+        @if(Auth::check() && Auth::user()->id != 1)
+            @for($i = 0; $i < $userIcons->count(); $i++)
+                @php
+                $icon = $userIcons[$i];
+                @endphp
+                @if(($i+2) % 6 == 0)
+                    <div class="row">
+                        @endif
+                        <div class="col-xs-2 text-center" id="youricon{{ $icon->id }}">
+                            <img class="img img-thumbnail markericon" src="{{ $icon->url }}" alt="{{ $icon->name }}" title="{{ $icon->name }}" v-on:click="setMarkerIcon" data-for-marker="0" data-dismiss="modal">
+                            <form action="{{ route('deleteIcon') }}" method="POST" class="removeIconForm">
+                                {{ csrf_field() }}
+                                <input type="hidden" name="icon-id" value="{{ $icon->id }}">
+                                <div class="form-group">
+                                    <button class="form-control btn btn-danger" type="submit" value="Delete"><i class="fa fa-trash fa-fw"></i></button>
+                                </div>
+
+                            </form>
+                        </div>
+                        @if(($i+2) % 6 == 0)
                     </div>
-                    @if(($i+2) % 6 == 0)
-                </div>
-            @endif
-        @endfor
+                @endif
+            @endfor
+        @endif
     </div>
     <div class="row">
         <div class="col-xs-12">
