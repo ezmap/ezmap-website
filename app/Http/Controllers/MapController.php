@@ -57,7 +57,7 @@ class MapController extends Controller
 
         $map->save();
 
-        return redirect()->route('map.index');
+        return redirect()->route('map.edit', $map);
     }
 
     /**
