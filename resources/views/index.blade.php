@@ -127,7 +127,7 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="form-group">
-                            <input type="button" class="form-control btn btn-default" v-on:click="this.addingPin=true" value="Add a Marker">
+                            <input type="button" class="form-control btn btn-primary" v-on:click="this.addingPin=true" value="Add a Marker">
                         </div>
                         <div class="row">
                             <div class="col-xs-12">
