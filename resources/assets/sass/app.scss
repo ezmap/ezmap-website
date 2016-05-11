@@ -51,7 +51,7 @@ img.theme-thumb {
   top: -20px;
 }
 
-.main-app{
+.main-app {
   border-top: .5em double $brand-primary;
   padding-top: 20px;
 }
@@ -64,9 +64,11 @@ html {
   position: relative;
   min-height: 100%;
 }
+
 body {
   margin-bottom: 60px;
 }
+
 .footer {
   position: absolute;
   bottom: 0;
@@ -74,4 +76,11 @@ body {
   height: 60px;
   background-color: $brand-primary;
   color: white;
+}
+
+.footer a {
+  color: lighten($brand-primary, 20%);
+  &:hover {
+    color: darken($brand-primary, 20%);
+  }
 }
