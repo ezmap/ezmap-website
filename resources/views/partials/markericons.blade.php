@@ -8,8 +8,8 @@
     $siteIcons = \App\Icon::where('user_id',1)->get();
     @endphp
     <div class="icon-uploads">
-        <h4>Your Icons</h4>
         @if(Auth::check() && Auth::user()->id != 1)
+            <h4>Your Icons</h4>
             @for($i = 0; $i < $userIcons->count(); $i++)
                 @php
                 $icon = $userIcons[$i];
@@ -23,7 +23,8 @@
                                 {{ csrf_field() }}
                                 <input type="hidden" name="icon-id" value="{{ $icon->id }}">
                                 <div class="form-group">
-                                    <button class="form-control btn btn-danger" type="submit" value="Delete"><i class="fa fa-trash fa-fw"></i></button>
+                                    <button class="form-control btn btn-danger" type="submit" value="Delete">
+                                        <i class="fa fa-trash fa-fw"></i></button>
                                 </div>
 
                             </form>
