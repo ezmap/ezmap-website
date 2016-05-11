@@ -1,5 +1,9 @@
 @import "_bootstrap.scss";
 
+[v-cloak] {
+  display: none;
+}
+
 div.map-container {
   position: relative;
 }
