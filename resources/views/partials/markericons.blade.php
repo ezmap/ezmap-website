@@ -7,7 +7,7 @@
     }
     $siteIcons = \App\Icon::where('user_id',1)->get();
     @endphp
-    @if($userIcons->count() > 0)
+    <div class="icon-uploads">
         <h4>Your Uploaded Icons</h4>
         @for($i = 0; $i < $userIcons->count(); $i++)
             @php
@@ -23,7 +23,7 @@
                 </div>
             @endif
         @endfor
-    @endif
+    </div>
     <div class="row">
         <div class="col-xs-12">
             <hr>

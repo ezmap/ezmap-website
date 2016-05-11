@@ -45,8 +45,9 @@
                 url: $(this).attr('action'),
                 data: $(this).serialize(),
                 success: function( msg ) {
-                    console.log( msg );
-                    $(this)[0].reset();
+                    event.target.reset();
+                    var formarker = $('.markericon').first().data('for-marker');
+                    $('.icon-uploads').append('<div class="col-xs-2 text-center"><img class="img img-thumbnail markericon" src="'+msg.icon.url+'" alt="'+msg.icon.name+'" title="'+msg.icon.name+'" onclick="mainVue.setMarkerIcon(event)" data-for-marker="'+formarker+'" data-dismiss="modal"></div>')
                 }
             });
 
