@@ -26,7 +26,7 @@ Route:: get('test', function ()
 
 Route::auth();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('admin', 'AdminController@index');
 Route::post('admin', 'SnazzyMapsController@populateThemes')->name('populateThemes');

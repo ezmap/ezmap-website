@@ -29,4 +29,9 @@ class MapPolicy
     {
         return $map->user_id == $user->id;
     }
+
+    public function destroy(User $user, Map $map)
+    {
+        return $map->user_id == $user->id;
+    }
 }

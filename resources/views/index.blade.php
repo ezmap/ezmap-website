@@ -7,18 +7,19 @@
     @include('partials.infoformmodal')
     @include('partials.markerpinmodal')
 
-    <form action="{{ !empty($map) ? route('map.update',  $map) : route('map.store') }}" method="POST">
-        @if(!empty($map))
-            {{ method_field('PUT') }}
-        @endif
-        {{ csrf_field() }}
-        <input type="hidden" name="theme_id" v-model="currentTheme.id">
-        <input type="hidden" name="markers" v-model="markersToString">
-        <div class="col-sm-4 form">
-            <div class="row">
-                <h3>Settings <i class="fa fa-compass"></i></h3>
-                <hr>
-            </div>
+
+    <div class="col-sm-4 form">
+        <div class="row">
+            <h3>Settings <i class="fa fa-compass"></i></h3>
+            <hr>
+        </div>
+        <form id="mainForm" action="{{ !empty($map) ? route('map.update',  $map) : route('map.store') }}" method="POST">
+            @if(!empty($map))
+                {{ method_field('PUT') }}
+            @endif
+            {{ csrf_field() }}
+            <input type="hidden" name="theme_id" v-model="currentTheme.id">
+            <input type="hidden" name="markers" v-model="markersToString">
             @if(Auth::check())
                 <div class="form-group row">
                     <label for="title">Map Title</label>
@@ -239,10 +240,31 @@
                             <button class="btn btn-primary form-control"><i class="fa fa-save"></i> Save Map</button>
                         </div>
                     </div>
+                    @if(!empty($map))
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <button class="btn btn-primary form-control" v-on:click.prevent="duplicateMap">
+                                    <i class="fa fa-clone"></i> Clone Map
+                                </button>
+                            </div>
+                        </div>
+
+                    @endif
                 @endif
             </div>
-        </div>
-    </form>
+        </form>
+        @if(!empty($map))
+            <form action="{{ route('map.destroy', $map) }}" method="POST">
+                {{ method_field('DELETE') }}
+                {{ csrf_field() }}
+                <div class="form-group">
+                    <button class="btn btn-danger form-control">
+                        <i class="fa fa-trash"></i> Delete Map
+                    </button>
+                </div>
+            </form>
+        @endif
+    </div>
     <div class="col-sm-7 results col-sm-offset-1">
         <div class="row">
             <h3>Your Map Result</h3>
@@ -517,6 +539,12 @@
                     $('#markerModal').modal('show');
                     this.addingPin = false;
                 }
+            },
+            duplicateMap: function () {
+                $('input[name="title"]').val($('input[name="title"]').val() + ' - copy');
+
+                $('input[name="_method"]').val('POST');
+                $('#mainForm').attr('action', '{{ route('map.store') }}').submit();
             },
 
             initMap: function () {

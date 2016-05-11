@@ -122,7 +122,10 @@ class MapController extends Controller
      */
     public function destroy(Map $map)
     {
-        //
+        $this->authorize($map);
+        $map->delete();
+
+        return redirect()->route('home');
     }
 
     /**
