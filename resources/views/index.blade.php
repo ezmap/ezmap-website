@@ -5,6 +5,7 @@
         @include('partials.infowindow')
     </div>
     @include('partials.infoformmodal')
+    @include('partials.markerpinmodal')
 
     <form action="{{ !empty($map) ? route('map.update',  $map) : route('map.store') }}" method="POST">
         @if(!empty($map))
@@ -142,12 +143,18 @@
                         <table class="table table-hover table-condensed" v-show="markers.length">
                             <tr>
                                 <th>Marker Title</th>
+                                <th>Change Icon</th>
                                 <th>Center Here</th>
                                 <th>Delete Marker</th>
                             </tr>
                             <tr v-for="(index, marker) in markers">
                                 <td>
                                     <strong>@{{ marker.title }}</strong>
+                                </td>
+                                <td>
+                                    <button v-on:click.prevent="changeMarkerIcon(index)" class="btn btn-info btn-sm form-control">
+                                        <i class="fa fa-map-marker fa-fw"></i>
+                                    </button>
                                 </td>
                                 <td>
                                     <button v-on:click.prevent="centerOnMarker(index)" class="btn btn-info btn-sm form-control">
@@ -228,7 +235,9 @@
                 </div>
                 @if(Auth::check())
                     <div class="col-xs-12">
-                        <button class="btn btn-primary btn-lg "><i class="fa fa-save"></i> Save Map</button>
+                        <div class="form-group">
+                            <button class="btn btn-primary form-control"><i class="fa fa-save"></i> Save Map</button>
+                        </div>
                     </div>
                 @endif
             </div>
@@ -237,6 +246,7 @@
     <div class="col-sm-7 results col-sm-offset-1">
         <div class="row">
             <h3>Your Map Result</h3>
+            <p>What you see here is pretty much what your code will give you, with the exception that your marker pins won't be draggable.</p>
             <hr>
             <div id="map-container" class="map-container">
                 <div id="map" class="map" v-show="show" :style="styleObject"></div>
@@ -345,6 +355,7 @@
                     var marker = this.markers[i];
                     out.push({
                         title: marker.title,
+                        icon: marker.icon,
                         lat: marker.position.lat(),
                         lng: marker.position.lng(),
                         infoWindow: {
@@ -382,7 +393,7 @@
                 var str = '';
                 for (var i = 0; i < this.markers.length; i++) {
                     var marker = this.markers[i];
-                    str += 'var marker' + i + ' = new google.maps.Marker({position: new google.maps.LatLng(' + marker.position.lat() + ', ' + marker.position.lng() + '), map: map});\n';
+                    str += 'var marker' + i + ' = new google.maps.Marker({icon: "' + marker.icon + '", position: new google.maps.LatLng(' + marker.position.lat() + ', ' + marker.position.lng() + '), map: map});\n';
                     if (marker.infoWindow) {
                         str += 'var infowindow' + i + ' = new google.maps.InfoWindow({content: ' + JSON.stringify(marker.infoWindow.content) + ',map: map});\n';
                         str += "marker" + i + ".addListener('click', function () { infowindow" + i + ".open(map, marker" + i + ") ;});infowindow" + i + ".close();\n";
@@ -472,9 +483,24 @@
             centerOnMarker: function (item) {
                 this.map.setCenter(this.markers[item].position);
             },
+            changeMarkerIcon: function (item) {
+                $('.markericon').data('for-marker', item);
+                $('#markerpinmodal').modal('show');
+            },
+            setMarkerIcon: function (event) {
+                newIcon = $(event.target);
+                icon = {
+                    url: newIcon.attr('src'), // url
+//                    scaledSize: new google.maps.Size(50, 50), // scaled size
+//                    origin: new google.maps.Point(0, 0), // origin
+//                    anchor: new google.maps.Point(0, 0) // anchor
+                };
+                this.markers[newIcon.data('for-marker')].setIcon(newIcon.attr('src'));
+            },
             placeMarker: function (event) {
                 if (this.addingPin) {
                     var marker = new google.maps.Marker({
+                        icon: 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi.png',
                         position: event.latLng,
                         map: this.map,
                         draggable: true,
@@ -504,14 +530,15 @@
 
                 this.map = new google.maps.Map(document.getElementById('map'), this.mapOptions);
                 this.mapLoaded = true;
-                this.mapmoved();@if( !empty($map) )
+                this.mapmoved();
+                        @if( !empty($map) )
 
                 var savedMarkers = {!! $map->markers !!};
-                for(var i = 0; i < savedMarkers.length; i++)
-                {
+                for (var i = 0; i < savedMarkers.length; i++) {
                     var savedMarker = savedMarkers[i];
                     var marker = new google.maps.Marker({
-                        position: new google.maps.LatLng(savedMarker.lat,savedMarker.lng),
+                        icon: savedMarker.icon,
+                        position: new google.maps.LatLng(savedMarker.lat, savedMarker.lng),
                         map: this.map,
                         draggable: true,
                         title: savedMarker.title,

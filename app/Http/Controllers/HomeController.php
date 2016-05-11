@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
+use App\Icon;
 use App\Theme;
 use Illuminate\Http\Request;
 
@@ -26,5 +27,21 @@ class HomeController extends Controller
     public function index()
     {
         return redirect()->route('map.index');
+    }
+
+    public function addNewIcon(Request $request)
+    {
+        $params = [
+            'user_id' => $request->user()->id,
+            'url'     => $request->input('newIconURL'),
+            'name'    => $request->input('newIconName'),
+        ];
+        $icon = Icon::firstOrCreate($params);
+        if ($request->ajax())
+        {
+            return response()->json(['success' => true, 'icon' => $icon]);
+        }
+
+        return redirect()->back();
     }
 }

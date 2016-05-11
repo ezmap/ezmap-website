@@ -2,7 +2,28 @@
 @section('title', 'Admin Panel')
 
 @section('content')
-    <div class="col-md-6 col-md-offset-3">
+    <div class="col-md-6">
+        <h2>Add Marker Icons</h2>
+        <form action="{{ route('addMarkerIcon') }}" method="POST">
+            {{ csrf_field() }}
+            <div class="form-group">
+                <label for="iconName">Icon Name</label>
+                <input id="iconName" name="iconName" class="form-control" type="text" placeholder="Icon Name" value="">
+            </div>
+            <div class="form-group">
+                <label for="iconURL">Icon URL</label>
+                <input id="iconURL" name="iconURL" class="form-control" type="text" placeholder="Icon URL" value="">
+            </div>
+            <div class="form-group">
+                <input name="submit" class="form-control btn btn-default" type="submit" value="Submit">
+            </div>
+        </form>
+
+        <a href="{{ route('AZPopulate') }}" class="btn btn-default form-control">Populate by code.</a>
+
+        @include('partials.markericons')
+    </div>
+    <div class="col-md-6">
         <h2>Populate Snazzy Themes</h2>
         <p>There are currently <strong>{{ \App\Theme::count() }}</strong> Snazzy Themes installed</p>
         <form action="{{ route('populateThemes') }}" method="POST">
@@ -50,8 +71,9 @@
             </div>
 
         </form>
+        @include('partials.snazzymaps')
+
     </div>
-    @include('partials.snazzymaps')
 @endsection
 
 @section('js')

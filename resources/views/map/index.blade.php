@@ -11,12 +11,14 @@
         <div class="col-sm-6">
             <hr>
             <h2>Your Saved Maps</h2>
-            <div class="form-group">
-                @foreach(Auth::user()->maps as $map)
+            @foreach(Auth::user()->maps as $map)
+                <div class="form-group">
+
                     <a class="btn btn-info form-control" href="{{ route('map.edit', $map->id) }}"><i class="fa fa-map-o"></i> {{ $map->title }}
                     </a>
-                @endforeach
-            </div>
+                </div>
+
+            @endforeach
         </div>
     @endif
 @endsection

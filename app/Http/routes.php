@@ -30,6 +30,12 @@ Route::get('/home', 'HomeController@index');
 
 Route::get('admin', 'AdminController@index');
 Route::post('admin', 'SnazzyMapsController@populateThemes')->name('populateThemes');
+
+Route::post('addNewIcon', 'HomeController@addNewIcon')->name('addNewIcon');
+
+Route::post('addMarkerIcon', 'AdminController@addMarkerIcon')->name('addMarkerIcon');
+Route::get('AZPopulate', 'AdminController@AZPopulate')->name('AZPopulate');
+
 Route::get('snazzymaps', 'SnazzyMapsController@index')->name('snazzymaps');
 
 Route::resource('map', 'MapController');

@@ -15,9 +15,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         $themes = Theme::orderBy('name')->paginate(24);
-
         view()->share('themes', $themes);
-
+        
     }
 
     /**
