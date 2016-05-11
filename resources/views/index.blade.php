@@ -573,7 +573,7 @@
                         infoWindow: savedMarker.infoWindow
                     });
                     this.markers.push(marker);
-                    infowindow = new google.maps.InfoWindow(marker.infoWindow);
+                    var infowindow = new google.maps.InfoWindow(marker.infoWindow);
                     var map = this.map;
                     marker.addListener('click', function () {
                         infowindow.open(map, marker);
