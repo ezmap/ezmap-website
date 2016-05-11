@@ -22,18 +22,18 @@ $grey: $gray;
 $grey-light: $gray-light;
 $grey-lighter: $gray-lighter;
 
-$brand-primary: #556270 !default; // $brand-primary: #556270 !default;
-$brand-success: #C7F464 !default; // $brand-success: #C7F464 !default;
-$brand-info: #4ECDC4 !default; // $brand-info: #4ECDC4 !default;
-$brand-warning: #FF6B6B !default; // $brand-warning: #FF6B6B !default;
-$brand-danger: #C44D58 !default; // $brand-danger: #C44D58 !default;
+$brand-primary: #54244C !default; // $brand-primary: #48131B !default; // $brand-primary: #556270 !default;
+$brand-success: #C7F464 !default; // $brand-success: #B8DC9E !default; // $brand-success: #C7F464 !default;
+$brand-info: #4ECDC4 !default;    // $brand-info: #57ADA2 !default;    // $brand-info: #4ECDC4 !default;
+$brand-warning: #FF6B6B !default; // $brand-warning: #F7F3C6 !default; // $brand-warning: #FF6B6B !default;
+$brand-danger: #C44D58 !default;  // $brand-danger: #F394AA !default;  // $brand-danger: #C44D58 !default;
 
 //== Scaffolding
 //
 //## Settings for some of the most global styles.
 
 //** Background color for `<body>`.
-$body-bg: lighten($brand-primary, 80%) !default;
+$body-bg: lighten($brand-primary, 90%) !default;
 //** Global text color on `<body>`.
 $text-color: $gray-dark !default;
 
@@ -225,7 +225,7 @@ $legend-color: $gray-dark !default;
 $legend-border-color: #e5e5e5 !default;
 
 //** Background color for textual input addons
-$input-group-addon-bg: $gray-lighter !default;
+$input-group-addon-bg: $brand-primary !default;
 //** Border color for textual input addons
 $input-group-addon-border-color: $input-border !default;
 
@@ -718,9 +718,9 @@ $panel-border-radius: $border-radius-base !default;
 $panel-inner-border: #ddd !default;
 $panel-footer-bg: #f5f5f5 !default;
 
-$panel-default-text: $gray-dark !default;
-$panel-default-border: #ddd !default;
-$panel-default-heading-bg: #f5f5f5 !default;
+$panel-default-text: white !default;
+$panel-default-border: darken($brand-primary, 10%) !default;
+$panel-default-heading-bg: $brand-primary !default;
 
 $panel-primary-text: #fff !default;
 $panel-primary-border: $brand-primary !default;
