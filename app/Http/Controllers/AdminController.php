@@ -55,15 +55,15 @@ class AdminController extends Controller
         {
 
             Icon::firstOrCreate([
-                'url'  => "http://www.google.com/mapfiles/marker{$letter}.png",
+                'url'  => "//www.google.com/mapfiles/marker{$letter}.png",
                 'name' => "The letter {$letter}",
             ]);
             Icon::firstOrCreate([
-                'url'  => "https://mts.googleapis.com/vt/icon/name=icons/spotlight/spotlight-waypoint-a.png&text={$letter}&psize=11&color=ff000000&ax=44&ay=48&scale=1",
+                'url'  => "//mts.googleapis.com/vt/icon/name=icons/spotlight/spotlight-waypoint-a.png&text={$letter}&psize=11&color=ff000000&ax=44&ay=48&scale=1",
                 'name' => "The letter {$letter} in a green waypoint marker",
             ]);
             Icon::firstOrCreate([
-                'url'  => "https://mts.googleapis.com/vt/icon/name=icons/spotlight/spotlight-waypoint-b.png&text={$letter}&psize=11&color=ff000000&ax=44&ay=48&scale=1",
+                'url'  => "//mts.googleapis.com/vt/icon/name=icons/spotlight/spotlight-waypoint-b.png&text={$letter}&psize=11&color=ff000000&ax=44&ay=48&scale=1",
                 'name' => "The letter {$letter} in a red waypoint marker",
             ]);
         }
@@ -71,12 +71,12 @@ class AdminController extends Controller
         foreach (['red', 'blue', 'yellow', 'green', 'orange', 'purple', 'pink'] as $colour)
         {
             Icon::firstOrCreate([
-                'url'  => "http://www.google.com/intl/en_us/mapfiles/ms/micons/{$colour}-dot.png",
+                'url'  => "//www.google.com/intl/en_us/mapfiles/ms/micons/{$colour}-dot.png",
                 'name' => "A {$colour} dot",
             ]);
 
             Icon::firstOrCreate([
-                'url'  => "http://www.google.com/intl/en_us/mapfiles/ms/micons/{$colour}.png",
+                'url'  => "//www.google.com/intl/en_us/mapfiles/ms/micons/{$colour}.png",
                 'name' => "A {$colour} marker",
             ]);
 
@@ -86,23 +86,23 @@ class AdminController extends Controller
 
 
             Icon::firstOrCreate([
-                'url'  => "http://maps.google.com/mapfiles/kml/paddle/{$colour}-blank.png",
+                'url'  => "//maps.google.com/mapfiles/kml/paddle/{$colour}-blank.png",
                 'name' => "A {$colour} paddle",
             ]);
             Icon::firstOrCreate([
-                'url'  => "http://maps.google.com/mapfiles/kml/paddle/{$colour}-circle.png",
+                'url'  => "//maps.google.com/mapfiles/kml/paddle/{$colour}-circle.png",
                 'name' => "A {$colour} paddle",
             ]);
             Icon::firstOrCreate([
-                'url'  => "http://maps.google.com/mapfiles/kml/paddle/{$colour}-diamond.png",
+                'url'  => "//maps.google.com/mapfiles/kml/paddle/{$colour}-diamond.png",
                 'name' => "A {$colour} paddle",
             ]);
             Icon::firstOrCreate([
-                'url'  => "http://maps.google.com/mapfiles/kml/paddle/{$colour}-square.png",
+                'url'  => "//maps.google.com/mapfiles/kml/paddle/{$colour}-square.png",
                 'name' => "A {$colour} paddle",
             ]);
             Icon::firstOrCreate([
-                'url'  => "http://maps.google.com/mapfiles/kml/paddle/{$colour}-stars.png",
+                'url'  => "//maps.google.com/mapfiles/kml/paddle/{$colour}-stars.png",
                 'name' => "A {$colour} paddle",
             ]);
         }
