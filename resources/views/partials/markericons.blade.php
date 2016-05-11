@@ -67,7 +67,7 @@
             </p>
             <p>
                 <small>If you still can't find an icon you're happy with, head over to
-                    <a href="https://www.mapbox.com/maki-icons/#editor">Maki Icons</a> where you can customize their excellent free icons, then upload those here.
+                    <a target="_blank" href="https://www.mapbox.com/maki-icons/#editor">Maki Icons</a> where you can customize their excellent free icons, then upload those here.
                 </small>
             </p>
         </div>
