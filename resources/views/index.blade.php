@@ -47,7 +47,7 @@
             </div>
 
             <div class="form-group row">
-                <label>Dimensions <i class="fa fa-arrows-alt"></i></label>
+                <label>Dimensions <i class="fa fa-arrows"></i></label>
 
                 <div class="row">
                     <div class="col-sm-6">
