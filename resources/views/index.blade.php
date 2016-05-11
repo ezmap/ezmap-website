@@ -546,7 +546,11 @@
                 $('input[name="_method"]').val('POST');
                 $('#mainForm').attr('action', '{{ route('map.store') }}').submit();
             },
-
+            addSavedInfoWindow: function (marker, infoWindow) {
+                marker.addListener('click', function () {
+                    infoWindow.open(mainVue.map, marker);
+                });
+            },
             initMap: function () {
 
                 this.mapOptions.center = new google.maps.LatLng(this.lat, this.lng);
@@ -564,20 +568,19 @@
                 var savedMarkers = {!! $map->markers !!};
                 for (var i = 0; i < savedMarkers.length; i++) {
                     var savedMarker = savedMarkers[i];
+                    infowindow = new google.maps.InfoWindow(savedMarker.infoWindow);
+
                     var marker = new google.maps.Marker({
                         icon: savedMarker.icon,
                         position: new google.maps.LatLng(savedMarker.lat, savedMarker.lng),
-                        map: this.map,
+                        map: mainVue.map,
                         draggable: true,
                         title: savedMarker.title,
                         infoWindow: savedMarker.infoWindow
                     });
+                    this.addSavedInfoWindow(marker, infowindow); //because, scope, I hate javascript!
                     this.markers.push(marker);
-                    var infowindow = new google.maps.InfoWindow(marker.infoWindow);
-                    var map = this.map;
-                    marker.addListener('click', function () {
-                        infowindow.open(map, marker);
-                    });
+
                 }
                 @endif
 
