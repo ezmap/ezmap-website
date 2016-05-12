@@ -298,6 +298,7 @@
                 <p>Your code has been copied to your clipboard!</p>
             </div>
             <textarea class="form-control code resultcode" rows="10" v-on:click="copied" readonly style="cursor: pointer;">@include('partials.textareacode')</textarea>
+            <p>Test your code by pasting it into <a target="_blank" href="http://codepen.io/pen/?editors=1000">a new HTML CodePen</a>.</p>
         </div>
     </div>
 
