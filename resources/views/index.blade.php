@@ -147,6 +147,15 @@
                                 <th>Change Icon</th>
                                 <th>Center Here</th>
                                 <th>Delete Marker</th>
+                                <th v-show="markers.length > 1 && false">Join Markers</th>
+                            </tr>
+                            <tr v-show="hasDirections">
+                                <td colspan=4></td>
+                                <td>
+                                    <button class="form-control btn btn-danger" v-on:click.prevent="clearDirections">
+                                        <i class="fa fa-trash"></i> Delete All Joined Routes?
+                                    </button>
+                                </td>
                             </tr>
                             <tr v-for="(index, marker) in markers">
                                 <td>
@@ -165,6 +174,14 @@
                                 <td>
                                     <button v-on:click.prevent="removeMarker(index)" class="btn btn-danger btn-sm form-control">
                                         <i class="fa fa-trash fa-fw"></i>
+                                    </button>
+                                </td>
+                                <td v-show="markers.length > 1 && false">
+                                    <button v-show="!joiningMarkers" v-on:click.prevent="beginJoin(index)" class="btn btn-danger btn-sm form-control">
+                                        <i class="fa fa-flag-o fa-fw"></i>
+                                    </button>
+                                    <button v-show="joiningMarkers && joinStart != markers[index]" v-on:click.prevent="endJoin(index)" class="btn btn-danger btn-sm form-control">
+                                        <i class="fa fa-flag-checkered fa-fw"></i>
                                     </button>
                                 </td>
                             </tr>
@@ -296,6 +313,9 @@
     Vue.filter('nl2br', function (value) {
         return value.replace(/\n/g, '<br>');
     });
+    Vue.filter('jsonShrink', function (value) {
+        return value.replace(/\n/g, '');
+    });
     var mainVue = new Vue({
         el: '#app',
         data: {
@@ -305,6 +325,7 @@
             currentTheme: {
                 id: "{{ $map->theme_id ?? 0 }}"
             },
+            directionsDisplays: [],
             doubleClickZoom: {{ $map->mapOptions->doubleClickZoom ?? 'true' }},
             height: {{ $map->height ?? 420 }} +0,
             infoDescription: '',
@@ -318,6 +339,9 @@
             mapcontainer: '{!! $map->mapContainer ?? 'ez-map' !!}',
             mapLoaded: false,
             markers: [],
+            joiningMarkers: false,
+            joinStart: null,
+            joinStop: null,
             responsive: @if( !empty($map) && ($map->responsiveMap) ) true @else false @endif,
             show: true,
             width: {{ $map->width ?? 560 }} +0,
@@ -357,6 +381,9 @@
             ]
         },
         computed: {
+            hasDirections: function() {
+               return (this.directionsDisplays.length > 0);
+            },
 
             styleObject: function () {
                 if (this.responsive) {
@@ -390,6 +417,44 @@
             }
         },
         methods: {
+            clearDirections: function () {
+                for(var i = 0; i<this.directionsDisplays.length;i++ )
+                {
+                    this.directionsDisplays[i].setMap(null);
+                }
+                this.directionsDisplays = [];
+            },
+            beginJoin: function (markerIndex) {
+                this.joiningMarkers = true;
+                this.joinStart = this.markers[markerIndex];
+            },
+            endJoin: function (markerIndex) {
+                this.joiningMarkers = false;
+                this.joinStop = this.markers[markerIndex];
+                this.calcRoute(this.joinStart, this.joinStop);
+            },
+            calcRoute: function (start, end) {
+                var displayer = new google.maps.DirectionsRenderer({
+                    draggable: true,
+                    suppressMarkers: true,
+                    preserveViewport: true
+                });
+                var directionsService = new google.maps.DirectionsService();
+                var request = {
+                    origin: start.position,
+                    destination: end.position,
+                    travelMode: google.maps.TravelMode.DRIVING
+                };
+                directionsService.route(request, function (response, status) {
+                    if (status == google.maps.DirectionsStatus.OK) {
+                        displayer.setDirections(response);
+                        displayer.setMap(mainVue.map);
+                        mainVue.directionsDisplays.push(displayer);
+                    } else {
+                        alert("Route failed: " + status);
+                    }
+                });
+            },
             setTheme: function (event) {
                 element = $(event.target);
                 if (element.hasClass('theme-thumb')) {
@@ -430,8 +495,8 @@
                 return '';
             },
             mapStyling: function () {
-                var str = '#' + this.mapcontainer + '{\n';
-                str += 'height: ' + this.styleObject.height + ';\nwidth: ' + this.styleObject.width + ';';
+                var str = '#' + this.mapcontainer + '{';
+                str += 'height: ' + this.styleObject.height + ';width: ' + this.styleObject.width + ';';
                 str += '}';
                 return str
             },
@@ -527,7 +592,9 @@
                         map: this.map,
                         draggable: true,
                         title: 'No Title',
-                        infoWindow: {content: ''}
+                        infoWindow: {content: ''},
+                        startsRoutes: [],
+                        endsRoutes: []
                     });
                     this.markers.push(marker);
                     $('#markerId').val(this.markers.length - 1);
@@ -551,6 +618,7 @@
                     infoWindow.open(mainVue.map, marker);
                 });
             },
+
             initMap: function () {
 
                 this.mapOptions.center = new google.maps.LatLng(this.lat, this.lng);
@@ -582,7 +650,8 @@
                     this.markers.push(marker);
 
                 }
-                @endif
+                        @endif
+                var wtf; // space weirndess - ignore this, stupid templating engines and script engines not playing nicely
 
                 google.maps.event.addListener(this.map, 'resize', this.centerchanged);
                 google.maps.event.addListener(this.map, 'center_changed', this.mapmoved);
