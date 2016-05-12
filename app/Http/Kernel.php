@@ -14,7 +14,7 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
-        \Spatie\Pjax\Middleware\FilterIfPjax::class,
+
 //        \GrahamCampbell\HTMLMin\Http\Middleware\MinifyMiddleware::class,
     ];
 
@@ -50,6 +50,7 @@ class Kernel extends HttpKernel
         'guest'      => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle'   => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'admin'      => \App\Http\Middleware\MustBeAdmin::class,
+        'pjax'       => \Spatie\Pjax\Middleware\FilterIfPjax::class,
 
     ];
 }

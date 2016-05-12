@@ -16,8 +16,8 @@ class MustBeAdmin
      */
     public function handle($request, Closure $next)
     {
-        if ($request->user()->id != 1) {
-            return redirect('home');
+        if (!Auth::check() || $request->user()->id != 1) {
+            return redirect('/');
         }
 
         return $next($request);

@@ -16,27 +16,25 @@ Route::get('/', function ()
     $themes = App\Theme::orderBy('name')->paginate(24);
 
     return view('index', compact('themes'));
-})->middleware(['guest']);
+})->middleware(['guest', 'pjax']);
 
 
 Route:: get('test', function ()
 {
     return view('test');
-});
+})->middleware('admin');
 
 Route::auth();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('admin', 'AdminController@index');
-Route::post('admin', 'SnazzyMapsController@populateThemes')->name('populateThemes');
+Route::post('admin', 'SnazzyMapsController@populateThemes')->name('populateThemes')->middleware('admin');
 
 Route::post('addNewIcon', 'HomeController@addNewIcon')->name('addNewIcon');
 Route::post('deleteIcon', 'HomeController@deleteIcon')->name('deleteIcon');
 
 Route::post('addMarkerIcon', 'AdminController@addMarkerIcon')->name('addMarkerIcon');
 Route::get('AZPopulate', 'AdminController@AZPopulate')->name('AZPopulate');
-
-Route::get('snazzymaps', 'SnazzyMapsController@index')->name('snazzymaps');
 
 Route::resource('map', 'MapController');

@@ -9,14 +9,6 @@ use App\Http\Requests;
 
 class SnazzyMapsController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-
-
-
     public function populateThemes(Request $request)
     {
 
