@@ -16,6 +16,8 @@ class AdminController extends Controller
     public function __construct()
     {
         $this->middleware(['admin']);
+        $this->middleware('pjax', ['only' => ['index']]);
+
     }
 
     public function index()
@@ -106,8 +108,6 @@ class AdminController extends Controller
                 'name' => "A {$colour} paddle",
             ]);
         }
-
-
 
 
         $files = array_values(array_diff(scandir(__DIR__ . '/../../../public/icons/pngs'), ['.', '..']));
