@@ -285,7 +285,6 @@
     <div class="col-sm-7 col-sm-offset-1 theresults">
         <div class="row">
             <h3>Your Map Result</h3>
-            <p>What you see here is pretty much what your code will give you, with the exception that your markers won't be draggable.</p>
             <hr>
             <div id="map-container" class="map-container">
                 <div id="map" class="map" v-show="show" :style="styleObject"></div>
