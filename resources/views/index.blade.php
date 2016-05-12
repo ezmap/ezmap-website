@@ -481,7 +481,7 @@
                 for (var i = 0; i < this.markers.length; i++) {
                     var marker = this.markers[i];
                     str += 'var marker' + i + ' = new google.maps.Marker({icon: "' + marker.icon + '", position: new google.maps.LatLng(' + marker.position.lat() + ', ' + marker.position.lng() + '), map: map});\n';
-                    if (marker.infoWindow) {
+                    if (marker.infoWindow.content) {
                         str += 'var infowindow' + i + ' = new google.maps.InfoWindow({content: ' + JSON.stringify(marker.infoWindow.content) + ',map: map});\n';
                         str += "marker" + i + ".addListener('click', function () { infowindow" + i + ".open(map, marker" + i + ") ;});infowindow" + i + ".close();\n";
                     }
