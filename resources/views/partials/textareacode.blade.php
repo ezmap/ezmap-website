@@ -9,7 +9,6 @@
   }
 google.maps.event.addDomListener(window, 'load', init);
 &lt;/script>
-
 &lt;style>
   @{{ mapStyling() }}
 &lt;/style>
