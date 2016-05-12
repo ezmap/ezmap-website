@@ -54,8 +54,8 @@
 <footer class="footer">
     <div class="container">
         <p style="margin-top:1.25em;">© {{ date('Y') }}
-            <a target="_blank" href="//billyfagan.co.uk">Billy Fagan</a>. This tool abides by the
-            <a target="_blank" href="https://www.google.co.uk/permissions/geoguidelines.html">Google Permissions Guidelines</a>.
+            <a target="_blank" href="//billyfagan.co.uk">Billy Fagan</a>. This tool abides by Google's
+            <a target="_blank" href="https://www.google.co.uk/permissions/geoguidelines.html">Permissions Guidelines</a>.
         </p>
     </div>
 </footer>
