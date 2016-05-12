@@ -155,7 +155,6 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        GrahamCampbell\HTMLMin\HTMLMinServiceProvider::class,
 
     ],
 
@@ -202,7 +201,6 @@ return [
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
-        'HTMLMin'   => GrahamCampbell\HTMLMin\Facades\HTMLMin::class,
     ],
 
 ];
