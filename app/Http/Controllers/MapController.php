@@ -95,9 +95,9 @@ class MapController extends Controller
     {
         $this->authorize($map);
 
-        $map->title         = $request->has('title') ? $request->input('title') : $map->title;
-        $map->apiKey        = $request->has('apiKey') ? $request->input('apiKey') : $map->apiKey;
-        $map->mapContainer  = $request->has('mapContainer') ? $request->input('mapContainer') : $map->mapContainer;
+        $map->title         = $request->has('title') ? $request->input('title') : '';
+        $map->apiKey        = $request->has('apiKey') ? $request->input('apiKey') : '';
+        $map->mapContainer  = $request->has('mapContainer') ? $request->input('mapContainer') : 'ez-map';
         $map->latitude      = $request->has('latitude') ? $request->input('latitude') : $map->latitude;
         $map->longitude     = $request->has('longitude') ? $request->input('longitude') : $map->longitude;
         $map->markers       = $request->has('markers') ? $request->input('markers') : $map->markers;
