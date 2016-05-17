@@ -50,8 +50,13 @@ img.theme-thumb {
 }
 @media (min-width: $screen-sm-min) {
   .theresults {
-    position: fixed;
+    position: absolute;
+    top: 65px;
     right: 2em;
+    &.moved {
+      position: fixed;
+      top: 0;
+    }
   }
 }
 

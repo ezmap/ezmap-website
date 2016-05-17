@@ -2,10 +2,10 @@
     $(window).on('scroll', function(){
         if($(window).scrollTop() > 65)
         {
-            $('.theresults').css({position: "fixed", top: "0"});
+            $('.theresults').addClass("moved");
         }
         else {
-            $('.theresults').css({position: "absolute", top: "65px"});
+            $('.theresults').removeClass("moved");
         }
     });
 })();
