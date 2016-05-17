@@ -511,7 +511,7 @@
             },
             mapStyling: function () {
                 var str = '#' + this.mapcontainer + '{';
-                str += 'height: ' + this.styleObject.height + ';width: ' + this.styleObject.width + ';';
+                str += 'min-height:150px;min-width:150px;height: ' + this.styleObject.height + ';width: ' + this.styleObject.width + ';';
                 str += '}';
                 return str
             },

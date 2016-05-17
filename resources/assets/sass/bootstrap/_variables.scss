@@ -35,6 +35,10 @@ $brand-danger: #f44336 !default; // $brand-danger: #F394AA !default;  // $brand-
 //** Background color for `<body>`.
 $body-bg-image: linear-gradient(to right, $grey-lighter 0%, $grey-lighter 37.5%, white 37.5%, white 100%) !default;
 $body-bg: white !default;
+
+$brand-shadow: 0 1px 4px rgba(0, 0, 0, 0.3) !default;
+$brand-shadow-up: 0 -1px 4px rgba(0, 0, 0, 0.3) !default;
+
 //** Global text color on `<body>`.
 $text-color: $gray-dark !default;
 
