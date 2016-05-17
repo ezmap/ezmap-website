@@ -23,11 +23,13 @@ div.map img {
   max-height: none;
 }
 
-h4.theme-title {
+h4.theme-title,
+div#snazzyMapsThemes p {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
 
 img.theme-thumb {
   cursor: pointer;
@@ -47,15 +49,11 @@ img.theme-thumb {
   background-position: 0 0, 10px 10px;
 }
 
-.theform,
 .theresults {
-  top: -20px;
+  position: fixed;
+  right: 2em;
 }
 
-.main-app {
-  //border-top: .5em double $brand-primary;
-  padding-top: 20px;
-}
 
 .navbar {
   margin-bottom: .1em;
@@ -72,7 +70,7 @@ body {
 }
 @media (min-width: $screen-sm-min) {
   .snazzrow {
-    background: white;
+    //background: white;
   }
 }
 

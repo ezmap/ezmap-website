@@ -320,7 +320,9 @@
         <hr class="invisible">
     </div>
     <div class="row snazzrow">
-        @include('partials.snazzymaps')
+        <div class="col-xs-4">
+            @include('partials.snazzymaps')
+        </div>
     </div>
 @endsection
 @push('scripts')
