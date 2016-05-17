@@ -2,7 +2,6 @@
 // Scaffolding
 // --------------------------------------------------
 
-
 // Reset the box-sizing
 //
 // Heads up! This reset may cause conflicts with some third-party widgets.
@@ -11,17 +10,17 @@
 * {
   @include box-sizing(border-box);
 }
+
 *:before,
 *:after {
   @include box-sizing(border-box);
 }
 
-
 // Body reset
 
 html {
   font-size: 10px;
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 body {
@@ -29,7 +28,9 @@ body {
   font-size: $font-size-base;
   line-height: $line-height-base;
   color: $text-color;
-  background-color: $body-bg;
+  @media (min-width: $screen-sm-min) {
+    background-image: $body-bg-image;
+  }
 }
 
 // Reset fonts for relevant elements
@@ -41,7 +42,6 @@ textarea {
   font-size: inherit;
   line-height: inherit;
 }
-
 
 // Links
 
@@ -60,7 +60,6 @@ a {
   }
 }
 
-
 // Figures
 //
 // We reset this here because previously Normalize had no `figure` margins. This
@@ -69,7 +68,6 @@ a {
 figure {
   margin: 0;
 }
-
 
 // Images
 
@@ -107,16 +105,14 @@ img {
   border-radius: 50%; // set radius in percents
 }
 
-
 // Horizontal rules
 
 hr {
-  margin-top:    $line-height-computed;
+  margin-top: $line-height-computed;
   margin-bottom: $line-height-computed;
   border: 0;
   border-top: 1px solid $hr-border;
 }
-
 
 // Only display content to screen readers
 //
@@ -129,7 +125,7 @@ hr {
   margin: -1px;
   padding: 0;
   overflow: hidden;
-  clip: rect(0,0,0,0);
+  clip: rect(0, 0, 0, 0);
   border: 0;
 }
 
@@ -148,7 +144,6 @@ hr {
     clip: auto;
   }
 }
-
 
 // iOS "clickable elements" fix for role="button"
 //

@@ -22,18 +22,19 @@ $grey: $gray;
 $grey-light: $gray-light;
 $grey-lighter: $gray-lighter;
 
-$brand-primary: #54244C !default; // $brand-primary: #48131B !default; // $brand-primary: #556270 !default;
-$brand-success: #C7F464 !default; // $brand-success: #B8DC9E !default; // $brand-success: #C7F464 !default;
-$brand-info: #4ECDC4 !default;    // $brand-info: #57ADA2 !default;    // $brand-info: #4ECDC4 !default;
-$brand-warning: #FF6B6B !default; // $brand-warning: #F7F3C6 !default; // $brand-warning: #FF6B6B !default;
-$brand-danger: #C44D58 !default;  // $brand-danger: #F394AA !default;  // $brand-danger: #C44D58 !default;
+$brand-primary: #2196f3 !default; // $brand-primary: #48131B !default; // $brand-primary: #556270 !default;
+$brand-success: #4caf50 !default; // $brand-success: #B8DC9E !default; // $brand-success: #C7F464 !default;
+$brand-info: #00bcd4 !default; // $brand-info: #57ADA2 !default;    // $brand-info: #4ECDC4 !default;
+$brand-warning: #ff9800 !default; // $brand-warning: #F7F3C6 !default; // $brand-warning: #FF6B6B !default;
+$brand-danger: #f44336 !default; // $brand-danger: #F394AA !default;  // $brand-danger: #C44D58 !default;
 
 //== Scaffolding
 //
 //## Settings for some of the most global styles.
 
 //** Background color for `<body>`.
-$body-bg: #FFFAF0 !default;
+$body-bg-image: linear-gradient(to right, $grey-lighter 0%, $grey-lighter 37.5%, white 37.5%, white 100%) !default;
+$body-bg: white !default;
 //** Global text color on `<body>`.
 $text-color: $gray-dark !default;
 
@@ -57,7 +58,7 @@ $font-family-base: $font-family-sans-serif !default;
 $font-size-base: 16px !default;
 $font-size-large: ceil(($font-size-base * 1.25)) !default; // ~18px
 $font-size-small: ceil(($font-size-base * 0.85)) !default; // ~12px
-$font-size-massive: 50px;
+$font-size-massive: 2em !default;
 
 $font-size-h1: floor(($font-size-base * 2.6)) !default; // ~36px
 $font-size-h2: floor(($font-size-base * 2.15)) !default; // ~30px

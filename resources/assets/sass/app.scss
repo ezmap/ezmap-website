@@ -68,6 +68,11 @@ html {
 body {
   margin-bottom: 60px;
 }
+@media (min-width: $screen-sm-min) {
+  .snazzrow {
+    background: white;
+  }
+}
 
 .footer {
   position: absolute;
