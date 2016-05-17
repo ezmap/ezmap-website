@@ -52,12 +52,13 @@ img.theme-thumb {
 }
 
 .main-app {
-  border-top: .5em double $brand-primary;
+  //border-top: .5em double $brand-primary;
   padding-top: 20px;
 }
 
 .navbar {
   margin-bottom: .1em;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 html {
