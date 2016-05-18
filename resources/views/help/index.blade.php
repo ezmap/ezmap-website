@@ -289,9 +289,9 @@
                 </div>
                 <div id="faq10">
                     <p class="lead">Themes</p>
-                    <p>The brilliant people at <a href="https://snazzymaps.com/">Snazzy Maps</a> have made their theme
+                    <p>The brilliant people at <a target="_blank" href="https://snazzymaps.com/">Snazzy Maps</a> have made their theme
                        repository available to us for you to use on your maps. We currently have 1000 themes in our
-                       platform but if you see one on <a href="https://snazzymaps.com/">Snazzy Maps</a> that we don't
+                       platform but if you see one on <a target="_blank" href="https://snazzymaps.com/">Snazzy Maps</a> that we don't
                        have, let us know and we'll add it.</p>
                     <p>If you want to try a theme on your map just click the preview icon for it and your map will be
                        instantly updated. If you want to remove a theme back to the Google Map defaults you can click
