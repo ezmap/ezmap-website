@@ -38,3 +38,8 @@ Route::post('addMarkerIcon', 'AdminController@addMarkerIcon')->name('addMarkerIc
 Route::get('AZPopulate', 'AdminController@AZPopulate')->name('AZPopulate');
 
 Route::resource('map', 'MapController');
+
+Route::get('help', function ()
+{
+    return view('help.index');
+})->name('help');

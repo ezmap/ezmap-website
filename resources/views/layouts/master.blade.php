@@ -6,7 +6,7 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
     <link rel="icon" type="image/png" href="{{ url('favicon.png') }}"/>
-    <link href='https://fonts.googleapis.com/css?family=Noto+Sans|Noto+Serif|Kanit|Cutive Mono' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Noto+Sans%7CNoto+Serif%7CKanit%7CCutive+Mono' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/css/app.css">
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5AXVyYFfagDPR4xi9U-ti9u5v_0iIbk8"></script>
     <script src="/js/all.js"></script>
@@ -24,9 +24,9 @@
             <a class="navbar-brand" href="{{ url('/') }}">EZ Map <i class="fa fa-map-o"></i></a>
         </div>
         <div class="collapse navbar-collapse" id="app-navbar-collapse">
-            {{--<ul class="nav navbar-nav">--}}
-            {{--<li><a href="{{ url('/home') }}">Home</a></li>--}}
-            {{--</ul>--}}
+            <ul class="nav navbar-nav">
+            <li><a href="{{ route('help') }}">Help</a></li>
+            </ul>
             <ul class="nav navbar-nav navbar-right">
                 @if (Auth::guest())
                     <li><a href="{{ url('/login') }}">Login</a></li>

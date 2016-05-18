@@ -17,8 +17,8 @@
                 @if(($i+2) % 6 == 0)
                     <div class="row">
                         @endif
-                        <div class="col-xs-2 text-center" id="youricon{{ $icon->id }}">
-                            <img class="img img-thumbnail markericon" src="{{ $icon->url }}" alt="{{ $icon->name }}" title="{{ $icon->name }}" v-on:click="setMarkerIcon" data-for-marker="0" data-dismiss="modal">
+                        <div class="col-xs-2" id="youricon{{ $icon->id }}">
+                            <img class="img img-thumbnail markericon center-block" src="{{ $icon->url }}" alt="{{ $icon->name }}" title="{{ $icon->name }}" v-on:click="setMarkerIcon" data-for-marker="0" data-dismiss="modal">
                             <form action="{{ route('deleteIcon') }}" method="POST" class="removeIconForm">
                                 {{ csrf_field() }}
                                 <input type="hidden" name="icon-id" value="{{ $icon->id }}">
@@ -41,8 +41,8 @@
             <h4>Our Icons</h4>
         </div>
     </div>
-    <div class="col-xs-2 text-center">
-        <img class="img img-thumbnail markericon" src="https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi.png" alt="Standard Marker" v-on:click="setMarkerIcon" data-for-marker="0" data-dismiss="modal">
+    <div class="col-xs-2">
+        <img class="img img-thumbnail markericon center-block" src="https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi.png" alt="Standard Marker" v-on:click="setMarkerIcon" data-for-marker="0" data-dismiss="modal">
     </div>
     @for($i = 0; $i < $siteIcons->count();  $i++)
         @php
@@ -51,8 +51,8 @@
         @if(($i+2) % 6 == 0)
             <div class="row">
                 @endif
-                <div class="col-xs-2 text-center">
-                    <img class="img img-thumbnail markericon" src="{{ $icon->url }}" alt="{{ $icon->name }}" title="{{ $icon->name }}" v-on:click="setMarkerIcon" data-for-marker="0" data-dismiss="modal">
+                <div class="col-xs-2">
+                    <img class="img img-thumbnail markericon center-block" src="{{ $icon->url }}" alt="{{ $icon->name }}" title="{{ $icon->name }}" v-on:click="setMarkerIcon" data-for-marker="0" data-dismiss="modal">
                 </div>
                 @if(($i+2) % 6 == 0)
             </div>
