@@ -32,7 +32,9 @@
                         <label for="apikey">API key</label>
                         <small>
                             <a target="_blank" href="https://developers.google.com/maps/documentation/javascript/">Get
-                                an API key</a>
+                                                                                                                   an
+                                                                                                                   API
+                                                                                                                   key</a>
                         </small>
                         <input id="apikey" name="apiKey" class="form-control" type="text" placeholder="API Key" v-model="apikey">
                         <div class="form-group">
@@ -160,7 +162,7 @@
                             </tr>
                             <tr v-for="(index, marker) in markers">
                                 <td>
-                                    <strong>@{{ marker.title }}</strong>
+                                    <input type="text" v-model="marker.title" contenteditable value="@{{ marker.title }}">
                                 </td>
                                 <td>
                                     <button v-on:click.prevent="changeMarkerIcon(index)" class="btn btn-info btn-sm form-control">
@@ -198,37 +200,38 @@
                     <div class="row">
                         <div class="checkbox">
                             <label for="streetViewControl"><input id="streetViewControl" name="mapOptions[showStreetViewControl]" type="checkbox" v-model="mapOptions.streetViewControl" v-on:change="optionschange">Streetview
-                                Control</label>
+                                                                                                                                                                                                                     Control</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="checkbox">
                             <label for="mapMaker"><input id="mapMaker" name="mapOptions[mapMakerTiles]" type="checkbox" v-model="mapOptions.mapMaker" v-on:change="optionschange">Use
-                                "<a href="http://www.google.com/mapmaker" target="_blank">MapMaker</a>" Tiles</label>
+                                                                                                                                                                                  "<a href="http://www.google.com/mapmaker" target="_blank">MapMaker</a>"
+                                                                                                                                                                                  Tiles</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="checkbox">
                             <label for="scalecontrol"><input id="scalecontrol" name="mapOptions[showScaleControl]" type="checkbox" v-model="mapOptions.scaleControl" v-on:change="optionschange">Scale
-                                Control</label>
+                                                                                                                                                                                                 Control</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="checkbox">
                             <label for="fullscreenControl"><input id="fullscreenControl" name="mapOptions[showFullScreenControl]" type="checkbox" v-model="mapOptions.fullscreenControl" v-on:change="optionschange">Fullscreen
-                                Control</label>
+                                                                                                                                                                                                                     Control</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="checkbox">
                             <label for="draggable"><input id="draggable" name="mapOptions[draggable]" type="checkbox" v-model="mapOptions.draggable" v-on:change="optionschange">Draggable
-                                Map</label>
+                                                                                                                                                                                 Map</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="checkbox">
                             <label for="keyboardShortcuts"><input id="keyboardShortcuts" name="mapOptions[keyboardShortcuts]" id="keyboardShortcuts" type="checkbox" v-model="mapOptions.keyboardShortcuts" v-on:change="optionschange">Keyboard
-                                Shortcuts</label>
+                                                                                                                                                                                                                                        Shortcuts</label>
                         </div>
                     </div>
                 </div>
@@ -237,30 +240,33 @@
                     <div class="row">
                         <div class="checkbox">
                             <label for="clickableIcons"><input id="clickableIcons" name="mapOptions[clickableIcons]" type="checkbox" v-model="mapOptions.clickableIcons" v-on:change="optionschange">Clickable
-                                Points of Interest</label>
+                                                                                                                                                                                                     Points
+                                                                                                                                                                                                     of
+                                                                                                                                                                                                     Interest</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="checkbox">
                             <label for="zoomcontrol"><input id="zoomcontrol" name="mapOptions[showZoomControl]" type="checkbox" v-model="mapOptions.zoomControl" v-on:change="optionschange">Zoom
-                                Control</label>
+                                                                                                                                                                                             Control</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="checkbox">
                             <label for="doubleClickZoom"><input id="doubleClickZoom" name="mapOptions[doubleClickZoom]" type="checkbox" v-model="doubleClickZoom" v-on:change="optionschange">Doubleclick
-                                Zoom</label>
+                                                                                                                                                                                              Zoom</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="checkbox">
                             <label for="scrollwheel"><input id="scrollwheel" name="mapOptions[scrollWheel]" type="checkbox" v-model="mapOptions.scrollwheel" v-on:change="optionschange">Scrollwheel
-                                Zoom</label>
+                                                                                                                                                                                         Zoom</label>
                         </div>
                     </div>
                     <div class="row">
                         <button class="btn btn-primary" v-show="themeApplied" v-on:click.prevent="clearTheme">Clear
-                            Applied Theme
+                                                                                                              Applied
+                                                                                                              Theme
                         </button>
                     </div>
                 </div>
@@ -312,7 +318,9 @@
             </div>
             <textarea class="form-control code resultcode" rows="10" v-on:click="copied" readonly style="cursor: pointer;">@include('partials.textareacode')</textarea>
             <p>Test your code by pasting it into <a target="_blank" href="http://codepen.io/pen/?editors=1000">a new
-                    HTML CodePen</a>.</p>
+                                                                                                               HTML
+                                                                                                               CodePen</a>.
+            </p>
         </div>
     </div>
 
@@ -653,7 +661,6 @@
                 var savedMarkers = {!! $map->markers !!};
                 for (var i = 0; i < savedMarkers.length; i++) {
                     var savedMarker = savedMarkers[i];
-                    infowindow = new google.maps.InfoWindow(savedMarker.infoWindow);
 
                     var marker = new google.maps.Marker({
                         icon: savedMarker.icon,
@@ -663,7 +670,10 @@
                         title: savedMarker.title,
                         infoWindow: savedMarker.infoWindow
                     });
-                    this.addSavedInfoWindow(marker, infowindow); //because, scope, I hate javascript!
+                    if (savedMarker.infoWindow.content) {
+                        infowindow = new google.maps.InfoWindow(savedMarker.infoWindow);
+                        this.addSavedInfoWindow(marker, infowindow); //because, scope, I hate javascript!
+                    }
                     this.markers.push(marker);
 
                 }
