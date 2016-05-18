@@ -1,5 +1,5 @@
 @extends('layouts.master')
-
+@section('bodyclass', 'main-body')
 @section('appcontent')
     <div v-show="false" class="hidden">
         @include('partials.infowindow')
