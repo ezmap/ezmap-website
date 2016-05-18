@@ -162,7 +162,7 @@
                             </tr>
                             <tr v-for="(index, marker) in markers">
                                 <td>
-                                    <input type="text" v-model="marker.title" contenteditable value="@{{ marker.title }}">
+                                    <input type="text" v-model="marker.title" v-on:keyup="marker.setTitle(marker.title)" >
                                 </td>
                                 <td>
                                     <button v-on:click.prevent="changeMarkerIcon(index)" class="btn btn-info btn-sm form-control">
@@ -505,7 +505,7 @@
                 var str = '';
                 for (var i = 0; i < this.markers.length; i++) {
                     var marker = this.markers[i];
-                    str += 'var marker' + i + ' = new google.maps.Marker({icon: "' + marker.icon + '", position: new google.maps.LatLng(' + marker.position.lat() + ', ' + marker.position.lng() + '), map: map});\n';
+                    str += 'var marker' + i + ' = new google.maps.Marker({title: "' + marker.title + '", icon: "' + marker.icon + '", position: new google.maps.LatLng(' + marker.position.lat() + ', ' + marker.position.lng() + '), map: map});\n';
                     if (marker.infoWindow.content) {
                         str += 'var infowindow' + i + ' = new google.maps.InfoWindow({content: ' + JSON.stringify(marker.infoWindow.content) + ',map: map});\n';
                         str += "marker" + i + ".addListener('click', function () { infowindow" + i + ".open(map, marker" + i + ") ;});infowindow" + i + ".close();\n";
