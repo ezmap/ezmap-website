@@ -28,10 +28,11 @@
                             <li><a href="#faq7">Markers</a></li>
                             <li><a href="#faq8">Other Options</a></li>
                             <li><a href="#faq9">Save Map</a></li>
+                            <li><a href="#faq10">Themes</a></li>
                         </ul>
                     </li>
                 </ol>
-                <hr class="brand-shadow">
+                <hr>
                 <div id="faq0">
                     <p class="lead">Map Title</p>
                     <p>If you are signed in to your account, you can give your map a title so you can find it again in
@@ -41,7 +42,7 @@
                             to
                             save maps.</p>
                     </div>
-                    <hr class="brand-shadow">
+                    <hr>
                 </div>
                 <div id="faq1">
                     <p class="lead">What's an API Key?</p>
@@ -61,7 +62,7 @@
                             many
                             times your maps can be viewed each day.</p>
                     </div>
-                    <hr class="brand-shadow">
+                    <hr>
                 </div>
                 <div id="faq2">
                     <p class="lead">Map Container ID</p>
@@ -69,7 +70,7 @@
                         given so unless you have another element on your page with the same ID you don't probably
                         need
                         to change this.</p>
-                    <hr class="brand-shadow">
+                    <hr>
                 </div>
                 <div id="faq3">
                     <p class="lead">Dimensions</p>
@@ -79,7 +80,7 @@
                         responsive option your map will remain {{ trans('ezmap.centered') }} if the visitor re-sizes
                         the
                         page.</p>
-                    <hr class="brand-shadow">
+                    <hr>
                 </div>
                 <div id="faq4">
                     <p class="lead">Latitude & Longitude</p>
@@ -88,7 +89,7 @@
                         {{ trans('ezmap.center') }} your map at you can fill this in. Otherwise, just drag the map
                         around and these numbers
                         will update to match the current position.</p>
-                    <hr class="brand-shadow">
+                    <hr>
                 </div>
                 <div id="faq5">
                     <img class="img img-thumbnail pull-right brand-shadow" src="images/map-type-control.png" alt="map type control">
@@ -115,7 +116,7 @@
                             removing the control from the map itself.
                         </p>
                     </div>
-                    <hr class="brand-shadow">
+                    <hr>
                 </div>
                 <div id="faq6">
                     <p class="lead">Zoom Level</p>
@@ -123,7 +124,7 @@
                         right out) and around 21, depending on the particular map position can be used here. This reacts
                         to the current map zoom too so if you don't know how zoomed in you want, just zoom the map
                         itself an this field will update for you.</p>
-                    <hr class="brand-shadow">
+                    <hr>
                 </div>
                 <div id="faq7">
                     <p class="lead">Markers</p>
@@ -225,7 +226,7 @@
 
                         </li>
                     </ol>
-                    <hr class="brand-shadow">
+                    <hr>
                 </div>
                 <div id="faq8">
                     <p class="lead">Other Options</p>
@@ -307,7 +308,7 @@
                                 off this option stops this functionality.</p>
                         </li>
                     </ul>
-                    <hr class="brand-shadow">
+                    <hr>
 
                 </div>
                 <div id="faq9">
@@ -342,7 +343,7 @@
                         in
                         future
                         maps.</p>
-                    <hr class="brand-shadow">
+                    <hr>
                 </div>
                 <div id="faq10">
                     <p class="lead">Themes</p>
