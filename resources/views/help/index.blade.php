@@ -174,7 +174,7 @@
                                     drag markers on this map, the map produced for your site will not have draggable
                                     markers. This is purely to allow you to drag n drop markers to get them exactly
                                     where you want them.</p>
-                                <p>Top tip, try zooming right in to where you want your marker to mark before placing
+                                <p>Top tip, try zooming right in to where you want your marker before placing
                                     it, then zoom out for your actual map.</p>
                             </div>
                             <p>For each marker you create you'll see some more options. You can do the following
