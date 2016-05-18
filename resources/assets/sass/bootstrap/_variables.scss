@@ -515,21 +515,37 @@ $jumbotron-heading-font-size: ceil(($font-size-base * 4.5)) !default;
 //
 //## Define colors for form feedback states and, by default, alerts.
 
-$state-success-text: darken($brand-success, 50%) !default;
-$state-success-bg: $brand-success !default;
-$state-success-border: darken(adjust-hue($state-success-bg, -10), 5%) !default;
+//$state-success-text: darken($brand-success, 50%) !default;
+//$state-success-bg: $brand-success !default;
+//$state-success-border: darken(adjust-hue($state-success-bg, -10), 5%) !default;
+//
+//$state-info-text: darken($brand-info, 50%) !default;
+//$state-info-bg: darken($brand-info, 2%) !default;
+//$state-info-border: darken(adjust-hue($state-info-bg, -10), 7%) !default;
+//
+//$state-warning-text: darken($brand-warning, 50%) !default;
+//$state-warning-bg: lighten($brand-warning, 20%) !default;
+//$state-warning-border: darken(adjust-hue($state-warning-bg, -10), 5%) !default;
+//
+//$state-danger-text: darken($brand-danger, 50%) !default;
+//$state-danger-bg: lighten($brand-danger, 20%) !default;
+//$state-danger-border: darken(adjust-hue($state-danger-bg, -10), 5%) !default;
 
-$state-info-text: darken($brand-info, 50%) !default;
-$state-info-bg: darken($brand-info, 2%) !default;
-$state-info-border: darken(adjust-hue($state-info-bg, -10), 7%) !default;
+$state-success-text:             white !default;
+$state-success-bg:               rgba(76, 175, 80, 0.7) !default;
+$state-success-border:           transparent !default;//darken(adjust-hue($state-success-bg, -10), 5%) !default;
 
-$state-warning-text: darken($brand-warning, 50%) !default;
-$state-warning-bg: lighten($brand-warning, 20%) !default;
-$state-warning-border: darken(adjust-hue($state-warning-bg, -10), 5%) !default;
+$state-info-text:                white !default;
+$state-info-bg:                  rgba(33, 150, 243, 0.7) !default;
+$state-info-border:              transparent !default;//darken(adjust-hue($state-info-bg, -10), 7%) !default;
 
-$state-danger-text: darken($brand-danger, 50%) !default;
-$state-danger-bg: lighten($brand-danger, 20%) !default;
-$state-danger-border: darken(adjust-hue($state-danger-bg, -10), 5%) !default;
+$state-warning-text:             black !default;
+$state-warning-bg:               rgba(255, 193, 7, 0.7) !default;
+$state-warning-border:           transparent !default;//darken(adjust-hue($state-warning-bg, -10), 5%) !default;
+
+$state-danger-text:              white !default;
+$state-danger-bg:                rgba(244, 67, 54, 0.7) !default;
+$state-danger-border:            transparent !default;//darken(adjust-hue($state-danger-bg, -10), 5%) !default;
 
 //== Tooltips
 //

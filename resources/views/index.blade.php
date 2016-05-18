@@ -31,10 +31,7 @@
                     <div class="col-sm-12">
                         <label for="apikey">API key</label>
                         <small>
-                            <a target="_blank" href="https://developers.google.com/maps/documentation/javascript/">Get
-                                                                                                                   an
-                                                                                                                   API
-                                                                                                                   key</a>
+                            <a target="_blank" href="https://developers.google.com/maps/signup">Get an API key</a>
                         </small>
                         <input id="apikey" name="apiKey" class="form-control" type="text" placeholder="API Key" v-model="apikey">
                         <div class="form-group">
@@ -148,7 +145,7 @@
                             <tr>
                                 <th>Marker Title</th>
                                 <th>Change Icon</th>
-                                <th>Center Here</th>
+                                <th>{{ ucfirst(trans('ezmap.center')) }} Here</th>
                                 <th>Delete Marker</th>
                                 <th v-show="markers.length > 1 && false">Join Markers</th>
                             </tr>
@@ -162,7 +159,7 @@
                             </tr>
                             <tr v-for="(index, marker) in markers">
                                 <td>
-                                    <input type="text" v-model="marker.title" v-on:keyup="marker.setTitle(marker.title)" >
+                                    <input type="text" v-model="marker.title" v-on:keyup="marker.setTitle(marker.title)">
                                 </td>
                                 <td>
                                     <button v-on:click.prevent="changeMarkerIcon(index)" class="btn btn-info btn-sm form-control">
