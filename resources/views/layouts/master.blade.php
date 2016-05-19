@@ -5,10 +5,10 @@
     <meta name="Description" content="The easiest way to generate Google Maps for your own sites.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    {{--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">--}}
     <link rel="icon" type="image/png" href="{{ url('favicon.png') }}"/>
     <link href='https://fonts.googleapis.com/css?family=Noto+Sans%7CNoto+Serif%7CKanit%7CCutive+Mono' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="{{ elixir('css/app.css') }}">
 
 </head>
 <body id="app-layout" class="@yield('bodyclass')">
@@ -62,7 +62,7 @@
     </div>
 </footer>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5AXVyYFfagDPR4xi9U-ti9u5v_0iIbk8"></script>
-<script src="/js/all.js"></script>
+<script src="{{ elixir('js/all.js') }}"></script>
 @stack('scripts')
 <script>
     (function (i, s, o, g, r, a, m) {

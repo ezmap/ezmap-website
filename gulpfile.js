@@ -20,5 +20,6 @@ elixir(function (mix) {
             'vue.min.js',
             'pjax.js',
             'main.js'
-        ])
+        ]);
+    mix.version(['css/app.css', 'js/all.js']);
 });
