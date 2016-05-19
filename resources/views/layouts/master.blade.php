@@ -60,7 +60,7 @@
         </p>
     </div>
 </footer>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5AXVyYFfagDPR4xi9U-ti9u5v_0iIbk8"></script>
+<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5AXVyYFfagDPR4xi9U-ti9u5v_0iIbk8"></script>
 <script src="{{ elixir('js/all.js') }}"></script>
 @stack('scripts')
 <script>
