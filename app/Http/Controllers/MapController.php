@@ -77,11 +77,27 @@ class MapController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Map $map)
+    public function edit(Request $request, Map $map)
     {
         $this->authorize($map);
-
-        return view('index', compact('map'));
+        $sorts   = ['name', 'description', 'author', 'snazzy_id', 'id'];
+        $sort    = 'name';
+        $order   = 'asc';
+        $appends = [];
+        if ($request->has('sort') || $request->has('order'))
+        {
+            if ($request->has('sort'))
+            {
+                $sort = in_array($request->input('sort'), $sorts) ? $request->input('sort') : 'name';
+                $appends['sort'] = $sort;
+            }
+            if ($request->has('order'))
+            {
+                $order = ($request->input('order') == 'true') ? 'desc' : 'asc';
+                $appends['order'] = ($request->input('order') == 'desc') ? 'true' : 'false';
+            }
+        }
+        return view('index', compact('map','sort','order'));
     }
 
     /**
