@@ -41,7 +41,7 @@
             <h4>Our Icons</h4>
         </div>
     </div>
-    <div class="col-xs-2">
+    <div class="col-xs-3">
         <img class="img img-thumbnail markericon center-block" src="favicon.png" data-src="https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi.png" alt="Standard Marker" v-on:click="setMarkerIcon" data-for-marker="0" data-dismiss="modal">
     </div>
     @for($i = 0; $i < $siteIcons->count();  $i++)
