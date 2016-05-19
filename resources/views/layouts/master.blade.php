@@ -5,7 +5,6 @@
     <meta name="Description" content="The easiest way to generate Google Maps for your own sites.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    {{--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">--}}
     <link rel="icon" type="image/png" href="{{ url('favicon.png') }}"/>
     <link href='https://fonts.googleapis.com/css?family=Noto+Sans%7CNoto+Serif%7CKanit%7CCutive+Mono' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="{{ elixir('css/app.css') }}">
