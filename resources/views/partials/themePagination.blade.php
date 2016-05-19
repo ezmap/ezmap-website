@@ -1,6 +1,6 @@
 <ul class="pagination pagination-sm">
     @if($themes->currentPage() == 1 )
-        <li class="disabled"><i class="fa fa-fw fa-backward"></i></li>
+        <li class="disabled"><span><i class="fa fa-fw fa-backward"></i></span></li>
     @else
         <li><a href="{{ $themes->previousPageUrl() }}" rel="prev"><i class="fa fa-fw fa-backward"></i></a></li>
     @endif
