@@ -58,7 +58,7 @@
                         <div class="checkbox">
                             <label for="responsivemap">
                                 <input id="responsivemap" name="responsiveMap" type="checkbox" v-model="responsive" v-on:click="mapresized | debounce 500">
-                                <strong>Responsive width?</strong></label>
+                                <strong><abbr title="This means it's as wide as its parent container">Responsive</abbr> width?</strong></label>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -298,7 +298,8 @@
     </div>
     <div class="col-sm-7 col-sm-offset-1 theresults">
         <div class="row">
-            <h3>Your Map Result</h3>
+            <h3>Your Map Result<button class="btn btn-primary pull-right" v-on:click="copied"><i class="fa fa-clipboard"></i> Copy your code</button></h3>
+
             <hr>
             <div id="map-container" class="map-container">
                 <div id="map" class="map" v-show="show" :style="styleObject"></div>
@@ -306,7 +307,7 @@
         </div>
         <div class="row">
             <h3>Your map code
-                <small v-on:click="copied" style="cursor: pointer;">Click to copy</small>
+                <button class="btn btn-primary" v-on:click="copied"><i class="fa fa-clipboard"></i> Copy your code</button>
             </h3>
             <div v-if="codeCopied" class="alert alert-success fade in">
                 <p>Your code has been copied to your clipboard!</p>

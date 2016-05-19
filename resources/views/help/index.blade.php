@@ -348,21 +348,14 @@
                 <div id="faq10">
                     <p class="lead">Themes</p>
                     <p>The brilliant people at <a target="_blank" href="https://snazzymaps.com/">Snazzy Maps</a>
-                        have
-                        made their theme
-                        repository available to us for you to use on your maps. We currently have 1000 themes in
-                        our
-                        platform but if you see one on <a target="_blank" href="https://snazzymaps.com/">Snazzy
-                            Maps</a>
-                        that we don't
-                        have, let us know and we'll add it.</p>
-                    <p>If you want to try a theme on your map just click the preview icon for it and your map
-                        will be
-                        instantly updated. If you want to remove a theme back to the Google Map defaults you can
-                        click
+                        have made their theme repository available to me for you to use on your maps. There are
+                        currently {{ \App\Theme::count() }} themes in
+                        EZ Map but if you see one you want on <a target="_blank" href="https://snazzymaps.com/">Snazzy Maps</a>
+                        that's not here, <a target="_blank" href="http://twitter.com/home?status=@ez_map%20I%20want%20you%20to..."><i class="fa fa-twitter"></i> let me know</a> and I'll add it.</p>
+                    <p>If you want to try a theme on your map just click the preview icon for it and your map will be
+                        instantly updated. If you want to remove a theme back to the Google Map defaults you can click
                         <button class="btn btn-primary btn-xs">Clear Applied Theme</button>
-                        in "Other Options". This button only appears if you have a currently applied
-                        theme.
+                        in "Other Options". This button only appears if you have a currently applied theme.
                     </p>
                 </div>
 
