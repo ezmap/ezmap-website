@@ -25,7 +25,7 @@
                     <img src="{{ $theme->imageUrl }}" alt="{{ $theme->name }}" data-themeId="{{ $theme->id }}" class="img img-responsive img-thumbnail theme-thumb">
                     <p>
                         <small>By: @if(!empty($theme->author->url))
-                                <a href="{{ $theme->author->url }}">{{ $theme->author->name }}</a>@else{{ $theme->author->name }}@endif
+                                <a target="_blank" href="{{ $theme->author->url }}">{{ $theme->author->name }}</a>@else{{ $theme->author->name }}@endif
                         </small>
                     </p>
                 </div>
