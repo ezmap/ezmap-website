@@ -342,7 +342,7 @@
     Vue.filter('jsonShrink', function (value) {
         return value.replace(/\n/g, '');
     });
-    var mainVue = new Vue({
+    mainVue = new Vue({
         el: '#app',
         data: {
             addingPin: false,
