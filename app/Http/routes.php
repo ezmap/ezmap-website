@@ -13,7 +13,7 @@
 
 Route::get('/', function ()
 {
-    $themes = App\Theme::orderBy('name')->paginate(24);
+    $themes = App\Theme::orderBy('name')->paginate(25);
 
     return view('index', compact('themes'));
 })->middleware(['guest', 'pjax']);

@@ -27,22 +27,20 @@
                 </div>
             @endif
             <div class="form-group row">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <label for="apikey">API key</label>
-                        <small>
-                            <a target="_blank" href="https://developers.google.com/maps/signup">Get an API key</a>
-                        </small>
-                        <input id="apikey" name="apiKey" class="form-control" type="text" placeholder="API Key" v-model="apikey">
-                        <div class="form-group">
-                            <label for="mapcontainer">Map Container ID</label>
-                            <div class="input-group">
-                                <div class="input-group-addon"><i class="fa fa-hashtag fa-fw"></i></div>
-                                <input id="mapcontainer" name="mapContainer" class="form-control" type="text" placeholder="map" v-model="mapcontainer">
-                            </div>
-                        </div>
-                    </div>
+                <label for="apikey">API key</label>
+                <small>
+                    <a target="_blank" href="https://developers.google.com/maps/signup">Get an API key</a>
+                </small>
+                <input id="apikey" name="apiKey" class="form-control" type="text" placeholder="API Key" v-model="apikey">
+            </div>
+            <div class="form-group row">
 
+                <div class="form-group">
+                    <label for="mapcontainer">Map Container ID</label>
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="fa fa-hashtag fa-fw"></i></div>
+                        <input id="mapcontainer" name="mapContainer" class="form-control" type="text" placeholder="map" v-model="mapcontainer">
+                    </div>
                 </div>
             </div>
 
@@ -50,7 +48,7 @@
                 <label>Dimensions <i class="fa fa-arrows"></i></label>
 
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-lg-6">
                         <div class="input-group" v-show="!responsive">
                             <div class="input-group-addon"><i class="fa fa-arrows-h fa-fw"></i></div>
                             <label for="width"></label>
@@ -63,7 +61,7 @@
                                 <strong>Responsive width?</strong></label>
                         </div>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-lg-6">
                         <div class="input-group">
                             <div class="input-group-addon"><i class="fa fa-arrows-v fa-fw"></i></div>
                             <label for="height"></label><input class="form-control" id="height" name="height" v-model="height" type="number" v-on:change="mapresized | debounce 500" v-on:keyup="mapresized | debounce 500">
@@ -80,11 +78,11 @@
 
             <div class="form-group row">
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-lg-6">
                         <label for="latitude">Latitude <i class="fa fa-arrow-circle-o-up"></i></label>
                         <input id="latitude" name="latitude" class="form-control" type="number" step=".0000000000000001" placeholder="Latitude" v-model="lat" number v-on:change="centerchanged" v-on:keyup="centerchanged">
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-lg-6">
                         <label for="longitude">Longitude <i class="fa fa-arrow-circle-o-right"></i></label>
                         <input id="longitude" name="longitude" class="form-control" type="number" step=".0000000000000001" placeholder="Longitude" v-model="lng" number v-on:change="centerchanged" v-on:keyup="centerchanged">
                     </div>
@@ -325,7 +323,7 @@
         <hr class="invisible">
     </div>
     <div class="row snazzrow">
-        <div class="col-xs-4">
+        <div class="col-sm-4">
             @include('partials.snazzymaps')
         </div>
     </div>
