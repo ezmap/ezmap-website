@@ -368,7 +368,7 @@
             joiningMarkers: false,
             joinStart: null,
             joinStop: null,
-            responsive: @if( !empty($map) && ($map->responsiveMap) ) true @else false @endif,
+            responsive: @if( empty($map) || ($map->responsiveMap) ) true @else false @endif,
             show: true,
             width: {{ $map->width ?? 560 }} +0,
             themeApplied: @if( !empty($map) && ($map->theme_id != "0") ) true @else false @endif,
