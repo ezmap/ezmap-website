@@ -11,12 +11,7 @@
 |
 */
 
-Route::get('/', function ()
-{
-    $themes = App\Theme::orderBy('name')->paginate(25);
-
-    return view('index', compact('themes'));
-})->middleware(['guest', 'pjax']);
+Route::get('/', "GeneralController@index")->middleware(['guest', 'pjax'])->name('index');
 
 
 Route:: get('test', function ()
