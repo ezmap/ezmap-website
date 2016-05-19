@@ -1,4 +1,4 @@
-<div class="modal fade modal-primary" id="markerpinmodal" tabindex="-1" role="dialog">
+<div class="modal fade modal-primary modal-scrollable" id="markerpinmodal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -40,8 +40,7 @@
 </div>
 
 @push('scripts')
-<script>
-    (function () {
+
         $('#addNewIconForm').on('submit', function (event) {
             event.preventDefault();
             $.ajax({
@@ -76,7 +75,4 @@
 
         });
 
-
-    })();
-</script>
 @endpush

@@ -24,7 +24,7 @@
         </div>
         <div class="collapse navbar-collapse" id="app-navbar-collapse">
             <ul class="nav navbar-nav">
-            <li><a href="{{ route('help') }}">Help</a></li>
+                <li><a href="{{ route('help') }}">Help</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 @if (Auth::guest())
@@ -60,9 +60,27 @@
         </p>
     </div>
 </footer>
-<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5AXVyYFfagDPR4xi9U-ti9u5v_0iIbk8"></script>
-<script src="{{ elixir('js/all.js') }}"></script>
-@stack('scripts')
+<script type="text/javascript" src="/js/head.min.js"></script>
+<script>
+    head.js("https://maps.googleapis.com/maps/api/js?key=AIzaSyC5AXVyYFfagDPR4xi9U-ti9u5v_0iIbk8",
+            "{{ elixir('js/all.js') }}",
+            "/js/jquery-unveil.js",
+            function () {
+                go();
+            });
+</script>
+{{--<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5AXVyYFfagDPR4xi9U-ti9u5v_0iIbk8"></script>--}}
+{{--<script src="{{ elixir('js/all.js') }}"></script>--}}
+
+<script>
+    function go() {
+        @stack('scripts')
+        $('#markerpinmodal').on('scroll shown.bs.modal', function(){
+            $(window).scroll();
+        });
+        $('img').unveil(200);
+    }
+</script>
 <script>
     (function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;

@@ -16,6 +16,7 @@ elixir(function (mix) {
     mix.sass('app.scss')
         .scripts([
             'jquery.min.js',
+            // 'jquery-unveil.js',
             'bootstrap.min.js',
             'vue.min.js',
             'pjax.js',
