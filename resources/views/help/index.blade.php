@@ -169,7 +169,7 @@
                                 button. Clicking this will remove every marker you have created from the map in one
                                 go.
                             </p>
-                            <div class="alert alert-info"><p><i class="fa fa-info-circle"></i> Although
+                            <div class="alert alert-info brand-shadow"><p><i class="fa fa-info-circle"></i> Although
                                     you are able to
                                     drag markers on this map, the map produced for your site will not have draggable
                                     markers. This is purely to allow you to drag n drop markers to get them exactly
