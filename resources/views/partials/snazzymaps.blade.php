@@ -8,7 +8,7 @@
         <div id="snazzy-page">
             <script>
                 if (typeof mainVue != 'undefined') {
-                    mainVue.themes = [()
+                    mainVue.themes = [
                             @foreach($themes as $theme)
                         {
                             id: "{{ $theme->id }}",
