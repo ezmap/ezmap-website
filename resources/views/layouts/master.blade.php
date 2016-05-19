@@ -3,6 +3,7 @@
 <head>
     <title>@yield('title', 'EZ Map - Google Maps Made Easy')</title>
     <meta name="Description" content="The easiest way to generate Google Maps for your own sites.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
     <link rel="icon" type="image/png" href="{{ url('favicon.png') }}"/>
