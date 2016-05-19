@@ -53,7 +53,7 @@
             @foreach($themes as $theme)
                 <div class="col-xs-4 col-sm-6 col-lg-4"><h4 class="theme-title">
                         <a href="{{ $theme->url }}" target="_blank">{{ $theme->name }}</a></h4>
-                    <img src="{{ request()->ajax() ? $theme->imageUrl : 'favicon.png' }}" data-src="{{ $theme->imageUrl }}" alt="{{ $theme->name }}" data-themeId="{{ $theme->id }}" class="img img-responsive img-thumbnail theme-thumb">
+                    <img src="{{ request()->ajax() ? $theme->imageUrl : '/favicon.png' }}" data-src="{{ $theme->imageUrl }}" alt="{{ $theme->name }}" data-themeId="{{ $theme->id }}" class="img img-responsive img-thumbnail theme-thumb">
                     <p>
                         <small>By: @if(!empty($theme->author->url))
                                 <a target="_blank" href="{{ $theme->author->url }}">{{ $theme->author->name }}</a>@else{{ $theme->author->name }}@endif
