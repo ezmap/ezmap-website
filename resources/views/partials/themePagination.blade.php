@@ -1,8 +1,8 @@
 <ul class="pagination pagination-sm">
     @if($themes->currentPage() == 1 )
-        <li class="disabled"><span><i class="fa fa-fw fa-backward"></i></span></li>
+        <li class="disabled"><span><i class="fa fa-backward"></i></span></li>
     @else
-        <li><a href="{{ $themes->previousPageUrl() }}" rel="prev"><i class="fa fa-fw fa-backward"></i></a></li>
+        <li><a href="{{ $themes->previousPageUrl() }}" rel="prev"><i class="fa fa-backward"></i></a></li>
     @endif
     @for($i = 1; $i <= 3; $i++)
         @if($i == $themes->currentPage())
@@ -17,7 +17,7 @@
         <li class="{{ ($themes->currentPage() == 4) ? 'active':'' }}"><a href="{{ $themes->url(4) }}"> 4 </a></li>
 
     @elseif($themes->currentPage() >= 5)
-        <li class="disabled"><span><i class="fa fa-fw fa-ellipsis-h"></i></span></li>
+        <li class="disabled"><span><i class="fa fa-ellipsis-h"></i></span></li>
     @endif
 
     @for($i = $themes->currentPage() - 2; $i <= $themes->currentPage() + 2; $i++)
@@ -31,7 +31,7 @@
     @endfor
 
     @if($themes->currentPage() < $themes->lastPage() - 5)
-        <li class="disabled"><span><i class="fa fa-fw fa-ellipsis-h"></i></span></li>
+        <li class="disabled"><span><i class="fa fa-ellipsis-h"></i></span></li>
     @endif
     @for($i = $themes->lastPage() - 2; $i <= $themes->lastPage(); $i++)
         @if($i == $themes->currentPage())
@@ -42,8 +42,8 @@
     @endfor
 
     @if($themes->currentPage() == $themes->lastPage())
-        <li class="disabled"><i class="fa fa-fw fa-forward"></i></li>
+        <li class="disabled"><i class="fa fa-forward"></i></li>
     @else
-        <li><a href="{{ $themes->nextPageUrl() }}" rel="next"><i class="fa fa-fw fa-forward"></i></a></li>
+        <li><a href="{{ $themes->nextPageUrl() }}" rel="next"><i class="fa fa-forward"></i></a></li>
     @endif
 </ul>
