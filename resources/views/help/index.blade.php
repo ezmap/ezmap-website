@@ -365,7 +365,7 @@
 @endsection
 
 @push('scripts')
-<script>
+
     Vue.filter('nl2br', function (value) {
         return value.replace(/\n/g, '<br>');
     });
@@ -376,5 +376,4 @@
         el: '#app',
         data: {}
     });
-</script>
 @endpush

@@ -305,6 +305,9 @@
                 <ui-button class="pull-right" color="primary" raised v-on:click="copied" icon="content_paste">
                     Copy your code
                 </ui-button>
+                <ui-alert type="success" v-if="codeCopied">
+                    Your code has been copied to your clipboard!
+                </ui-alert>
                 <hr>
 
                 <div class="clearfix"></div>
