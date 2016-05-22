@@ -67,32 +67,25 @@
                 <div id="faq3">
                     <p class="lead">Dimensions</p>
                     <p>This is the width and height of your map in pixels. If you want your map to be as wide as
-                        whatever bit of the page you put it in, check the "Responsive Width" checkbox. If you choose
-                        the
-                        responsive option your map will remain {{ trans('ezmap.centered') }} if the visitor re-sizes
-                        the
+                        whatever bit of the page you put it in, select the "Responsive Width" option. If you choose the
+                        responsive option your map will remain {{ trans('ezmap.centered') }} if the visitor re-sizes the
                         page.</p>
                     <hr>
                 </div>
                 <div id="faq4">
                     <p class="lead">Latitude & Longitude</p>
                     <p>These numbers are the {{ trans('ezmap.center') }} of your map. If you know the latitude and
-                        longitude you want to
-                        {{ trans('ezmap.center') }} your map at you can fill this in. Otherwise, just drag the map
-                        around and these numbers
-                        will update to match the current position.</p>
+                        longitude you want to {{ trans('ezmap.center') }} your map at you can fill this in. Otherwise,
+                        just drag the map around and these numbers will update to match the current position.</p>
                     <hr>
                 </div>
                 <div id="faq5">
-                    <img class="img img-thumbnail pull-right brand-shadow" src="images/map-type-control.png" alt="map type control">
                     <p class="lead">Map Type Control</p>
+                    <img class="img img-thumbnail pull-right brand-shadow" src="images/map-type-control.png" alt="map type control">
                     <p>The "Map Type" Control is the control in the top-left of a map that determines the basic look
                         of
-                        the map. You can use this checkbox to remove the control from the map altogether.
-                    </p>
-                    <p>Alternatively you can use the selector to choose whether to display this control as buttons
-                        or as
-                        a dropdown.</p>
+                        the map. You can use the selector to choose whether to display this control as buttons
+                        or as a dropdown.</p>
                     <div class="clearfix"></div>
                     <div id="faq5.1" class="col-xs-offset-1">
                         <p class="lead">Map Type</p>
@@ -213,6 +206,9 @@
                 <div id="faq8">
                     <p class="lead">Other Options</p>
                     <ul class="list-unstyled">
+                        <li><h4>Map Type Control</h4>
+                            <p>You can use this toggle to remove the map type control from the map altogether.</p>
+                        </li>
                         <li><h4>Streetview Control</h4>
                             <p>Shows or hides the streetview option on the bottom-right of the map.</p>
                             <ui-alert type="info" dismissible="false"> If you are
@@ -231,8 +227,7 @@
                         <li>
                             <h4>Scale Control</h4>
                             <img class="img img-thumbnail pull-right brand-shadow" src="images/scale-control.png" alt="map type control">
-                            <p>This is a small part on the bottom of the map showing the scale of the map at the
-                                current
+                            <p>This is a small part on the bottom of the map showing the scale of the map at the current
                                 zoom level for that area, clicking it changes the scale from metric to imperial
                                 units.</p>
                             <div class="clearfix"></div>
@@ -240,30 +235,27 @@
                         <li>
                             <h4>Fullscreen Control</h4>
                             <p>
-                                This is a small button on the top-right of the map that allows a
-                                person to make the map full-screen on their device.
+                                This is a small button on the top-right of the map that allows a person to make the map
+                                full-screen on their device.
                             </p>
                         </li>
                         <li>
                             <h4>Draggable Map</h4>
-                            <p>If this is un-checked the person will not be able to drag the map
-                                around.</p>
+                            <p>If this is deselected the person will not be able to drag the map around.</p>
                         </li>
                         <li>
                             <h4>Keyboard Shortcuts</h4>
                             <p>You can control Google Maps navigation
                                 <a href="https://sites.google.com/a/umich.edu/going-google/accessibility/google-maps-keyboard-shortcuts" target="_blank">
-                                    by using the keyboard</a>. Un-checking this box disables that functionality on
-                                your
-                                map.</p>
+                                    by using the keyboard</a>. Deselecting this option disables that functionality on
+                                your map.</p>
                         </li>
                         <li>
                             <img class="img img-thumbnail pull-right brand-shadow" src="images/clickable-points-of-interest.png" alt="map type control">
                             <h4>Clickable Points of Interest</h4>
                             <p>At some zoom levels some local attractions or places of interest will show up. </p>
                             <p>These have little information windows attached to them by default
-                                that will show up when you click on the place. Un-checking this box stops these
-                                places
+                                that will show up when you click on the place. Deselecting this stops these places
                                 from being clickable on your map.</p>
                             <p>Of course you can still place a <a href="#faq7">marker</a> on anywhere you
                                 want an information window to appear.</p>
@@ -271,7 +263,7 @@
                         </li>
                         <li>
                             <h4>Zoom Control</h4>
-                            <p>The zoom control is the plus and minus on the bottom right of a map. Un-checking this
+                            <p>The zoom control is the plus and minus on the bottom right of a map. Deselecting this
                                 option will remove those buttons from the map.</p>
                             <p>Zooming will still be available by way of the other zoom options (Keyboard Controls,
                                 Doubleclick Zoom and Scrollwheel Zoom) unless these are also turned off.</p>
@@ -279,8 +271,7 @@
                         <li>
                             <h4>Doubleclick Zoom</h4>
                             <p>You can double-click your mouse on the map to zoom in (and hold <kbd>ctrl</kbd> and
-                                double-click to zoom out). Un-checking this option stops this functionality on your
-                                map.
+                                double-click to zoom out). Deselecting this option stops this functionality on your map.
                             </p>
                         </li>
                         <li>
