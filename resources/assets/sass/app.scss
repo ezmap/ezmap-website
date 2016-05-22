@@ -1,5 +1,6 @@
 @import "_bootstrap.scss";
 @import "_font-awesome.scss";
+@import "keen-ui.min.scss";
 
 [v-cloak] {
   display: none;
@@ -54,7 +55,7 @@ img.theme-thumb {
 @media (min-width: $screen-sm-min) {
   .theresults {
     position: absolute;
-    top: 65px;
+    top: 66px;
     right: 2em;
     &.moved {
       position: fixed;

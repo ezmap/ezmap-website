@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="icon" type="image/png" href="{{ url('favicon.png') }}"/>
-    <link href='https://fonts.googleapis.com/css?family=Noto+Sans%7CNoto+Serif%7CKanit%7CCutive+Mono' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto%7CNoto+Sans%7CNoto+Serif%7CKanit%7CCutive+Mono' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="{{ elixir('css/app.css') }}">
 
 </head>
@@ -62,6 +63,7 @@
 </footer>
 <script type="text/javascript" src="/js/head.min.js"></script>
 <script>
+
     head.js("https://maps.googleapis.com/maps/api/js?key=AIzaSyC5AXVyYFfagDPR4xi9U-ti9u5v_0iIbk8",
             "{{ elixir('js/all.js') }}",
             "/js/jquery-unveil.js",
@@ -69,8 +71,7 @@
                 go();
             });
 </script>
-{{--<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5AXVyYFfagDPR4xi9U-ti9u5v_0iIbk8"></script>--}}
-{{--<script src="{{ elixir('js/all.js') }}"></script>--}}
+
 
 <script>
     function go() {

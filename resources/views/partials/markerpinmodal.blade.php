@@ -22,7 +22,7 @@
                                 <input id="newIconURL" name="newIconURL" class="form-control" type="text" placeholder="New Icon URL" value="">
                             </div>
                             <div class="form-group">
-                                <input name="Add" class="form-control btn btn-default" type="submit" value="Add Icon">
+                                <ui-button name="Add" icon="add" color="primary">Add Icon</ui-button>
                             </div>
                         </form>
                     @else

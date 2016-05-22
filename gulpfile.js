@@ -19,6 +19,7 @@ elixir(function (mix) {
             // 'jquery-unveil.js',
             'bootstrap.min.js',
             'vue.min.js',
+            'keen-ui.min.js',
             'pjax.js',
             'main.js'
         ]);

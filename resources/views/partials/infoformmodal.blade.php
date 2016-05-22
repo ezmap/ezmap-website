@@ -42,8 +42,8 @@
                 <div class="clearfix"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">I Don't Need This</button>
-                <button type="button" class="btn btn-primary" v-on:click="addInfoBox">Add Info Box</button>
+                <ui-button raised color="default" data-dismiss="modal">I Don't Need This</ui-button>
+                <ui-button raised color="primary" v-on:click="addInfoBox">Add Info Box</ui-button>
             </div>
         </div>
     </div>
