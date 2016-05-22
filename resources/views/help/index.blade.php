@@ -37,11 +37,7 @@
                     <p class="lead">Map Title</p>
                     <p>If you are signed in to your account, you can give your map a title so you can find it again in
                         your dashboard.</p>
-                    <div class="alert brand-shadow alert-info">
-                        <p><i class="fa fa-info-circle"></i> You must be signed in
-                            to
-                            save maps.</p>
-                    </div>
+                    <ui-alert type="info" dismissible="false">You must be signed in to save maps.</ui-alert>
                     <hr>
                 </div>
                 <div id="faq1">
@@ -51,17 +47,13 @@
                         also restrict the use of your maps to only your own domain(s). You can get an API key
                         <a href="https://developers.google.com/maps/signup">at this page.</a>
                     </p>
-                    <div class="alert brand-shadow alert-warning"><p><i class="fa fa-exclamation-circle"></i> If your
-                            map
-                            will feature in a commercial product you <strong>MUST</strong> use an API key. You should
-                            contact the
-                            <a href="https://developers.google.com/maps/premium/">Google Maps APIs Premium Plan</a>
-                            people
-                            for advice.</p>
-                        <p>If you do not have an API key you can still make maps but there will be restrictions on how
-                            many
-                            times your maps can be viewed each day.</p>
-                    </div>
+                    <ui-alert type="warning" dismissible="false">If your map will feature in a commercial product you
+                        <strong>MUST</strong> use an API key. You should contact the
+                        <a href="https://developers.google.com/maps/premium/">Google Maps APIs Premium Plan</a> people
+                        for advice.<br>If you do not have an API key you can still make maps but there will be
+                        restrictions on how many times your maps can be viewed each day.
+                    </ui-alert>
+
                     <hr>
                 </div>
                 <div id="faq2">
@@ -132,7 +124,9 @@
                     <ol>
                         <li>
                             <p>Click the
-                                <button class="btn btn-primary btn-xs">Add a Marker</button>
+                                <ui-button raised color="primary" icon="add_location">
+                                    Add a Marker
+                                </ui-button>
                                 button
                             </p>
                         </li>
@@ -144,8 +138,8 @@
                                         clicks
                                         the
                                         marker click
-                                        <button type="button" class="btn btn-default btn-xs">I Don't Need This
-                                        </button>
+                                        <ui-button raised color="default">I Don't Need This</ui-button>
+
                                     </p>
                                 </li>
                                 <li>
@@ -154,7 +148,7 @@
                                         gets
                                         it's own class so you can style these to suit the page you'll be putting the
                                         finished map if you want. When you're happy with the details click
-                                        <button class="btn btn-primary btn-xs">Add Info Box</button>
+                                        <ui-button raised color="primary">Add Info Box</ui-button>
                                     </p>
                                 </li>
                             </ul>
@@ -163,62 +157,50 @@
                             <p>Your pin will now be on the map. You can click it to see how any info window looks
                                 and
                                 drag it around to reposition it if it was a bit off. You will also see a
-                                <button class="btn btn-danger btn-xs">
-                                    <i class="fa fa-trash"></i> Delete All Markers?
-                                </button>
+                                <ui-button raised color="danger" icon="delete">
+                                    Delete All Markers?
+                                </ui-button>
                                 button. Clicking this will remove every marker you have created from the map in one
                                 go.
                             </p>
-                            <div class="alert alert-info brand-shadow"><p><i class="fa fa-info-circle"></i> Although
-                                    you are able to
-                                    drag markers on this map, the map produced for your site will not have draggable
-                                    markers. This is purely to allow you to drag n drop markers to get them exactly
-                                    where you want them.</p>
-                                <p>Top tip, try zooming right in to where you want your marker before placing
-                                    it, then zoom out for your actual map.</p>
-                            </div>
+                            <ui-alert type="info" dismissible="false">
+                                Although you are able to drag markers on this
+                                map, the map produced for your site will not have draggable markers. This is purely
+                                to allow you to drag n drop markers to get them exactly where you want them.
+                                <br>Top tip, try zooming right in to where you want your marker before placing it, then
+                                zoom out for your actual map.
+                            </ui-alert>
+
                             <p>For each marker you create you'll see some more options. You can do the following
                                 operations on a marker.</p>
                             <ul>
                                 <li>
-                                    <p>Marker Title - Just type it's new name
-                                        <input type="text" value="in the box" title="">
-                                        and it'll be automatically updated. (The title shows when you hover on a marker
-                                        on the map)</p>
+                                    <p>Marker Title - Just type it's new name <span style="display:inline-block; ">
+                                        <ui-textbox type="text" placeholder="in the space" title=""></ui-textbox>
+                                        </span> and it'll be automatically updated. (The title shows when you hover on a
+                                        marker on the map)
+                                    </p>
                                 </li>
                                 <li>
                                     <p>Change Icon - If you click
-                                        <button class="btn btn-info btn-xs">
-                                            <i class="fa fa-map-marker fa-fw"></i>
-                                        </button>
-                                        you'll be presented with an overlay containing a number of different icons
-                                        you
-                                        can use for your marker. If you are logged in, you can also save your own
-                                        icon,
-                                        which will be available to just select for all your maps. Just click on an
-                                        icon
+                                        <ui-icon-button color="accent" icon="place"></ui-icon-button>
+                                        you'll be presented with an overlay containing a number of different icons you
+                                        can use for your marker. If you are logged in, you can also save your own icon,
+                                        which will be available to just select for all your maps. Just click on an icon
                                         to use it for that marker.
                                     </p>
                                 </li>
                                 <li>
                                     <p>{{ ucfirst(trans('ezmap.center')) }} Here - Clicking the
-                                        <button class="btn btn-info btn-xs">
-                                            <i class="fa fa-crosshairs fa-fw"></i>
-                                        </button>
-                                        button will {{ trans('ezmap.center') }} the
-                                        map on that marker's position. If you resize
-                                        the map or
-                                        move it around you may need to click this
-                                        button again to
-                                        re-{{ trans('ezmap.center') }} it here
-                                        before copying your code.
+                                        <ui-icon-button color="accent" icon="my_location"></ui-icon-button>
+                                        button will {{ trans('ezmap.center') }} the map on that marker's position. If
+                                        you resize the map or move it around you may need to click this button again to
+                                        re-{{ trans('ezmap.center') }} it here before copying your code.
                                     </p>
                                 </li>
                                 <li>
                                     <p>Finally you can delete the individual marker altogether by clicking the
-                                        <button class="btn btn-danger btn-xs">
-                                            <i class="fa fa-trash fa-fw"></i>
-                                        </button>
+                                        <ui-icon-button color="danger" icon="delete"></ui-icon-button>
                                         for that marker.
                                     </p>
                                 </li>
@@ -233,12 +215,11 @@
                     <ul class="list-unstyled">
                         <li><h4>Streetview Control</h4>
                             <p>Shows or hides the streetview option on the bottom-right of the map.</p>
-                            <div class="alert brand-shadow alert-info"><p>
-                                    <i class="fa fa-info-circle"></i> If you are
-                                    in streetview mode when you save a map, this won't be shown, you will get the map as
-                                    it was before entering streetview.
-                                </p>
-                            </div>
+                            <ui-alert type="info" dismissible="false"> If you are
+                                in streetview mode when you save a map, this won't be shown, you will get the map as
+                                it was before entering streetview.
+
+                            </ui-alert>
                         </li>
                         <li>
                             <h4>Use "Map Maker" Tiles</h4>
@@ -314,22 +295,19 @@
                 <div id="faq9">
                     <p class="lead">Save Map</p>
                     <p>You can click the
-                        <button class="btn btn-primary btn-xs"><i class="fa fa-save"></i> Save Map</button>
+                        <ui-button raised color="success" icon="save">Save Map</ui-button>
                         button to save your map to your account. It'll then be available for you to
                         re-visit and edit.
                     </p>
-                    <div class="alert brand-shadow alert-info"><p><i class="fa fa-info-circle"></i> You
-                            can only save a
-                            map when signed in.</p>
-                    </div>
+                    <ui-alert type="info" dismissible="false">You can only save a map when signed in.</ui-alert>
+
                     <p>If you are working on a saved map you will also have the options to
-                        <button class="btn btn-primary btn-xs">
-                            <i class="fa fa-clone"></i> Clone Map
-                        </button>
+                        <ui-button raised color="primary" icon="content_copy">
+                            Clone Map
+                        </ui-button>
                         or
-                        <button class="btn btn-danger btn-xs">
-                            <i class="fa fa-trash"></i> Delete Map
-                        </button>
+                        <ui-button raised color="danger" icon="delete">Delete Map</ui-button>
+
                     </p>
                     <p>Cloning a map means making an exact copy of the map and saving it as a new map. This can
                         be
@@ -350,12 +328,17 @@
                     <p>The brilliant people at <a target="_blank" href="https://snazzymaps.com/">Snazzy Maps</a>
                         have made their theme repository available to me for you to use on your maps. There are
                         currently {{ \App\Theme::count() }} themes in
-                        EZ Map but if you see one you want on <a target="_blank" href="https://snazzymaps.com/">Snazzy Maps</a>
-                        that's not here, <a target="_blank" href="http://twitter.com/home?status=@ez_map%20I%20want%20you%20to..."><i class="fa fa-twitter"></i> let me know</a> and I'll add it.</p>
+                        EZ Map but if you see one you want on <a target="_blank" href="https://snazzymaps.com/">Snazzy
+                            Maps</a>
+                        that's not here,
+                        <a target="_blank" href="http://twitter.com/home?status=@ez_map%20I%20want%20you%20to..."><i class="fa fa-twitter"></i>
+                            let me know</a> and I'll add it.</p>
                     <p>If you want to try a theme on your map just click the preview icon for it and your map will be
                         instantly updated. If you want to remove a theme back to the Google Map defaults you can click
-                        <button class="btn btn-primary btn-xs">Clear Applied Theme</button>
-                        in "Other Options". This button only appears if you have a currently applied theme.
+                        <ui-button raised color="accent" icon="format_color_reset">
+                            Clear Applied Theme
+                        </ui-button>
+                        near your map preview. This button only appears if you have a currently applied theme.
                     </p>
                 </div>
 
@@ -365,15 +348,16 @@
 @endsection
 
 @push('scripts')
+Vue.use(Keen);
 
-    Vue.filter('nl2br', function (value) {
-        return value.replace(/\n/g, '<br>');
-    });
-    Vue.filter('jsonShrink', function (value) {
-        return value.replace(/\n/g, '');
-    });
-    var helpVue = new Vue({
-        el: '#app',
-        data: {}
-    });
+Vue.filter('nl2br', function (value) {
+return value.replace(/\n/g, '<br>');
+});
+Vue.filter('jsonShrink', function (value) {
+return value.replace(/\n/g, '');
+});
+var helpVue = new Vue({
+el: '#app',
+data: {}
+});
 @endpush
