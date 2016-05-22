@@ -71,7 +71,6 @@
             });
 </script>
 
-
 <script>
     function go() {
         @stack('scripts')

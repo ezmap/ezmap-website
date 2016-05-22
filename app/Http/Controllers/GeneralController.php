@@ -36,4 +36,5 @@ class GeneralController extends Controller
 
         return view('index', compact('themes','sort','order'));
     }
+    
 }
