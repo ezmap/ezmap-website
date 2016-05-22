@@ -10,7 +10,7 @@
 
     <div class="col-sm-4 theform form">
         <div class="row">
-            <h3>Settings <i class="fa fa-compass"></i></h3>
+            <h3>Settings <ui-icon icon="explore"></ui-icon></h3>
             <hr>
         </div>
         <form class="form" id="mainForm" action="{{ !empty($map) ? route('map.update',  $map) : route('map.store') }}" method="POST">
@@ -170,7 +170,7 @@
                                 </td>
                                 <td v-show="markers.length > 1 && false">
                                     <button v-show="!joiningMarkers" v-on:click.prevent="beginJoin(index)" class="btn btn-danger btn-sm form-control">
-                                        <i class="fa fa-flag-o fa-fw"></i>
+                                        <i class="fa fa-flag-o fa-fw">
                                     </button>
                                     <button v-show="joiningMarkers && joinStart != markers[index]" v-on:click.prevent="endJoin(index)" class="btn btn-danger btn-sm form-control">
                                         <i class="fa fa-flag-checkered fa-fw"></i>
