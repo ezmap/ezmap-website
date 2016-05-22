@@ -1,3 +1,4 @@
+&lt;!-- Google map code from EZ Map - https://ezmap.co -->
 &lt;script src='https://maps.googleapis.com/maps/api/js?key=@{{ apikey }}'>&lt;/script>
 &lt;script>
   function init() {
@@ -13,3 +14,4 @@ google.maps.event.addDomListener(window, 'load', init);
   @{{ mapStyling() }}
 &lt;/style>
 &lt;div id='@{{ mapcontainer }}'>&lt;/div>
+&lt;!-- End of EZ Map code - https://ezmap.co -->
