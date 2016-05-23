@@ -88,16 +88,17 @@ class MapController extends Controller
         {
             if ($request->has('sort'))
             {
-                $sort = in_array($request->input('sort'), $sorts) ? $request->input('sort') : 'name';
+                $sort            = in_array($request->input('sort'), $sorts) ? $request->input('sort') : 'name';
                 $appends['sort'] = $sort;
             }
             if ($request->has('order'))
             {
-                $order = ($request->input('order') == 'true') ? 'desc' : 'asc';
+                $order            = ($request->input('order') == 'true') ? 'desc' : 'asc';
                 $appends['order'] = ($request->input('order') == 'desc') ? 'true' : 'false';
             }
         }
-        return view('index', compact('map','sort','order'));
+
+        return view('index', compact('map', 'sort', 'order'));
     }
 
     /**

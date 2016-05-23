@@ -334,11 +334,11 @@ mainVue = new Vue({
         initMap: function () {
 
             this.mapOptions.center = new google.maps.LatLng(this.lat, this.lng);
-            this.mapOptions.mapTypeControl = true;
-            this.mapOptions.navigationControl = true;
-            this.mapOptions.navigationControlOptions = {
-                style: google.maps.NavigationControlStyle.SMALL
-            };
+            {{--this.mapOptions.mapTypeControl = true;--}}
+            {{--this.mapOptions.navigationControl = true;--}}
+            {{--this.mapOptions.navigationControlOptions = {--}}
+                {{--style: google.maps.NavigationControlStyle.SMALL--}}
+            {{--};--}}
 
             this.map = new google.maps.Map(document.getElementById('map'), this.mapOptions);
             this.mapLoaded = true;
