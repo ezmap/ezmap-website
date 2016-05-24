@@ -11,7 +11,7 @@ $('#addNewIconForm').on('submit', function (event) {
                     '<img class="img img-thumbnail markericon" src="' + msg.icon.url + '" alt="' + msg.icon.name + '" title="' + msg.icon.name + '" onclick="mainVue.setMarkerIcon(event)" data-for-marker="' + formarker + '" data-dismiss="modal">' +
                     '<form action="/deleteIcon" method="POST" class="removeIconForm">' +
                     '<input type="hidden" name="icon-id" value="' + msg.icon.id + '">' +
-                    '<div class="form-group"><button class="form-control btn btn-danger" type="submit" value="Delete"><i class="fa fa-trash fa-fw"></i></button></div>' +
+                    '<div class="form-group"><button class="ui-button ui-button-normal color-danger"> <div class="ui-button-content"> <i class="ui-icon material-icons ui-button-icon delete" aria-hidden="true">delete</i> <div class="ui-button-text"> Delete </div>  </div> <div class="ui-progress-circular ui-button-spinner v-transition" style="display: none; width: 18px; height: 18px;"> <svg class="ui-progress-circular-indeterminate" viewBox="25 25 50 50" role="progressbar" aria-valuemin="0" aria-valuemax="100"> <circle class="ui-progress-circular-indeterminate-path white" cx="50" cy="50" r="20" fill="none" stroke-miterlimit="10" stroke-width="4.5"> </circle></svg>  </div> <div class="ui-ripple-ink"></div>   </button></div>' +
                     '</form></div>');
         }
     });

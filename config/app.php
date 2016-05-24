@@ -157,6 +157,10 @@ return [
         Vluzrmos\LanguageDetector\Providers\LanguageDetectorServiceProvider::class, //this one needs to be above RouteServiceProvider
         App\Providers\RouteServiceProvider::class,
 
+        Infinety\Alerts\AlertServiceProvider::class,
+        Greggilbert\Recaptcha\RecaptchaServiceProvider::class,
+
+
     ],
 
     /*
@@ -202,6 +206,10 @@ return [
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
+
+
+        'Recaptcha' => Greggilbert\Recaptcha\Facades\Recaptcha::class,
+
     ],
 
 ];

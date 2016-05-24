@@ -18,6 +18,7 @@ elixir(function (mix) {
             'jquery.min.js',
             // 'jquery-unveil.js',
             'bootstrap.min.js',
+            'sweetalert.js',
             'vue.min.js',
             'keen-ui.min.js',
             'pjax.js',

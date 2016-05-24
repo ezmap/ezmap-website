@@ -194,31 +194,11 @@
             <div class="form-group row">
                 <h4>Other Options <i class="fa fa-sliders"></i></h4>
                 <div class="col-sm-6">
+
                     <div class="row">
                         <div class="checkbox">
                             <ui-switch name="mapOptions[showMapTypeControl]" :value.sync="mapOptions.mapTypeControl" v-on:change="optionschange">
                                 Map Type Control
-                            </ui-switch>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="checkbox">
-                            <ui-switch name="mapOptions[showStreetViewControl]" :value.sync="mapOptions.streetViewControl" v-on:change="optionschange">
-                                Streetview Control
-                            </ui-switch>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="checkbox">
-                            <ui-switch name="mapOptions[mapMakerTiles]" :value.sync="mapOptions.mapMaker" v-on:change="optionschange">
-                                Use "<a href="http://www.google.com/mapmaker" target="_blank">MapMaker</a>" Tiles
-                            </ui-switch>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="checkbox">
-                            <ui-switch name="mapOptions[showScaleControl]" :value.sync="mapOptions.scaleControl" v-on:change="optionschange">
-                                Scale Control
                             </ui-switch>
                         </div>
                     </div>
@@ -231,24 +211,8 @@
                     </div>
                     <div class="row">
                         <div class="checkbox">
-                            <ui-switch name="mapOptions[draggable]" :value.sync="mapOptions.draggable" v-on:change="optionschange">
-                                Draggable Map
-                            </ui-switch>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="row">
-                        <div class="checkbox">
-                            <ui-switch name="mapOptions[keyboardShortcuts]" :value.sync="mapOptions.keyboardShortcuts" v-on:change="optionschange">
-                                Keyboard Shortcuts
-                            </ui-switch>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="checkbox">
-                            <ui-switch name="mapOptions[clickableIcons]" :value.sync="mapOptions.clickableIcons" v-on:change="optionschange">
-                                Clickable Points of Interest
+                            <ui-switch name="mapOptions[showStreetViewControl]" :value.sync="mapOptions.streetViewControl" v-on:change="optionschange">
+                                Streetview Control
                             </ui-switch>
                         </div>
                     </div>
@@ -256,6 +220,30 @@
                         <div class="checkbox">
                             <ui-switch name="mapOptions[showZoomControl]" :value.sync="mapOptions.zoomControl" v-on:change="optionschange">
                                 Zoom Control
+                            </ui-switch>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="checkbox">
+                            <ui-switch name="mapOptions[showScaleControl]" :value.sync="mapOptions.scaleControl" v-on:change="optionschange">
+                                Scale Control
+                            </ui-switch>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="checkbox">
+                            <ui-switch name="mapOptions[mapMakerTiles]" :value.sync="mapOptions.mapMaker" v-on:change="optionschange">
+                                Use "<a href="http://www.google.com/mapmaker" target="_blank">MapMaker</a>" Tiles
+                            </ui-switch>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="checkbox">
+                            <ui-switch name="mapOptions[draggable]" :value.sync="mapOptions.draggable" v-on:change="optionschange">
+                                Draggable Map
                             </ui-switch>
                         </div>
                     </div>
@@ -270,6 +258,20 @@
                         <div class="checkbox">
                             <ui-switch name="mapOptions[scrollWheel]" :value.sync="mapOptions.scrollwheel" v-on:change="optionschange">
                                 Scrollwheel Zoom
+                            </ui-switch>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="checkbox">
+                            <ui-switch name="mapOptions[keyboardShortcuts]" :value.sync="mapOptions.keyboardShortcuts" v-on:change="optionschange">
+                                Keyboard Shortcuts
+                            </ui-switch>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="checkbox">
+                            <ui-switch name="mapOptions[clickableIcons]" :value.sync="mapOptions.clickableIcons" v-on:change="optionschange">
+                                Clickable Points of Interest
                             </ui-switch>
                         </div>
                     </div>

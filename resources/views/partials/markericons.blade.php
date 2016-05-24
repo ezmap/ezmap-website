@@ -23,8 +23,7 @@
                                 {{ csrf_field() }}
                                 <input type="hidden" name="icon-id" value="{{ $icon->id }}">
                                 <div class="form-group">
-                                    <button class="form-control btn btn-danger" type="submit" value="Delete">
-                                        <i class="fa fa-trash fa-fw"></i></button>
+                                    <ui-button color="danger" icon="delete">Delete</ui-button>
                                 </div>
 
                             </form>

@@ -12,7 +12,10 @@
 */
 
 Route::get('/', "GeneralController@index")->middleware(['guest', 'pjax'])->name('index');
-
+Route::get('feedback', function(){
+    return view('feedback');
+});
+Route::post('feedback', 'GeneralController@feedback')->name('feedback');
 
 Route:: get('test', function ()
 {

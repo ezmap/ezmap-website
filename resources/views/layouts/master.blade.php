@@ -25,6 +25,7 @@
         <div class="collapse navbar-collapse" id="app-navbar-collapse">
             <ul class="nav navbar-nav">
                 <li><a href="{{ route('help') }}">Help</a></li>
+                <li><a href="{{ route('feedback') }}">Feedback</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 @if (Auth::guest())
@@ -62,7 +63,6 @@
 </footer>
 <script type="text/javascript" src="/js/head.min.js"></script>
 <script>
-
     head.js("https://maps.googleapis.com/maps/api/js?key=AIzaSyC5AXVyYFfagDPR4xi9U-ti9u5v_0iIbk8",
             "{{ elixir('js/all.js') }}",
             "/js/jquery-unveil.js",
@@ -74,12 +74,14 @@
 <script>
     function go() {
         @stack('scripts')
-        $('#markerpinmodal').on('scroll shown.bs.modal', function(){
+        $('#markerpinmodal').on('scroll shown.bs.modal', function () {
             $(window).scroll();
         });
         $('img').unveil(200);
+        @include('Alerts::alerts')
     }
 </script>
+
 <script>
     (function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;

@@ -12,7 +12,9 @@
     "laravel/framework": "5.2.*",
     "guzzlehttp/guzzle": "~5.3|~6.0",
     "spatie/laravel-pjax": "^1.3",
-    "vluzrmos/language-detector": "^1.0"
+    "vluzrmos/language-detector": "^1.0",
+    "infinety/alerts": "dev-master",
+    "greggilbert/recaptcha": "dev-master"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",

@@ -3,6 +3,7 @@
 
 @section('appcontent')
     <div class="col-sm-8 col-sm-offset-2">
+        <hr class="invisible">
         <div class="panel panel-primary">
             <div class="panel-heading">Help</div>
             <div class="panel-body">
@@ -23,16 +24,12 @@
 @endsection
 
 @push('scripts')
-Vue.use(Keen);
+{{--<script>--}}
+    @include('partials.scripts.feedbackform-js')
 
-Vue.filter('nl2br', function (value) {
-return value.replace(/\n/g, '<br>');
-});
-Vue.filter('jsonShrink', function (value) {
-return value.replace(/\n/g, '');
-});
-var helpVue = new Vue({
-el: '#app',
-data: {}
-});
+    {{--helpVue = new Vue({--}}
+        {{--el: '#app',--}}
+        {{--data: {},--}}
+        {{--computed: {},--}}
+    {{--});--}}
 @endpush

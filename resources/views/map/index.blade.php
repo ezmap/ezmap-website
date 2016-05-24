@@ -3,6 +3,7 @@
 
 @section('content')
     <div class="col-sm-6 col-sm-offset-3">
+        <hr class="invisible">
         <a href="{{ route('map.create') }}" class="btn btn-primary form-control"><i class="fa fa-plus"></i> Make a new map</a>
         <hr>
     </div>
