@@ -220,7 +220,14 @@ mainVue = new Vue({
             document.execCommand('copy');
             target.blur();
             $(window).focus();
-            this.codeCopied = true;
+            {{--this.codeCopied = true;--}}
+            swal({
+                type: "success",
+                title: "Success",
+                text: "Your code has been copied to your clipboard",
+                timer: 2000,
+                showConfirmButton: 0
+            });
             setTimeout(this.clearCopied, 2000);
         },
         clearCopied: function () {
@@ -251,7 +258,7 @@ mainVue = new Vue({
         },
         maptypeidchanged: function () {
             this.mapOptions.mapTypeId = this.map.getMapTypeId();
-            this.mapTypeId = this.mapTypes.filter(function(mapType){
+            this.mapTypeId = this.mapTypes.filter(function (mapType) {
                 return mapType.mapTypeId == mainVue.mapOptions.mapTypeId;
             })[0];
         },
@@ -335,12 +342,12 @@ mainVue = new Vue({
 
             this.mapOptions.center = new google.maps.LatLng(this.lat, this.lng);
             {{--this.mapOptions.mapTypeControl = true;--}}
-            {{--this.mapOptions.navigationControl = true;--}}
-            {{--this.mapOptions.navigationControlOptions = {--}}
-                {{--style: google.maps.NavigationControlStyle.SMALL--}}
-            {{--};--}}
+                    {{--this.mapOptions.navigationControl = true;--}}
+                    {{--this.mapOptions.navigationControlOptions = {--}}
+                    {{--style: google.maps.NavigationControlStyle.SMALL--}}
+                    {{--};--}}
 
-            this.map = new google.maps.Map(document.getElementById('map'), this.mapOptions);
+                    this.map = new google.maps.Map(document.getElementById('map'), this.mapOptions);
             this.mapLoaded = true;
             this.mapmoved();
                     @if( !empty($map) )
