@@ -56,12 +56,16 @@
                     @endforeach
                 </select>
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
+                <label for="text">Search Text</label>
+                <input id="text" name="text" class="form-control" type="text" placeholder="Apple Map" value="">
+            </div>
+            <div class="form-group col-md-4">
                 <label for="pageSize">Number Per Page</label>
                 <input id="pageSize" name="pageSize" class="form-control" type="text" placeholder="12"
                        value="">
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
                 <label for="page">Page</label>
                 <input id="page" name="page" class="form-control" type="text" placeholder="1" value="">
             </div>

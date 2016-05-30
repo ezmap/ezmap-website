@@ -13,6 +13,7 @@ class SnazzyMapsController extends Controller
     {
 
         $endpoint = 'https://snazzymaps.com/explore.json?key=' . env('SNAZZY_KEY');
+        $endpoint .= ($request->has('text')) ? "&text=" . urlencode($request->input('text')) : '';
         $endpoint .= ($request->has('tag')) ? "&tag={$request->input('tag')}" : '';
         $endpoint .= ($request->has('color')) ? "&color={$request->input('color')}" : '';
         $endpoint .= ($request->has('sort')) ? "&sort={$request->input('sort')}" : '';
