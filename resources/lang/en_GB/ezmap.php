@@ -14,4 +14,6 @@ return [
     'center'   => 'centre',
     'centered' => 'centred',
     'check'    => 'tick',
+    'color'    => 'colour',
+
 ];

@@ -14,5 +14,5 @@ return [
     'center'   => 'center',
     'centered' => 'centered',
     'check'    => 'check',
-
+    'color'    => 'color',
 ];
