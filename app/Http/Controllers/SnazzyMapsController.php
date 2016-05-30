@@ -25,7 +25,7 @@ class SnazzyMapsController extends Controller
         foreach ($snazzyThemes->styles as $theme)
         {
             $snazzyTheme              = Theme::firstOrCreate(['snazzy_id' => $theme->id]);
-            $snazzyTheme->json        = json_encode(json_decode($theme->json));
+            $snazzyTheme->json        = $theme->json;
             $snazzyTheme->description = $theme->description;
             $snazzyTheme->author      = $theme->createdBy;
             $snazzyTheme->imageUrl    = $theme->imageUrl;
