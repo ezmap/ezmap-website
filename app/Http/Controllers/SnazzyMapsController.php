@@ -20,17 +20,21 @@ class SnazzyMapsController extends Controller
         $endpoint .= ($request->has('pageSize')) ? "&pageSize={$request->input('pageSize')}" : '';
 
         $snazzyThemes = json_decode(file_get_contents($endpoint), false);
-        foreach ($snazzyThemes->styles as $theme) {
-            $snazzyTheme = Theme::firstOrCreate(['snazzy_id'=> $theme->id]);
-            $snazzyTheme->name = $theme->name;
+        foreach ($snazzyThemes->styles as $theme)
+        {
+            $snazzyTheme              = Theme::firstOrCreate(['snazzy_id' => $theme->id]);
+            $snazzyTheme->name        = $theme->name;
             $snazzyTheme->description = $theme->description;
-            $snazzyTheme->url = $theme->url;
-            $snazzyTheme->imageUrl = $theme->imageUrl;
-            $snazzyTheme->json = json_encode(json_decode($theme->json));
+            $snazzyTheme->url         = $theme->url;
+            $snazzyTheme->imageUrl    = $theme->imageUrl;
+            $snazzyTheme->json        = json_encode(json_decode($theme->json));
+            $snazzyTheme->tags        = $theme->tags;
+            $snazzyTheme->colors      = $theme->colors;
+
             $snazzyTheme->author = $theme->createdBy;
             $snazzyTheme->save();
         }
-        
+
         return redirect()->back();
 
     }
