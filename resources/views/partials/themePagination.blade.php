@@ -1,5 +1,4 @@
-<ul class="pagination pagination-sm">
-{{ $themes->appends($appends)->links() }}
+
     {{--@if($themes->currentPage() == 1 )--}}
         {{--<li class="disabled"><span><i class="fa fa-backward"></i></span></li>--}}
     {{--@else--}}
@@ -47,4 +46,3 @@
     {{--@else--}}
         {{--<li><a href="{{ $themes->nextPageUrl() }}" rel="next"><i class="fa fa-forward"></i></a></li>--}}
     {{--@endif--}}
-</ul>

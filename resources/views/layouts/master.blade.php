@@ -58,6 +58,7 @@
         <p style="margin-top:1.25em;">© {{ date('Y') }}
             <a target="_blank" href="//billyfagan.co.uk">Billy Fagan</a>. This tool abides by Google's
             <a target="_blank" href="https://www.google.co.uk/permissions/geoguidelines.html">Permissions Guidelines</a>.
+            <a class="pull-right" target="_blank" href="https://twitter.com/ez_map"><i class="fa fa-twitter fa-fw"></i> @ez_map</a>
         </p>
     </div>
 </footer>

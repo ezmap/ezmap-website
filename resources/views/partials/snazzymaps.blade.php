@@ -2,11 +2,11 @@
     <div class="snazzyMapsThemes" id="snazzyMapsThemes">
         <h3>Themes from <a target="_blank" href="https://snazzymaps.com/">Snazzy Maps</a></h3>
         <p>Click on a theme's image to apply the theme to your map.</p>
+        <p>Showing {{ $themes->count() }} of {{ \App\Theme::count() }} themes.</p>
         <div class="col-xs-12">
-            @include('partials.themePagination')
+            {{ $themes->appends($appends)->links() }}
         </div>
         <div class="col-xs-12">
-
             <h5>Show: @if(request()->has('tag') || request()->has('col'))
                     <a href="{{ request()->url() }}">All</a>
                 @endif
@@ -59,7 +59,7 @@
 
         </div>
         <div class="col-xs-12">
-            @include('partials.themePagination')
+            {{ $themes->appends($appends)->links() }}
             <hr class="invisible">
         </div>
     </div>
