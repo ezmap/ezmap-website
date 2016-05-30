@@ -42,7 +42,7 @@
     @endfor
 
     @if($themes->currentPage() == $themes->lastPage())
-        <li class="disabled"><i class="fa fa-forward"></i></li>
+        <li class="disabled"><span><i class="fa fa-forward"></i></span></li>
     @else
         <li><a href="{{ $themes->nextPageUrl() }}" rel="next"><i class="fa fa-forward"></i></a></li>
     @endif
