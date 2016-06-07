@@ -42,9 +42,9 @@
         <p class="lead">...design a map theme?</p>
         <p>The guys over at <a href="https://snazzymaps.com">Snazzy Maps</a> have a
             <a href="https://snazzymaps.com/editor">brilliant wizard style tool</a> to make designing your own themes
-            extremely easy. I'd encourage you to use that. Once you've saved your map let us know and we'll import it
+            extremely easy. I'd encourage you to use that. Once you've saved your map let me know and I'll import it
             for everyone to use here.</p>
-        <p>Soon we'll be adding support to let anyone import their own Snazzy Maps "My Styles" and "Favorites" for their
+        <p>Soon I'll be adding support to let anyone import their own Snazzy Maps "My Styles" and "Favorites" for their
             own use. (i.e your imported themes won't show in the main list but will be saved for your use here!)</p>
         <hr>
     </li>
