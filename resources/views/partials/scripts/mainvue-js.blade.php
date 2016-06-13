@@ -78,6 +78,7 @@ mainVue = new Vue({
             zoom: {{ $map->mapOptions->zoomLevel ?? 3 }},
             zoomControl: {{ $map->mapOptions->showZoomControl ?? 'true' }}
         },
+        mapOpacity: 1,
         themes: [
                 @foreach($themes as $theme)
             {
@@ -125,6 +126,10 @@ mainVue = new Vue({
         }
     },
     methods: {
+        showCenter: function () {
+            this.mapOpacity = this.mapOpacity == 1 ? .5 : 1;
+            $('#map').children().first().css({opacity:this.mapOpacity});
+        },
         clearDirections: function () {
             for (var i = 0; i < this.directionsDisplays.length; i++) {
                 this.directionsDisplays[i].setMap(null);
@@ -382,7 +387,7 @@ mainVue = new Vue({
         }
     }
 });
-$(document).pjax('a', '#snazzthemes', {scrollTo: false, timeout: 3000 });
+$(document).pjax('a', '#snazzthemes', {scrollTo: false, timeout: 3000});
 if ("createEvent" in document) {
     var evt = document.createEvent("HTMLEvents");
     evt.initEvent("change", false, true);

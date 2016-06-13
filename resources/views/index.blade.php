@@ -322,7 +322,9 @@
                 Your code has been copied to your clipboard!
             </ui-alert>
             <hr>
-
+            <ui-button raised class="pull-left" color="accent" v-on:click.prevent="showCenter" icon="my_location" >
+                Show {{ ucfirst(trans('ezmap.center')) }}
+            </ui-button>
             <div class="clearfix"></div>
         </div>
 

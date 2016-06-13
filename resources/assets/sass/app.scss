@@ -13,7 +13,8 @@ div.map-container {
 
 div.map {
   /*position: absolute;*/
-  background: #eee;
+  background: transparent url(/images/crosshairs.svg) center center no-repeat;
+  //background-size: cover;
   border: 1px solid #aaa;
   min-height: 150px;
   min-width: 150px;
