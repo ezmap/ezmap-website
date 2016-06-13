@@ -314,7 +314,9 @@
             <ui-button raised class="pull-left" color="accent" v-show="themeApplied" v-on:click.prevent="clearTheme" icon="format_color_reset">
                 Clear Applied Theme
             </ui-button>
-
+            <ui-button raised class="pull-left" color="primary" v-on:click.prevent="showCenter" icon="my_location" >
+                Show {{ ucfirst(trans('ezmap.center')) }}
+            </ui-button>
             <ui-button class="pull-right" color="primary" raised v-on:click="copied" icon="content_paste">
                 Copy your code
             </ui-button>
@@ -322,9 +324,7 @@
                 Your code has been copied to your clipboard!
             </ui-alert>
             <hr>
-            <ui-button raised class="pull-left" color="accent" v-on:click.prevent="showCenter" icon="my_location" >
-                Show {{ ucfirst(trans('ezmap.center')) }}
-            </ui-button>
+
             <div class="clearfix"></div>
         </div>
 
