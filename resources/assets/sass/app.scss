@@ -28,7 +28,7 @@ div.map img {
 }
 
 h4.theme-title,
-div#snazzyMapsThemes p {
+div#snazzyMapsThemes p:not(:first-of-type) {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
