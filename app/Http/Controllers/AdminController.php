@@ -25,6 +25,20 @@ class AdminController extends Controller
         return view('admin.index');
     }
 
+    public function stealth(Request $request, $userid)
+    {
+        session(['stealth' => $request->user()->id]);
+        Auth::loginUsingId($userid);
+        return redirect()->back();
+    }
+
+    public function unstealth(Request $request)
+    {
+        Auth::loginUsingId(1);
+        $request->session()->forget('stealth');
+        return redirect()->back();
+    }
+
     public function addMarkerIcon(Request $request)
     {
         $icon       = Icon::firstOrCreate(['url' => $request->input('iconURL')]);

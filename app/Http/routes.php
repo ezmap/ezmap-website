@@ -27,6 +27,8 @@ Route::auth();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('admin', 'AdminController@index');
+Route::get('stealth/{userid}', "AdminController@stealth")->name('stealth');
+Route::get('unstealth',"AdminController@unstealth")->name('unstealth');
 Route::post('admin', 'SnazzyMapsController@populateThemes')->name('populateThemes')->middleware('admin');
 
 Route::post('addNewIcon', 'HomeController@addNewIcon')->name('addNewIcon');

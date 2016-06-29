@@ -36,9 +36,12 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->name }}
                             <span class="caret"></span> </a>
                         <ul class="dropdown-menu" role="menu">
-                            @if (Auth::user()->isAdmin)
+                            @if (Auth::user()->isAdmin || session()->has('stealth'))
                                 <li><a href="{{ url('admin') }}">Admin</a></li>
                             @endif
+                            @if(session()->has('stealth'))
+                                <li><a href="{{ route('unstealth') }}">Un-stealth</a></li>
+                                @endif
                             <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
                         </ul>
                     </li>

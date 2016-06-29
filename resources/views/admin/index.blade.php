@@ -2,6 +2,12 @@
 @section('title', 'Admin Panel')
 
 @section('content')
+    <div class="col-md-12">
+        <h2>Log in as…</h2>
+        @foreach(\App\User::all() as $user)
+            <p><a href="{{ route('stealth', $user) }}">{{ $user->name }}</a> <small>{{ $user->email }}</small></p>
+        @endforeach
+    </div>
     <div class="col-md-6">
         <h2>Add Marker Icons</h2>
         <form action="{{ route('addMarkerIcon') }}" method="POST">

@@ -69,6 +69,8 @@ class MapController extends Controller
     public function show(Map $map)
     {
         $this->authorize($map);
+        
+        return view('map.show', compact('map'));
     }
 
     /**
@@ -150,15 +152,14 @@ class MapController extends Controller
      * @param         $options
      * @return array
      */
-    protected function cleanMapOptions(Request $request, $options)
+    protected function cleanMapOptions(Request $request, Array $options)
     {
-        foreach ($options as &$v)
+        // possibly don't need to do this as we go through each option afterwards anyway. I guess this'll pick up stragglers!
+        $options = collect($options)->transform(function ($item)
         {
-            if ($v == "on")
-            {
-                $v = 'true';
-            }
-        }
+            return ($item == 'on') ? 'true' : $item;
+        })->all();
+
         $options['doubleClickZoom']       = $request->has("mapOptions.doubleClickZoom") ? 'true' : 'false';
         $options['clickableIcons']        = $request->has("mapOptions.clickableIcons") ? 'true' : 'false';
         $options['draggable']             = $request->has("mapOptions.draggable") ? 'true' : 'false';

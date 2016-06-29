@@ -128,7 +128,7 @@ mainVue = new Vue({
     methods: {
         showCenter: function () {
             this.mapOpacity = this.mapOpacity == 1 ? .5 : 1;
-            $('#map').children().first().css({opacity:this.mapOpacity});
+            $('#map').children().first().css({opacity: this.mapOpacity});
         },
         clearDirections: function () {
             for (var i = 0; i < this.directionsDisplays.length; i++) {
@@ -346,13 +346,7 @@ mainVue = new Vue({
         initMap: function () {
 
             this.mapOptions.center = new google.maps.LatLng(this.lat, this.lng);
-            {{--this.mapOptions.mapTypeControl = true;--}}
-                    {{--this.mapOptions.navigationControl = true;--}}
-                    {{--this.mapOptions.navigationControlOptions = {--}}
-                    {{--style: google.maps.NavigationControlStyle.SMALL--}}
-                    {{--};--}}
-
-                    this.map = new google.maps.Map(document.getElementById('map'), this.mapOptions);
+            this.map = new google.maps.Map(document.getElementById('map'), this.mapOptions);
             this.mapLoaded = true;
             this.mapmoved();
                     @if( !empty($map) )
