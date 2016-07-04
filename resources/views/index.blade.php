@@ -59,10 +59,10 @@
                 <div class="form-group row">
                     <div class="form-group">
                         <ui-switch name="embeddable" :value.sync="embeddable" v-on:change="optionschange">
-                            Embeddable Code
+                            Automatic Updates
                             <ui-icon-button color="primary" type="flat" has-popover icon="help">
                                 <div slot="popover">
-                                    <p>Paste your code once and any updates you save will automatically be applied
+                                    <p>Paste your code once and any updates you save here will automatically be applied
                                         wherever you added your code.</p>
                                     <p>You <strong>MUST</strong> save your map after editing for this to work.</p>
                                 </div>
