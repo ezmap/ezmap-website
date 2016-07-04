@@ -55,7 +55,7 @@
                     <ui-textbox label="Map Container ID" id="mapcontainer" name="mapContainer" type="text" placeholder="map" :value.sync="mapcontainer"></ui-textbox>
                 </div>
             </div>
-            @if(Auth::check())
+            @if(!empty($map))
                 <div class="form-group row">
                     <div class="form-group">
                         <ui-switch name="embeddable" :value.sync="embeddable" v-on:change="optionschange">
