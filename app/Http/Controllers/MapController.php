@@ -68,9 +68,7 @@ class MapController extends Controller
      */
     public function show(Map $map)
     {
-        $this->authorize($map);
-
-        return view('map.show', compact('map'));
+        return $map->embeddable ? view('map.show', compact('map')) : abort(403);
     }
 
     /**

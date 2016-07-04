@@ -35,8 +35,4 @@ class MapPolicy
         return $map->user_id == $user->id;
     }
 
-    public function show(User $user, Map $map)
-    {
-        return $map->embeddable;
-    }
 }
