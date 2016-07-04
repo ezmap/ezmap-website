@@ -62,7 +62,8 @@
                             Embeddable Code
                             <ui-icon-button color="primary" type="flat" has-popover icon="help">
                                 <div slot="popover">
-                                    <p>Paste your code once and any updates you save will automatically be applied wherever you added your code.</p>
+                                    <p>Paste your code once and any updates you save will automatically be applied
+                                        wherever you added your code.</p>
                                     <p>You <strong>MUST</strong> save your map after editing for this to work.</p>
                                 </div>
                             </ui-icon-button>
@@ -358,8 +359,9 @@
                 Your code has been copied to your clipboard!
             </ui-alert>
             <textarea v-if="!embeddable" class="form-control code resultcode" rows="10" v-on:click="copied" readonly style="cursor: pointer;">@include('partials.textareacode')</textarea>
-            <textarea v-else class="form-control code resultcode" rows="10" v-on:click="copied" readonly style="cursor: pointer;">@include('partials.textareaembedcode')</textarea>
-
+            @if (!empty($map))
+                <textarea v-else class="form-control code resultcode" rows="10" v-on:click="copied" readonly style="cursor: pointer;">@include('partials.textareaembedcode')</textarea>
+            @endif
             <hr>
             <p>You can test your code is working by pasting it into
                 <a target="_blank" href="http://codepen.io/pen/?editors=1000">a new HTML CodePen</a>.
