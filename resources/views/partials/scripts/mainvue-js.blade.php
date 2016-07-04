@@ -23,6 +23,7 @@ mainVue = new Vue({
         },
         directionsDisplays: [],
         doubleClickZoom: {{ $map->mapOptions->doubleClickZoom ?? 'true' }},
+        embeddable: @if( empty($map) || !($map->embeddable) ) false @else true @endif,
         height: {{ $map->height ?? 420 }} +0,
         infoDescription: '',
         infoEmail: '',

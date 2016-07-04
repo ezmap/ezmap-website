@@ -69,7 +69,7 @@ class MapController extends Controller
     public function show(Map $map)
     {
         $this->authorize($map);
-        
+
         return view('map.show', compact('map'));
     }
 
@@ -122,6 +122,7 @@ class MapController extends Controller
         $map->markers       = $request->has('markers') ? $request->input('markers') : $map->markers;
         $map->mapOptions    = $request->has('mapOptions') ? $request->input('mapOptions') : $map->mapOptions;
         $map->responsiveMap = $request->has('responsiveMap');
+        $map->embeddable    = $request->has('embeddable');
         $map->theme_id      = $request->has('theme_id') ? $request->theme_id : $map->theme_id;
 
         $options         = (array)$map->mapOptions;

@@ -46,7 +46,6 @@
                 </small>
             </div>
             <div class="form-group row">
-
                 <div class="form-group">
                     {{--<label for="mapcontainer">Map Container ID</label>--}}
                     {{--<div class="input-group">--}}
@@ -56,7 +55,22 @@
                     <ui-textbox label="Map Container ID" id="mapcontainer" name="mapContainer" type="text" placeholder="map" :value.sync="mapcontainer"></ui-textbox>
                 </div>
             </div>
+            @if(!empty($map))
+                <div class="form-group row">
+                    <div class="form-group">
+                        <ui-switch name="embeddable" :value.sync="embeddable" v-on:change="optionschange">
+                            Embeddable Code
+                            <ui-icon-button color="primary" type="flat" has-popover icon="help">
+                                <div slot="popover">
+                                    <p>Paste your code once and any updates you save will automatically be applied wherever you added your code.</p>
+                                    <p>You <strong>MUST</strong> save your map after editing for this to work.</p>
+                                </div>
+                            </ui-icon-button>
+                        </ui-switch>
 
+                    </div>
+                </div>
+            @endif
             <div class="form-group row">
                 <label>Dimensions <i class="fa fa-arrows"></i></label>
 
@@ -276,6 +290,7 @@
                         </div>
                     </div>
 
+
                 </div>
                 @if(Auth::check())
                     <div class="col-sm-12">
@@ -314,7 +329,7 @@
             <ui-button raised class="pull-left" color="accent" v-show="themeApplied" v-on:click.prevent="clearTheme" icon="format_color_reset">
                 Clear Applied Theme
             </ui-button>
-            <ui-button raised class="pull-left" color="primary" v-on:click.prevent="showCenter" icon="my_location" >
+            <ui-button raised class="pull-left" color="primary" v-on:click.prevent="showCenter" icon="my_location">
                 Show {{ ucfirst(trans('ezmap.center')) }}
             </ui-button>
             <ui-button class="pull-right" color="primary" raised v-on:click="copied" icon="content_paste">
@@ -342,7 +357,9 @@
             <ui-alert type="success" v-if="codeCopied">
                 Your code has been copied to your clipboard!
             </ui-alert>
-            <textarea class="form-control code resultcode" rows="10" v-on:click="copied" readonly style="cursor: pointer;">@include('partials.textareacode')</textarea>
+            <textarea v-if="!embeddable" class="form-control code resultcode" rows="10" v-on:click="copied" readonly style="cursor: pointer;">@include('partials.textareacode')</textarea>
+            <textarea v-else class="form-control code resultcode" rows="10" v-on:click="copied" readonly style="cursor: pointer;">@include('partials.textareaembedcode')</textarea>
+
             <hr>
             <p>You can test your code is working by pasting it into
                 <a target="_blank" href="http://codepen.io/pen/?editors=1000">a new HTML CodePen</a>.

@@ -17,12 +17,14 @@ class Map extends Model
         'markers',
         'mapOptions',
         'theme_id',
+        'embeddable',
     ];
 
     protected $casts = [
         'mapOptions'    => 'object',
         'markers'       => 'object',
         'responsiveMap' => 'boolean',
+        'embeddable'    => 'boolean',
     ];
 
     public function user()
@@ -47,6 +49,7 @@ class Map extends Model
         {
             return collect(json_decode(json_decode($markers)));
         }
+
         return collect(json_decode($markers));
     }
 
@@ -67,8 +70,7 @@ class Map extends Model
     {
         $disableDoubleClickZoom = $this->mapOptions->doubleClickZoom ? 'false' : 'true';
         $styles                 = ($this->theme_id > 0) ? ",\n                \"styles\": " . $this->theme->json : '';
-        $output                 = "<!-- Google map code from EZ Map - https://ezmap.co -->
-<script>
+        $output                 = "
     function init() {
             var mapOptions = {
                 \"center\": {\"lat\": {$this->latitude}, \"lng\": {$this->longitude}},                
@@ -98,18 +100,7 @@ class Map extends Model
       });
     }
     google.maps.event.addDomListener(window, 'load', init);
-</script>
-<style>
-#ez-map{
-    min-height:150px;
-    min-width:150px;
-    width: ";
-        $output .= $this->responsiveMap ? "100%;" : "{$this->width}px;";
-        $output .= " height: {$this->height}px;
-}
-</style>
-<div id='ez-map'></div>
-<!-- End of EZ Map code - https://ezmap.co -->";
+";
 
         return $output;
     }
