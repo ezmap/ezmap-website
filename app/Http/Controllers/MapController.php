@@ -16,7 +16,7 @@ class MapController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth', 'pjax']);
+        $this->middleware(['auth', 'pjax'])->except('show');
     }
 
     /**

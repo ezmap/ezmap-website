@@ -21,13 +21,4 @@ style.appendChild(document.createTextNode(css));
 
 head.appendChild(style);
 
-
-
-{{--mapContainerStyle = document.createElement('style');--}}
-{{--mapContainerStyle.content = {--}}
-{{--"min-height":  "150px",--}}
-{{--"min-width":   "150px",--}}
-{{--"width":      "{{ $map->responsiveMap ? "100%" : "{$map->width}px"}}",--}}
-{{--"height":     "{{ $map->height }}px"--}}
-{{--};--}}
 {!! $map->code() !!}
