@@ -80,6 +80,7 @@ mainVue = new Vue({
             zoomControl: {{ $map->mapOptions->showZoomControl ?? 'true' }}
         },
         mapOpacity: 1,
+        mapBackground: "none",
         themes: [
                 @foreach($themes as $theme)
             {
@@ -129,7 +130,10 @@ mainVue = new Vue({
     methods: {
         showCenter: function () {
             this.mapOpacity = this.mapOpacity == 1 ? .5 : 1;
+            this.mapBackground = this.mapOpacity == .5 ? "transparent url(/images/crosshairs.svg) center center no-repeat" : "none";
             $('#map').children().first().css({opacity: this.mapOpacity});
+            $('#map').css({background: this.mapBackground});
+
         },
         clearDirections: function () {
             for (var i = 0; i < this.directionsDisplays.length; i++) {
