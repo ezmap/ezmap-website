@@ -110,12 +110,26 @@
         <li>
             <p>Click the
                 <ui-button raised color="primary" icon="add_location">
-                    Add a Marker
+                    Drop a Marker
+                </ui-button>
+            </p>
+            <p>OR</p>
+            <p>
+                <ui-button raised color="primary" icon="add_location">
+                    Add a Marker by Address
                 </ui-button>
                 button
             </p>
         </li>
-        <li><p>Click on the map roughly where you want the pin to go.</p></li>
+        <li>
+            <p>If you chose to drop a marker, click on the map roughly where you want the pin to go.</p>
+            <p>If you chose to add a marker by address, enter the adddress or postcode etc into the box that appears,
+                and click
+                <ui-button raised color="primary" icon="add">
+                    Add Marker
+                </ui-button>
+            </p>
+        </li>
         <li>
             <ul>
                 <li>

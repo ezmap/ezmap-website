@@ -217,6 +217,13 @@ mainVue = new Vue({
             var str = '#' + this.mapcontainer + '{';
             str += 'min-height:150px;min-width:150px;height: ' + this.styleObject.height + ';width: ' + this.styleObject.width + ';';
             str += '}';
+
+            str += '\n  #' + this.mapcontainer + ' .infoTitle{}';
+            str += '\n  #' + this.mapcontainer + ' .infoWebsite{}';
+            str += '\n  #' + this.mapcontainer + ' .infoEmail{}';
+            str += '\n  #' + this.mapcontainer + ' .infoTelephone{}';
+            str += '\n  #' + this.mapcontainer + ' .infoDescription{}';
+
             return str
         },
         mapresized: function () {
