@@ -1,22 +1,3 @@
-<p class="lead">Contents</p>
-<ul class="list-unstyled">
-    <li><a href="#faq0">Map Title</a></li>
-    <li><a href="#faq1">API Key?</a></li>
-    <li><a href="#faq2">Map Container ID</a></li>
-    <li><a href="#faq3">Dimensions</a></li>
-    <li><a href="#faq4">Latitude & Longitude</a></li>
-    <li><a href="#faq5">Map Type Control</a>
-        <ul>
-            <li style="list-style:none;"><a href="#faq5.1">Map Type</a></li>
-        </ul>
-    </li>
-    <li><a href="#faq6">Zoom Level</a></li>
-    <li><a href="#faq7">Markers</a></li>
-    <li><a href="#faq8">Other Options</a></li>
-    <li><a href="#faq9">Save Map</a></li>
-    <li><a href="#faq10">Themes</a></li>
-</ul>
-<hr>
 <div id="faq0">
     <p class="lead">Map Title</p>
     <p>If you are signed in to your account, you can give your map a title so you can find it again
@@ -349,4 +330,5 @@
         </ui-button>
         near your map preview. This button only appears if you have a currently applied theme.
     </p>
+    <hr>
 </div>

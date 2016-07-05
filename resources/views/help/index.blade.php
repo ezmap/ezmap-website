@@ -11,13 +11,13 @@
                     that pain
                     away.</p>
                 <p>This page should help you with all you need to know about EZ Map and its options.</p>
-
-                <ui-collapsible header="Settings - All the options explained">
+                    @include('help.contents')
+                {{--<ui-collapsible header="Settings - All the options explained">--}}
                     @include('help.settings')
-                </ui-collapsible>
-                <ui-collapsible header="How Do I...? ">
+                {{--</ui-collapsible>--}}
+                {{--<ui-collapsible header="How Do I...? ">--}}
                     @include('help/howDoI')
-                </ui-collapsible>
+                {{--</ui-collapsible>--}}
             </div>
         </div>
     </div>
