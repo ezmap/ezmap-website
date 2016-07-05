@@ -317,7 +317,9 @@ mainVue = new Vue({
         },
         showAddressModal: function () {
             this.addingPinByAddress = true;
-            $('#geocodemodal').modal('show');
+            $('#geocodemodal').modal('show').on('shown.bs.modal', function () {
+                $('#geocodeAddress').focus();
+            });
         },
         geocodeAddress: function () {
             var address = document.getElementById('geocodeAddress');
