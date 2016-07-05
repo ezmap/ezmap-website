@@ -33,7 +33,8 @@ $brand-danger: #f44336 !default; // $brand-danger: #F394AA !default;  // $brand-
 //## Settings for some of the most global styles.
 
 //** Background color for `<body>`.
-$body-bg-image: linear-gradient(90deg,rgba(12, 134, 230, .1) 0,rgba(12, 134, 230, .15) 37.5%,#fff 0,#fff) !default;
+//$body-bg-image: linear-gradient(90deg,rgba(12, 134, 230, .1) 0,rgba(12, 134, 230, .15) 37.5%,#fff 0,#fff) !default;
+$body-bg-image: linear-gradient(90deg,rgba(230, 230, 230, .1) 0,rgba(230, 230, 230, .15) 37.5%,#fff 0,#fff) !default;
 $body-bg: white !default;
 
 $brand-shadow: 0 1px 4px rgba(0, 0, 0, 0.3) !default;
