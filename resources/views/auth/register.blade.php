@@ -11,9 +11,10 @@
                     <li>Come back to your saved maps to edit further</li>
                     <li>Duplicate saved maps, to use as your standard starting-point map perhaps.</li>
                     <li>Create your own marker pins and save them for re-use.</li>
+                    <li>Place your saved map code once and update your maps on the fly from your EZMap control panel.</li>
                     <li>...more to come.</li>
                 </ul>
-                <p class="lead">...and best of all it's FREE!</p>
+                <p class="lead">...and best of all it's FREE, forever!</p>
                 <hr>
                 <div class="panel panel-default">
                     <div class="panel-heading">Register</div>
