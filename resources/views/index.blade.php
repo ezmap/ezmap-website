@@ -6,6 +6,7 @@
     </div>
     @include('partials.infoformmodal')
     @include('partials.markerpinmodal')
+    @include('partials.addressmodal')
 
     <div class="col-sm-4 theform form">
         <div class="row">
@@ -143,8 +144,10 @@
                     <div class="col-xs-12">
                         <div class="">
                             <ui-button raised color="primary" v-on:click.prevent="this.addingPin=true" icon="add_location">
-                                Add a
-                                Marker
+                                Drop a Marker
+                            </ui-button>
+                            <ui-button raised color="primary" v-on:click.prevent="showAddressModal" icon="add_location">
+                                Add a Marker by Address
                             </ui-button>
                             <ui-button raised v-show="markers.length" color="danger" v-on:click.prevent="removeAllMarkers" icon="delete">
                                 Delete All Markers?

@@ -33,8 +33,10 @@ Route::post('admin', 'SnazzyMapsController@populateThemes')->name('populateTheme
 
 Route::post('addNewIcon', 'HomeController@addNewIcon')->name('addNewIcon');
 Route::post('deleteIcon', 'HomeController@deleteIcon')->name('deleteIcon');
+Route::post('geocodeAddress', 'GeneralController@geocodeAddress')->name('geocode');
 
 Route::post('addMarkerIcon', 'AdminController@addMarkerIcon')->name('addMarkerIcon');
+
 Route::get('AZPopulate', 'AdminController@AZPopulate')->name('AZPopulate');
 
 Route::resource('map', 'MapController');

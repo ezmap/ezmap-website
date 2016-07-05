@@ -44,4 +44,9 @@ class GeneralController extends Controller
 
         return redirect()->back();
     }
+
+    public function geocodeAddress(Request $request)
+    {
+        return $request->all();
+    }
 }

@@ -16,6 +16,7 @@ mainVue = new Vue({
     el: '#app',
     data: {
         addingPin: false,
+        addingPinByAddress: false,
         apikey: '{{ $map->apiKey ?? '' }}',
         codeCopied: false,
         currentTheme: {
@@ -25,6 +26,7 @@ mainVue = new Vue({
         doubleClickZoom: {{ $map->mapOptions->doubleClickZoom ?? 'true' }},
         embeddable: @if( empty($map) || !($map->embeddable) ) false @else true @endif,
         height: {{ $map->height ?? 420 }} +0,
+        geocoder: {},
         infoDescription: '',
         infoEmail: '',
         infoTelephone: '',
@@ -313,8 +315,29 @@ mainVue = new Vue({
             };
             this.markers[newIcon.data('for-marker')].setIcon(newIcon.attr('src'));
         },
+        showAddressModal: function () {
+            this.addingPinByAddress = true;
+            $('#geocodemodal').modal('show');
+        },
+        geocodeAddress: function () {
+            var address = document.getElementById('geocodeAddress').value;
+            this.geocoder.geocode({'address': address}, function (results, status) {
+                if (status === google.maps.GeocoderStatus.OK) {
+                    $('#geocodemodal').modal('hide');
+                    mainVue.placeMarker({latLng: results[0].geometry.location});
+                    {{--resultsMap.setCenter(results[0].geometry.location);--}}
+                    {{--var marker = new google.maps.Marker({--}}
+                    {{--map: resultsMap,--}}
+                    {{--position: results[0].geometry.location--}}
+                    {{--});--}}
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
+            });
+        },
         placeMarker: function (event) {
-            if (this.addingPin) {
+            console.log(event);
+            if (this.addingPin || this.addingPinByAddress) {
                 var marker = new google.maps.Marker({
                     icon: 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi.png',
                     position: event.latLng,
@@ -333,25 +356,30 @@ mainVue = new Vue({
                 this.infoTelephone = '';
                 this.infoDescription = '';
                 $('#markerModal').modal('show');
-                this.addingPin = false;
+                this.addingPin = this.addingPinByAddress = false;
             }
-        },
+        }
+
+        ,
         duplicateMap: function () {
             $('input[name="title"]').val($('input[name="title"]').val() + ' - copy');
 
             $('input[name="_method"]').val('POST');
             $('#mainForm').attr('action', '{{ route('map.store') }}').submit();
-        },
+        }
+        ,
         addSavedInfoWindow: function (marker, infoWindow) {
             marker.addListener('click', function () {
                 infoWindow.open(mainVue.map, marker);
             });
-        },
+        }
+        ,
 
         initMap: function () {
 
             this.mapOptions.center = new google.maps.LatLng(this.lat, this.lng);
             this.map = new google.maps.Map(document.getElementById('map'), this.mapOptions);
+            this.geocoder = new google.maps.Geocoder();
             this.mapLoaded = true;
             this.mapmoved();
                     @if( !empty($map) )
