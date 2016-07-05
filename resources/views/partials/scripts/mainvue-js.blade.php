@@ -320,11 +320,12 @@ mainVue = new Vue({
             $('#geocodemodal').modal('show');
         },
         geocodeAddress: function () {
-            var address = document.getElementById('geocodeAddress').value;
-            this.geocoder.geocode({'address': address}, function (results, status) {
+            var address = document.getElementById('geocodeAddress');
+            this.geocoder.geocode({'address': address.value}, function (results, status) {
                 if (status === google.maps.GeocoderStatus.OK) {
                     $('#geocodemodal').modal('hide');
                     mainVue.placeMarker({latLng: results[0].geometry.location});
+                    address.value = '';
                     {{--resultsMap.setCenter(results[0].geometry.location);--}}
                     {{--var marker = new google.maps.Marker({--}}
                     {{--map: resultsMap,--}}
