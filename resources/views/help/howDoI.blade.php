@@ -43,7 +43,7 @@
     </li>
     <li id="hdi5">
         <p class="lead">…style my marker's info windows?</p>
-        <p>If you are not using the automatic update code you'll see this in your code output:</p>
+        <p>You can add the following classes to your CSS. (If you are not using the automatic update code you'll see this in your code output)</p>
        <pre><code>…
 &lt;style>
   #ez-map{min-height:150px;min-width:150px;height: 420px;width: 100%;}
