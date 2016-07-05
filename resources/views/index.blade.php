@@ -6,7 +6,7 @@
     </div>
     @include('partials.infoformmodal')
     @include('partials.markerpinmodal')
-    @include('partials.addressmodal')
+    @include('partials.addressModal')
 
     <div class="col-sm-4 theform form">
         <div class="row">
