@@ -1,5 +1,6 @@
 <?php
 
+
 return [
 
     /*
@@ -160,6 +161,8 @@ return [
         Infinety\Alerts\AlertServiceProvider::class,
         Greggilbert\Recaptcha\RecaptchaServiceProvider::class,
 
+        App\Providers\EzTranslatorServiceProvider::class,
+
 
     ],
 
@@ -209,6 +212,7 @@ return [
 
 
         'Recaptcha' => Greggilbert\Recaptcha\Facades\Recaptcha::class,
+        'EzTrans'   => App\Facades\EzTranslator::class,
 
     ],
 

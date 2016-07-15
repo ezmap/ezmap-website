@@ -38,15 +38,15 @@ mainVue = new Vue({
         mapcontainer: '{!! $map->mapContainer ?? 'ez-map' !!}',
         mapLoaded: false,
         mapTypeControlDropdown: [
-            {text: "Default (depends on viewport size etc.)", style: 0},
-            {text: "Buttons", style: 1},
-            {text: "Dropdown", style: 2}
+            {text: "{{ ucfirst(EzTrans::translate('mapType.default','default (depends on viewport size etc.)')) }}", style: 0},
+            {text: "{{ ucfirst(EzTrans::translate('mapType.buttons','buttons')) }}", style: 1},
+            {text: "{{ ucfirst(EzTrans::translate('mapType.dropdown','dropdown')) }}", style: 2}
         ],
         mapTypes: [
-            {mapTypeId: "roadmap", text: "Road Map"},
-            {mapTypeId: "terrain", text: "Road Map with Terrain"},
-            {mapTypeId: "satellite", text: "Satellite"},
-            {mapTypeId: "hybrid", text: "Satellite with Labels"},
+            {mapTypeId: "roadmap", text: "{{ ucwords(EzTrans::translate('mapType.roadMap','road map')) }}"},
+            {mapTypeId: "terrain", text: "{{ ucwords(EzTrans::translate('mapType.terrain', 'road map with terrain')) }}"},
+            {mapTypeId: "satellite", text: "{{ ucwords(EzTrans::translate('mapType.satellite', 'satellite')) }}"},
+            {mapTypeId: "hybrid", text: "{{ ucwords(EzTrans::translate('mapType.hybrid', 'satellite with labels')) }}"},
         ],
         mapTypeId: {},
         markers: [],
