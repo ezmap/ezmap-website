@@ -14,9 +14,9 @@ return [
 
     "login"    => "log in",
     "logout"   => "log oot",
-    "register" => "stert here",
+    "register" => "register",
 
-    "settings"                   => "settins",
+    "settings"                   => "settings",
     "youAreNot"                  => "ye urny",
     "loggedIn"                   => "logged in",
     "youWontBeAbleToSaveYourMap" => "ye'll no be able tae save yur map",
