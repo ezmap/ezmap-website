@@ -1,18 +1,20 @@
 <div id="snazzthemes" class="col-xs-12" v-on:click="setTheme">
     <div class="snazzyMapsThemes" id="snazzyMapsThemes">
-        <h3>Themes from <a target="_blank" href="https://snazzymaps.com/">Snazzy Maps</a></h3>
-        <p>Click on a theme's image to apply the theme to your map.</p>
-        <p>Showing {{ $themes->count() }} of {{ \App\Theme::count() }} themes.</p>
+        <h3>{{ ucfirst(EzTrans::help("theme.from")) }} <a target="_blank" href="https://snazzymaps.com/">Snazzy Maps</a></h3>
+        <p>{{ EzTrans::help("theme.clickToApply") }}</p>
+        <p>
+            {{ ucfirst(EzTrans::help("theme.showing")) }} {{ $themes->count() }} {{ EzTrans::help("theme.of") }} {{ \App\Theme::count() }} {{ str_plural(EzTrans::help("theme.theme"),\App\Theme::count()) }}.
+        </p>
         <div class="col-xs-12">
             {{ $themes->appends($appends)->links() }}
         </div>
         <div class="col-xs-12">
-            <h5>Show: @if(request()->has('tag') || request()->has('col'))
-                    <a href="{{ request()->url() }}">All</a>
+            <h5>{{ ucfirst(EzTrans::help("theme.show")) }}: @if(request()->has('tag') || request()->has('col'))
+                    <a href="{{ request()->url() }}">{{ ucfirst(EzTrans::help("theme.all")) }}</a>
                 @endif
             </h5>
 
-            <div>Tagged... |
+            <div>{{ ucfirst(EzTrans::help("theme.tagged")) }}... |
                 @foreach (['colorful','complex','dark','greyscale','light','monochrome','no-labels','simple','two-tone'] as $tag)
                     @if(request()->input('tag') != $tag)
                         <a href="?tag={{ $tag }}">{{ $tag }}</a> |
@@ -21,7 +23,7 @@
                     @endif
                 @endforeach
             </div>
-            <div>{{ ucfirst(trans('ezmap.color')) }}... |
+            <div>{{ ucfirst(EzTrans::help("theme.color")) }}... |
                 @foreach( ['black','blue','gray','green','multi','orange','purple','red','white','yellow'] as $color)
                     @if(request()->input('col') != $color)
                         <a href="?col={{ $color }}">{{ $color }}</a> |

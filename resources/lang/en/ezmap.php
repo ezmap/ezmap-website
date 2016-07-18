@@ -1,8 +1,13 @@
 <?php
 return [
+    "language" => "English (simplified)",
 
-    "settings" => "settings",
+    "feedback" => [
+        "title" => "Please give any feedback on this tool here.",
+        "intro" => "Maybe you would like a particular Snazzy Maps theme installed, or something's being problematic with markers. Whatever your issue, please please contact me and I'll do what I can to fix you right up.",
+    ],
 
+    "settings"                   => "settings",
     "youAreNot"                  => "you are not",
     "loggedIn"                   => "logged in",
     "youWontBeAbleToSaveYourMap" => "you won't be able to save your map",

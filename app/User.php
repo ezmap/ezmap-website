@@ -33,4 +33,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Map::class);
     }
+
+    public function icons()
+    {
+        return $this->hasMany(Icon::class);
+    }
 }

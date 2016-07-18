@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Icon;
 use App\Map;
 use App\Theme;
 use Illuminate\Http\Request;
@@ -98,7 +99,7 @@ class MapController extends Controller
             }
         }
 
-        return view('index', compact('map', 'sort', 'order'));
+        return view('index', compact('map', 'sort', 'order', 'userIcons'));
     }
 
     /**

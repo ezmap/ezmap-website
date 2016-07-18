@@ -29,6 +29,21 @@ class EzTranslatorService
     public static function translate($translation, $default = null)
     {
         $default = $default ?? $translation;
-        return (new static($translation,$default))->translation();
+
+        return (new static($translation, $default))->translation();
+    }
+
+    public function helpTranslation()
+    {
+        return (trans("ezmaphelp.{$this->translation}") == "ezmaphelp.{$this->translation}") ?
+            $this->default :
+            trans('ezmaphelp.' . $this->translation);
+    }
+
+    public static function help($translation, $default = null)
+    {
+        $default = $default ?? $translation;
+
+        return (new static($translation, $default))->helpTranslation();
     }
 }
