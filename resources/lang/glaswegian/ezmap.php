@@ -7,7 +7,7 @@ return [
     "feedback" => [
         "feedback" => "feedback",
         "title" => "Here mate, whit d'ye 'hink o' this?",
-        "intro" => "Like, d'ye want a Snazzy Map theme pit oan? Or mibbe the markers ur being complete nyaffs. Whitever ye need, let me know and I'll sort yi oot.",
+        "intro" => "D'ye want a Snazzy Map theme put on? Or mibbe the markers ur being complete dobbers. Whitever ye need, let me know and I'll sort yi oot.",
     ],
 
     "changeLanguage" => "talk shite",
