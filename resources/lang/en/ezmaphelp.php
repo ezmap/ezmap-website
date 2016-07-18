@@ -15,7 +15,7 @@ return [
             "warn3"    => "use an API key. You should contact the",
             "warn4"    => "people for advice. If you do not have an API key you can still make maps but there will be restrictions on how many times your maps can be viewed each day.",
         ],
-        "containerID"    => "This is just the ID of the element you want your map to appear in. It's produced in the code given so unless you have another element on your page with the same ID you don't probably needto change this.",
+        "containerID"    => "This is just the ID of the element you want your map to appear in. It's produced in the code given so unless you have another element on your page with the same ID you don't probably need to change this.",
         "dimensions"     => "This is the width and height of your map in pixels. If you want your map to be as wide as whatever bit of the page you put it in, select the \"Responsive Width\" option. If you choose the responsive option your map will remain centered if the visitor re-sizes the page.",
         "latLong"        => "These numbers are the center point of your map. If you know the latitude and longitude you want to center your map at you can fill this in. Otherwise, just drag the map around and these numbers will update to match the current center position.",
         "mapTypeControl" => "The Map Type Control is the control in the top-left of a map that determines the basic look of the map. You can use the selector to choose whether to display this control as buttons or as a dropdown.",

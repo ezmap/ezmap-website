@@ -11,8 +11,10 @@
 |
 */
 
+
 Route::get('/', "GeneralController@index")->middleware(['guest', 'pjax'])->name('index');
-Route::get('feedback', function(){
+Route::get('feedback', function ()
+{
     return view('feedback');
 });
 Route::post('feedback', 'GeneralController@feedback')->name('feedback');
@@ -28,7 +30,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('admin', 'AdminController@index');
 Route::get('stealth/{userid}', "AdminController@stealth")->name('stealth');
-Route::get('unstealth',"AdminController@unstealth")->name('unstealth');
+Route::get('unstealth', "AdminController@unstealth")->name('unstealth');
 Route::post('admin', 'SnazzyMapsController@populateThemes')->name('populateThemes')->middleware('admin');
 
 Route::post('addNewIcon', 'HomeController@addNewIcon')->name('addNewIcon');
@@ -40,6 +42,7 @@ Route::post('addMarkerIcon', 'AdminController@addMarkerIcon')->name('addMarkerIc
 Route::get('AZPopulate', 'AdminController@AZPopulate')->name('AZPopulate');
 
 Route::resource('map', 'MapController');
+Route::get('lang/{lang}', 'GeneralController@changeLanguage')->name('lang');
 
 Route::get('help', function ()
 {

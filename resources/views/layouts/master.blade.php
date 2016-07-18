@@ -24,13 +24,23 @@
         </div>
         <div class="collapse navbar-collapse" id="app-navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="{{ route('help') }}">Help</a></li>
-                <li><a href="{{ route('feedback') }}">Feedback</a></li>
+                <li><a href="{{ route('help') }}">{{ ucwords(EzTrans::translate("help")) }}</a></li>
+                <li><a href="{{ route('feedback') }}">{{ ucwords(EzTrans::translate("feedback.feedback")) }}</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ ucwords(EzTrans::translate("changeLanguage")) }}
+                        <span class="caret"></span> </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="{{ route('lang','en_GB') }}">{{ EzTrans::language('en_GB') }}</a></li>
+                        <li><a href="{{ route('lang','en') }}">{{ EzTrans::language('en_US') }}</a></li>
+                        <li><a href="{{ route('lang','glaswegian') }}">{{ EzTrans::language('glaswegian') }}</a></li>
+
+                    </ul>
+                </li>
                 @if (Auth::guest())
-                    <li><a href="{{ url('/login') }}">Login</a></li>
-                    <li><a href="{{ url('/register') }}">Register</a></li>
+                    <li><a href="{{ url('/login') }}">{{ ucwords(EzTrans::translate("login")) }}</a></li>
+                    <li><a href="{{ url('/register') }}">{{ ucwords(EzTrans::translate("register")) }}</a></li>
                 @else
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->name }}
@@ -41,8 +51,8 @@
                             @endif
                             @if(session()->has('stealth'))
                                 <li><a href="{{ route('unstealth') }}">Un-stealth</a></li>
-                                @endif
-                            <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                            @endif
+                            <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>{{ ucwords(EzTrans::translate("logout")) }}</a></li>
                         </ul>
                     </li>
                 @endif
@@ -61,7 +71,8 @@
         <p style="margin-top:1.25em;">© {{ date('Y') }}
             <a target="_blank" href="//billyfagan.co.uk">Billy Fagan</a>. This tool abides by Google's
             <a target="_blank" href="https://www.google.co.uk/permissions/geoguidelines.html">Permissions Guidelines</a>.
-            <a class="pull-right" target="_blank" href="https://twitter.com/ez_map"><i class="fa fa-twitter fa-fw"></i> @ez_map</a>
+            <a class="pull-right" target="_blank" href="https://twitter.com/ez_map"><i class="fa fa-twitter fa-fw"></i> @ez
+                _map</a>
         </p>
     </div>
 </footer>

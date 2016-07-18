@@ -2,10 +2,20 @@
 return [
     "language" => "English (simplified)",
 
+    "help" => "help",
+
     "feedback" => [
-        "title" => "Please give any feedback on this tool here.",
-        "intro" => "Maybe you would like a particular Snazzy Maps theme installed, or something's being problematic with markers. Whatever your issue, please please contact me and I'll do what I can to fix you right up.",
+        "feedback" => "feedback",
+        "title"    => "Please give any feedback on this tool here.",
+        "intro"    => "Maybe you would like a particular Snazzy Maps theme installed, or something's being problematic with markers. Whatever your issue, please please contact me and I'll do what I can to fix you right up.",
     ],
+
+    "changeLanguage" => "change language",
+
+    "login"    => "log in",
+    "logout"   => "log out",
+    "register" => "register",
+
 
     "settings"                   => "settings",
     "youAreNot"                  => "you are not",

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Mail;
+use Vluzrmos\LanguageDetector\Facades\LanguageDetector;
 
 class GeneralController extends Controller
 {
@@ -48,5 +49,12 @@ class GeneralController extends Controller
     public function geocodeAddress(Request $request)
     {
         return $request->all();
+    }
+
+    public function changeLanguage($lang)
+    {
+        LanguageDetector::apply($lang);
+
+        return redirect()->back();
     }
 }

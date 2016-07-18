@@ -17,7 +17,7 @@ class MapController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth', 'pjax'])->except('show');
+        $this->middleware(['auth', 'pjax'])->except(['show']);
     }
 
     /**
@@ -174,4 +174,6 @@ class MapController extends Controller
 
         return $options;
     }
+
+
 }

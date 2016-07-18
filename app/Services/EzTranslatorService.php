@@ -46,4 +46,11 @@ class EzTranslatorService
 
         return (new static($translation, $default))->helpTranslation();
     }
+
+    public static function language($locale)
+    {
+        //trans($id = null, $parameters = [], $domain = 'messages', $locale = null)
+        return trans('ezmap.language',[],'messages', $locale);
+    }
+
 }

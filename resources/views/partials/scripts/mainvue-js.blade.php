@@ -424,7 +424,7 @@ mainVue = new Vue({
         }
     }
 });
-$(document).pjax('a', '#snazzthemes', {scrollTo: false, timeout: 3000});
+$(".container-fluid").pjax('a', '#snazzthemes', {scrollTo: false, timeout: 3000});
 if ("createEvent" in document) {
     var evt = document.createEvent("HTMLEvents");
     evt.initEvent("change", false, true);
