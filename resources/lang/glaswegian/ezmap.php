@@ -87,7 +87,6 @@ return [
     "makiIntro"  => "if ye still cannae find a picture yer happy wae, head ower tae",
     "makiOutro"  => "an ye can customize their excellent free pictures, then stick them on here",
 
-
     "options" => [
         "other"           => "ither options",
         "fullscreen"      => "fullscreen control",
@@ -114,5 +113,5 @@ return [
 
     "mapCodeHeading" => "yer map code",
     "testCode"       => "ye can test yer code works by sticking it in",
-    "newCodePen"     => "wan ae these CodePen hings",
+    "newCodePen"     => "wan o these CodePen hings",
 ];
