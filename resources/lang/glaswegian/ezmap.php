@@ -63,7 +63,7 @@ return [
     "deleteAllMarkers"       => "delete aw yer markers",
     "markerTitle"            => "marker title",
     "changeIcon"             => "swap the picture",
-    "centerHere"             => "center the map here",
+    "centerHere"             => "centre the map here",
     "deleteMarker"           => "remove marker",
     "markerInfo"             => "marker info",
     "telephone"              => "phone",
