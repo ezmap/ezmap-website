@@ -34,7 +34,7 @@
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="{{ route('lang','en_GB') }}">{{ EzTrans::language('en_GB') }}</a></li>
                         <li><a href="{{ route('lang','en') }}">{{ EzTrans::language('en_US') }}</a></li>
-                        <li><a href="{{ route('lang','glaswegian') }}">{{ EzTrans::language('glaswegian') }}</a></li>
+                        <li><a href="{{ route('lang','kilwinkian') }}">{{ EzTrans::language('kilwinkian') }}</a></li>
 
                     </ul>
                 </li>

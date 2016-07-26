@@ -1,6 +1,6 @@
 <?php
 return [
-    "language" => "Glaswegian",
+    "language" => "Kilwinkian",
 
     "help" => "hauners",
 
@@ -30,7 +30,7 @@ return [
     "automaticUpdates"    => "easy updates",
     "automaticUpdateHelp" => [
         "description" => "Paste yer code on yer page then jist change it here.",
-        "warning"     => "Ye HUV TAE save yer map efter editin it or yer changes wullny show up",
+        "warning"     => "Edgy up! Ye HUV TAE save yer map efter editin it or yer changes wullny show up",
     ],
     "dimensions"          => "dimensions",
     "responsive"          => [
