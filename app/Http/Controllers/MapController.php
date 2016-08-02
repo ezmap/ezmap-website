@@ -116,6 +116,8 @@ class MapController extends Controller
         $map->title         = $request->has('title') ? $request->input('title') : '';
         $map->apiKey        = $request->has('apiKey') ? $request->input('apiKey') : '';
         $map->mapContainer  = $request->has('mapContainer') ? $request->input('mapContainer') : 'ez-map';
+        $map->width         = $request->has('width') ? $request->input('width') : $map->width;
+        $map->height        = $request->has('height') ? $request->input('height') : $map->height;
         $map->latitude      = $request->has('latitude') ? $request->input('latitude') : $map->latitude;
         $map->longitude     = $request->has('longitude') ? $request->input('longitude') : $map->longitude;
         $map->markers       = $request->has('markers') ? $request->input('markers') : $map->markers;
