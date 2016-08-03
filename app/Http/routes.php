@@ -42,6 +42,8 @@ Route::post('addMarkerIcon', 'AdminController@addMarkerIcon')->name('addMarkerIc
 Route::get('AZPopulate', 'AdminController@AZPopulate')->name('AZPopulate');
 
 Route::resource('map', 'MapController');
+Route::post('map/undelete/{id}', 'MapController@undelete')->name('map.undelete');
+
 Route::get('lang/{lang}', 'GeneralController@changeLanguage')->name('lang');
 
 Route::get('help', function ()

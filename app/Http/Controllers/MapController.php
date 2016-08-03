@@ -25,9 +25,14 @@ class MapController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('map.index');
+        $maps        = $request->user()->maps;
+        $deletedMaps = Map::onlyTrashed()
+            ->where('user_id', $request->user()->id)
+            ->get();
+
+        return view('map.index', compact('maps', 'deletedMaps'));
     }
 
     /**
@@ -145,6 +150,16 @@ class MapController extends Controller
     {
         $this->authorize($map);
         $map->delete();
+
+        return redirect()->route('home');
+    }
+
+    public function undelete(Request $request, $id)
+    {
+        Map::onlyTrashed()
+            ->where('id', $id)
+            ->where('user_id', $request->user()->id)
+            ->restore();
 
         return redirect()->route('home');
     }
