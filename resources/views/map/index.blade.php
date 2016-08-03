@@ -33,6 +33,7 @@
             @endforeach
 
             @if(count($deletedMaps) > 0)
+                <hr>
                 <h3>Deleted Maps</h3>
                 @foreach($deletedMaps as $deletedMap)
                     <div class="col-xs-10">
