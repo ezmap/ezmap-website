@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Map extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'title',
         'mapContainer',
@@ -26,6 +29,8 @@ class Map extends Model
         'responsiveMap' => 'boolean',
         'embeddable'    => 'boolean',
     ];
+
+    protected $dates = ['deleted_at'];
 
     public function user()
     {
