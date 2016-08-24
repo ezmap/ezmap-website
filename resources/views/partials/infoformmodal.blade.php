@@ -32,7 +32,7 @@
                             <div class="form-group">
                                 <label for="website">{{ ucwords(EzTrans::translate('website')) }}</label>
                                 <input id="website" class="form-control" type="text" placeholder="http://www.example.com" v-model="infoWebsite">
-                                <ui-switch name="new_window" :value.sync="infoTarget">{{ ucwords(EzTrans::translate('open_in_new_tab')) }}</ui-switch>
+                                <ui-switch name="new_window" :value.sync="infoTarget">{{ ucfirst(EzTrans::translate('open_in_new_tab')) }}</ui-switch>
                             </div>
                         </div>
                         <div class="col-sm-12">
