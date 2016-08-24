@@ -69,7 +69,7 @@ return [
     "telephone"              => "phone",
     "email"                  => "email address",
     "website"                => "website",
-    "open_in_new_tab"        => "open website in a new tab/window?",
+    "open_in_new_tab"        => "open in a new tab?",
     "descriptionPlaceholder" => "talk aboot this place a wee bit here, if ye can be arsed",
     "infoDismissButton"      => "Piss aff",
     "infoConfirmButton"      => "Right, great",

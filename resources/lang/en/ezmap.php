@@ -70,7 +70,7 @@ return [
     "telephone"              => "telephone",
     "email"                  => "email address",
     "website"                => "website",
-    "open_in_new_tab"        => "open website in a new tab/window?",
+    "open_in_new_tab"        => "open in a new tab?",
     "descriptionPlaceholder" => "write a short description here, if you want",
     "infoDismissButton"      => "I don't need this",
     "infoConfirmButton"      => "add info box",
