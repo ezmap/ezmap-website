@@ -145,9 +145,7 @@
                             <ui-button raised color="primary" v-on:click.prevent="showAddressModal" icon="add_location">
                                 {{ EzTrans::translate('addMarkerByAddress', 'add a marker by address') }}
                             </ui-button>
-                            <ui-button raised v-show="markers.length > 1" color="danger" v-on:click.prevent="removeAllMarkers" icon="delete">
-                                {{ EzTrans::translate('deleteAllMarkers', 'delete all markers') }}
-                            </ui-button>
+
                         </div>
                         <div class="row">
                             <div class="col-xs-12">
@@ -165,6 +163,15 @@
                                         <th>{{ ucwords(EzTrans::translate('changeIcon', 'change icon')) }}</th>
                                         <th>{{ ucwords(EzTrans::translate('centerHere', 'center here')) }}</th>
                                         <th>{{ ucwords(EzTrans::translate('deleteMarker', 'delete marker')) }}</th>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                        </td>
+                                        <td>
+                                            <ui-button raised v-show="markers.length > 1" color="danger" v-on:click.prevent="removeAllMarkers" icon="delete">
+                                                {{ EzTrans::translate('deleteAllMarkers', 'delete all markers') }}
+                                            </ui-button>
+                                        </td>
                                     </tr>
                                     <tr v-for="(index, marker) in markers">
                                         <td>

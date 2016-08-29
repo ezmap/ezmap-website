@@ -300,10 +300,12 @@ mainVue = new Vue({
             this.markers.splice(item, 1);
         },
         removeAllMarkers: function () {
-            for (var i = 0; i < this.markers.length; i++) {
-                this.markers[i].setMap(null);
+            if (window.confirm('Are you sure you want to delete the '+ this.markers.length + ' markers from this map?')) {
+                for (var i = 0; i < this.markers.length; i++) {
+                    this.markers[i].setMap(null);
+                }
+                this.markers = [];
             }
-            this.markers = [];
         },
         centerOnMarker: function (item) {
             this.map.setCenter(this.markers[item].position);
