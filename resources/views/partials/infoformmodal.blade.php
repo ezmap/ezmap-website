@@ -8,7 +8,7 @@
             </div>
             <div class="modal-body">
                 <div class="form">
-                    <form action="#" id="marker-form">
+                    {{--<form action="#" id="marker-form">--}}
                         <input type="hidden" id="markerId">
                         <div class="col-sm-6">
                             <div class="form-group">
@@ -32,12 +32,13 @@
                             <div class="form-group">
                                 <label for="website">{{ ucwords(EzTrans::translate('website')) }}</label>
                                 <input id="website" class="form-control" type="text" placeholder="http://www.example.com" v-model="infoWebsite">
+                                <ui-switch name="new_window" :value.sync="infoTarget">{{ ucfirst(EzTrans::translate('open_in_new_tab')) }}</ui-switch>
                             </div>
                         </div>
                         <div class="col-sm-12">
                             <textarea name="description" id="description" cols="30" rows="10" class="form-control" placeholder="{{ ucfirst(EzTrans::translate('descriptionPlaceholder','write a short description here, if you want')) }}." v-model="infoDescription"></textarea>
                         </div>
-                    </form>
+                    {{--</form>--}}
                 </div>
                 <div class="clearfix"></div>
             </div>

@@ -32,6 +32,7 @@ mainVue = new Vue({
         infoTelephone: '',
         infoTitle: '',
         infoWebsite: '',
+        infoTarget: false,
         lat: {{ $map->latitude ?? 57.511784490097384 }} +0,
         lng: {{ $map->longitude ?? -1.8120742589235306 }} +0,
         map: {},
