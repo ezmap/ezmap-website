@@ -1,4 +1,4 @@
-head = document.head || document.getElementsByTagName('head')[0],
+head = document.head || document.getElementsByTagName('head')[0];
 
 if (document.getElementById("ezmap-gmap-script") === null)
 {
