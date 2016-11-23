@@ -76,7 +76,7 @@ class Map extends Model
         $disableDoubleClickZoom = $this->mapOptions->doubleClickZoom ? 'false' : 'true';
         $styles                 = ($this->theme_id > 0) ? ",\n                \"styles\": " . $this->theme->json : '';
         $output                 = "
-    function init() {
+    function init{$this->id}() {
             var mapOptions = {
                 \"center\": {\"lat\": {$this->latitude}, \"lng\": {$this->longitude}},                
                 \"clickableIcons\": {$this->mapOptions->clickableIcons},
@@ -104,7 +104,7 @@ class Map extends Model
         map.setCenter(center); 
       });
     }
-    google.maps.event.addDomListener(window, 'load', init);
+    google.maps.event.addDomListener(window, 'load', init{$this->id});
 ";
 
         return $output;
