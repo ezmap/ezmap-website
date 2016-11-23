@@ -33,9 +33,9 @@ function doMap{{ $map->id }}() {
 
 if (firstload){
     gmapscript.onload = function(){
-        doMap{{ $map->id }}
+        doMap{{ $map->id }}();
     }
 } else {
-    doMap{{ $map->id }}
+    doMap{{ $map->id }}();
 }
 })();
