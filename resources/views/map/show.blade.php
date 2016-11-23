@@ -1,6 +1,6 @@
 (function(){
 var head = document.head || document.getElementsByTagName('head')[0];
-var firstload =  (document.getElementById("ezmap-gmap-script") === null)
+var firstLoad =  (document.getElementById("ezmap-gmap-script") === null)
 
 var gmapscript = document.createElement('script');
 gmapscript.id = "ezmap-gmap-script";
