@@ -1,6 +1,6 @@
 (function(){
 var head = document.head || document.getElementsByTagName('head')[0];
-console.log(typeof document.getElementById("ezmap-gmap-script"));
+console.log(document.getElementById("ezmap-gmap-script"));
 if (typeof document.getElementById("ezmap-gmap-script") === undefined)
 {
 var gmapscript = document.createElement('script');
