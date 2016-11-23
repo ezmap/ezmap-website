@@ -51,6 +51,6 @@ Route::get('help', function ()
     return view('help.index');
 })->name('help');
 
-Route::get('2mapautoupdatetest', function(){
-    return view('2mapsautoupdate');
+Route::get('twomapautoupdatetest', function(){
+    return view('twomapsautoupdate');
 });
