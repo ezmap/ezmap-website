@@ -1,3 +1,4 @@
+(function(){
 head = document.head || document.getElementsByTagName('head')[0];
 
 if (document.getElementById("ezmap-gmap-script") === null)
@@ -27,3 +28,4 @@ theScript.parentNode.insertBefore(mapContainer, theScript);
 gmapscript.onload = function(){
     {!! $map->code() !!}
 };
+})();
