@@ -1,7 +1,7 @@
 (function(){
 var head = document.head || document.getElementsByTagName('head')[0];
 
-if (document.getElementById("ezmap-gmap-script") === null)
+if (typeof window.gmapscript === undefined)
 {
 var gmapscript = document.createElement('script');
 gmapscript.id = "ezmap-gmap-script";
