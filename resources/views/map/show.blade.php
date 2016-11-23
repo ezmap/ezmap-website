@@ -1,5 +1,5 @@
 (function(){
-head = document.head || document.getElementsByTagName('head')[0];
+var head = document.head || document.getElementsByTagName('head')[0];
 
 if (document.getElementById("ezmap-gmap-script") === null)
 {
@@ -11,7 +11,7 @@ head.appendChild(gmapscript);
 var gmapscript = document.getElementById("ezmap-gmap-script");
 }
 var css = '#{{ $map->mapContainer }}{min-height: 150px;min-width: 150px;width: {{ $map->responsiveMap ? "100%" : "{$map->width}px"}};height: {{ $map->height }}px;}',
-style = document.createElement('style');
+var style = document.createElement('style');
 style.type = 'text/css';
 if (style.styleSheet){
     style.styleSheet.cssText = css;
@@ -20,9 +20,9 @@ if (style.styleSheet){
 }
 head.appendChild(style);
 
-mapContainer = document.createElement('div');
+var mapContainer = document.createElement('div');
 mapContainer.id = '{{ $map->mapContainer }}';
-theScript = document.getElementById('ez-map-embed-script-{{ $map->id }}');
+var theScript = document.getElementById('ez-map-embed-script-{{ $map->id }}');
 theScript.parentNode.insertBefore(mapContainer, theScript);
 
 gmapscript.onload = function(){
