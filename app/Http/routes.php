@@ -53,4 +53,4 @@ Route::get('help', function ()
 
 Route::get('twomapautoupdatetest', function(){
     return view('twomapsautoupdate');
-});
+});t

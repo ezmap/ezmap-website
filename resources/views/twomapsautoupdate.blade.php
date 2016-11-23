@@ -8,11 +8,11 @@
 </head>
 <body>
 <!-- Google map code from EZ Map - https://ezmap.co -->
-<script src="http://ezmap.co/map/243" id="ez-map-embed-script"></script>
+<script src="//ezmap.co/map/243" id="ez-map-embed-script"></script>
 <!-- End of EZ Map code - https://ezmap.co -->
 
 <!-- Google map code from EZ Map - https://ezmap.co -->
-<script src="http://ezmap.co/map/244" id="ez-map-embed-script"></script>
+<script src="//ezmap.co/map/244" id="ez-map-embed-script"></script>
 <!-- End of EZ Map code - https://ezmap.co -->
 
 </body>
