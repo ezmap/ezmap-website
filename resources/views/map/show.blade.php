@@ -21,7 +21,7 @@ head.appendChild(style);
 
 mapContainer = document.createElement('div');
 mapContainer.id = '{{ $map->mapContainer }}';
-theScript = document.getElementById('ez-map-embed-script');
+theScript = document.getElementById('ez-map-embed-script-{{ $map->id }}');
 theScript.parentNode.insertBefore(mapContainer, theScript);
 
 gmapscript.onload = function(){
