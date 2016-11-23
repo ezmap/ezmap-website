@@ -95,7 +95,7 @@ class Map extends Model
                 \"zoom\": {$this->mapOptions->zoomLevel},
                 \"zoomControl\": {$this->mapOptions->showZoomControl}{$styles}
             };
-      var mapElement = document.getElementById('ez-map');
+      var mapElement = document.getElementById('{$this->mapContainer}');
       var map = new google.maps.Map(mapElement, mapOptions);";
         $output .= $this->markersLoop();
         $output .= "\n      google.maps.event.addDomListener(window, 'resize', function() { 
