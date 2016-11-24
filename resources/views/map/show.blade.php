@@ -24,6 +24,7 @@ mapContainer.id = '{{ $map->mapContainer }}';
 var theScript = document.getElementById('ez-map-embed-script-{{ $map->id }}');
 if (!theScript)
 {
+    // legacy code
     theScript = document.getElementById('ez-map-embed-script');
 }
 theScript.parentNode.insertBefore(mapContainer, theScript);
