@@ -28,7 +28,7 @@
                 <li><a href="{{ route('feedback') }}">{{ ucwords(EzTrans::translate("feedback.feedback")) }}</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
+                <!--<li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ ucwords(EzTrans::translate("changeLanguage")) }}
                         <span class="caret"></span> </a>
                     <ul class="dropdown-menu" role="menu">
@@ -37,7 +37,7 @@
                         <li><a href="{{ route('lang','kilwinkian') }}">{{ EzTrans::language('kilwinkian') }}</a></li>
 
                     </ul>
-                </li>
+                </li>-->
                 @if (Auth::guest())
                     <li><a href="{{ url('/login') }}">{{ ucwords(EzTrans::translate("login")) }}</a></li>
                     <li><a href="{{ url('/register') }}">{{ ucwords(EzTrans::translate("register")) }}</a></li>
@@ -68,7 +68,7 @@
 </div>
 <footer class="footer">
     <div class="container">
-        <p style="margin-top:1.25em;">Â© {{ date('Y') }}
+        <p style="margin-top:1.25em;">© {{ date('Y') }}
             <a target="_blank" href="//billyfagan.co.uk">Billy Fagan</a>. This tool abides by Google's
             <a target="_blank" href="https://www.google.co.uk/permissions/geoguidelines.html">Permissions Guidelines</a>.
             <a class="pull-right" target="_blank" href="https://twitter.com/ez_map"><i class="fa fa-twitter fa-fw"></i> @ez
