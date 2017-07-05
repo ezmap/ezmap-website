@@ -64,15 +64,9 @@
             <div class="form-group row">
                 <label>{{ ucwords(EzTrans::translate('dimensions')) }} <i class="fa fa-arrows"></i></label>
 
+
                 <div class="row">
-                    <div class="col-lg-6">
-                        <div class="input-group">
-                            <div class="input-group-addon"><i class="fa fa-arrows-h fa-fw"></i></div>
-                            <label for="width"></label>
-                            <input v-show="!responsive" class="form-control" id="width" name="width" v-model="width" type="number" v-on:change="mapresized | debounce 500" v-on:keyup="mapresized | debounce 500">
-                            <input v-show="responsive" disabled class="form-control" id="width" name="width" v-model="width" type="number" v-on:change="mapresized | debounce 500" v-on:keyup="mapresized | debounce 500">
-                            <div class="input-group-addon">px</div>
-                        </div>
+                    <div class="col-lg-12">
                         <div class="checkbox">
                             <ui-switch name="responsiveMap" :value.sync="responsive" v-on:click="mapresized | debounce 500">
                                 <strong>{{ ucfirst(EzTrans::translate('responsive.width','responsive width')) }}</strong>
@@ -83,6 +77,16 @@
                                     </div>
                                 </ui-icon-button>
                             </ui-switch>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-arrows-h fa-fw"></i></div>
+                            <label for="width"></label>
+                            <input v-show="!responsive" class="form-control" id="width" name="width" v-model="width" type="number" v-on:change="mapresized | debounce 500" v-on:keyup="mapresized | debounce 500">
+                            <input v-show="responsive" disabled class="form-control" id="width" name="width" v-model="width" type="number" v-on:change="mapresized | debounce 500" v-on:keyup="mapresized | debounce 500">
+                            <div class="input-group-addon">px</div>
                         </div>
                     </div>
                     <div class="col-lg-6">
