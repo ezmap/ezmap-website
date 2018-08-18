@@ -13,15 +13,13 @@
 
 
 Route::get('/', "GeneralController@index")->middleware(['guest', 'pjax'])->name('index');
-Route::get('feedback', function ()
-{
-    return view('feedback');
+Route::get('feedback', function () {
+  return view('feedback');
 });
 Route::post('feedback', 'GeneralController@feedback')->name('feedback');
 
-Route:: get('test', function ()
-{
-    return view('test');
+Route:: get('test', function () {
+  return view('test');
 })->middleware('admin');
 
 Route::auth();
@@ -46,16 +44,12 @@ Route::post('map/undelete/{id}', 'MapController@undelete')->name('map.undelete')
 
 Route::get('lang/{lang}', 'GeneralController@changeLanguage')->name('lang');
 
-Route::get('help', function ()
-{
-    return view('help.index');
+Route::get('help', function () {
+  return view('help.index');
 })->name('help');
 
-Route::get('twomapautoupdatetest', function(){
-    return view('twomapsautoupdate');
+Route::get('twomapautoupdatetest', function () {
+  return view('twomapsautoupdate');
 });
 
 Route::post('renewapikey', 'HomeController@renewApiKey')->name('renewapikey');
-
-Route::post('api/{email}/{apikey}/getmaps', 'ApiController@getMaps')->name('api.getMaps');
-Route::post('api/{email}/{apikey}/getmapcode/{map}', 'ApiController@getMapCode')->name('api.getMap');
