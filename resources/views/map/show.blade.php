@@ -19,15 +19,18 @@ if (style.styleSheet){
 
 head.appendChild(style);
 
-var mapContainer = document.createElement('div');
-mapContainer.id = '{{ $map->mapContainer }}';
-var theScript = document.getElementById('ez-map-embed-script-{{ $map->id }}');
-if (!theScript)
-{
-    // legacy code
-    theScript = document.getElementById('ez-map-embed-script');
+var mapContainer = document.getElementById('{{ $map->mapContainer }}');
+if (!mapContainer) {
+    mapContainer = document.createElement('div');
+    mapContainer.id = '{{ $map->mapContainer }}';
+    var theScript = document.getElementById('ez-map-embed-script-{{ $map->id }}');
+    if (!theScript)
+    {
+        // legacy code
+        theScript = document.getElementById('ez-map-embed-script');
+    }
+    theScript.parentNode.insertBefore(mapContainer, theScript);
 }
-theScript.parentNode.insertBefore(mapContainer, theScript);
 
 function doMap{{ $map->id }}() {
     {!! $map->code() !!}
