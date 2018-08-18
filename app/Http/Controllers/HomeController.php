@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Icon;
 use App\Theme;
+use Faker\Provider\Uuid;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -58,5 +59,13 @@ class HomeController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    public function renewApiKey(Request $request)
+    {
+      $request->user()->apiKey = Uuid::uuid();
+      $request->user()->save();
+
+      return redirect()->back();
     }
 }

@@ -55,3 +55,4 @@ Route::get('twomapautoupdatetest', function(){
     return view('twomapsautoupdate');
 });
 
+Route::post('renewapikey', 'HomeController@renewApiKey')->name('renewapikey');
