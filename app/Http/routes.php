@@ -57,5 +57,5 @@ Route::get('twomapautoupdatetest', function(){
 
 Route::post('renewapikey', 'HomeController@renewApiKey')->name('renewapikey');
 
-Route::get('api/{email}/{apikey}/getmaps', 'ApiController@getMaps')->name('api.getMaps');
-Route::get('api/{email}/{apikey}/getmapcode/{map}', 'ApiController@getMapCode')->name('api.getMaps');
+Route::post('api/{email}/{apikey}/getmaps', 'ApiController@getMaps')->name('api.getMaps');
+Route::post('api/{email}/{apikey}/getmapcode/{map}', 'ApiController@getMapCode')->name('api.getMap');
