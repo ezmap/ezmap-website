@@ -28,7 +28,7 @@
           </div>
           <div class="col-sm-6 col-sm-offset-6">
             <strong>
-              <small>NOTE: This will cause all current usages of your API key to fail.</small>
+              <small>NOTE: Renewing your API key will disconnect any existing external integrations.</small>
             </strong>
           </div>
         </div>
