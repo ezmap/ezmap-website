@@ -6,6 +6,22 @@
     <h1>EZ Map API</h1>
     <p>Every EZ Map account comes with API access for you to access your maps in your own projects.</p>
 
+    <h2>Rate Limiting</h2>
+    <p>All API requests are  rate limited. The limits are approximately 60 calls per minute, after which users will receive a 429 "Too many requests" error and will be unable to make more requests for a minute.</p>
+    <p>The following headers are sent to assist users</p>
+    <ul>
+      <li>
+        <code>X-RateLimit-Limit</code> - the number of calls allowed in a minute (currently 60)
+      </li>
+      <li>
+        <code>X-RateLimit-Remaining</code> - the number of calls remaining in this minute, reduces with each call.
+      </li>
+      <li>
+        <code>Retry-After</code> - when locked out this is the number of seconds until the timer is reset. Subsequent calls within this time will all result in 429 errors.
+      </li>
+    </ul>
+    <p>Please contact us using <a href="{{route('feedback')}}">the feedback</a> tool to request an increase in limits.</p>
+
     <h2>Endpoints</h2>
     <p>All API endpoints begin with the same URL and require your EZ Map registered email address as well as your API key which can be found on your dashboard.</p>
     <p>All endpoints require a HTTP POST request.</p>
