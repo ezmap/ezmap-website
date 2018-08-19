@@ -26,7 +26,10 @@
               <input name="renew" class="form-control btn btn-default" type="submit" value="Renew API Key">
             </div>
           </div>
-          <div class="col-sm-6 col-sm-offset-6">
+          <div class="col-sm-6">
+            <p><strong>NOTE: This is NOT your <a href="/help#faq1">Google Maps API Key</a></strong></p>
+          </div>
+          <div class="col-sm-6">
             <strong>
               <small>NOTE: Renewing your API key will disconnect any existing external integrations.</small>
             </strong>
