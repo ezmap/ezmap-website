@@ -103,7 +103,7 @@
         <code>https://ezmap.co/api/{{ Auth::user()->email }}/{{ Auth::user()->apikey }}/getmapcode/{{ Auth::user()->maps->first()->id }}</code>
       </p>
     @endif
-    <h5>Response</h5>
+    <h4>Response</h4>
     <p>Raw HTML Markup. This will be similar to the code you would normally paste from the grey box</p>
     @if(Auth::guest())
       <pre>&lt;!-- Google map code from EZ Map - https://ezmap.co -->
