@@ -8,7 +8,7 @@
 <div id="faq1">
     <p class="lead">{{ ucwords(EzTrans::translate("apiKey")) }}</p>
     <p>
-        {{ ucwords(EzTrans::help("settings.apiKey.text")) }}
+        {{ EzTrans::help("settings.apiKey.text") }}
         <a href="https://developers.google.com/maps/signup">{{ EzTrans::help("settings.apiKey.linkText") }}</a>
     </p>
     <ui-alert type="warning" dismissible="false">
