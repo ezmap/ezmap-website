@@ -20,7 +20,7 @@
         <code>Retry-After</code> - when locked out this is the number of seconds until the timer is reset. Subsequent calls within this time will all result in 429 errors.
       </li>
     </ul>
-    <p>Please contact us using <a href="{{route('feedback')}}">the feedback</a> tool to request an increase in limits.</p>
+    <p>Please contact us using <a href="{{route('feedback')}}">the feedback tool</a> to request an increase in limits.</p>
 
     <h2>Endpoints</h2>
     <p>All API endpoints begin with the same URL and require your EZ Map registered email address as well as your API key which can be found on your dashboard.</p>
