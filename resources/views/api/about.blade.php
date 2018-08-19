@@ -28,7 +28,8 @@
     @if(Auth::guest())
       <p><code>https://ezmap.co/api/{email}/{apikey}</code></p>
     @else
-      <p><code>https://ezmap.co/api/{{ Auth::user()->email }}/{{ Auth::user()->apikey }}</code></p>
+      <p><code>https://ezmap.co/api/{email}/{apikey}</code></p>
+      <p>Example: <code>https://ezmap.co/api/{{ Auth::user()->email }}/{{ Auth::user()->apikey }}</code></p>
     @endif
 
     <ul>
@@ -40,6 +41,7 @@
 
     <h3 id="get-maps">Get Maps JSON</h3>
     <h4>Endpoint</h4>
+    <h5>/getmaps</h5>
     @if(Auth::guest())
       <p><code>https://ezmap.co/api/{email}/{apikey}/getmaps</code></p>
       <h4>Response</h4>
@@ -88,7 +90,8 @@
 …
 }]</pre>
     @else
-      <p><code>https://ezmap.co/api/{{ Auth::user()->email }}/{{ Auth::user()->apikey }}/getmaps</code></p>
+      <p><code>https://ezmap.co/api/{email}/{apikey}/getmaps</code></p>
+      <p>Example: <code>https://ezmap.co/api/{{ Auth::user()->email }}/{{ Auth::user()->apikey }}/getmaps</code></p>
       <h4>Response</h4>
       <p>JSON encoded array of map objects</p>
       <pre>{{ Auth::user()->maps()->limit(2)->get()->toJson(JSON_PRETTY_PRINT) }}</pre>
@@ -96,10 +99,12 @@
 
     <h3 id="get-map-code">Get Map Code</h3>
     <h4>Endpoint</h4>
+    <h5>/getmapcode/{mapID}</h5>
     @if(Auth::guest())
       <p><code>https://ezmap.co/api/{email}/{apikey}/getmapcode/{mapID}</code></p>
     @else
-      <p>
+      <p><code>https://ezmap.co/api/{email}/{apikey}/getmapcode/{mapID}</code></p>
+      <p>Example:
         <code>https://ezmap.co/api/{{ Auth::user()->email }}/{{ Auth::user()->apikey }}/getmapcode/{{ Auth::user()->maps->first()->id }}</code>
       </p>
     @endif
