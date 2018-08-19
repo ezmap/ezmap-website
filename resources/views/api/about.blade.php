@@ -72,7 +72,7 @@
 …
 }]</pre>
     @else
-      <p><code>https://ezmap.co/api/{{ Auth::user()->email }}/{{ Auth::user()->apikey }}</code></p>
+      <p><code>https://ezmap.co/api/{{ Auth::user()->email }}/{{ Auth::user()->apikey }}/getmaps</code></p>
       <h4>Response</h4>
       <p>JSON encoded array of map objects</p>
       <pre>{{ Auth::user()->maps()->limit(2)->get()->toJson(JSON_PRETTY_PRINT) }}</pre>
