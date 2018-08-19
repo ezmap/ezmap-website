@@ -26,6 +26,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="{{ route('help') }}">{{ ucwords(EzTrans::translate("help")) }}</a></li>
                 <li><a href="{{ route('feedback') }}">{{ ucwords(EzTrans::translate("feedback.feedback")) }}</a></li>
+                <li><a href="{{ route('api') }}">API</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <!--<li class="dropdown">

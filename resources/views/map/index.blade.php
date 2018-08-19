@@ -11,7 +11,7 @@
 
   @if(Auth::user()->maps)
     <div class="col-sm-6 col-sm-offset-3">
-      <h2>Your EZMap API Key</h2>
+      <h2>Your EZ Map API Key</h2>
       <form action="{{ route('renewapikey') }}" method="POST">
         {{ method_field('POST') }}
         {{ csrf_field() }}
