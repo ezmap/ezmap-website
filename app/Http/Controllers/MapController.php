@@ -77,7 +77,7 @@ class MapController extends Controller
     return $map->embeddable
         ? response()
             ->view('map.show', compact('map'), 200)
-            ->header('Content-Type', 'text/javascript;charset=UTF-8')
+            ->header('Content-Type', 'text/javascript; charset=UTF-8')
         : abort(403);
   }
 
