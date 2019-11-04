@@ -15,7 +15,8 @@
     "vluzrmos/language-detector": "^1.0",
     "infinety/alerts": "dev-master",
     "greggilbert/recaptcha": "dev-master",
-    "fzaninotto/faker": "~1.4"
+    "fzaninotto/faker": "~1.4",
+    "ext-json": "*"
   },
   "require-dev": {
     "mockery/mockery": "0.9.*",
@@ -24,6 +25,9 @@
     "symfony/dom-crawler": "2.8.*|3.0.*"
   },
   "autoload": {
+    "files": [
+      "app/helpers.php"
+    ],
     "classmap": [
       "database"
     ],
