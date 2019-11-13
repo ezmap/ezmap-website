@@ -545,7 +545,7 @@ $state-warning-bg:               rgba(255, 193, 7, 0.7) !default;
 $state-warning-border:           transparent !default;//darken(adjust-hue($state-warning-bg, -10), 5%) !default;
 
 $state-danger-text:              red !default;
-$state-danger-bg:                rgba(244, 67, 54, 0.7) !default;
+$state-danger-bg:                transparent !default;
 $state-danger-border:            transparent !default;//darken(adjust-hue($state-danger-bg, -10), 5%) !default;
 
 //== Tooltips

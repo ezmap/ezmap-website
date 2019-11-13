@@ -108,7 +108,7 @@ class MapController extends Controller
       }
     }
 
-    return view('index', compact('map', 'sort', 'order', 'userIcons'));
+    return view('index', compact('map', 'sort', 'order'));
   }
 
   /**
