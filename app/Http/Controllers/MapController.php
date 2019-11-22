@@ -42,7 +42,7 @@ class MapController extends Controller
    */
   public function create()
   {
-    return view('index', compact('themes'));
+    return view('index');
   }
 
   /**
