@@ -21,11 +21,11 @@ class Theme extends Model
     foreach ($styles as $style)
     {
       $response .= "&style=";
-      if(isset($style['featureType']))
+      if (isset($style['featureType']))
       {
         $response .= "feature:" . $style['featureType'];
       }
-      if( isset($style['elementType']))
+      if (isset($style['elementType']))
       {
         $response .= "|element:" . $style['elementType'];
       }
@@ -33,8 +33,10 @@ class Theme extends Model
       {
         foreach ($subStyle as $key => $value)
         {
-          if ($key === 'lightness')
-          $value /= 10;
+          if (in_array($key, ['lightness', 'saturation', 'hue']))
+          {
+            $value /= 10;
+          }
           $response .= "|{$key}:" . str_replace('#', '0x', $value);
         }
       }
