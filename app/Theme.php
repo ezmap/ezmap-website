@@ -25,7 +25,7 @@ class Theme extends Model
       {
         $response .= "feature:" . $style['featureType'];
       }
-      if( isset($style['featureType']))
+      if( isset($style['elementType']))
       {
         $response .= "|element:" . $style['elementType'];
       }
