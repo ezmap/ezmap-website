@@ -301,7 +301,8 @@
       </div>
     </form>
     @if(!empty($map))
-      @if(!empty($map))
+
+      @if(!empty($map->apiKey))
         <div class="row">
           <div class="col-sm-12">
             <div class="form-group">
@@ -313,6 +314,7 @@
           </div>
         </div>
       @endif
+
       <form action="{{ route('map.destroy', $map) }}" method="POST">
         {{ method_field('DELETE') }}
         {{ csrf_field() }}
@@ -320,6 +322,7 @@
           {{ EzTrans::translate('deleteMap', 'delete map') }}
         </ui-button>
       </form>
+
     @endif
   </div>
   <div class="col-sm-7 col-sm-offset-1 theresults">
