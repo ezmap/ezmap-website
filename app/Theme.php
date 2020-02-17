@@ -21,8 +21,14 @@ class Theme extends Model
     foreach ($styles as $style)
     {
       $response .= "&style=";
-      $response .= "feature:" . $style['featureType'];
-      $response .= "|element:" . $style['elementType'];
+      if(isset($style['featureType']))
+      {
+        $response .= "feature:" . $style['featureType'];
+      }
+      if( isset($style['featureType']))
+      {
+        $response .= "|element:" . $style['elementType'];
+      }
       foreach ($style['stylers'] as $subStyle)
       {
         foreach ($subStyle as $key => $value)
