@@ -35,7 +35,7 @@ class Theme extends Model
         {
           if (in_array($key, ['lightness', 'saturation', 'hue']))
           {
-            $value /= 10;
+            $value = floatval($value) / 10;
           }
           $response .= "|{$key}:" . str_replace('#', '0x', $value);
         }
