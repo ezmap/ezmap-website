@@ -142,7 +142,7 @@ class Map extends Model
     $imageUrl .= "&size=" . $this->width . 'x' . $this->height . "&scale=2";
     $imageUrl .= "&maptype=" . $this->mapOptions->mapTypeId;
 
-    if ($this->theme())
+    if (!empty($this->theme))
     {
       $imageUrl .= $this->theme->toImageParams();
     }
