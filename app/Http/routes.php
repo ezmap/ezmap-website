@@ -41,6 +41,8 @@ Route::get('AZPopulate', 'AdminController@AZPopulate')->name('AZPopulate');
 
 Route::resource('map', 'MapController');
 Route::post('map/undelete/{id}', 'MapController@undelete')->name('map.undelete');
+Route::get('map/image/{map}', 'MapController@image')->name('map.image');
+Route::get('map/image/download/{map}', 'MapController@download')->name('map.download');
 
 Route::get('lang/{lang}', 'GeneralController@changeLanguage')->name('lang');
 

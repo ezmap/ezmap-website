@@ -136,7 +136,6 @@ mainVue = new Vue({
             this.mapBackground = this.mapOpacity == .5 ? "transparent url(/images/crosshairs.svg) center center no-repeat" : "none";
             $('#map').children().first().css({opacity: this.mapOpacity});
             $('#map').css({background: this.mapBackground});
-
         },
         clearDirections: function () {
             for (var i = 0; i < this.directionsDisplays.length; i++) {
@@ -371,22 +370,22 @@ mainVue = new Vue({
                 $('#markerModal').modal('show');
                 this.addingPin = this.addingPinByAddress = false;
             }
-        }
-
-        ,
+        },
         duplicateMap: function () {
             $('input[name="title"]').val($('input[name="title"]').val() + ' - copy');
 
             $('input[name="_method"]').val('POST');
             $('#mainForm').attr('action', '{{ route('map.store') }}').submit();
-        }
-        ,
+        },
+        openImage: function() {
+            window.open("{{ route("map.image", $map) }}", '_blank');
+        },
+
         addSavedInfoWindow: function (marker, infoWindow) {
             marker.addListener('click', function () {
                 infoWindow.open(mainVue.map, marker);
             });
-        }
-        ,
+        },
 
         initMap: function () {
 

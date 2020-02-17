@@ -196,4 +196,29 @@ class MapController extends Controller
   }
 
 
+  public function image(Request $request, Map $map)
+  {
+    $this->authorize($map);
+
+    $extension = $request->get('type') ?? "png";
+
+    return view('map.image', compact('map', 'extension'));
+  }
+
+  public function download(Request $request, Map $map)
+  {
+    $this->authorize($map);
+
+    $extension = 'png';
+
+    $filename  = str_slug($map->title) . ".{$extension}";
+    $tempImage = tempnam(sys_get_temp_dir(), $filename);
+    copy($map->getImage($extension), $tempImage);
+
+    return response()->download($tempImage, $filename);
+
+
+  }
+
+
 }

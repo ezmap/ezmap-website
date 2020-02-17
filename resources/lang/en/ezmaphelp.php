@@ -72,6 +72,7 @@ return [
             "info"         => "You can only save a map when signed in.",
             "otherButtons" => "If you are working on a saved map you will also have these buttons",
             "clone"        => "Cloning a map means making an exact copy of the map and saving it as a new map. This can be useful if you've set up a map to be your base map setup that you use to make your other maps from. Just clone the base and work from there.",
+            "getImage"     => "Getting a static image is a way to save your map as a non-interactive image, perhaps for use in a piece of print work or some other image use.",
             "delete"       => "Deleting a map simply removes all records of the map from your account. Any marker icons saved during this maps's creation are not removed from your account so you can use them again in future maps.",
         ],
     ],
@@ -82,6 +83,7 @@ return [
         "reportBug"        => "report a bug?",
         "designTheme"      => "design a map theme?",
         "styleInfoWindow"  => "style my markers' info windows?",
+        "saveAsImage"      => "save my map as a static image?",
         "coordSteps"       => [
             "step1" => "Zoom in on the map then click this button and position your marker on the location you want.",
             "step2" => "Now click the center here button next to your marker. The Latitude and Longitude boxes will now be filled with the coordinates of your place.",
@@ -91,12 +93,12 @@ return [
             "step1" => "Click this button for the marker, then find your broken icon in the list.",
             "step2" => "Click this button under the broken image indicator to delete it.",
         ],
-        "bugIntro" => "If you think you might have found a bug, please fill in this form:",
-        "design" => "have a brilliant wizard style tool to make designing your own themes simple.",
-        "style" => [
-            "intro" => "You can add the following rules to your CSS. (If you are not using the automatic update code you'll see this in your code output)",
-            "description" => "this is where you can style your elements to suit your page. If you do nothing they'll take on your default styling for the type of element they are:",
-            "containsAnchor" => "contains an 'a' element"
+        "bugIntro"         => "If you think you might have found a bug, please fill in this form:",
+        "design"           => "have a brilliant wizard style tool to make designing your own themes simple.",
+        "style"            => [
+            "intro"          => "You can add the following rules to your CSS. (If you are not using the automatic update code you'll see this in your code output)",
+            "description"    => "this is where you can style your elements to suit your page. If you do nothing they'll take on your default styling for the type of element they are:",
+            "containsAnchor" => "contains an 'a' element",
         ],
     ],
 

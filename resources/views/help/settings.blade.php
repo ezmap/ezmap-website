@@ -210,12 +210,16 @@
         <ui-button raised color="primary" icon="content_copy">
             {{ EzTrans::translate("cloneMap") }}
         </ui-button>
+        <ui-button raised color="primary" icon="image">
+            {{ EzTrans::translate("getImage") }}
+        </ui-button>
         <ui-button raised color="danger" icon="delete">
             {{ EzTrans::translate("deleteMap") }}
         </ui-button>
     </p>
 
     <p>{{ EzTrans::help('settings.saveMap.clone') }}</p>
+    <p>{{ EzTrans::help('settings.saveMap.getImage') }}</p>
     <p>{{ EzTrans::help('settings.saveMap.delete') }}</p>
     <hr>
 </div>

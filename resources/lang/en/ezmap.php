@@ -106,6 +106,7 @@ return [
 
     "saveMap"   => "save map",
     "cloneMap"  => "clone map",
+    "getImage"  => "get static image",
     "deleteMap" => "delete map",
 
     "yourMapResult" => "your map result",
