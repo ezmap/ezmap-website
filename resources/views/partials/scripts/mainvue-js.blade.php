@@ -377,10 +377,12 @@ mainVue = new Vue({
             $('input[name="_method"]').val('POST');
             $('#mainForm').attr('action', '{{ route('map.store') }}').submit();
         },
+@if( !empty($map) )
+
         openImage: function() {
             window.open("{{ route("map.image", $map) }}", '_blank');
         },
-
+@endif
         addSavedInfoWindow: function (marker, infoWindow) {
             marker.addListener('click', function () {
                 infoWindow.open(mainVue.map, marker);
