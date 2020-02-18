@@ -29,16 +29,21 @@ class Theme extends Model
       {
         $response .= "|element:" . $style['elementType'];
       }
+
       foreach ($style['stylers'] as $subStyle)
       {
         foreach ($subStyle as $key => $value)
         {
-//          if (in_array($key, ['lightness', 'saturation']))
-//          {
-//            $value = floatval($value) / 10;
-//          }
-          $response .= "|{$key}:" . str_replace('#', '0x', $value);
+          if ($key === 'invert_lightness')
+          {
+            if ($value)
+            {
+              $value = "true";
+            }
+          }
         }
+
+        $response .= "|{$key}:" . str_replace('#', '0x', $value);
       }
     }
 

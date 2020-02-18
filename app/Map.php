@@ -155,7 +155,7 @@ class Map extends Model
         $marker   = $this->markers[$i];
         if ($marker->icon)
         {
-          $imageUrl .= "icon:" . ltrim($marker->icon, '/');
+          $imageUrl .= "icon:" . urlencode($marker->icon);
           $imageUrl .= "|";
         }
         $imageUrl .= $marker->lat . ',' . $marker->lng;
