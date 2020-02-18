@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests;
 use App\Icon;
-use App\Theme;
 use Faker\Provider\Uuid;
 use Illuminate\Http\Request;
 
@@ -23,6 +21,7 @@ class HomeController extends Controller
   /**
    * Show the application dashboard.
    *
+   * @param Request $request
    * @return \Illuminate\Http\Response
    */
   public function index(Request $request)
@@ -36,6 +35,10 @@ class HomeController extends Controller
     return redirect()->route('map.index');
   }
 
+  /**
+   * @param Request $request
+   * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+   */
   public function addNewIcon(Request $request)
   {
     $params = [
@@ -52,6 +55,10 @@ class HomeController extends Controller
     return redirect()->back();
   }
 
+  /**
+   * @param Request $request
+   * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+   */
   public function deleteIcon(Request $request)
   {
     $icon = Icon::where([
