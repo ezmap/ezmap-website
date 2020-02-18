@@ -1,6 +1,7 @@
 <?php
 return [
-    "sizenote"         => "You should note that depending on your API account the image size is restricted to the following sizes.",
+    "sizenote"         => "<p>The image width will take whatever is set in your map, even if you have \"responsive\" turned on in your map settings for regular maps.</p>" .
+        "<p>You should note that depending on your API account the image size is restricted to the following sizes. (We <a href='https://developers.google.com/maps/documentation/maps-static/dev-guide#scale_values'>use scale=2 to increase image quality for high resolution devices</a>, so your image may appear larger)",
     "plan"             => "Plan",
     "maximumImageSize" => "Maximum Image Size",
     "payAsYouGo"       => "Pay-As-You-Go",

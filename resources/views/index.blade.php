@@ -83,8 +83,7 @@
             <div class="input-group">
               <div class="input-group-addon"><i class="fa fa-arrows-h fa-fw"></i></div>
               <label for="width"></label>
-              <input v-show="!responsive" class="form-control" id="width" name="width" v-model="width" type="number" v-on:change="mapresized | debounce 500" v-on:keyup="mapresized | debounce 500">
-              <input v-show="responsive" disabled class="form-control" id="width" name="width" v-model="width" type="number" v-on:change="mapresized | debounce 500" v-on:keyup="mapresized | debounce 500">
+              <input v-show="true" class="form-control" id="width" name="width" v-model="width" type="number" v-on:change="mapresized | debounce 500" v-on:keyup="mapresized | debounce 500">
               <div class="input-group-addon">px</div>
             </div>
           </div>

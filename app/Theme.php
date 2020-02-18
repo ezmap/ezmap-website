@@ -33,10 +33,10 @@ class Theme extends Model
       {
         foreach ($subStyle as $key => $value)
         {
-          if (in_array($key, ['lightness', 'saturation', 'hue']))
-          {
-            $value = floatval($value) / 10;
-          }
+//          if (in_array($key, ['lightness', 'saturation']))
+//          {
+//            $value = floatval($value) / 10;
+//          }
           $response .= "|{$key}:" . str_replace('#', '0x', $value);
         }
       }

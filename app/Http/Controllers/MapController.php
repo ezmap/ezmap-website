@@ -215,9 +215,9 @@ class MapController extends Controller
     $tempImage = tempnam(sys_get_temp_dir(), $filename);
     copy($map->getImage($extension), $tempImage);
 
-    return response()->download($tempImage, $filename);
-
-
+    return response()
+        ->download($tempImage, $filename)
+        ->deleteFileAfterSend(true);
   }
 
 

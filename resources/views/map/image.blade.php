@@ -11,7 +11,11 @@
         <a href="{{ route('map.edit', $map) }}" class="btn btn-primary pull-right"><i class="fa fa-map-o"></i> Back to your map</a>
 
         <hr class="invisible">
-        <img src="{{ $map->getImage($extension) }}" alt="{{ $map->title }}">
+        <div class="row">
+          <div class="col-md-8 col-md-offset-2">
+            <img class="img-responsive center-block" src="{{ $map->getImage($extension) }}" alt="{{ $map->title }}">
+          </div>
+        </div>
         <hr>
         <p>Change image format</p>
         @if ($extension !== 'png')
@@ -28,7 +32,7 @@
         <textarea class="form-control" rows="8" style="max-width: 100%;"><img src="{{ $map->getImage($extension) }}" alt="{{ $map->title }}"></textarea>
       </div>
       <div class="panel-footer">
-        <p>{{ EzTrans::image('sizenote') }}</p>
+        {!! EzTrans::image('sizenote') !!}
         <table class="table">
           <tr>
             <th>{{ EzTrans::image('plan') }}</th>
