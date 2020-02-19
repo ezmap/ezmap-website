@@ -17,33 +17,42 @@ class Theme extends Model
   public function toImageParams()
   {
     $response = "";
-    $styles   = $this->fromJson($this->json);
+    $styles   = $this->fromJson(
+        trim(str_replace("\r\n", "", $this->json), ',')
+    );
+    if($styles === null)
+    {
+      throw new \Exception(json_last_error_msg() . ": Theme {$this->id}");
+    }
     foreach ($styles as $style)
     {
-      $response .= "&style=";
-      if (isset($style['featureType']))
+      if(!empty($style["stylers"]))
       {
-        $response .= "feature:" . $style['featureType'];
-      }
-      if (isset($style['elementType']))
-      {
-        $response .= "|element:" . $style['elementType'];
-      }
-
-      foreach ($style['stylers'] as $subStyle)
-      {
-        foreach ($subStyle as $key => $value)
+        $response .= "&style=";
+        if (isset($style['featureType']))
         {
-          if ($key === 'invert_lightness')
-          {
-            if ($value)
-            {
-              $value = "true";
-            }
-          }
+          $response .= "feature:" . $style['featureType'];
+        }
+        if (isset($style['elementType']))
+        {
+          $response .= "|element:" . $style['elementType'];
         }
 
-        $response .= "|{$key}:" . str_replace('#', '0x', $value);
+        foreach ($style['stylers'] as $subStyle)
+        {
+          foreach ($subStyle as $key => $value)
+          {
+            if ($key === 'invert_lightness')
+            {
+              if ($value)
+              {
+                $value = "true";
+              }
+            }
+          }
+
+          $response .= "|{$key}:" . str_replace('#', '0x', $value);
+        }
       }
     }
 

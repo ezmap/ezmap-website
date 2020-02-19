@@ -128,7 +128,7 @@ class Map extends Model
   }
 
 
-  public function getImage($extension = "png")
+  public function getImage($extension = "png", $theme = null)
   {
 
     if (!in_array($extension, ['jpg', 'png', 'gif']))
@@ -142,7 +142,11 @@ class Map extends Model
     $imageUrl .= "&size=" . $this->width . 'x' . $this->height . "&scale=2";
     $imageUrl .= "&maptype=" . $this->mapOptions->mapTypeId;
 
-    if (!empty($this->theme))
+
+    if ($theme !== null)
+    {
+      $imageUrl .= $theme->toImageParams();
+    } elseif (!empty($this->theme))
     {
       $imageUrl .= $this->theme->toImageParams();
     }
