@@ -94,7 +94,6 @@ return [
         "streetview"      => "streetview control",
         "zoom"            => "zoom control",
         "scale"           => "scale control",
-        "mapmaker"        => "use MapMaker tiles",
         "draggable"       => "draggable map",
         "doubleclickzoom" => "doubleclick zoom",
         "scrollwheel"     => "scrollwheel zoom",

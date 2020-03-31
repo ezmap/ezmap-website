@@ -57,7 +57,6 @@ return [
             "streetviewInfo"  => "If ye are in streetview mode when ye save a map, it'll no be in streetview mode in yer code, ye will get the map as it was before entering streetview. So don't bother wae it.",
             "zoom"            => "The zoom control is the add sign and take away sign on the bottom right o a map. Turning this aff'll get rid ae they buttons fae the map. Zooming will still be available by way o the other zoom options (Keyboard Controls, Doubleclick Zoom and Scrollwheel Zoom) unless these are aff anaw.",
             "scale"           => "This is a small part on the bottom o the map showing the scale o the map at the current zoom level for that area, clicking it changes the scale fae metric tae imperial units.",
-            "mapmaker"        => "These are jist a different set o images that make up the base-map. If ye are trying tae hide place names, try these tiles. ye can click through tae Google's Map Maker by clicking the link tae see what that's a' aboot.",
             "draggable"       => "If this isnae selected the person will no be able tae drag the map aroon.",
             "doubleclickzoom" => "Ye can double-click yer moose on the map tae zoom in (and haud ctrl and double-click tae zoom oot). Turnin' this aff stops this functionality on yer map.",
             "scrollwheel"     => "Ye can use the scroll function o yer moose tae zoom in and out o a map. Turning aff this option stops this functionality.",

@@ -68,7 +68,6 @@ mainVue = new Vue({
             draggable: {{ $map->mapOptions->draggable ?? 'true' }},
             fullscreenControl: {{ $map->mapOptions->showFullScreenControl ?? 'true' }},
             keyboardShortcuts: {{ $map->mapOptions->keyboardShortcuts ?? 'true' }},
-            mapMaker: {{ $map->mapOptions->mapMakerTiles ?? 'false' }},
             mapTypeControl: {{ $map->mapOptions->showMapTypeControl ?? 'true' }},
             mapTypeControlOptions: {
                 style: {{ $map->mapOptions->mapTypeControlStyle ?? 0 }}

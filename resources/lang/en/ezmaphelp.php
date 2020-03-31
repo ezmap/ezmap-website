@@ -57,7 +57,6 @@ return [
             "streetviewInfo"  => "If you are in streetview mode when you save a map, this won't be shown, you will get the map as it was before entering streetview.",
             "zoom"            => "The zoom control is the plus and minus on the bottom right of a map. Deselecting this option will remove those buttons from the map. Zooming will still be available by way of the other zoom options (Keyboard Controls, Doubleclick Zoom and Scrollwheel Zoom) unless these are also turned off.",
             "scale"           => "This is a small part on the bottom of the map showing the scale of the map at the current zoom level for that area, clicking it changes the scale from metric to imperial units.",
-            "mapmaker"        => "These are just a different set of images that make up the base-map. If you are trying to hide place names, try these tiles. You can click through to Google's Map Maker by clicking the link to see what's going on there.",
             "draggable"       => "If this is deselected the person will not be able to drag the map around.",
             "doubleclickzoom" => "You can double-click your mouse on the map to zoom in (and hold ctrl and double-click to zoom out). Deselecting this option stops this functionality on your map.",
             "scrollwheel"     => "You can use the scroll function of your mouse to zoom in and out of a map. Turning off this option stops this functionality.",

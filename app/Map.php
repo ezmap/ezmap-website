@@ -84,7 +84,6 @@ class Map extends Model
                 \"draggable\": {$this->mapOptions->draggable},
                 \"fullscreenControl\": {$this->mapOptions->showFullScreenControl},
                 \"keyboardShortcuts\": {$this->mapOptions->keyboardShortcuts},
-                \"mapMaker\": {$this->mapOptions->mapMakerTiles},
                 \"mapTypeControl\": {$this->mapOptions->showMapTypeControl},
                 \"mapTypeControlOptions\": { style : {$this->mapOptions->mapTypeControlStyle} },
                 \"mapTypeId\": \"{$this->mapOptions->mapTypeId}\",

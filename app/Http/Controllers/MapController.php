@@ -185,7 +185,6 @@ class MapController extends Controller
     $options['draggable']             = $request->has("mapOptions.draggable") ? 'true' : 'false';
     $options['showFullScreenControl'] = $request->has("mapOptions.showFullScreenControl") ? 'true' : 'false';
     $options['keyboardShortcuts']     = $request->has("mapOptions.keyboardShortcuts") ? 'true' : 'false';
-    $options['mapMakerTiles']         = $request->has("mapOptions.mapMakerTiles") ? 'true' : 'false';
     $options['showMapTypeControl']    = $request->has("mapOptions.showMapTypeControl") ? 'true' : 'false';
     $options['showScaleControl']      = $request->has("mapOptions.showScaleControl") ? 'true' : 'false';
     $options['scrollWheel']           = $request->has("mapOptions.scrollWheel") ? 'true' : 'false';

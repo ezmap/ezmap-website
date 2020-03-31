@@ -239,13 +239,6 @@
         <div class="col-sm-6">
           <div class="row">
             <div class="checkbox">
-              <ui-switch name="mapOptions[mapMakerTiles]" :value.sync="mapOptions.mapMaker" v-on:change="optionschange">
-                <a href="http://www.google.com/mapmaker" target="_blank">{{ ucwords(EzTrans::translate('options.mapmaker', 'use MapMaker tiles')) }}</a>
-              </ui-switch>
-            </div>
-          </div>
-          <div class="row">
-            <div class="checkbox">
               <ui-switch name="mapOptions[draggable]" :value.sync="mapOptions.draggable" v-on:change="optionschange">
                 {{ ucwords(EzTrans::translate('options.draggable', 'draggable map')) }}                            </ui-switch>
             </div>

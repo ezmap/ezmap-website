@@ -164,11 +164,6 @@
       <p>{{ EzTrans::help('settings.other.scale') }}</p>
       <div class="clearfix"></div>
     </li>
-
-    <li>
-      <h4>{{ ucwords(EzTrans::translate("options.mapmaker")) }}</h4>
-      <p>{{ EzTrans::help('settings.other.mapmaker') }}</p>
-    </li>
     <li>
       <h4>{{ ucwords(EzTrans::translate("options.draggable")) }}</h4>
       <p>{{ EzTrans::help('settings.other.draggable') }}</p>

@@ -76,7 +76,6 @@
     "clickableIcons": "false",
     "showFullScreenControl": "false",
     "keyboardShortcuts": "false",
-    "mapMakerTiles": "false",
     "showMapTypeControl": "false",
     "scrollWheel": "false"
   },
@@ -115,7 +114,7 @@
 &lt;script src='https://maps.googleapis.com/maps/api/js?key='>&lt;/script>
 &lt;script>
   function init() {
-    var mapOptions = { "center": {  "lat": 57.511784490097,  "lng": -1.8120742589235306 }, "clickableIcons": true, "disableDoubleClickZoom": false, "draggable": true, "fullscreenControl": true, "keyboardShortcuts": true, "mapMaker": false, "mapTypeControl": true, "mapTypeControlOptions": {  "text": "Default (depends on viewport size etc.)",  "style": 0 }, "mapTypeId": "roadmap", "rotateControl": true, "scaleControl": true, "scrollwheel": true, "streetViewControl": true, "styles": false, "zoom": 3, "zoomControl": true};
+    var mapOptions = { "center": {  "lat": 57.511784490097,  "lng": -1.8120742589235306 }, "clickableIcons": true, "disableDoubleClickZoom": false, "draggable": true, "fullscreenControl": true, "keyboardShortcuts": true, "mapTypeControl": true, "mapTypeControlOptions": {  "text": "Default (depends on viewport size etc.)",  "style": 0 }, "mapTypeId": "roadmap", "rotateControl": true, "scaleControl": true, "scrollwheel": true, "streetViewControl": true, "styles": false, "zoom": 3, "zoomControl": true};
     var mapElement = document.getElementById('ez-map');
     var map = new google.maps.Map(mapElement, mapOptions);
 
