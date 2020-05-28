@@ -213,20 +213,19 @@ mainVue = new Vue({
             return '';
         },
         mapStyling: function () {
-            var str = '';
-            if (this.markers.length) {
-                str += '<style>\n  ';
-                str += '#' + this.mapcontainer + ' { ';
-                str += 'min-height:150px; min-width:150px; height: ' + this.styleObject.height + '; width: ' + this.styleObject.width + ';';
-                str += ' }';
+            var str = '<style>\n  ';
+            str += '#' + this.mapcontainer + ' { ';
+            str += 'min-height:150px; min-width:150px; height: ' + this.styleObject.height + '; width: ' + this.styleObject.width + ';';
+            str += ' }';
 
+            if (this.markers.length) {
                 str += '\n  #' + this.mapcontainer + ' .infoTitle { /*marker window title styles*/ }';
                 str += '\n  #' + this.mapcontainer + ' .infoWebsite { /*marker window website styles*/ }';
                 str += '\n  #' + this.mapcontainer + ' .infoEmail { /*marker window email address styles*/ }';
                 str += '\n  #' + this.mapcontainer + ' .infoTelephone { /*marker window telephone styles*/ }';
                 str += '\n  #' + this.mapcontainer + ' .infoDescription { /*marker window description styles*/ }';
-                str += '\n</style>';
-}
+            }
+            str += '\n</style>';
             return str
         },
         mapresized: function () {
