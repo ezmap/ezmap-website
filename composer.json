@@ -16,8 +16,7 @@
     "infinety/alerts": "dev-master",
     "greggilbert/recaptcha": "dev-master",
     "fzaninotto/faker": "~1.4",
-    "ext-json": "*",
-    "ext-http": "*"
+    "ext-json": "*"
   },
   "require-dev": {
     "mockery/mockery": "0.9.*",
