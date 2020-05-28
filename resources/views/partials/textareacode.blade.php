@@ -10,8 +10,6 @@
   }
 google.maps.event.addDomListener(window, 'load', init);
 &lt;/script>
-&lt;style>
-  @{{ mapStyling() }}
-&lt;/style>
+@{{ mapStyling() }}
 &lt;div id='@{{ mapcontainer }}'>&lt;/div>
 &lt;!-- End of EZ Map code - https://ezmap.co -->

@@ -213,16 +213,20 @@ mainVue = new Vue({
             return '';
         },
         mapStyling: function () {
-            var str = '#' + this.mapcontainer + '{';
-            str += 'min-height:150px;min-width:150px;height: ' + this.styleObject.height + ';width: ' + this.styleObject.width + ';';
-            str += '}';
+            var str = '';
+            if (this.markers.length) {
+                str += '<style>\n  ';
+                str += '#' + this.mapcontainer + ' { ';
+                str += 'min-height:150px; min-width:150px; height: ' + this.styleObject.height + '; width: ' + this.styleObject.width + ';';
+                str += ' }';
 
-            str += '\n  #' + this.mapcontainer + ' .infoTitle{}';
-            str += '\n  #' + this.mapcontainer + ' .infoWebsite{}';
-            str += '\n  #' + this.mapcontainer + ' .infoEmail{}';
-            str += '\n  #' + this.mapcontainer + ' .infoTelephone{}';
-            str += '\n  #' + this.mapcontainer + ' .infoDescription{}';
-
+                str += '\n  #' + this.mapcontainer + ' .infoTitle { /*marker window title styles*/ }';
+                str += '\n  #' + this.mapcontainer + ' .infoWebsite { /*marker window website styles*/ }';
+                str += '\n  #' + this.mapcontainer + ' .infoEmail { /*marker window email address styles*/ }';
+                str += '\n  #' + this.mapcontainer + ' .infoTelephone { /*marker window telephone styles*/ }';
+                str += '\n  #' + this.mapcontainer + ' .infoDescription { /*marker window description styles*/ }';
+                str += '\n</style>';
+}
             return str
         },
         mapresized: function () {
@@ -232,11 +236,14 @@ mainVue = new Vue({
             google.maps.event.trigger(this.map, "resize");
         },
         copied: function (event) {
-            var target = $('.resultcode')[0];
-            target.focus();
-            target.select();
+            var code = $('.resultcode').one().text();
+            var tempTextArea = document.createElement('textarea');
+            tempTextArea.textContent = code;
+            document.body.append(tempTextArea);
+            tempTextArea.focus();
+            tempTextArea.select();
             document.execCommand('copy');
-            target.blur();
+            tempTextArea.remove();
             $(window).focus();
             {{--this.codeCopied = true;--}}
             swal({

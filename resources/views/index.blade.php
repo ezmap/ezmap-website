@@ -353,9 +353,9 @@
       <ui-alert type="success" v-if="codeCopied">
         {{ ucfirst(EzTrans::translate('copySuccess', 'your code has been copied to your clipboard!')) }}
       </ui-alert>
-      <textarea v-if="!embeddable" class="form-control code resultcode" rows="10" v-on:click="copied" readonly style="cursor: pointer;">@include('partials.textareacode')</textarea>
+      <pre v-if="!embeddable" class="code resultcode" v-on:click="copied" style="cursor: pointer;user-select: none;max-height: 260px;">@include('partials.textareacode')</pre>
       @if (!empty($map))
-        <textarea v-else class="form-control code resultcode" rows="10" v-on:click="copied" readonly style="cursor: pointer;">@include('partials.textareaembedcode')</textarea>
+        <pre v-else class="code resultcode" v-on:click="copied" style="cursor: pointer;user-select: none;max-height: 260px;">@include('partials.textareaembedcode')</pre>
       @endif
       <hr>
       <p>{{ ucfirst(EzTrans::translate('testCode', "you can test your code is working by pasting it into")) }}
