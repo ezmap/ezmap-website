@@ -359,7 +359,7 @@
       @endif
       <hr>
       <p>{{ ucfirst(EzTrans::translate('testCode', "you can test your code is working by pasting it into")) }}
-        <a target="_blank" href="http://codepen.io/pen/?editors=1000">{{ EzTrans::translate("newCodePen", "a new HTML CodePen") }}</a>.
+        <a target="_blank" href="http://codepen.io/pen/?editors=1001">{{ EzTrans::translate("newCodePen", "a new HTML CodePen") }}</a>.
       </p>
 
     </div>
