@@ -99,7 +99,7 @@
     <h3 id="get-map-code">Get Map Code</h3>
     <h4>Endpoint</h4>
     <h5>/getmapcode/{mapID}</h5>
-    @if(Auth::guest())
+    @if(Auth::guest() || Auth::user()->maps->count() === 0)
       <p><code>https://ezmap.co/api/{email}/{apikey}/getmapcode/{mapID}</code></p>
     @else
       <p><code>https://ezmap.co/api/{email}/{apikey}/getmapcode/{mapID}</code></p>
@@ -109,7 +109,7 @@
     @endif
     <h4>Response</h4>
     <p>Raw HTML Markup. This will be similar to the code you would normally paste from the grey box</p>
-    @if(Auth::guest())
+    @if(Auth::guest() || Auth::user()->maps->count() === 0)
       <pre>&lt;!-- Google map code from EZ Map - https://ezmap.co -->
 &lt;script src='https://maps.googleapis.com/maps/api/js?key='>&lt;/script>
 &lt;script>
