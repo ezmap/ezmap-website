@@ -42,7 +42,7 @@
     <h3 id="get-maps">Get Maps JSON</h3>
     <h4>Endpoint</h4>
     <h5>/getmaps</h5>
-    @if(Auth::guest())
+    @if(Auth::guest() || Auth::user()->maps->count() === 0)
       <p><code>https://ezmap.co/api/{email}/{apikey}/getmaps</code></p>
       <h4>Response</h4>
       <p>JSON encoded array of map objects</p>
@@ -55,13 +55,13 @@
   "width": 560,
   "height": 420,
   "responsiveMap": true,
-  "latitude": 57.18807929165505,
-  "longitude": -2.19426155090332,
+  "latitude": 56.4778058625534,
+  "longitude": -2.86748333610688,
   "markers": [{
     "title": "My House",
     "icon": "https:\/\/ezmap.co\/icons\/svgs\/location-blue.svg",
-    "lat": 57.188079291655,
-    "lng": -2.1942615509033203,
+    "lat": 56.4778058625534,
+    "lng": -2.86748333610688,
     "infoWindow": {"content": "…truncated HTML markup…"}
   }],
   "mapOptions": {
@@ -114,7 +114,7 @@
 &lt;script src='https://maps.googleapis.com/maps/api/js?key='>&lt;/script>
 &lt;script>
   function init() {
-    var mapOptions = { "center": {  "lat": 57.511784490097,  "lng": -1.8120742589235306 }, "clickableIcons": true, "disableDoubleClickZoom": false, "draggable": true, "fullscreenControl": true, "keyboardShortcuts": true, "mapTypeControl": true, "mapTypeControlOptions": {  "text": "Default (depends on viewport size etc.)",  "style": 0 }, "mapTypeId": "roadmap", "rotateControl": true, "scaleControl": true, "scrollwheel": true, "streetViewControl": true, "styles": false, "zoom": 3, "zoomControl": true};
+    var mapOptions = { "center": {  "lat": 56.4778058625534,  "lng": -2.86748333610688 }, "clickableIcons": true, "disableDoubleClickZoom": false, "draggable": true, "fullscreenControl": true, "keyboardShortcuts": true, "mapTypeControl": true, "mapTypeControlOptions": {  "text": "Default (depends on viewport size etc.)",  "style": 0 }, "mapTypeId": "roadmap", "rotateControl": true, "scaleControl": true, "scrollwheel": true, "streetViewControl": true, "styles": false, "zoom": 3, "zoomControl": true};
     var mapElement = document.getElementById('ez-map');
     var map = new google.maps.Map(mapElement, mapOptions);
 
