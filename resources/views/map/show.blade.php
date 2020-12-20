@@ -2,12 +2,14 @@
 var head = document.head || document.getElementsByTagName('head')[0];
 var firstLoad =  (document.getElementById("ezmap-gmap-script") === null)
 
-var gmapscript = document.createElement('script');
-gmapscript.id = "ezmap-gmap-script";
-gmapscript.src = "https://maps.googleapis.com/maps/api/js?key={{ $map->apiKey }}"
+if (!document.getElementById('ezmap-gmap-script'))
+{
+  var gmapscript = document.createElement('script');
+  gmapscript.id = "ezmap-gmap-script";
+  gmapscript.src = "https://maps.googleapis.com/maps/api/js?key={{ $map->apiKey }}"
 
-head.appendChild(gmapscript);
-
+  head.appendChild(gmapscript);
+}
 var css = '#{{ $map->mapContainer }}{min-height: 150px;min-width: 150px;width: {{ $map->responsiveMap ? "100%" : "{$map->width}px"}};height: {{ $map->height }}px;}';
 var style = document.createElement('style');
 style.type = 'text/css';
