@@ -2,9 +2,10 @@
 var head = document.head || document.getElementsByTagName('head')[0];
 var firstLoad =  (document.getElementById("ezmap-gmap-script") === null)
 
-if (!document.getElementById('ezmap-gmap-script'))
+var gmapscript = document.getElementById('ezmap-gmap-script');
+if (!gmapscript)
 {
-  var gmapscript = document.createElement('script');
+  gmapscript = document.createElement('script');
   gmapscript.id = "ezmap-gmap-script";
   gmapscript.src = "https://maps.googleapis.com/maps/api/js?key={{ $map->apiKey }}"
 
