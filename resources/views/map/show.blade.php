@@ -2,8 +2,7 @@
 var head = document.head || document.getElementsByTagName('head')[0];
 var firstLoad =  (document.getElementById("ezmap-gmap-script") === null)
 
-var gmapscript = document.getElementById('ezmap-gmap-script');
-if (!gmapscript)
+if (firstLoad)
 {
   gmapscript = document.createElement('script');
   gmapscript.id = "ezmap-gmap-script";
