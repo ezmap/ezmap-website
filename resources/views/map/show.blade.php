@@ -1,11 +1,11 @@
 (function(){
 var head = document.head || document.getElementsByTagName('head')[0];
-var firstLoad =  (document.getElementById("ezmap-gmap-script") === null)
+var firstLoad =  (document.getElementById("ezmap-gmap-script-{{ $map->id }}") === null)
 
 if (firstLoad)
 {
   gmapscript = document.createElement('script');
-  gmapscript.id = "ezmap-gmap-script";
+  gmapscript.id = "ezmap-gmap-script-{{ $map->id }}";
   gmapscript.src = "https://maps.googleapis.com/maps/api/js?key={{ $map->apiKey }}"
 
   head.appendChild(gmapscript);
