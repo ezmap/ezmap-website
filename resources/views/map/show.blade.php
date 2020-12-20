@@ -38,9 +38,9 @@ function doMap{{ $map->id }}() {
     {!! $map->code() !!}
 }
 
-    gmapscript.addEventListener('load', function(){
-        doMap{{ $map->id }}();
-    });
+gmapscript.addEventListener('load', function(){
+  doMap{{ $map->id }}();
+});
 
 
 })();
