@@ -38,8 +38,12 @@ function doMap{{ $map->id }}() {
     {!! $map->code() !!}
 }
 
-
+    gmapscript.onload = function(){
         doMap{{ $map->id }}();
+    }
 
+if (!firstLoad) {
+  doMap{{ $map->id }}();
+}
 
 })();
