@@ -38,12 +38,9 @@ function doMap{{ $map->id }}() {
     {!! $map->code() !!}
 }
 
-    gmapscript.onload = function(){
+    gmapscript.addEventListener('load', function(){
         doMap{{ $map->id }}();
-    }
+    });
 
-if (!firstLoad) {
-  doMap{{ $map->id }}();
-}
 
 })();
