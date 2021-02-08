@@ -18,6 +18,8 @@ class Map extends Model
       'latitude',
       'longitude',
       'markers',
+      'heatmap',
+      'heatmapLayer',
       'mapOptions',
       'theme_id',
       'embeddable',
@@ -26,6 +28,8 @@ class Map extends Model
   protected $casts = [
       'mapOptions'    => 'object',
       'markers'       => 'object',
+      'heatmap'       => 'object',
+      'heatmapLayer'  => 'object',
       'responsiveMap' => 'boolean',
       'embeddable'    => 'boolean',
   ];
@@ -57,6 +61,22 @@ class Map extends Model
 
     return collect(json_decode($markers));
   }
+
+  public function getHeatmapAttribute($heatmap)
+  {
+    if (!is_array(json_decode($heatmap)))
+    {
+      return collect(json_decode(json_decode($heatmap)));
+    }
+
+    return collect(json_decode($heatmap));
+  }
+
+  public function getHeatmapLayerAttribute($heatmapLayer)
+  {
+    return json_decode($heatmapLayer);
+  }
+
 
   public function getMapOptionsAttribute($options)
   {
@@ -97,6 +117,7 @@ class Map extends Model
       var mapElement = document.getElementById('{$this->mapContainer}');
       var map = new google.maps.Map(mapElement, mapOptions);";
     $output                 .= $this->markersLoop();
+    $output                 .= $this->heatMapLoop();
     $output                 .= "\n      google.maps.event.addDomListener(window, 'resize', function() { 
         var center = map.getCenter(); 
         google.maps.event.trigger(map, 'resize'); 
@@ -126,6 +147,24 @@ class Map extends Model
     return $str;
   }
 
+
+  private function heatMapLoop()
+  {
+    $str = "";
+
+    if ($this->heatmap !== null)
+    {
+      $str = "var heatmap = new google.maps.visualization.HeatmapLayer({data: [";
+      foreach ($this->heatmap as $hotspot)
+      {
+        $str .= "{ location: new google.maps.LatLng(" . $hotspot->weightedLocation->location->lat . "," . $hotspot->weightedLocation->location->lng . "), weight: " . $hotspot->weightedLocation->weight . "},";
+      }
+      $str .= "]}); heatmap.setMap(map);";
+      $str .= "heatmap.setOptions(" . $this->heatmapLayer . ")";
+    }
+
+    return $str;
+  }
 
   public function getImage($extension = "png", $theme = null)
   {

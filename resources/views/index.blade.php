@@ -26,6 +26,7 @@
       {{ csrf_field() }}
       <input type="hidden" name="theme_id" v-model="currentTheme.id">
       <input type="hidden" name="markers" v-model="markersToString">
+      <input type="hidden" name="heatmap" v-model="heatMapToString">
       @if(Auth::check())
         <div class="form-group row">
           <ui-textbox label="{{ ucwords(EzTrans::translate('mapTitle','map title')) }}" name="title" type="text" placeholder="{{ ucwords(EzTrans::translate('myMap','my map')) }}" value="{{ $map->title ?? '' }}"></ui-textbox>
@@ -140,7 +141,7 @@
         <div class="row">
           <div class="col-xs-12">
             <div class="">
-              <ui-button raised color="primary" v-on:click.prevent="this.addingPin=true" icon="add_location">
+              <ui-button raised color="primary" v-on:click.prevent="addingPin=true" icon="add_location">
                 {{ EzTrans::translate('dropMarker', 'drop a marker') }}
               </ui-button>
               <ui-button raised color="primary" v-on:click.prevent="showAddressModal" icon="add_location">
@@ -151,8 +152,7 @@
             <div class="row">
               <div class="col-xs-12">
                 <ui-alert type="info" v-show="addingPin" :dismissible="false">
-                  {{ EzTrans::translate('clickToDrop', "Click the map where you want your pin! Don't worry, you can reposition it if you're a bit off") }}
-                  .
+                  {{ EzTrans::translate('clickToDrop', "Click the map where you want your pin! Don't worry, you can reposition it if you're a bit off") }}.
                 </ui-alert>
               </div>
             </div>
@@ -193,6 +193,90 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <div class="form-group row">
+        <h4>{{ ucwords(EzTrans::translate('heatmap', 'Heatmap')) }} <i class="fa fa-bullseye"></i></h4>
+
+        <div class="form-group row" v-show="heatMapData.length">
+          <div class="col-sm-12">
+            <h4>{{ ucwords(EzTrans::translate('heatmapLayerOptions.options', 'heatmap options')) }} <i class="fa fa-sliders"></i>
+            </h4>
+          </div>
+          <div class="col-lg-4">
+            <div class="checkbox">
+              <ui-switch name="heatmapLayer[dissipating]" :value.sync="heatmapLayer.dissipating">
+                {{ ucwords(EzTrans::translate('heatmapLayerOptions.dissipating', 'dissipate')) }}
+              </ui-switch>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <label for="heatmapLayerOpacity">{{ ucwords(EzTrans::translate('opacity')) }}
+              <i class="fa fa-low-vision"></i></label>
+            <input id="heatmapLayerOpacity" name="heatmapLayer[opacity]" class="form-control" type="number" step="0.1" min="0.0" max="1.0" placeholder="Opacity" v-model="heatmapLayer.opacity" number>
+          </div>
+          <div class="col-lg-4">
+            <label for="heatmapLayerRadius">{{ ucwords(EzTrans::translate('radius')) }}
+              <i class="fa fa-circle"></i></label>
+            <input id="heatmapLayerRadius" name="heatmapLayer[radius]" class="form-control" type="number" step="1" min="1" placeholder="Radius" v-model="heatmapLayer.radius" number>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="">
+              <ui-button raised color="primary" v-on:click.prevent="addingHotSpot=true" icon="add_location">
+                {{ EzTrans::translate('addHotSpot', 'add a hot spot') }}
+              </ui-button>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <ui-alert type="info" v-show="addingHotSpot" :dismissible="false">
+              {{ EzTrans::translate('dropHotSpot', "Click the map where you want your hot spot! Don't worry, you can reposition it if you're a bit off") }}.
+            </ui-alert>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-xs-12">
+            <table class="table table-condensed" v-show="heatMapData.length">
+              <tr>
+                <th>{{ ucwords(EzTrans::translate('hotTitle', 'title')) }}</th>
+                <th>{{ ucwords(EzTrans::translate('locationWeight', 'weight (count)')) }}</th>
+                <th>{{ ucwords(EzTrans::translate('centerHere', 'center here')) }}</th>
+                <th>{{ ucwords(EzTrans::translate('deleteLocation', 'delete hot spot')) }}</th>
+              </tr>
+              <tr>
+                <td colspan="3">
+                </td>
+                <td>
+                  <ui-button raised v-show="heatMapData.length > 1" color="danger" v-on:click.prevent="removeAllHotSpots" icon="delete">
+                    {{ EzTrans::translate('deleteAllHotSpots', 'delete all hot spots') }}
+                  </ui-button>
+                </td>
+              </tr>
+              <tr v-for="(index, hotspot) in heatMapData">
+                <td>
+                  <ui-textbox type="text" :value.sync="hotspot.title"></ui-textbox>
+                </td>
+                <td>
+                  <ui-textbox type="number" :value.sync="hotspot.weightedLocation.weight"></ui-textbox>
+                </td>
+                <td>
+                  <ui-icon-button v-on:click.prevent="centerOnHotSpot(index)" color="accent" icon="my_location"></ui-icon-button>
+                </td>
+                <td>
+                  <ui-icon-button v-on:click.prevent="removeHotSpot(index)" color="danger" icon="delete"></ui-icon-button>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
       </div>
 
       <div class="form-group row">

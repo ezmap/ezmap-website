@@ -17,6 +17,7 @@ mainVue = new Vue({
     data: {
         addingPin: false,
         addingPinByAddress: false,
+        addingHotSpot: false,
         apikey: '{{ $map->apiKey ?? '' }}',
         codeCopied: false,
         currentTheme: {
@@ -26,6 +27,12 @@ mainVue = new Vue({
         doubleClickZoom: {{ $map->mapOptions->doubleClickZoom ?? 'true' }},
         embeddable: @if( empty($map) || !($map->embeddable) ) false @else true @endif,
         height: {{ $map->height ?? 420 }} +0,
+        heatMapData: [],
+        heatmapLayer: {
+            dissipating: false,
+            opacity: 0.6,
+            radius: 2
+        },
         geocoder: {},
         infoDescription: '',
         infoEmail: '',
@@ -127,6 +134,9 @@ mainVue = new Vue({
             }
 
             return JSON.stringify(out);
+        },
+        heatMapToString: function() {
+            return JSON.stringify(this.heatMapData);
         }
     },
     methods: {
@@ -204,6 +214,17 @@ mainVue = new Vue({
                     str += "marker" + i + ".addListener('click', function () { infowindow" + i + ".open(map, marker" + i + ") ;});infowindow" + i + ".close();\n";
                 }
             }
+            return str;
+        },
+        heatmapLoop: function() {
+            var str = '';
+            str += 'var heatmap = new google.maps.visualization.HeatmapLayer({data: [';
+            for (var i = 0; i < this.heatMapData.length; i++) {
+                str += '{ location: new google.maps.LatLng(' + this.heatMapData[i].weightedLocation.location.lat + ',' + this.heatMapData[i].weightedLocation.location.lng + '), weight: ' + this.heatMapData[i].weightedLocation.weight + '},';
+            }
+            str += ']});';
+            str += 'heatmap.setOptions(' + JSON.stringify(this.heatmapLayer) + ');';
+            str += 'heatmap.setMap(map);';
             return str;
         },
         responsiveOutput: function () {
@@ -312,8 +333,16 @@ mainVue = new Vue({
                 this.markers = [];
             }
         },
+        removeAllHotSpots: function(){
+            if (window.confirm('Are you sure you want to delete the '+ this.heatMapData.length + ' hotspots from this map?')) {
+                this.heatMapData = [];
+            }
+        },
         centerOnMarker: function (item) {
             this.map.setCenter(this.markers[item].position);
+        },
+        centerOnHotSpot: function (item) {
+            this.map.setCenter(this.heatMapData[item].weightedLocation.location);
         },
         changeMarkerIcon: function (item) {
             $('.markericon').data('for-marker', item);
@@ -353,7 +382,7 @@ mainVue = new Vue({
             });
         },
         placeMarker: function (event) {
-            console.log(event);
+            // console.log(event);
             if (this.addingPin || this.addingPinByAddress) {
                 var marker = new google.maps.Marker({
                     icon: 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi.png',
@@ -375,6 +404,23 @@ mainVue = new Vue({
                 $('#markerModal').modal('show');
                 this.addingPin = this.addingPinByAddress = false;
             }
+        },
+        placeHotSpot: function(event) {
+            // console.log(this);
+            if (this.addingHotSpot) {
+                this.heatMapData.push({
+                    title: window.prompt("Give this hotspot a title?", event.latLng.toString()),
+                    weightedLocation: {
+                        location: event.latLng,
+                        weight: Number(window.prompt("Give it a weight (count)", "1"))
+                    }
+                });
+            }
+
+            this.addingHotSpot = false;
+        },
+        removeHotSpot: function (item) {
+            this.heatMapData.splice(item, 1);
         },
         duplicateMap: function () {
             $('input[name="title"]').val($('input[name="title"]').val() + ' - copy');
@@ -422,6 +468,20 @@ mainVue = new Vue({
                 this.markers.push(marker);
 
             }
+
+            @if ($map->heatmap)
+                this.heatMapData = {!! $map->heatmap !!};
+                this.heatmapLayer = {!! $map->heatmapLayer !!};
+                var heatmap = new google.maps.visualization.HeatmapLayer({
+                  data: [
+                  @foreach($map->heatmap as $hotSpot)
+                      { location: new google.maps.LatLng({{ $hotSpot->weightedLocation->location->lat }},{{ $hotSpot->weightedLocation->location->lng }}), weight: {{ $hotSpot->weightedLocation->weight }} },
+                  @endforeach
+                  ]
+                });
+                heatmap.setOptions(this.heatmapLayer);
+                heatmap.setMap(this.map);
+            @endif
                     @endif
             var wtf; // space weirndess - ignore this, stupid templating engines and script engines not playing nicely
 
@@ -430,6 +490,7 @@ mainVue = new Vue({
             google.maps.event.addListener(this.map, 'zoom_changed', this.mapzoomed);
             google.maps.event.addListener(this.map, 'maptypeid_changed', this.maptypeidchanged);
             google.maps.event.addListener(this.map, 'click', this.placeMarker);
+            google.maps.event.addListener(this.map, 'click', this.placeHotSpot);
         }
     }
 });

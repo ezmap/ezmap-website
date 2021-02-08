@@ -8,6 +8,7 @@ use App\Theme;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Http\Response;
 
 class MapController extends Controller
 {
@@ -23,7 +24,7 @@ class MapController extends Controller
   /**
    * Display a listing of the map.
    *
-   * @return \Illuminate\Http\Response
+   * @return Response
    */
   public function index(Request $request)
   {
@@ -38,7 +39,7 @@ class MapController extends Controller
   /**
    * Show the form for creating a new map.
    *
-   * @return \Illuminate\Http\Response
+   * @return Response
    */
   public function create()
   {
@@ -48,8 +49,8 @@ class MapController extends Controller
   /**
    * Store a newly created map in storage.
    *
-   * @param \Illuminate\Http\Request $request
-   * @return \Illuminate\Http\Response
+   * @param Request $request
+   * @return Response
    */
   public function store(Request $request)
   {
@@ -61,8 +62,6 @@ class MapController extends Controller
     $options         = $this->cleanMapOptions($request, $options);
     $map->mapOptions = (object)$options;
 
-    $map->save();
-
     return redirect()->route('map.edit', $map);
   }
 
@@ -70,7 +69,7 @@ class MapController extends Controller
    * Display the specified map.
    *
    * @param int $id
-   * @return \Illuminate\Http\Response
+   * @return Response
    */
   public function show(Map $map)
   {
@@ -85,7 +84,7 @@ class MapController extends Controller
    * Show the form for editing the specified map.
    *
    * @param int $id
-   * @return \Illuminate\Http\Response
+   * @return Response
    */
   public function edit(Request $request, Map $map)
   {
@@ -114,9 +113,9 @@ class MapController extends Controller
   /**
    * Update the specified map in storage.
    *
-   * @param \Illuminate\Http\Request $request
-   * @param int                      $id
-   * @return \Illuminate\Http\Response
+   * @param Request $request
+   * @param int     $id
+   * @return Response
    */
   public function update(Request $request, Map $map)
   {
@@ -130,6 +129,8 @@ class MapController extends Controller
     $map->latitude      = $request->has('latitude') ? $request->input('latitude') : $map->latitude;
     $map->longitude     = $request->has('longitude') ? $request->input('longitude') : $map->longitude;
     $map->markers       = $request->has('markers') ? $request->input('markers') : $map->markers;
+    $map->heatmap       = $request->has('heatmap') ? $request->input('heatmap') : $map->heatmap;
+    $map->heatmapLayer  = $request->has('heatmapLayer') ? $request->input('heatmapLayer') : $map->heatmapLayer;
     $map->mapOptions    = $request->has('mapOptions') ? $request->input('mapOptions') : $map->mapOptions;
     $map->responsiveMap = $request->has('responsiveMap');
     $map->embeddable    = $request->has('embeddable');
@@ -138,6 +139,8 @@ class MapController extends Controller
     $options         = (array)$map->mapOptions;
     $options         = $this->cleanMapOptions($request, $options);
     $map->mapOptions = (object)$options;
+
+    $map->heatmapLayer = $this->cleanHeatmapLayer($request, (array)$map->heatmapLayer);
 
     $map->save();
 
@@ -148,7 +151,7 @@ class MapController extends Controller
    * Remove the specified map from storage.
    *
    * @param int $id
-   * @return \Illuminate\Http\Response
+   * @return Response
    */
   public function destroy(Map $map)
   {
@@ -173,7 +176,7 @@ class MapController extends Controller
    * @param         $options
    * @return array
    */
-  protected function cleanMapOptions(Request $request, Array $options)
+  protected function cleanMapOptions(Request $request, array $options)
   {
     // possibly don't need to do this as we go through each option afterwards anyway. I guess this'll pick up stragglers!
     $options = collect($options)->transform(function ($item) {
@@ -194,6 +197,16 @@ class MapController extends Controller
     return $options;
   }
 
+  protected function cleanHeatmapLayer(Request $request, $heatmapLayer)
+  {
+    $heatmapLayer = collect($heatmapLayer)->transform(function ($item) {
+      return ($item === 'on') ? true : $item;
+    })->all();
+    $heatmapLayer['radius']  = intval($heatmapLayer['radius']);
+    $heatmapLayer['opacity'] = floatval($heatmapLayer['opacity']);
+
+    return json_encode($heatmapLayer);
+  }
 
   public function image(Request $request, Map $map)
   {
