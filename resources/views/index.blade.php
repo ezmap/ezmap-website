@@ -205,7 +205,7 @@
           </div>
           <div class="col-lg-4">
             <div class="checkbox">
-              <ui-switch name="heatmapLayer[dissipating]" :value.sync="heatmapLayer.dissipating">
+              <ui-switch name="heatmapLayer[dissipating]" :value.sync="heatmapLayer.dissipating" v-on:change="heatmapChange()">
                 {{ ucwords(EzTrans::translate('heatmapLayerOptions.dissipating', 'dissipate')) }}
               </ui-switch>
             </div>
@@ -213,12 +213,12 @@
           <div class="col-lg-4">
             <label for="heatmapLayerOpacity">{{ ucwords(EzTrans::translate('opacity')) }}
               <i class="fa fa-low-vision"></i></label>
-            <input id="heatmapLayerOpacity" name="heatmapLayer[opacity]" class="form-control" type="number" step="0.1" min="0.0" max="1.0" placeholder="Opacity" v-model="heatmapLayer.opacity" number>
+            <input id="heatmapLayerOpacity" name="heatmapLayer[opacity]" class="form-control" type="number" step="0.1" min="0.0" max="1.0" placeholder="Opacity" v-model="heatmapLayer.opacity" number  v-on:change="heatmapChange()">
           </div>
           <div class="col-lg-4">
             <label for="heatmapLayerRadius">{{ ucwords(EzTrans::translate('radius')) }}
               <i class="fa fa-circle"></i></label>
-            <input id="heatmapLayerRadius" name="heatmapLayer[radius]" class="form-control" type="number" step="1" min="1" placeholder="Radius" v-model="heatmapLayer.radius" number>
+            <input id="heatmapLayerRadius" name="heatmapLayer[radius]" class="form-control" type="number" step="1" min="1" placeholder="Radius" v-model="heatmapLayer.radius" number  v-on:change="heatmapChange()">
           </div>
         </div>
 
@@ -264,7 +264,7 @@
                   <ui-textbox type="text" :value.sync="hotspot.title"></ui-textbox>
                 </td>
                 <td>
-                  <ui-textbox type="number" :value.sync="hotspot.weightedLocation.weight"></ui-textbox>
+                  <ui-textbox type="number" :min="0" :value.sync="hotspot.weightedLocation.weight" v-on:change="heatmapChange()"></ui-textbox>
                 </td>
                 <td>
                   <ui-icon-button v-on:click.prevent="centerOnHotSpot(index)" color="accent" icon="my_location"></ui-icon-button>

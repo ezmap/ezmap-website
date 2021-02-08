@@ -27,6 +27,7 @@ mainVue = new Vue({
         doubleClickZoom: {{ $map->mapOptions->doubleClickZoom ?? 'true' }},
         embeddable: @if( empty($map) || !($map->embeddable) ) false @else true @endif,
         height: {{ $map->height ?? 420 }} +0,
+        heatmap: null,
         heatMapData: [],
         heatmapLayer: {
             dissipating: false,
@@ -301,6 +302,19 @@ mainVue = new Vue({
             this.mapOptions.mapTypeId = this.mapTypeId.mapTypeId;
             this.map.setOptions(this.mapOptions);
         },
+        heatmapChange: function() {
+            if (this.heatmap === null) {
+                this.heatmap = new google.maps.visualization.HeatmapLayer([]);
+            }
+            var data = [];
+            for( var i = 0; i < this.heatMapData.length; i++ ) {
+                var location = this.heatMapData[i].weightedLocation.location;
+                var weight = this.heatMapData[i].weightedLocation.weight;
+                data.push({location: new google.maps.LatLng(location.lat,location.lng), weight: weight});
+            }
+            this.heatmap.setData(data);
+            this.heatmap.setOptions(this.heatmapLayer);
+        },
         maptypeidchanged: function () {
             this.mapOptions.mapTypeId = this.map.getMapTypeId();
             this.mapTypeId = this.mapTypes.filter(function (mapType) {
@@ -337,6 +351,7 @@ mainVue = new Vue({
             if (window.confirm('Are you sure you want to delete the '+ this.heatMapData.length + ' hotspots from this map?')) {
                 this.heatMapData = [];
             }
+            this.heatmapChange();
         },
         centerOnMarker: function (item) {
             this.map.setCenter(this.markers[item].position);
@@ -406,21 +421,21 @@ mainVue = new Vue({
             }
         },
         placeHotSpot: function(event) {
-            // console.log(this);
             if (this.addingHotSpot) {
                 this.heatMapData.push({
                     title: window.prompt("Give this hotspot a title?", event.latLng.toString()),
                     weightedLocation: {
-                        location: event.latLng,
+                        location: event.latLng.toJSON(),
                         weight: Number(window.prompt("Give it a weight (count)", "1"))
                     }
                 });
             }
-
             this.addingHotSpot = false;
+            this.heatmapChange();
         },
         removeHotSpot: function (item) {
             this.heatMapData.splice(item, 1);
+            this.heatmapChange();
         },
         duplicateMap: function () {
             $('input[name="title"]').val($('input[name="title"]').val() + ' - copy');
@@ -472,15 +487,10 @@ mainVue = new Vue({
             @if ($map->heatmap)
                 this.heatMapData = {!! $map->heatmap !!};
                 this.heatmapLayer = {!! $map->heatmapLayer !!};
-                var heatmap = new google.maps.visualization.HeatmapLayer({
-                  data: [
-                  @foreach($map->heatmap as $hotSpot)
-                      { location: new google.maps.LatLng({{ $hotSpot->weightedLocation->location->lat }},{{ $hotSpot->weightedLocation->location->lng }}), weight: {{ $hotSpot->weightedLocation->weight }} },
-                  @endforeach
-                  ]
-                });
-                heatmap.setOptions(this.heatmapLayer);
-                heatmap.setMap(this.map);
+                this.heatmap = new google.maps.visualization.HeatmapLayer();
+                this.heatmapChange();
+                this.heatmap.setOptions(this.heatmapLayer);
+                this.heatmap.setMap(this.map);
             @endif
                     @endif
             var wtf; // space weirndess - ignore this, stupid templating engines and script engines not playing nicely

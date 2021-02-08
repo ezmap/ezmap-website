@@ -5,8 +5,7 @@
     var mapOptions = @{{ mapOptions | json 1 | jsonShrink }};
     var mapElement = document.getElementById('@{{ mapcontainer }}');
     var map = new google.maps.Map(mapElement, mapOptions);
-    @{{ markersLoop() }}
-    @{{ heatmapLoop() }}
+    @{{ markersLoop() }}@{{ heatmapLoop() }}
     @{{ responsiveOutput() }}
   }
 google.maps.event.addDomListener(window, 'load', init);

@@ -61,6 +61,9 @@ class MapController extends Controller
     $options         = (array)$map->mapOptions;
     $options         = $this->cleanMapOptions($request, $options);
     $map->mapOptions = (object)$options;
+    $map->heatmapLayer = $this->cleanHeatmapLayer($request, (array)$map->heatmapLayer);
+
+    $map->save();
 
     return redirect()->route('map.edit', $map);
   }
@@ -199,6 +202,8 @@ class MapController extends Controller
 
   protected function cleanHeatmapLayer(Request $request, $heatmapLayer)
   {
+    $heatmapLayer['dissipating']  = false;
+
     $heatmapLayer = collect($heatmapLayer)->transform(function ($item) {
       return ($item === 'on') ? true : $item;
     })->all();
