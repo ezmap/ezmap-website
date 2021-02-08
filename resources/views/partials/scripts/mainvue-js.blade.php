@@ -484,15 +484,14 @@ mainVue = new Vue({
 
             }
 
-            @if ($map->heatmap)
                 this.heatMapData = {!! $map->heatmap !!};
                 this.heatmapLayer = {!! $map->heatmapLayer !!};
-                this.heatmap = new google.maps.visualization.HeatmapLayer();
-                this.heatmapChange();
-                this.heatmap.setOptions(this.heatmapLayer);
-                this.heatmap.setMap(this.map);
-            @endif
+
                     @endif
+            this.heatmap = new google.maps.visualization.HeatmapLayer([]);
+            this.heatmapChange();
+            this.heatmap.setOptions(this.heatmapLayer);
+            this.heatmap.setMap(this.map);
             var wtf; // space weirndess - ignore this, stupid templating engines and script engines not playing nicely
 
             google.maps.event.addListener(this.map, 'resize', this.centerchanged);
