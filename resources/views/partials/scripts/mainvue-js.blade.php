@@ -485,7 +485,7 @@ mainVue = new Vue({
             }
 
                 this.heatMapData = {!! $map->heatmap !!};
-                this.heatmapLayer = {!! $map->heatmapLayer ? $this->heatmapLayer : "''" !!};
+                this.heatmapLayer = {!! $map->heatmapLayer ? $map->heatmapLayer : "''" !!};
 
                     @endif
             this.heatmap = new google.maps.visualization.HeatmapLayer([]);
