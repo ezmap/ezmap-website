@@ -218,7 +218,7 @@
           <div class="col-lg-4">
             <label for="heatmapLayerRadius">{{ ucwords(EzTrans::translate('radius')) }}
               <i class="fa fa-circle"></i></label>
-            <input id="heatmapLayerRadius" name="heatmapLayer[radius]" class="form-control" type="number" step="1" min="1" placeholder="Radius" v-model="heatmapLayer.radius" number  v-on:change="heatmapChange()">
+            <input id="heatmapLayerRadius" name="heatmapLayer[radius]" class="form-control" type="number" step="1" min="0" placeholder="Radius" v-model="heatmapLayer.radius" number  v-on:change="heatmapChange()">
           </div>
         </div>
 
