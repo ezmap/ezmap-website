@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider
@@ -18,26 +18,24 @@ class RouteServiceProvider extends ServiceProvider
   /**
    * Define your route model bindings, pattern filters, etc.
    *
-   * @param  \Illuminate\Routing\Router $router
    * @return void
    */
-  public function boot(Router $router)
+  public function boot()
   {
     //
 
-    parent::boot($router);
+    parent::boot();
   }
 
   /**
    * Define the routes for the application.
    *
-   * @param  \Illuminate\Routing\Router $router
    * @return void
    */
-  public function map(Router $router)
+  public function map()
   {
-    $this->mapWebRoutes($router);
-    $this->mapApiRoutes($router);
+    $this->mapWebRoutes();
+    $this->mapApiRoutes();
 
     //
   }
@@ -46,24 +44,25 @@ class RouteServiceProvider extends ServiceProvider
    * Define the "web" routes for the application.
    * These routes all receive session state, CSRF protection, etc.
    *
-   * @param  \Illuminate\Routing\Router $router
    * @return void
    */
-  protected function mapWebRoutes(Router $router)
+  protected function mapWebRoutes()
   {
-    $router->group([
-        'namespace' => $this->namespace, 'middleware' => 'web',
+    Route::group([
+        'namespace'  => $this->namespace,
+        'middleware' => 'web',
     ], function ($router) {
-      require app_path('Http/routes.php');
+      require base_path('routes/web.php');
     });
   }
 
-  protected function mapApiRoutes(Router $router)
+  protected function mapApiRoutes()
   {
-    $router->group([
-        'namespace' => $this->namespace, 'middleware' => 'api',
-    ], function ($router) {
-      require app_path('Http/apiroutes.php');
+    Route::group([
+        'namespace'  => $this->namespace,
+        'middleware' => 'api',
+    ], function () {
+      require base_path('routes/api.php');
     });
   }
 }

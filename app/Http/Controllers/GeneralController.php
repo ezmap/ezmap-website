@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Theme;
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
 use Illuminate\Support\Facades\Mail;
 use Vluzrmos\LanguageDetector\Facades\LanguageDetector;
 

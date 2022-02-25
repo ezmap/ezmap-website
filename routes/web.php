@@ -22,9 +22,11 @@ Route:: get('test', function () {
   return view('test');
 })->middleware('admin');
 
-Route::auth();
+//Route::auth();
+Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/logout', 'Auth\LoginController@logout');
 
 Route::get('admin', 'AdminController@index');
 Route::get('stealth/{userid}', "AdminController@stealth")->name('stealth');
