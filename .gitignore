@@ -3,7 +3,10 @@
 /public/storage
 /storage/*.key
 /vendor
-.idea
+/.idea
+/.vscode
 Homestead.json
 Homestead.yaml
+npm-debug.log
+yarn-error.log
 .env
