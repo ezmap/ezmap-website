@@ -58,9 +58,9 @@ class MapController extends Controller
     $map->user_id       = $request->user()->id;
     $map->responsiveMap = $request->has('responsiveMap');
 
-    $options         = (array)$map->mapOptions;
-    $options         = $this->cleanMapOptions($request, $options);
-    $map->mapOptions = (object)$options;
+    $options           = (array)$map->mapOptions;
+    $options           = $this->cleanMapOptions($request, $options);
+    $map->mapOptions   = (object)$options;
     $map->heatmapLayer = $this->cleanHeatmapLayer($request, (array)$map->heatmapLayer);
 
     $map->save();
@@ -202,13 +202,13 @@ class MapController extends Controller
 
   protected function cleanHeatmapLayer(Request $request, $heatmapLayer)
   {
-    $heatmapLayer['dissipating']  = false;
+    $heatmapLayer['dissipating'] = false;
 
-    $heatmapLayer = collect($heatmapLayer)->transform(function ($item) {
+    $heatmapLayer            = collect($heatmapLayer)->transform(function ($item) {
       return ($item === 'on') ? true : $item;
     })->all();
-    $heatmapLayer['radius']  = intval($heatmapLayer['radius']);
-    $heatmapLayer['opacity'] = floatval($heatmapLayer['opacity']);
+    $heatmapLayer['radius']  = intval($heatmapLayer['radius'] ?? 0);
+    $heatmapLayer['opacity'] = floatval($heatmapLayer['opacity'] ?? 0);
 
     return json_encode($heatmapLayer);
   }

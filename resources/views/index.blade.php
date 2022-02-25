@@ -33,7 +33,7 @@
         </div>
       @endif
       <div class="form-group row">
-        <ui-textbox label="{{ EzTrans::translate('apiKey','API key') }}" name="apiKey" type="text" placeholder="{{ EzTrans::translate('apiKey','API key') }}" :value.sync="apikey"></ui-textbox>
+        <ui-textbox label="{{ EzTrans::translate('apiKey','API key') }}" name="apiKey" type="text" placeholder="{{ EzTrans::translate('apiKey','Google Maps API key') }}" :value.sync="apikey"></ui-textbox>
         <small>
           <a target="_blank" href="https://developers.google.com/maps/signup">{{ ucfirst(EzTrans::translate('getAnApiKey','get an API key')) }}</a>
         </small>
@@ -218,7 +218,7 @@
           <div class="col-lg-4">
             <label for="heatmapLayerRadius">{{ ucwords(EzTrans::translate('radius')) }}
               <i class="fa fa-circle"></i></label>
-            <input id="heatmapLayerRadius" name="heatmapLayer[radius]" class="form-control" type="number" step="1" min="1" placeholder="Radius" v-model="heatmapLayer.radius" number  v-on:change="heatmapChange()">
+            <input v-if="heatMapData.length > 0" id="heatmapLayerRadius" name="heatmapLayer[radius]" class="form-control" type="number" step="1" min="1" placeholder="Radius" v-model="heatmapLayer.radius" number  v-on:change="heatmapChange()">
           </div>
         </div>
 

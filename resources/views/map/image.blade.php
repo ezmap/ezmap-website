@@ -13,6 +13,15 @@
         <hr class="invisible">
         <div class="row">
           <div class="col-md-8 col-md-offset-2">
+            <ui-alert type="warning" dismissible="false">
+              <p>Please note: if no image appears here it's most likely for one of these reasons:</p>
+              <ul>
+                <li>your Google Maps API key does not include "<em>{{ Config::get('app.url') }}/*</em>" as an allowed domain under "Website restrictions"
+                </li>
+                <li>your Google Maps API key does not include the "<em>Maps Static API</em>".</li>
+              </ul>
+
+            </ui-alert>
             <img class="img-responsive center-block" src="{{ $map->getImage($extension) }}" alt="{{ $map->title }}">
             @if($map->theme->id === 1089)
               <ui-alert raised type="info" dismissible="false">

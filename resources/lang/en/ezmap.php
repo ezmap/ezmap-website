@@ -25,7 +25,7 @@ return [
 
     "mapTitle"            => "map title",
     "myMap"               => "my map",
-    "apiKey"              => "API key",
+    "apiKey"              => "Google Maps API key",
     "getAnApiKey"         => "get an API key",
     "mapContainerId"      => "map container ID",
     "automaticUpdates"    => "automatic updates",

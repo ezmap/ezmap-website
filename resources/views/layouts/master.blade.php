@@ -81,7 +81,7 @@
     </footer>
     <script type="text/javascript" src="/js/head.min.js"></script>
     <script>
-      head.js("https://maps.googleapis.com/maps/api/js?key=AIzaSyC5AXVyYFfagDPR4xi9U-ti9u5v_0iIbk8&libraries=visualization",
+      head.js("https://maps.googleapis.com/maps/api/js?key={{ env("GOOGLE_MAPS_API_KEY") }}&libraries=visualization",
         "/js/jquery.min.js",
         "/js/vue.min.js",
         "/js/keen-ui.min.js",
