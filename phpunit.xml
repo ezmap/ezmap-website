@@ -20,9 +20,6 @@
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./app</directory>
-            <exclude>
-                <file>./app/Http/routes.php</file>
-            </exclude>
         </whitelist>
     </filter>
     <php>
@@ -30,7 +27,7 @@
         <env name="BCRYPT_ROUNDS" value="4"/>
         <env name="CACHE_DRIVER" value="array"/>
         <env name="MAIL_DRIVER" value="array"/>
-        <env name="SESSION_DRIVER" value="array"/>
         <env name="QUEUE_DRIVER" value="sync"/>
+        <env name="SESSION_DRIVER" value="array"/>
     </php>
 </phpunit>
