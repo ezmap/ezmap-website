@@ -2,12 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Icon;
 use App\Map;
-use App\Theme;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
 use Illuminate\Http\Response;
 
 class MapController extends Controller
@@ -24,7 +20,7 @@ class MapController extends Controller
   /**
    * Display a listing of the map.
    *
-   * @return Response
+   * @return mixed
    */
   public function index(Request $request)
   {
@@ -39,7 +35,7 @@ class MapController extends Controller
   /**
    * Show the form for creating a new map.
    *
-   * @return Response
+   * @return mixed
    */
   public function create()
   {
@@ -50,7 +46,7 @@ class MapController extends Controller
    * Store a newly created map in storage.
    *
    * @param Request $request
-   * @return Response
+   * @return mixed
    */
   public function store(Request $request)
   {
@@ -72,7 +68,7 @@ class MapController extends Controller
    * Display the specified map.
    *
    * @param int $id
-   * @return Response
+   * @return mixed
    */
   public function show(Map $map)
   {
@@ -87,7 +83,7 @@ class MapController extends Controller
    * Show the form for editing the specified map.
    *
    * @param int $id
-   * @return Response
+   * @return mixed
    */
   public function edit(Request $request, Map $map)
   {
@@ -118,7 +114,7 @@ class MapController extends Controller
    *
    * @param Request $request
    * @param int     $id
-   * @return Response
+   * @return mixed
    */
   public function update(Request $request, Map $map)
   {
@@ -154,7 +150,7 @@ class MapController extends Controller
    * Remove the specified map from storage.
    *
    * @param int $id
-   * @return Response
+   * @return mixed
    */
   public function destroy(Map $map)
   {

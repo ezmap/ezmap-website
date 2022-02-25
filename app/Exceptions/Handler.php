@@ -3,11 +3,6 @@
 namespace App\Exceptions;
 
 use Exception;
-use Illuminate\Auth\AuthenticationException;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -33,7 +28,6 @@ class Handler extends ExceptionHandler
 
   /**
    * Report or log an exception.
-   * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
    *
    * @param \Exception $e
    * @return void
@@ -54,5 +48,4 @@ class Handler extends ExceptionHandler
   {
     return parent::render($request, $e);
   }
-
 }

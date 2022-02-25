@@ -11,8 +11,6 @@ return [
   | by the framework. A "local" driver, as well as a variety of cloud
   | based drivers are available for your choosing. Just store away!
   |
-  | Supported: "local", "ftp", "s3", "rackspace"
-  |
   */
 
     'default' => env('FILESYSTEM_DRIVER', 'local'),
@@ -39,6 +37,8 @@ return [
   | may even configure multiple disks of the same driver. Defaults have
   | been setup for each driver as an example of the required options.
   |
+  | Supported Drivers: "local", "ftp", "sftp", "s3", "rackspace"
+  |
   */
 
     'disks' => [
@@ -61,6 +61,7 @@ return [
             'secret' => env('AWS_SECRET_ACCESS_KEY'),
             'region' => env('AWS_DEFAULT_REGION'),
             'bucket' => env('AWS_BUCKET'),
+            'url'    => env('AWS_URL'),
         ],
 
     ],

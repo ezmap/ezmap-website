@@ -35,6 +35,11 @@ class MapPolicy
     return $map->user_id == $user->id;
   }
 
+  public function delete(User $user, Map $map)
+  {
+    return $map->user_id == $user->id;
+  }
+
   public function undelete(User $user, Map $map)
   {
     return $map->user_id == $user->id;
