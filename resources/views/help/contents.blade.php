@@ -15,10 +15,10 @@
                 </ul>
             </li>
             <li><a href="#faq6">{{ ucwords(EzTrans::translate("zoomLevel")) }}</a></li>
-            <li><a href="#faq7">{{ str_plural(ucwords(EzTrans::translate("marker")),2) }}</a></li>
+            <li><a href="#faq7">{{ Str::plural(ucwords(EzTrans::translate("marker")),2) }}</a></li>
             <li><a href="#faq8">{{ ucwords(EzTrans::translate("options.other")) }}</a></li>
             <li><a href="#faq9">{{ ucwords(EzTrans::translate("saveMap")) }}</a></li>
-            <li><a href="#faq10">{{ str_plural(ucwords(EzTrans::help("theme.theme")),2) }}</a></li>
+            <li><a href="#faq10">{{ Str::plural(ucwords(EzTrans::help("theme.theme")),2) }}</a></li>
         </ul>
     </div>
     <div class="col-sm-6">

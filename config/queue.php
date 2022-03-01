@@ -35,17 +35,18 @@ return [
         ],
 
         'database' => [
-            'driver' => 'database',
-            'table'  => 'jobs',
-            'queue'  => 'default',
-            'expire' => 60,
+            'driver'      => 'database',
+            'table'       => 'jobs',
+            'queue'       => 'default',
+            'retry_after' => 90,
         ],
 
         'beanstalkd' => [
-            'driver' => 'beanstalkd',
-            'host'   => 'localhost',
-            'queue'  => 'default',
-            'ttr'    => 60,
+            'driver'      => 'beanstalkd',
+            'host'        => 'localhost',
+            'queue'       => 'default',
+            'retry_after' => 90,
+            'block_for'   => 0,
         ],
 
         'sqs' => [

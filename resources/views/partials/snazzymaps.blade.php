@@ -3,7 +3,7 @@
         <h3>{{ ucfirst(EzTrans::help("theme.from")) }} <a target="_blank" href="https://snazzymaps.com/">Snazzy Maps</a></h3>
         <p>{{ EzTrans::help("theme.clickToApply") }}</p>
         <p>
-            {{ ucfirst(EzTrans::help("theme.showing")) }} {{ $themes->count() }} {{ EzTrans::help("theme.of") }} {{ \App\Theme::count() }} {{ str_plural(EzTrans::help("theme.theme"),\App\Theme::count()) }}.
+            {{ ucfirst(EzTrans::help("theme.showing")) }} {{ $themes->count() }} {{ EzTrans::help("theme.of") }} {{ \App\Theme::count() }} {{ Str::plural(EzTrans::help("theme.theme"),\App\Theme::count()) }}.
         </p>
         <div class="col-xs-12">
             {{ $themes->appends($appends)->links() }}

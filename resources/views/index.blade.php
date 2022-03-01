@@ -137,7 +137,7 @@
       </div>
 
       <div class="form-group row">
-        <h4>{{ ucwords(str_plural(EzTrans::translate('marker'))) }} <i class="fa fa-map-marker"></i></h4>
+        <h4>{{ ucwords(Str::plural(EzTrans::translate('marker'))) }} <i class="fa fa-map-marker"></i></h4>
         <div class="row">
           <div class="col-xs-12">
             <div class="">
