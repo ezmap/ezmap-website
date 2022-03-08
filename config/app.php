@@ -41,8 +41,7 @@ return [
   |
   */
 
-    'debug' => env('APP_DEBUG', false),
-
+    'debug' => (bool) env('APP_DEBUG', false),
   /*
   |--------------------------------------------------------------------------
   | Application URL
@@ -180,7 +179,8 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Infinety\Alerts\AlertServiceProvider::class,
-        Greggilbert\Recaptcha\RecaptchaServiceProvider::class,
+//        Greggilbert\Recaptcha\RecaptchaServiceProvider::class,
+        Biscolab\ReCaptcha\ReCaptchaServiceProvider::class,
 
         App\Providers\EzTranslatorServiceProvider::class,
 
@@ -236,8 +236,9 @@ return [
         'View'         => Illuminate\Support\Facades\View::class,
 
 
-        'Recaptcha' => Greggilbert\Recaptcha\Facades\Recaptcha::class,
-        'EzTrans'   => App\Facades\EzTranslator::class,
+//        'Recaptcha' => Greggilbert\Recaptcha\Facades\Recaptcha::class,
+        'ReCaptcha' => Biscolab\ReCaptcha\Facades\ReCaptcha::class,
+        'EzTrans'      => App\Facades\EzTranslator::class,
 
     ],
 

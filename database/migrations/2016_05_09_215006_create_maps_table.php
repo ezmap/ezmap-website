@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateMapsTable extends Migration
 {
@@ -33,7 +34,7 @@ class CreateMapsTable extends Migration
                 ->references('id')->on('users')
                 ->onDelete('cascade');
 
-        
+
         });
     }
 

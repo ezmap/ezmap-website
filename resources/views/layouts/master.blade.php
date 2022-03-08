@@ -7,6 +7,7 @@
 
     <link rel="icon" type="image/png" href="{{ url('favicon.png') }}"/>
     <link href='https://fonts.googleapis.com/css?family=Roboto%7CNoto+Sans%7CNoto+Serif%7CKanit%7CCutive+Mono%7CMaterial+Icons' rel='stylesheet' type='text/css'>
+    {!! htmlScriptTagJsApi() !!}
     <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
 
   </head>
