@@ -25,6 +25,6 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "keen-ui": "^0.8.9"
+        "keen-ui": "^1.3"
     }
 }
