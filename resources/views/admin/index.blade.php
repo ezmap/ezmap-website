@@ -5,7 +5,7 @@
 
     <div class="col-md-6">
         <h2>Populate Snazzy Themes</h2>
-        <p>There are currently <strong>{{ \App\Theme::count() }}</strong> Snazzy Themes installed</p>
+        <p>There are currently <strong>{{ \App\Models\Theme::count() }}</strong> Snazzy Themes installed</p>
         <form action="{{ route('populateThemes') }}" method="POST">
             {{ method_field('POST') }}
             {{ csrf_field() }}
@@ -83,7 +83,7 @@
 
     <div class="col-md-12">
         <h2>Log in as…</h2>
-        @foreach(\App\User::all() as $user)
+        @foreach(\App\Models\User::all() as $user)
             <p><a href="{{ route('stealth', $user) }}">{{ $user->name }}</a> <small>{{ $user->email }}</small></p>
         @endforeach
     </div>

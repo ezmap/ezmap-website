@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Icon;
+use App\Models\Icon;
 use Faker\Provider\Uuid;
 use Illuminate\Http\Request;
 
@@ -22,7 +22,7 @@ class HomeController extends Controller
    * Show the application dashboard.
    *
    * @param Request $request
-   * @return \Illuminate\Http\Response
+   * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
    */
   public function index(Request $request)
   {

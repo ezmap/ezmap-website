@@ -26,13 +26,13 @@
             @if($map->theme->id === 1089)
               <ui-alert raised type="info" dismissible="false">
                 @php
-                  $altThemes = \App\Theme::whereIn('id',[1086, 1038, 1137, 1007, 1130, 1010, 1072, 1144, 1154, 1082, 1155, 1170, 1159, 1141])->orderBy('name')->get();
+                  $altThemes = \App\Models\Theme::whereIn('id',[1086, 1038, 1137, 1007, 1130, 1010, 1072, 1144, 1154, 1082, 1155, 1170, 1159, 1141])->orderBy('name')->get();
                 @endphp
                 <p>You're using the "{{ $map->theme->name }}" theme, which unfortunately cannot display properly using the Google static maps API. It only works with the JS maps API due to an undocumented feature. You may like to try one of these themes instead?</p>
                 <div class="row">
                   <div class="col-xs-12 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
                     <p>
-                      <img class="img-responsive img-thumbnail center-block" src="{{ $map->getImage($extension, \App\Theme::find(1182)) }}" alt="EZ Chilled">
+                      <img class="img-responsive img-thumbnail center-block" src="{{ $map->getImage($extension, \App\Models\Theme::find(1182)) }}" alt="EZ Chilled">
                       EZ Chilled
                     </p>
                   </div>

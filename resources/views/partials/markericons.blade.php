@@ -3,9 +3,9 @@
         $userIcons = collect([]);
         if (Auth::check() && Auth::user()->id != 1)
         {
-        $userIcons = \App\Icon::where('user_id',Auth::user()->id)->orderBy('created_at', 'asc')->get();
+        $userIcons = \App\Models\Icon::where('user_id',Auth::user()->id)->orderBy('created_at', 'asc')->get();
         }
-        $siteIcons = \App\Icon::where('user_id',1)->get();
+        $siteIcons = \App\Models\Icon::where('user_id',1)->get();
     @endphp
     <div class="icon-uploads">
         @if(Auth::check() && Auth::user()->id != 1)

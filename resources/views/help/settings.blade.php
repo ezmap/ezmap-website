@@ -235,7 +235,7 @@
     {{ EzTrans::help('theme.brilliant') }}
     <a target="_blank" href="https://snazzymaps.com/">Snazzy Maps</a>
     {{ EzTrans::help('theme.available') }}
-    {{ EzTrans::help('theme.currently') }} {{ \App\Theme::count() }} {{ Str::plural(ucwords(EzTrans::help("theme.theme")),2) }}.
+    {{ EzTrans::help('theme.currently') }} {{ \App\Models\Theme::count() }} {{ Str::plural(ucwords(EzTrans::help("theme.theme")),2) }}.
   </p>
   <p>{{ EzTrans::help('theme.tryIt') }}</p>
   <p>

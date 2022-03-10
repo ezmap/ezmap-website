@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Map;
-use App\User;
+use App\Models\Map;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class MapPolicy

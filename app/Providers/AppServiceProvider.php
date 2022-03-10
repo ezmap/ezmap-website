@@ -2,7 +2,8 @@
 
 namespace App\Providers;
 
-use App\Theme;
+use App\Models\Theme;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -26,6 +27,8 @@ class AppServiceProvider extends ServiceProvider
    */
   public function boot()
   {
+    Paginator::useBootstrap();
+
     if (Schema::hasTable('themes'))
     {
       $tags    = ['colorful', 'complex', 'dark', 'greyscale', 'light', 'monochrome', 'no-labels', 'simple', 'two-tone'];

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Map;
+use App\Models\Map;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Str;
 
 class MapController extends Controller
 {
@@ -224,7 +225,7 @@ class MapController extends Controller
 
     $extension = 'png';
 
-    $filename  = str_slug($map->title) . ".{$extension}";
+    $filename  = Str::slug($map->title) . ".{$extension}";
     $tempImage = tempnam(sys_get_temp_dir(), $filename);
     copy($map->getImage($extension), $tempImage);
 

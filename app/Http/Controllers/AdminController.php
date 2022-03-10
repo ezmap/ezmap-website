@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Icon;
-use App\Theme;
+use App\Models\Icon;
+use App\Models\Theme;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
