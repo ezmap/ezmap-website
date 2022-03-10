@@ -11,7 +11,5 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.override((config) => {
-  delete config.watchOptions;
-});
+// TODO - work out how I built the javascript and css using elixir and set it up here again.
 
