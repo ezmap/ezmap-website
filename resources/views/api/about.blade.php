@@ -118,9 +118,9 @@
     var mapElement = document.getElementById('ez-map');
     var map = new google.maps.Map(mapElement, mapOptions);
 
-    google.maps.event.addDomListener(window, "resize", function() { var center = map.getCenter(); google.maps.event.trigger(map, "resize"); map.setCenter(center); });
+    window.addEventListener("resize", function() { var center = map.getCenter(); google.maps.event.trigger(map, "resize"); map.setCenter(center); });
   }
-  google.maps.event.addDomListener(window, 'load', init);
+  window.addEventListener('load', init);
 &lt;/script>
 &lt;style>
   #ez-map{min-height:150px;min-width:150px;height: 420px;width: 100%;}

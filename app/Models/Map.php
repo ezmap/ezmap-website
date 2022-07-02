@@ -118,13 +118,13 @@ class Map extends Model
       var map = new google.maps.Map(mapElement, mapOptions);";
     $output                 .= $this->markersLoop();
     $output                 .= $this->heatMapLoop();
-    $output                 .= "\n      google.maps.event.addDomListener(window, 'resize', function() { 
+    $output                 .= "\n      window.addEventListener('resize', function() { 
         var center = map.getCenter(); 
         google.maps.event.trigger(map, 'resize'); 
         map.setCenter(center); 
       });
     }
-    google.maps.event.addDomListener(window, 'load', init{$this->id});
+    window.addEventListener('load', init{$this->id});
 ";
 
     return $output;

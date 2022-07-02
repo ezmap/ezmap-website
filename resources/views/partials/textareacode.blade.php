@@ -8,7 +8,7 @@
     @{{ markersLoop() }}@{{ heatmapLoop() }}
     @{{ responsiveOutput() }}
   }
-google.maps.event.addDomListener(window, 'load', init);
+window.addEventListener('load', init);
 &lt;/script>
 @{{ mapStyling() }}
 &lt;div id='@{{ mapcontainer }}'>&lt;/div>

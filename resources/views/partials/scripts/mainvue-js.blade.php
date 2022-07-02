@@ -230,7 +230,7 @@ mainVue = new Vue({
         },
         responsiveOutput: function () {
             if (this.responsive) {
-                return 'google.maps.event.addDomListener(window, "resize", function() { var center = map.getCenter(); google.maps.event.trigger(map, "resize"); map.setCenter(center); });';
+                return 'window.addEventListener("resize", function() { var center = map.getCenter(); google.maps.event.trigger(map, "resize"); map.setCenter(center); });';
             }
             return '';
         },
