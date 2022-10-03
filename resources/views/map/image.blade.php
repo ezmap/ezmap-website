@@ -23,7 +23,7 @@
 
             </ui-alert>
             <img class="img-responsive center-block" src="{{ $map->getImage($extension) }}" alt="{{ $map->title }}">
-            @if($map->theme->id === 1089)
+            @if($map->theme && $map->theme->id === 1089)
               <ui-alert raised type="info" dismissible="false">
                 @php
                   $altThemes = \App\Models\Theme::whereIn('id',[1086, 1038, 1137, 1007, 1130, 1010, 1072, 1144, 1154, 1082, 1155, 1170, 1159, 1141])->orderBy('name')->get();
