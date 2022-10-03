@@ -7,7 +7,7 @@
     <div class="panel panel-primary">
       <div class="panel-heading">"{{ $map->title }}" {{ $extension }} image</div>
       <div class="panel-body">
-        <a href="{{ route('map.download', $map) }}" download="{{ str_slug($map->title) }}.{{ $extension }}" class="btn btn-primary"><i class="fa fa-download"></i> Download image</a>
+        <a href="{{ route('map.download', $map) }}" download="{{ Str::slug($map->title) }}.{{ $extension }}" class="btn btn-primary"><i class="fa fa-download"></i> Download image</a>
         <a href="{{ route('map.edit', $map) }}" class="btn btn-primary pull-right"><i class="fa fa-map-o"></i> Back to your map</a>
 
         <hr class="invisible">
