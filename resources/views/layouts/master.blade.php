@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title>@yield('title', 'EZ Map - Google Maps Made Easy')</title>
     <meta name="Description" content="The easiest way to generate Google Maps for your own sites.">
