@@ -8,6 +8,7 @@
     <link rel="icon" type="image/png" href="{{ url('favicon.png') }}"/>
     <link href='https://fonts.googleapis.com/css?family=Roboto%7CNoto+Sans%7CNoto+Serif%7CKanit%7CCutive+Mono%7CMaterial+Icons' rel='stylesheet' type='text/css'>
     {!! htmlScriptTagJsApi() !!}
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6520761220699409" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
 
   </head>
@@ -71,12 +72,14 @@
       @yield('content')
     </div>
     <footer class="footer">
-      <div class="container">
-        <p style="margin-top:1.25em;">© {{ date('Y') }}
+      <div class="container" style="padding-top:1.25em;">
+        <p class="pull-left">© {{ date('Y') }}
           <a target="_blank" href="//billyfagan.co.uk">Billy Fagan</a>. This tool abides by Google's
           <a target="_blank" href="https://www.google.co.uk/permissions/geoguidelines.html">Permissions Guidelines</a>.
-          <a class="pull-right" target="_blank" href="https://twitter.com/ez_map"><i class="fa fa-twitter fa-fw"></i> @ez
-            _map</a>
+        </p>
+        <p class="pull-right clearfix">
+          <a target="_blank" href="https://twitter.com/ez_map"><i class="fa fa-twitter fa-fw"></i></a>
+          <a target="_blank" href="https://github.com/ezmap/"><i class="fa fa-github fa-fw"></i></a>
         </p>
       </div>
     </footer>
