@@ -12,6 +12,15 @@
     <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
 
   </head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-5ESRGRL3QX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-5ESRGRL3QX');
+  </script>
   <body id="app-layout" class="@yield('bodyclass')">
     <nav class="navbar navbar-default navbar-static-top">
       <div class="container">
