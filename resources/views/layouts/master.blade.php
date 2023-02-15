@@ -8,19 +8,19 @@
     <link rel="icon" type="image/png" href="{{ url('favicon.png') }}"/>
     <link href='https://fonts.googleapis.com/css?family=Roboto%7CNoto+Sans%7CNoto+Serif%7CKanit%7CCutive+Mono%7CMaterial+Icons' rel='stylesheet' type='text/css'>
     {!! htmlScriptTagJsApi() !!}
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6520761220699409" crossorigin="anonymous"></script>
+    {{--<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6520761220699409" crossorigin="anonymous"></script>--}}
     <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
 
   </head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-5ESRGRL3QX"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+  {{--<!-- Google tag (gtag.js) -->--}}
+  {{--<script async src="https://www.googletagmanager.com/gtag/js?id=G-5ESRGRL3QX"></script>--}}
+  {{--<script>--}}
+  {{--  window.dataLayer = window.dataLayer || [];--}}
+  {{--  function gtag(){dataLayer.push(arguments);}--}}
+  {{--  gtag('js', new Date());--}}
 
-    gtag('config', 'G-5ESRGRL3QX');
-  </script>
+  {{--  gtag('config', 'G-5ESRGRL3QX');--}}
+  {{--</script>--}}
   <body id="app-layout" class="@yield('bodyclass')">
     <nav class="navbar navbar-default navbar-static-top">
       <div class="container">
