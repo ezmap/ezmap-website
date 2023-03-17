@@ -15,9 +15,14 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-5ESRGRL3QX"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
 
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('set', 'allow_google_signals', false);
+    gtag('set', 'allow_ad_personalization_signals', false);
+    gtag('js', new Date());
     gtag('config', 'G-5ESRGRL3QX');
   </script>
   <body id="app-layout" class="@yield('bodyclass')">
@@ -39,7 +44,7 @@
             <li><a href="{{ route('api') }}">API</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-          <!--<li class="dropdown">
+            <!--<li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ ucwords(EzTrans::translate("changeLanguage")) }}
             <span class="caret"></span> </a>
         <ul class="dropdown-menu" role="menu">
