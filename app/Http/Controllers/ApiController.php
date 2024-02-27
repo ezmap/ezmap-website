@@ -17,7 +17,7 @@ class ApiController extends Controller
 
     if ($user->apikey === "" || $apiKey !== $user->apikey)
     {
-      abort(404);
+      abort(404, "It looks like you do not have an API key set up. Please visit your account settings to generate one.");
     }
   }
 
