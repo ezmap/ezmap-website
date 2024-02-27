@@ -14,11 +14,7 @@ class ApiController extends Controller
   private function checkApiAvailable($email, $apiKey)
   {
     $user = User::where(['email' => $email])->firstOrFail();
-
-    if ($user->apikey === "" || $apiKey !== $user->apikey)
-    {
-      abort(404, "It looks like you do not have an API key set up. Please visit your account settings to generate one.");
-    }
+    abort_if(($user->apikey === "" || $apiKey !== $user->apikey),404, "It looks like you do not have an API key set up. Please visit your account settings to generate one.");
   }
 
   public function getMaps($email, $apiKey)
