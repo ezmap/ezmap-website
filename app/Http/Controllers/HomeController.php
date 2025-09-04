@@ -81,4 +81,29 @@ class HomeController extends Controller
 
     return redirect()->back();
   }
+
+  public function deleteAccount(Request $request)
+  {
+    $request->validate([
+      'confirmation' => 'required|string|in:delete my account'
+    ], [
+      'confirmation.in' => 'You must type exactly "delete my account" to confirm account deletion.'
+    ]);
+
+    $user = $request->user();
+
+    // Hard delete all user's maps (bypass soft delete)
+    $user->maps()->withTrashed()->forceDelete();
+    
+    // Delete all user's icons
+    $user->icons()->delete();
+
+    // Delete the user account
+    $user->delete();
+
+    // Logout and redirect to home page
+    auth()->logout();
+    
+    return redirect('/')->with('success', 'Your account has been permanently deleted.');
+  }
 }

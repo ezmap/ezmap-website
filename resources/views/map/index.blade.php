@@ -37,6 +37,39 @@
         </div>
       </form>
 
+      <hr>
+      <h2>Delete Account</h2>
+      <div class="panel panel-danger">
+        <div class="panel-header">
+          <h4 class="panel-title text-danger">
+            <i class="fa fa-warning"></i> Danger Zone
+          </h4>
+        </div>
+        <div class="panel-body">
+          <p><strong>Warning:</strong> This action cannot be undone. This will permanently delete your account and remove all of your maps and icons.</p>
+          <p>If you're sure you want to delete your account, type <strong>"delete my account"</strong> in the field below and click the delete button.</p>
+          
+          <form action="{{ route('deleteaccount') }}" method="POST" onsubmit="return confirm('Are you absolutely sure? This action cannot be undone!');">
+            {{ method_field('DELETE') }}
+            {{ csrf_field() }}
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <input name="confirmation" class="form-control" type="text" placeholder="Type: delete my account" required>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <button type="submit" class="form-control btn btn-danger">
+                    <i class="fa fa-trash"></i> Delete My Account Permanently
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
       <h2>Your Saved Maps</h2>
       @foreach($maps as $map)
         <div class="col-xs-10">

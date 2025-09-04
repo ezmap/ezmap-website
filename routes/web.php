@@ -66,6 +66,7 @@ Route::get('twomapautoupdatetest', function () {
 });
 
 Route::post('renewapikey', [HomeController::class, 'renewApiKey'])->name('renewapikey');
+Route::delete('deleteaccount', [HomeController::class, 'deleteAccount'])->name('deleteaccount');
 
 Route::get('api', function () {
   return view('api.about');
