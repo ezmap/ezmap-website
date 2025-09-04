@@ -82,23 +82,62 @@
     </div>
 
     <div class="col-md-12">
-        <h2>Log in as…</h2>
-        @foreach(\App\Models\User::all() as $user)
-            <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                <div style="flex-grow: 1;">
-                    <a href="{{ route('stealth', $user) }}">{{ $user->name }}</a> <small>{{ $user->email }}</small>
+        <h2>User Management</h2>
+        
+        <!-- User Search Form -->
+        <div class="row" style="margin-bottom: 20px;">
+            <div class="col-md-6">
+                <form method="GET" action="{{ url('admin') }}" class="form-inline">
+                    <div class="form-group">
+                        <input type="text" name="search" class="form-control" placeholder="Search users by name or email..." 
+                               value="{{ $search }}" style="width: 300px; margin-right: 10px;">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                    @if($search)
+                        <a href="{{ url('admin') }}" class="btn btn-default" style="margin-left: 10px;">Clear</a>
+                    @endif
+                </form>
+            </div>
+            <div class="col-md-6 text-right">
+                <small class="text-muted">
+                    Showing {{ $users->firstItem() ?? 0 }} to {{ $users->lastItem() ?? 0 }} 
+                    of {{ $users->total() }} users
+                </small>
+            </div>
+        </div>
+
+        <!-- User List -->
+        @if($users->count() > 0)
+            @foreach($users as $user)
+                <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                    <div style="flex-grow: 1;">
+                        <a href="{{ route('stealth', $user) }}">{{ $user->name }}</a> <small>{{ $user->email }}</small>
+                    </div>
+                    @if($user->id != 1)
+                        <form method="POST" action="{{ route('admin.deleteUser', $user->id) }}" style="margin-left: 10px;" onsubmit="return confirmDelete('{{ $user->name }}')">
+                            {{ csrf_field() }}
+                            {{ method_field('DELETE') }}
+                            <button type="submit" class="btn btn-danger btn-sm" title="Delete user account">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </form>
+                    @endif
                 </div>
-                @if($user->id != 1)
-                    <form method="POST" action="{{ route('admin.deleteUser', $user->id) }}" style="margin-left: 10px;" onsubmit="return confirmDelete('{{ $user->name }}')">
-                        {{ csrf_field() }}
-                        {{ method_field('DELETE') }}
-                        <button type="submit" class="btn btn-danger btn-sm" title="Delete user account">
-                            <i class="fa fa-trash"></i>
-                        </button>
-                    </form>
+            @endforeach
+            
+            <!-- Pagination Links -->
+            <div style="margin-top: 20px;">
+                {{ $users->links() }}
+            </div>
+        @else
+            <div class="alert alert-info">
+                @if($search)
+                    No users found matching "{{ $search }}".
+                @else
+                    No users found.
                 @endif
             </div>
-        @endforeach
+        @endif
     </div>
 
 @endsection
