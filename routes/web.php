@@ -40,6 +40,7 @@ Route::get('/logout', [LoginController::class, 'logout']);
 Route::get('admin', [AdminController::class, 'index']);
 Route::get('stealth/{userid}', [AdminController::class, "stealth"])->name('stealth');
 Route::get('unstealth', [AdminController::class, "unstealth"])->name('unstealth');
+Route::delete('admin/deleteuser/{userId}', [AdminController::class, 'deleteUser'])->name('admin.deleteUser')->middleware('admin');
 Route::post('admin', [SnazzyMapsController::class, 'populateThemes'])->name('populateThemes')->middleware('admin');
 
 Route::post('addNewIcon', [HomeController::class, 'addNewIcon'])->name('addNewIcon');

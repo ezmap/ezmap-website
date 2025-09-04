@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Icon;
 use App\Models\Theme;
+use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
@@ -43,6 +44,32 @@ class AdminController extends Controller
     {
         $icon       = Icon::firstOrCreate(['url' => $request->input('iconURL')]);
         $icon->name = $request->input('iconName');
+    }
+
+    public function deleteUser(Request $request, $userId)
+    {
+        // Prevent deleting the admin account (user ID 1)
+        if ($userId == 1) {
+            return redirect()->back()->with('error', 'Cannot delete the admin account.');
+        }
+
+        $user = User::find($userId);
+        
+        if (!$user) {
+            return redirect()->back()->with('error', 'User not found.');
+        }
+
+        // Use the same deletion logic as HomeController::deleteAccount()
+        // Hard delete all user's maps (bypass soft delete)
+        $user->maps()->withTrashed()->forceDelete();
+        
+        // Delete all user's icons
+        $user->icons()->delete();
+
+        // Delete the user account
+        $user->delete();
+        
+        return redirect()->back()->with('success', "User account '{$user->name}' has been permanently deleted.");
     }
 
     public function AZPopulate()

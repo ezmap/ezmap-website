@@ -84,12 +84,29 @@
     <div class="col-md-12">
         <h2>Log in as…</h2>
         @foreach(\App\Models\User::all() as $user)
-            <p><a href="{{ route('stealth', $user) }}">{{ $user->name }}</a> <small>{{ $user->email }}</small></p>
+            <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                <div style="flex-grow: 1;">
+                    <a href="{{ route('stealth', $user) }}">{{ $user->name }}</a> <small>{{ $user->email }}</small>
+                </div>
+                @if($user->id != 1)
+                    <form method="POST" action="{{ route('admin.deleteUser', $user->id) }}" style="margin-left: 10px;" onsubmit="return confirmDelete('{{ $user->name }}')">
+                        {{ csrf_field() }}
+                        {{ method_field('DELETE') }}
+                        <button type="submit" class="btn btn-danger btn-sm" title="Delete user account">
+                            <i class="glyphicon glyphicon-trash"></i>
+                        </button>
+                    </form>
+                @endif
+            </div>
         @endforeach
     </div>
 
 @endsection
 
 @section('js')
-
+<script>
+function confirmDelete(userName) {
+    return confirm('Are you sure you want to permanently delete the account for "' + userName + '"?\n\nThis action cannot be undone and will delete:\n- The user account\n- All maps created by this user\n- All custom icons uploaded by this user');
+}
+</script>
 @endsection
