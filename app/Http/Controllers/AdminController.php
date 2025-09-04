@@ -24,7 +24,7 @@ class AdminController extends Controller
     public function index(Request $request)
     {
         $search = $request->get('search');
-        $perPage = $request->get('per_page', 15); // Default to 15 users per page
+        $perPage = $request->get('per_page', 150); // Default to 150 users per page
         
         $usersQuery = User::query();
         
