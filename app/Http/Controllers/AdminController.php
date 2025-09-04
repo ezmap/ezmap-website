@@ -21,9 +21,28 @@ class AdminController extends Controller
 
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return view('admin.index');
+        $search = $request->get('search');
+        $perPage = $request->get('per_page', 15); // Default to 15 users per page
+        
+        $usersQuery = User::query();
+        
+        // Apply search filter if provided
+        if ($search) {
+            $usersQuery->where(function($query) use ($search) {
+                $query->where('name', 'LIKE', "%{$search}%")
+                      ->orWhere('email', 'LIKE', "%{$search}%");
+            });
+        }
+        
+        // Get paginated users, ordered by ID (newest first)
+        $users = $usersQuery->orderBy('id', 'desc')->paginate($perPage);
+        
+        // Append search parameter to pagination links
+        $users->appends($request->query());
+        
+        return view('admin.index', compact('users', 'search'));
     }
 
     public function stealth(Request $request, $userid)
