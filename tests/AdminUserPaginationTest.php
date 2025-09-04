@@ -20,7 +20,7 @@ class AdminUserPaginationTest extends TestCase
         ]);
 
         // Create multiple test users (more than default page size)
-        for ($i = 1; $i <= 20; $i++) {
+        for ($i = 1; $i <= 200; $i++) {
             User::create([
                 'name' => "Test User {$i}",
                 'email' => "user{$i}@test.com",
