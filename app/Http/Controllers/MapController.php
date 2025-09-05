@@ -234,5 +234,141 @@ class MapController extends Controller
         ->deleteFileAfterSend(true);
   }
 
+  public function exportKml(Request $request, Map $map)
+  {
+    $this->authorize($map);
+
+    $kmlContent = $this->generateKml($map);
+    $filename = Str::slug($map->title) . '.kml';
+
+    return response($kmlContent)
+        ->header('Content-Type', 'application/vnd.google-earth.kml+xml')
+        ->header('Content-Disposition', "attachment; filename=\"{$filename}\"");
+  }
+
+  public function exportKmz(Request $request, Map $map)
+  {
+    $this->authorize($map);
+
+    $kmlContent = $this->generateKml($map);
+    $filename = Str::slug($map->title) . '.kmz';
+    
+    // Create a temporary ZIP file
+    $tempKmz = tempnam(sys_get_temp_dir(), $filename);
+    $zip = new \ZipArchive();
+    
+    if ($zip->open($tempKmz, \ZipArchive::CREATE) === TRUE) {
+      $zip->addFromString('doc.kml', $kmlContent);
+      $zip->close();
+    }
+
+    return response()
+        ->download($tempKmz, $filename)
+        ->deleteFileAfterSend(true);
+  }
+
+  private function generateKml(Map $map)
+  {
+    $kml = new \DOMDocument('1.0', 'UTF-8');
+    $kml->formatOutput = true;
+
+    // Create root kml element
+    $kmlElement = $kml->createElement('kml');
+    $kmlElement->setAttribute('xmlns', 'http://www.opengis.net/kml/2.2');
+    $kml->appendChild($kmlElement);
+
+    // Create document element
+    $document = $kml->createElement('Document');
+    $kmlElement->appendChild($document);
+
+    // Add document name
+    $name = $kml->createElement('name', htmlspecialchars($map->title ?: 'EZ Map'));
+    $document->appendChild($name);
+
+    // Add description
+    $description = $kml->createElement('description', 'Map created with EZ Map (ezmap.co)');
+    $document->appendChild($description);
+
+    // Add markers as placemarks
+    if ($map->markers && count($map->markers) > 0) {
+      foreach ($map->markers as $index => $marker) {
+        $placemark = $kml->createElement('Placemark');
+        $document->appendChild($placemark);
+
+        // Marker name/title
+        $placemarkName = $kml->createElement('name', htmlspecialchars($marker->title ?: "Marker " . ($index + 1)));
+        $placemark->appendChild($placemarkName);
+
+        // Marker description (from info window)
+        if (!empty($marker->infoWindow->content)) {
+          $placemarkDesc = $kml->createElement('description');
+          $placemarkDesc->appendChild($kml->createCDATASection($marker->infoWindow->content));
+          $placemark->appendChild($placemarkDesc);
+        }
+
+        // Point coordinates
+        $point = $kml->createElement('Point');
+        $placemark->appendChild($point);
+
+        $coordinates = $kml->createElement('coordinates', $marker->lng . ',' . $marker->lat . ',0');
+        $point->appendChild($coordinates);
+
+        // Style for custom icons
+        if (!empty($marker->icon)) {
+          $styleId = 'icon-style-' . $index;
+          
+          // Create style
+          $style = $kml->createElement('Style');
+          $style->setAttribute('id', $styleId);
+          $document->appendChild($style);
+
+          $iconStyle = $kml->createElement('IconStyle');
+          $style->appendChild($iconStyle);
+
+          $icon = $kml->createElement('Icon');
+          $iconStyle->appendChild($icon);
+
+          $href = $kml->createElement('href', htmlspecialchars($marker->icon));
+          $icon->appendChild($href);
+
+          // Reference style in placemark
+          $styleUrl = $kml->createElement('styleUrl', '#' . $styleId);
+          $placemark->appendChild($styleUrl);
+        }
+      }
+    }
+
+    // Add heatmap data as points if available
+    if ($map->heatmap && count($map->heatmap) > 0) {
+      $folder = $kml->createElement('Folder');
+      $document->appendChild($folder);
+
+      $folderName = $kml->createElement('name', 'Heatmap Data');
+      $folder->appendChild($folderName);
+
+      foreach ($map->heatmap as $index => $hotspot) {
+        $placemark = $kml->createElement('Placemark');
+        $folder->appendChild($placemark);
+
+        $placemarkName = $kml->createElement('name', 'Heatmap Point ' . ($index + 1));
+        $placemark->appendChild($placemarkName);
+
+        $placemarkDesc = $kml->createElement('description', 'Weight: ' . $hotspot->weightedLocation->weight);
+        $placemark->appendChild($placemarkDesc);
+
+        $point = $kml->createElement('Point');
+        $placemark->appendChild($point);
+
+        $coordinates = $kml->createElement('coordinates', 
+          $hotspot->weightedLocation->location->lng . ',' . 
+          $hotspot->weightedLocation->location->lat . ',0'
+        );
+        $point->appendChild($coordinates);
+      }
+    }
+
+    return $kml->saveXML();
+  }
+
 
 }

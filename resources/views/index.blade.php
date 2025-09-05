@@ -389,6 +389,23 @@
             </div>
           </div>
         </div>
+        
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <a href="{{ route('map.kml', $map) }}" class="btn btn-info form-control" target="_blank">
+                <i class="fa fa-download"></i> Export KML
+              </a>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <a href="{{ route('map.kmz', $map) }}" class="btn btn-info form-control" target="_blank">
+                <i class="fa fa-download"></i> Export KMZ
+              </a>
+            </div>
+          </div>
+        </div>
       @endif
 
       <form action="{{ route('map.destroy', $map) }}" method="POST">
