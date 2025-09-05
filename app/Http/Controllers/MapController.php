@@ -260,11 +260,13 @@ class MapController extends Controller
     if ($zip->open($tempKmz, \ZipArchive::CREATE) === TRUE) {
       $zip->addFromString('doc.kml', $kmlContent);
       $zip->close();
+      
+      return response()
+          ->download($tempKmz, $filename)
+          ->deleteFileAfterSend(true);
+    } else {
+      return response()->json(['error' => 'Failed to create KMZ file'], 500);
     }
-
-    return response()
-        ->download($tempKmz, $filename)
-        ->deleteFileAfterSend(true);
   }
 
   private function generateKml(Map $map)
@@ -292,6 +294,11 @@ class MapController extends Controller
     // Add markers as placemarks
     if ($map->markers && count($map->markers) > 0) {
       foreach ($map->markers as $index => $marker) {
+        // Validate marker data
+        if (!isset($marker->lat) || !isset($marker->lng)) {
+          continue;
+        }
+
         $placemark = $kml->createElement('Placemark');
         $document->appendChild($placemark);
 
@@ -347,13 +354,18 @@ class MapController extends Controller
       $folder->appendChild($folderName);
 
       foreach ($map->heatmap as $index => $hotspot) {
+        // Validate heatmap data
+        if (!isset($hotspot->weightedLocation->location->lat) || !isset($hotspot->weightedLocation->location->lng)) {
+          continue;
+        }
+
         $placemark = $kml->createElement('Placemark');
         $folder->appendChild($placemark);
 
         $placemarkName = $kml->createElement('name', 'Heatmap Point ' . ($index + 1));
         $placemark->appendChild($placemarkName);
 
-        $placemarkDesc = $kml->createElement('description', 'Weight: ' . $hotspot->weightedLocation->weight);
+        $placemarkDesc = $kml->createElement('description', 'Weight: ' . ($hotspot->weightedLocation->weight ?? 1));
         $placemark->appendChild($placemarkDesc);
 
         $point = $kml->createElement('Point');
