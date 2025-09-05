@@ -89,4 +89,24 @@ class MapPolicy
 
     return $map->user_id == $user->id && $map->apiKey !== "";
   }
+
+  public function exportKml(User $user, Map $map)
+  {
+    if ($user->id != $map->user_id)
+    {
+      return $this->deny("You are not allowed to export this map to KML.");
+    }
+
+    return $map->user_id == $user->id;
+  }
+
+  public function exportKmz(User $user, Map $map)
+  {
+    if ($user->id != $map->user_id)
+    {
+      return $this->deny("You are not allowed to export this map to KMZ.");
+    }
+
+    return $map->user_id == $user->id;
+  }
 }
