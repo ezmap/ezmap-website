@@ -72,9 +72,10 @@ return [
             "otherButtons" => "If you are working on a saved map you will also have these buttons",
             "clone"        => "Cloning a map means making an exact copy of the map and saving it as a new map. This can be useful if you've set up a map to be your base map setup that you use to make your other maps from. Just clone the base and work from there.",
             "getImage"     => "Getting a static image is a way to save your map as a non-interactive image, perhaps for use in a piece of print work or some other image use.",
-            "delete"       => "Deleting a map simply removes all records of the map from your account. Any marker icons saved during this maps's creation are not removed from your account so you can use them again in future maps.",
             "getImageInfo" => "You can only get an image if your map has an API key saved.",
-
+            "exportKml"    => "Export your map data as a KML file, which can be imported into Google Earth, Google My Maps, or other mapping applications.",
+            "exportKmz"    => "Export your map data as a compressed KMZ file, which is a zipped KML file that can be imported into Google Earth and other mapping applications.",
+            "delete"       => "Deleting a map simply removes all records of the map from your account. Any marker icons saved during this maps's creation are not removed from your account so you can use them again in future maps.",
         ],
     ],
     "howDoI"   => [
