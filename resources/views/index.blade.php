@@ -391,6 +391,23 @@
         </div>
       @endif
 
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <ui-button class="form-control" raised color="primary" v-on:click="window.open('{{ route('map.kml', $map) }}', '_blank')" icon="file_download">
+              {{ EzTrans::translate('exportKml') }}
+            </ui-button>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group">
+            <ui-button class="form-control" raised color="primary" v-on:click="window.open('{{ route('map.kmz', $map) }}', '_blank')" icon="file_download">
+              {{ EzTrans::translate('exportKmz') }}
+            </ui-button>
+          </div>
+        </div>
+      </div>
+
       <form action="{{ route('map.destroy', $map) }}" method="POST">
         {{ method_field('DELETE') }}
         {{ csrf_field() }}

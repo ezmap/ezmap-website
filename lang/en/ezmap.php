@@ -106,6 +106,8 @@ return [
     "saveMap"   => "save map",
     "cloneMap"  => "clone map",
     "getImage"  => "get static image",
+    "exportKml" => "export KML",
+    "exportKmz" => "export KMZ",
     "deleteMap" => "delete map",
 
     "yourMapResult" => "your map result",

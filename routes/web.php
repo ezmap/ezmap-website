@@ -55,6 +55,8 @@ Route::resource('map', MapController::class);
 Route::post('map/undelete/{id}', [MapController::class, 'undelete'])->name('map.undelete');
 Route::get('map/image/{map}', [MapController::class, 'image'])->name('map.image');
 Route::get('map/image/download/{map}', [MapController::class, 'download'])->name('map.download');
+Route::get('map/kml/{map}', [MapController::class, 'exportKml'])->name('map.kml');
+Route::get('map/kmz/{map}', [MapController::class, 'exportKmz'])->name('map.kmz');
 
 Route::get('lang/{lang}', [GeneralController::class, 'changeLanguage'])->name('lang');
 

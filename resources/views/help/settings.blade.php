@@ -222,6 +222,20 @@
   <ui-alert type="info" dismissible="false">{{ EzTrans::help('settings.saveMap.getImageInfo') }}</ui-alert>
 
   <p>
+    <ui-button raised color="primary" icon="file_download">
+      {{ EzTrans::translate("exportKml") }}
+    </ui-button>
+    {{ EzTrans::help('settings.saveMap.exportKml') }}
+  </p>
+
+  <p>
+    <ui-button raised color="primary" icon="file_download">
+      {{ EzTrans::translate("exportKmz") }}
+    </ui-button>
+    {{ EzTrans::help('settings.saveMap.exportKmz') }}
+  </p>
+
+  <p>
     <ui-button raised color="danger" icon="delete">
       {{ EzTrans::translate("deleteMap") }}
     </ui-button>
