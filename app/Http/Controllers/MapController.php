@@ -355,7 +355,12 @@ class MapController extends Controller
 
       foreach ($map->heatmap as $index => $hotspot) {
         // Validate heatmap data
-        if (!isset($hotspot->weightedLocation->location->lat) || !isset($hotspot->weightedLocation->location->lng)) {
+        if (
+          !isset($hotspot->weightedLocation) ||
+          !isset($hotspot->weightedLocation->location) ||
+          !isset($hotspot->weightedLocation->location->lat) ||
+          !isset($hotspot->weightedLocation->location->lng)
+        ) {
           continue;
         }
 
