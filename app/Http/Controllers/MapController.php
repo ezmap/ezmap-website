@@ -252,15 +252,15 @@ class MapController extends Controller
 
     $kmlContent = $this->generateKml($map);
     $filename = Str::slug($map->title) . '.kmz';
-    
+
     // Create a temporary ZIP file
     $tempKmz = tempnam(sys_get_temp_dir(), $filename);
     $zip = new \ZipArchive();
-    
+
     if ($zip->open($tempKmz, \ZipArchive::CREATE) === TRUE) {
       $zip->addFromString('doc.kml', $kmlContent);
       $zip->close();
-      
+
       return response()
           ->download($tempKmz, $filename)
           ->deleteFileAfterSend(true);
@@ -273,6 +273,14 @@ class MapController extends Controller
   {
     $kml = new \DOMDocument('1.0', 'UTF-8');
     $kml->formatOutput = true;
+
+    // Debug logging - let's see what's actually in the map data
+    \Log::info('Generating KML for Map ID: ' . $map->id);
+    \Log::info('Map Title: ' . $map->title);
+    \Log::info('Map Latitude: ' . $map->latitude);
+    \Log::info('Map Longitude: ' . $map->longitude);
+    \Log::info('Markers count: ' . ($map->markers instanceof \Illuminate\Support\Collection ? $map->markers->count() : (is_array($map->markers) ? count($map->markers) : 'not array/collection')));
+    \Log::info('Heatmap count: ' . ($map->heatmap instanceof \Illuminate\Support\Collection ? $map->heatmap->count() : (is_array($map->heatmap) ? count($map->heatmap) : 'not array/collection')));
 
     // Create root kml element
     $kmlElement = $kml->createElement('kml');
@@ -291,25 +299,38 @@ class MapController extends Controller
     $description = $kml->createElement('description', 'Map created with EZ Map (ezmap.co)');
     $document->appendChild($description);
 
+    $hasGeographicData = false;
+
     // Add markers as placemarks
-    if ($map->markers && count($map->markers) > 0) {
+    if ($map->markers && ($map->markers instanceof \Illuminate\Support\Collection || is_array($map->markers)) && $map->markers->count() > 0) {
+      \Log::info('Processing ' . $map->markers->count() . ' markers');
       foreach ($map->markers as $index => $marker) {
-        // Validate marker data
-        if (!isset($marker->lat) || !isset($marker->lng)) {
+        // Validate marker data - check if marker is an object and has required coordinates
+        if (!is_object($marker) || !isset($marker->lat) || !isset($marker->lng) ||
+            $marker->lat === null || $marker->lng === null) {
+          \Log::info('Skipping invalid marker at index ' . $index);
           continue;
         }
+
+        $hasGeographicData = true;
+        \Log::info('Adding marker: ' . $marker->lat . ',' . $marker->lng);
 
         $placemark = $kml->createElement('Placemark');
         $document->appendChild($placemark);
 
-        // Marker name/title
-        $placemarkName = $kml->createElement('name', htmlspecialchars($marker->title ?: "Marker " . ($index + 1)));
+        // Marker name/title - handle null/empty title
+        $markerTitle = isset($marker->title) && !empty(trim($marker->title)) ?
+                      trim($marker->title) : "Marker " . ($index + 1);
+        $placemarkName = $kml->createElement('name', htmlspecialchars($markerTitle));
         $placemark->appendChild($placemarkName);
 
-        // Marker description (from info window)
-        if (isset($marker->infoWindow) && !empty($marker->infoWindow->content)) {
+        // Marker description (from info window) - add null safety checks
+        if (isset($marker->infoWindow) &&
+            is_object($marker->infoWindow) &&
+            isset($marker->infoWindow->content) &&
+            !empty(trim($marker->infoWindow->content))) {
           $placemarkDesc = $kml->createElement('description');
-          $placemarkDesc->appendChild($kml->createCDATASection($marker->infoWindow->content));
+          $placemarkDesc->appendChild($kml->createCDATASection(trim($marker->infoWindow->content)));
           $placemark->appendChild($placemarkDesc);
         }
 
@@ -320,10 +341,10 @@ class MapController extends Controller
         $coordinates = $kml->createElement('coordinates', $marker->lng . ',' . $marker->lat . ',0');
         $point->appendChild($coordinates);
 
-        // Style for custom icons
-        if (!empty($marker->icon)) {
+        // Style for custom icons - add null safety checks
+        if (isset($marker->icon) && !empty(trim($marker->icon))) {
           $styleId = 'icon-style-' . $index;
-          
+
           // Create style
           $style = $kml->createElement('Style');
           $style->setAttribute('id', $styleId);
@@ -335,7 +356,7 @@ class MapController extends Controller
           $icon = $kml->createElement('Icon');
           $iconStyle->appendChild($icon);
 
-          $href = $kml->createElement('href', htmlspecialchars($marker->icon));
+          $href = $kml->createElement('href', htmlspecialchars(trim($marker->icon)));
           $icon->appendChild($href);
 
           // Reference style in placemark
@@ -346,7 +367,8 @@ class MapController extends Controller
     }
 
     // Add heatmap data as points if available
-    if ($map->heatmap && count($map->heatmap) > 0) {
+    if ($map->heatmap && ($map->heatmap instanceof \Illuminate\Support\Collection || is_array($map->heatmap)) && $map->heatmap->count() > 0) {
+      \Log::info('Processing ' . $map->heatmap->count() . ' heatmap points');
       $folder = $kml->createElement('Folder');
       $document->appendChild($folder);
 
@@ -354,15 +376,22 @@ class MapController extends Controller
       $folder->appendChild($folderName);
 
       foreach ($map->heatmap as $index => $hotspot) {
-        // Validate heatmap data
-        if (
-          !isset($hotspot->weightedLocation) ||
-          !isset($hotspot->weightedLocation->location) ||
-          !isset($hotspot->weightedLocation->location->lat) ||
-          !isset($hotspot->weightedLocation->location->lng)
-        ) {
+        // Enhanced validation for heatmap data with null safety checks
+        if (!is_object($hotspot) ||
+            !isset($hotspot->weightedLocation) ||
+            !is_object($hotspot->weightedLocation) ||
+            !isset($hotspot->weightedLocation->location) ||
+            !is_object($hotspot->weightedLocation->location) ||
+            !isset($hotspot->weightedLocation->location->lat) ||
+            !isset($hotspot->weightedLocation->location->lng) ||
+            $hotspot->weightedLocation->location->lat === null ||
+            $hotspot->weightedLocation->location->lng === null) {
+          \Log::info('Skipping invalid heatmap point at index ' . $index);
           continue;
         }
+
+        $hasGeographicData = true;
+        \Log::info('Adding heatmap point: ' . $hotspot->weightedLocation->location->lat . ',' . $hotspot->weightedLocation->location->lng);
 
         $placemark = $kml->createElement('Placemark');
         $folder->appendChild($placemark);
@@ -370,20 +399,47 @@ class MapController extends Controller
         $placemarkName = $kml->createElement('name', 'Heatmap Point ' . ($index + 1));
         $placemark->appendChild($placemarkName);
 
-        $placemarkDesc = $kml->createElement('description', 'Weight: ' . ($hotspot->weightedLocation->weight ?? 1));
+        // Handle weight with null safety
+        $weight = isset($hotspot->weightedLocation->weight) && $hotspot->weightedLocation->weight !== null
+                 ? $hotspot->weightedLocation->weight
+                 : 1;
+        $placemarkDesc = $kml->createElement('description', 'Weight: ' . $weight);
         $placemark->appendChild($placemarkDesc);
 
         $point = $kml->createElement('Point');
         $placemark->appendChild($point);
 
-        $coordinates = $kml->createElement('coordinates', 
-          $hotspot->weightedLocation->location->lng . ',' . 
+        $coordinates = $kml->createElement('coordinates',
+          $hotspot->weightedLocation->location->lng . ',' .
           $hotspot->weightedLocation->location->lat . ',0'
         );
         $point->appendChild($coordinates);
       }
     }
 
+    // If no markers or heatmap data, add the map center as a placemark
+    if (!$hasGeographicData && isset($map->latitude) && isset($map->longitude) &&
+        $map->latitude !== null && $map->longitude !== null) {
+
+      \Log::info('No geographic data found, using map center: ' . $map->latitude . ',' . $map->longitude);
+
+      $placemark = $kml->createElement('Placemark');
+      $document->appendChild($placemark);
+
+      $placemarkName = $kml->createElement('name', 'Map Center');
+      $placemark->appendChild($placemarkName);
+
+      $placemarkDesc = $kml->createElement('description', 'Center point of the map');
+      $placemark->appendChild($placemarkDesc);
+
+      $point = $kml->createElement('Point');
+      $placemark->appendChild($point);
+
+      $coordinates = $kml->createElement('coordinates', $map->longitude . ',' . $map->latitude . ',0');
+      $point->appendChild($coordinates);
+    }
+
+    \Log::info('KML generation completed for Map ID: ' . $map->id);
     return $kml->saveXML();
   }
 
