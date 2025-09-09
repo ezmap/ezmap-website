@@ -57,18 +57,6 @@ Route::get('map/image/{map}', [MapController::class, 'image'])->name('map.image'
 Route::get('map/image/download/{map}', [MapController::class, 'download'])->name('map.download');
 Route::get('map/kml/{map}', [MapController::class, 'exportKml'])->name('map.kml');
 Route::get('map/kmz/{map}', [MapController::class, 'exportKmz'])->name('map.kmz');
-Route::get('map/debug/{map}', function(App\Models\Map $map) {
-    return response()->json([
-        'map_id' => $map->id,
-        'title' => $map->title,
-        'latitude' => $map->latitude,
-        'longitude' => $map->longitude,
-        'raw_latitude' => $map->getAttributes()['latitude'] ?? 'null',
-        'raw_longitude' => $map->getAttributes()['longitude'] ?? 'null',
-        'markers_count' => is_array($map->markers) ? count($map->markers) : 'not array',
-        'heatmap_count' => is_array($map->heatmap) ? count($map->heatmap) : 'not array'
-    ]);
-})->name('map.debug');
 
 Route::get('lang/{lang}', [GeneralController::class, 'changeLanguage'])->name('lang');
 
