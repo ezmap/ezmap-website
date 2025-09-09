@@ -307,7 +307,7 @@ class MapController extends Controller
         $placemark->appendChild($placemarkName);
 
         // Marker description (from info window)
-        if (!empty($marker->infoWindow->content)) {
+        if (isset($marker->infoWindow) && !empty($marker->infoWindow->content)) {
           $placemarkDesc = $kml->createElement('description');
           $placemarkDesc->appendChild($kml->createCDATASection($marker->infoWindow->content));
           $placemark->appendChild($placemarkDesc);
