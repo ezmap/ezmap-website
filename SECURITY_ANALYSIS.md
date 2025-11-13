@@ -139,9 +139,68 @@ While the application is not vulnerable to CVE-2023-36051, here are general secu
 - ✅ All controller methods examined
 - ✅ Form views inspected
 - ✅ Routes analyzed
+- ✅ Application server tested (runs successfully on port 8000)
+- ✅ Code review completed
+- ✅ Security scan completed (CodeQL)
+
+## Changes Made
+
+### 1. HomeController.php - addNewIcon() Method
+Added input validation:
+```php
+$request->validate([
+    'newIconURL'  => 'required|url|max:500',
+    'newIconName' => 'required|string|max:255',
+]);
+```
+
+**Security Benefits**:
+- Prevents invalid URLs from being stored
+- Prevents excessively long URLs (potential DoS)
+- Ensures icon names are within reasonable limits
+- Provides user feedback for invalid inputs
+
+### 2. AdminController.php - addMarkerIcon() Method
+Added input validation and improved response:
+```php
+$request->validate([
+    'iconURL'  => 'required|url|max:500',
+    'iconName' => 'required|string|max:255',
+]);
+
+$icon       = Icon::firstOrCreate(['url' => $request->input('iconURL')]);
+$icon->name = $request->input('iconName');
+$icon->save();
+
+return redirect()->back()->with('success', 'Icon added successfully.');
+```
+
+**Improvements**:
+- Validates admin icon inputs
+- Ensures icon is saved after name update
+- Provides proper response to user
+- Consistent with user endpoint validation
+
+### 3. New Test File: IconValidationTest.php
+Comprehensive test coverage including:
+- Valid URL format validation
+- Required field validation
+- Maximum length validation
+- Authentication requirement
+- Successful icon creation
 
 ## Date of Analysis
 **Date**: 2025-11-13  
 **Analyst**: GitHub Copilot  
 **Repository**: ezmap/ezmap-website  
-**Branch**: Analyzed on fresh clone
+**Branch**: copilot/check-vulnerable-code  
+**Commit**: 333dc0c
+
+## Summary
+
+The EZ Map application is **NOT VULNERABLE** to CVE-2023-36051. The vulnerability requires:
+1. Laravel version < 9.52.16 (application has 9.52.21 ✅)
+2. Wildcard validation on file arrays (application has none ✅)
+3. File upload functionality (application uses URL input only ✅)
+
+As a proactive security measure, URL validation has been added to icon endpoints to prevent invalid or malicious URL inputs. This provides defense-in-depth even though the specific CVE does not affect this application.
