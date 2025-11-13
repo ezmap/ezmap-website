@@ -61,8 +61,16 @@ class AdminController extends Controller
 
     public function addMarkerIcon(Request $request)
     {
+        $request->validate([
+            'iconURL'  => 'required|url|max:500',
+            'iconName' => 'required|string|max:255',
+        ]);
+
         $icon       = Icon::firstOrCreate(['url' => $request->input('iconURL')]);
         $icon->name = $request->input('iconName');
+        $icon->save();
+
+        return redirect()->back()->with('success', 'Icon added successfully.');
     }
 
     public function deleteUser(Request $request, $userId)

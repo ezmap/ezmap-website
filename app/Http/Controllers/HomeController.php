@@ -41,6 +41,11 @@ class HomeController extends Controller
    */
   public function addNewIcon(Request $request)
   {
+    $request->validate([
+        'newIconURL'  => 'required|url|max:500',
+        'newIconName' => 'required|string|max:255',
+    ]);
+
     $params = [
         'user_id' => $request->user()->id,
         'url'     => $request->input('newIconURL'),
