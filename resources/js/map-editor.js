@@ -238,7 +238,9 @@ document.addEventListener('alpine:init', () => {
 
         showCenter() {
             this.mapOpacity = this.mapOpacity === 1 ? 0.5 : 1;
-            this.mapBackground = this.mapOpacity === 0.5 ? 'transparent url(/images/crosshairs.svg) center center no-repeat' : 'none';
+            const isDark = document.documentElement.classList.contains('dark');
+            const crosshair = isDark ? '/images/crosshairs-white.svg' : '/images/crosshairs.svg';
+            this.mapBackground = this.mapOpacity === 0.5 ? `transparent url(${crosshair}) center center no-repeat` : 'none';
             const mapEl = document.getElementById('map');
             if (mapEl && mapEl.firstChild) {
                 mapEl.firstChild.style.opacity = this.mapOpacity;

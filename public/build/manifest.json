@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-Dc7DdQL4.css",
+    "file": "assets/app-DbtEe8vY.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -11,7 +11,7 @@
     "isEntry": true
   },
   "resources/js/map-editor.js": {
-    "file": "assets/map-editor-BbUXcY-L.js",
+    "file": "assets/map-editor-BAgUGxag.js",
     "name": "map-editor",
     "src": "resources/js/map-editor.js",
     "isEntry": true
