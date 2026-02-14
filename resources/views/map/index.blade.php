@@ -42,7 +42,7 @@
               <form action="{{ route('map.destroy', $map) }}" method="POST" onsubmit="return confirm('Delete this map?')">
                 @method('DELETE')
                 @csrf
-                <flux:button type="submit" variant="ghost" size="sm" icon="trash" class="text-red-500 hover:text-red-700" />
+                <flux:button type="submit" variant="danger" size="sm" icon="trash" />
               </form>
             </div>
           @empty
