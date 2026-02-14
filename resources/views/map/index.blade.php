@@ -85,7 +85,7 @@
         @csrf
         <div class="flex flex-col gap-4 sm:flex-row sm:items-end">
           <div class="flex-1">
-            <flux:input name="confirmation" placeholder='Type "delete my account" to confirm' required />
+            <flux:input name="confirmation" label='Type "delete my account" to confirm' placeholder="delete my account" required />
           </div>
           <flux:button type="submit" variant="danger" icon="trash">Delete Account</flux:button>
         </div>

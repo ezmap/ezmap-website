@@ -26,6 +26,8 @@
     "laravel/boost": "^2.1",
     "mockery/mockery": "^1.3.1",
     "nunomaduro/collision": "^8.0",
+    "pestphp/pest": "^3.8",
+    "pestphp/pest-plugin-laravel": "^3.2",
     "phpunit/phpunit": "^11.0",
     "spatie/laravel-ignition": "^2.0"
   },
@@ -35,7 +37,8 @@
     "sort-packages": true,
     "allow-plugins": {
       "kylekatarnls/update-helper": true,
-      "symfony/thanks": true
+      "symfony/thanks": true,
+      "pestphp/pest-plugin": true
     }
   },
   "extra": {

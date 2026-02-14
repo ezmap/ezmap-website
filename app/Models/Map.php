@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Map extends Model
 {
-  use SoftDeletes;
+  use HasFactory, SoftDeletes;
 
   protected $fillable = [
       'title',
@@ -159,7 +160,7 @@ class Map extends Model
         $str .= "{ location: new google.maps.LatLng(" . $hotspot->weightedLocation->location->lat . "," . $hotspot->weightedLocation->location->lng . "), weight: " . $hotspot->weightedLocation->weight . "},";
       }
       $str .= "]}); heatmap.setMap(map);";
-      $str .= "heatmap.setOptions(" . $this->heatmapLayer . ")";
+      $str .= "heatmap.setOptions(" . json_encode($this->heatmapLayer) . ")";
     }
 
     return $str;

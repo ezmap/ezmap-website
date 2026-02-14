@@ -5,17 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Icon;
 use Faker\Provider\Uuid;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class HomeController extends Controller
 {
   /**
    * Create a new controller instance.
-   *
-   * @return void
    */
   public function __construct()
   {
-    $this->middleware('auth');
+    // Middleware applied via route definitions
   }
 
   /**
@@ -85,12 +84,21 @@ class HomeController extends Controller
   public function deleteAccount(Request $request)
   {
     $request->validate([
-      'confirmation' => 'required|string|in:delete my account'
+      'confirmation' => [
+        'required',
+        'string',
+        Rule::in(['delete my account']),
+      ],
     ], [
-      'confirmation.in' => 'You must type exactly "delete my account" to confirm account deletion.'
+      'confirmation.in' => 'You must type exactly "delete my account" to confirm account deletion.',
     ]);
 
     $user = $request->user();
+
+    // Logout first (before deleting, since logout saves the user's remember token)
+    auth()->logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
 
     // Hard delete all user's maps (bypass soft delete)
     $user->maps()->withTrashed()->forceDelete();
@@ -100,9 +108,6 @@ class HomeController extends Controller
 
     // Delete the user account
     $user->delete();
-
-    // Logout and redirect to home page
-    auth()->logout();
     
     return redirect('/')->with('success', 'Your account has been permanently deleted.');
   }

@@ -14,11 +14,7 @@ use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['admin']);
-
-    }
+    // Middleware applied via route definitions in routes/web.php
 
     public function index(Request $request)
     {

@@ -11,12 +11,8 @@ class MapController extends Controller
 {
 
   /*
-   * Users should be logged in for all endpoints on this map
+   * Middleware applied via route definitions
    */
-  public function __construct()
-  {
-    $this->middleware(['auth'])->except(['show']);
-  }
 
   /**
    * Display a listing of the map.
