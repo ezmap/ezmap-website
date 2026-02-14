@@ -43,8 +43,15 @@
         </div>
     </div>
 
-    <div wire:loading class="mt-4">
-        <flux:text class="text-zinc-500 animate-pulse">Loading themes…</flux:text>
+    {{-- Skeleton overlay while loading --}}
+    <div wire:loading class="mt-6 grid grid-cols-2 sm:grid-cols-3 gap-4">
+        @for ($i = 0; $i < 6; $i++)
+            <div class="text-center space-y-2">
+                <flux:skeleton class="h-4 w-3/4 mx-auto" animate="shimmer" />
+                <flux:skeleton class="w-full aspect-[4/3] !rounded-lg" animate="shimmer" />
+                <flux:skeleton class="h-3 w-1/2 mx-auto" animate="shimmer" />
+            </div>
+        @endfor
     </div>
 
     <div wire:loading.remove class="mt-6 grid grid-cols-2 sm:grid-cols-3 gap-4">
