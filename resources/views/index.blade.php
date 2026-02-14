@@ -1,5 +1,6 @@
 @extends('layouts.master')
 @section('bodyclass', 'main-body')
+@section('mapscripts', true)
 @section('appcontent')
   <div v-show="false" class="hidden">
     @include('partials.infowindow')

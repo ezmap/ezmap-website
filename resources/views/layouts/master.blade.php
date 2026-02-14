@@ -8,6 +8,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="icon" type="image/png" href="{{ url('favicon.png') }}"/>
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700&display=swap" rel="stylesheet" />
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @fluxAppearance
@@ -98,16 +100,12 @@
     {{-- Flash messages --}}
     @if(session('success'))
       <div class="mx-auto max-w-7xl px-4 pt-4">
-        <flux:callout variant="success" icon="check-circle" class="mb-0">
-          {{ session('success') }}
-        </flux:callout>
+        <flux:callout variant="success" icon="check-circle" class="mb-0" :text="session('success')" />
       </div>
     @endif
     @if(session('error'))
       <div class="mx-auto max-w-7xl px-4 pt-4">
-        <flux:callout variant="danger" icon="exclamation-triangle" class="mb-0">
-          {{ session('error') }}
-        </flux:callout>
+        <flux:callout variant="danger" icon="exclamation-triangle" class="mb-0" :text="session('error')" />
       </div>
     @endif
 

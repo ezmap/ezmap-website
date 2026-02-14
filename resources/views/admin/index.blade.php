@@ -3,149 +3,127 @@
 
 @section('content')
 
-    <div class="col-md-6">
-        <h2>Populate Snazzy Themes</h2>
-        <p>There are currently <strong>{{ \App\Models\Theme::count() }}</strong> Snazzy Themes installed</p>
-        <form action="{{ route('populateThemes') }}" method="POST">
-            {{ method_field('POST') }}
-            {{ csrf_field() }}
-            <div class="form-group col-md-4">
-                <label for="tag">Tag</label>
-                <select name="tag" id="tag" class="form-control">
-                    <option value="" disabled selected>Please Select</option>
-                    @foreach (['colorful','complex','dark','greyscale','light','monochrome','no-labels','simple','two-tone'] as $tag)
-                        <option value="{{ $tag }}">{{ $tag }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="form-group col-md-4">
-                <label for="color">Colour</label>
-                <select name="color" id="color" class="form-control">
-                    <option value="" disabled selected>Please Select</option>
-                    @foreach( ['black','blue','gray','green','multi','orange','purple','red','white','yellow'] as $color)
-                        <option value="{{ $color }}">{{ $color }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="form-group col-md-4">
-                <label for="sort">Sort By</label>
-                <select name="sort" id="sort" class="form-control">
-                    <option value="" disabled selected>Please Select</option>
-                    @foreach( ['popular', 'recent'] as $option)
-                        <option value="{{ $option }}">{{ $option }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="form-group col-md-4">
-                <label for="text">Search Text</label>
-                <input id="text" name="text" class="form-control" type="text" placeholder="Apple Map" value="">
-            </div>
-            <div class="form-group col-md-4">
-                <label for="pageSize">Number Per Page</label>
-                <input id="pageSize" name="pageSize" class="form-control" type="text" placeholder="12"
-                  value="">
-            </div>
-            <div class="form-group col-md-4">
-                <label for="page">Page</label>
-                <input id="page" name="page" class="form-control" type="text" placeholder="1" value="">
-            </div>
-            <div class="form-group col-md-12">
-                <input name="Populate Themes" class="form-control btn btn-primary" type="submit"
-                  value="Populate Themes">
-            </div>
+  <flux:heading size="xl" level="1">Admin Panel</flux:heading>
 
-        </form>
-        @include('partials.snazzymaps')
+  <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
 
-    </div>
+    {{-- Snazzy Themes --}}
+    <flux:card class="space-y-6">
+      <flux:heading size="lg" level="2">Populate Snazzy Themes</flux:heading>
+      <flux:text>There are currently <strong>{{ \App\Models\Theme::count() }}</strong> Snazzy Themes installed</flux:text>
 
-    <div class="col-md-6">
-        <h2>Add Marker Icons</h2>
-        <form action="{{ route('addMarkerIcon') }}" method="POST">
-            {{ csrf_field() }}
-            <div class="form-group">
-                <label for="iconName">Icon Name</label>
-                <input id="iconName" name="iconName" class="form-control" type="text" placeholder="Icon Name" value="">
-            </div>
-            <div class="form-group">
-                <label for="iconURL">Icon URL</label>
-                <input id="iconURL" name="iconURL" class="form-control" type="text" placeholder="Icon URL" value="">
-            </div>
-            <div class="form-group">
-                <input name="submit" class="form-control btn btn-default" type="submit" value="Submit">
-            </div>
-        </form>
+      <form action="{{ route('populateThemes') }}" method="POST" class="space-y-4">
+        @csrf
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <flux:select name="tag" label="Tag" placeholder="Please Select">
+            @foreach (['colorful','complex','dark','greyscale','light','monochrome','no-labels','simple','two-tone'] as $tag)
+              <flux:select.option value="{{ $tag }}">{{ $tag }}</flux:select.option>
+            @endforeach
+          </flux:select>
 
-        <a href="{{ route('AZPopulate') }}" class="btn btn-default form-control">Populate by code.</a>
+          <flux:select name="color" label="Colour" placeholder="Please Select">
+            @foreach( ['black','blue','gray','green','multi','orange','purple','red','white','yellow'] as $color)
+              <flux:select.option value="{{ $color }}">{{ $color }}</flux:select.option>
+            @endforeach
+          </flux:select>
 
-        @include('partials.markericons')
-    </div>
-
-    <div class="col-md-12">
-        <h2>User Management</h2>
-        
-        <!-- User Search Form -->
-        <div class="row" style="margin-bottom: 20px;">
-            <div class="col-md-6">
-                <form method="GET" action="{{ url('admin') }}" class="form-inline">
-                    <div class="form-group">
-                        <input type="text" name="search" class="form-control" placeholder="Search users by name or email..." 
-                               value="{{ $search }}" style="width: 300px; margin-right: 10px;">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Search</button>
-                    @if($search)
-                        <a href="{{ url('admin') }}" class="btn btn-default" style="margin-left: 10px;">Clear</a>
-                    @endif
-                </form>
-            </div>
-            <div class="col-md-6 text-right">
-                <small class="text-muted">
-                    Showing {{ $users->firstItem() ?? 0 }} to {{ $users->lastItem() ?? 0 }} 
-                    of {{ $users->total() }} users
-                </small>
-            </div>
+          <flux:select name="sort" label="Sort By" placeholder="Please Select">
+            @foreach( ['popular', 'recent'] as $option)
+              <flux:select.option value="{{ $option }}">{{ $option }}</flux:select.option>
+            @endforeach
+          </flux:select>
         </div>
 
-        <!-- User List -->
-        @if($users->count() > 0)
-            @foreach($users as $user)
-                <div style="display: flex; align-items: center; margin-bottom: 10px;">
-                    <div style="flex-grow: 1;">
-                        <a href="{{ route('stealth', $user) }}">{{ $user->name }}</a> <small>{{ $user->email }}</small>
-                    </div>
-                    @if($user->id != 1)
-                        <form method="POST" action="{{ route('admin.deleteUser', $user->id) }}" style="margin-left: 10px;" onsubmit="return confirmDelete('{{ $user->name }}')">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-danger btn-sm" title="Delete user account">
-                                <i class="fa fa-trash"></i>
-                            </button>
-                        </form>
-                    @endif
-                </div>
-            @endforeach
-            
-            <!-- Pagination Links -->
-            <div style="margin-top: 20px;">
-                {{ $users->links() }}
-            </div>
-        @else
-            <div class="alert alert-info">
-                @if($search)
-                    No users found matching "{{ $search }}".
-                @else
-                    No users found.
-                @endif
-            </div>
-        @endif
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <flux:input name="text" label="Search Text" placeholder="Apple Map" />
+          <flux:input name="pageSize" label="Number Per Page" placeholder="12" />
+          <flux:input name="page" label="Page" placeholder="1" />
+        </div>
+
+        <flux:button type="submit" variant="primary" class="w-full">Populate Themes</flux:button>
+      </form>
+
+      @include('partials.snazzymaps')
+    </flux:card>
+
+    {{-- Marker Icons --}}
+    <flux:card class="space-y-6">
+      <flux:heading size="lg" level="2">Add Marker Icons</flux:heading>
+
+      <form action="{{ route('addMarkerIcon') }}" method="POST" class="space-y-4">
+        @csrf
+        <flux:input name="iconName" label="Icon Name" placeholder="Icon Name" />
+        <flux:input name="iconURL" label="Icon URL" placeholder="Icon URL" />
+        <flux:button type="submit" class="w-full">Submit</flux:button>
+      </form>
+
+      <flux:button href="{{ route('AZPopulate') }}" class="w-full">Populate by code</flux:button>
+
+      @include('partials.markericons')
+    </flux:card>
+  </div>
+
+  {{-- User Management --}}
+  <flux:card class="mt-8 space-y-6">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <flux:heading size="lg" level="2">User Management</flux:heading>
+      <flux:text size="sm">
+        Showing {{ $users->firstItem() ?? 0 }} to {{ $users->lastItem() ?? 0 }}
+        of {{ $users->total() }} users
+      </flux:text>
     </div>
+
+    <form method="GET" action="{{ url('admin') }}" class="flex items-end gap-3">
+      <div class="flex-1">
+        <flux:input name="search" placeholder="Search users by name or email..." :value="$search" icon="magnifying-glass" />
+      </div>
+      <flux:button type="submit" variant="primary">Search</flux:button>
+      @if($search)
+        <flux:button href="{{ url('admin') }}">Clear</flux:button>
+      @endif
+    </form>
+
+    @if($users->count() > 0)
+      <div class="space-y-2">
+        @foreach($users as $user)
+          <div class="flex items-center justify-between p-3 rounded-lg bg-zinc-50 dark:bg-zinc-800">
+            <div>
+              <a href="{{ route('stealth', $user) }}" class="font-medium text-zinc-900 dark:text-white hover:underline">{{ $user->name }}</a>
+              <span class="ml-2 text-sm text-zinc-500">{{ $user->email }}</span>
+            </div>
+            @if($user->id != 1)
+              <form method="POST" action="{{ route('admin.deleteUser', $user->id) }}" onsubmit="return confirmDelete('{{ $user->name }}')">
+                @csrf
+                @method('DELETE')
+                <flux:button type="submit" variant="danger" size="xs" icon="trash" />
+              </form>
+            @endif
+          </div>
+        @endforeach
+      </div>
+
+      <div class="mt-4">
+        {{ $users->links() }}
+      </div>
+    @else
+      <flux:callout icon="information-circle">
+        <flux:callout.text>
+          @if($search)
+            No users found matching "{{ $search }}".
+          @else
+            No users found.
+          @endif
+        </flux:callout.text>
+      </flux:callout>
+    @endif
+  </flux:card>
 
 @endsection
 
-@section('js')
+@push('page-scripts')
 <script>
 function confirmDelete(userName) {
     return confirm('Are you sure you want to permanently delete the account for "' + userName + '"?\n\nThis action cannot be undone and will delete:\n- The user account\n- All maps created by this user\n- All custom icons uploaded by this user');
 }
 </script>
-@endsection
+@endpush

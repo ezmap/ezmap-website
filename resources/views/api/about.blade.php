@@ -2,51 +2,51 @@
 
 @section('content')
 
-  <div class="col-sm-8 col-sm-offset-2">
-    <h1>EZ Map API</h1>
-    <p>Every EZ Map account comes with API access for you to access your maps in your own projects.</p>
+  <div class="max-w-3xl mx-auto">
+    <flux:heading size="xl" level="1">EZ Map API</flux:heading>
+    <flux:text class="mt-4">Every EZ Map account comes with API access for you to access your maps in your own projects.</flux:text>
 
-    <h2>Rate Limiting</h2>
-    <p>All API requests are  rate limited. The limits are approximately 60 calls per minute, after which users will receive a 429 "Too many requests" error and will be unable to make more requests for a minute.</p>
-    <p>The following headers are sent to assist users</p>
-    <ul>
-      <li>
-        <code>X-RateLimit-Limit</code> - the number of calls allowed in a minute (currently 60)
-      </li>
-      <li>
-        <code>X-RateLimit-Remaining</code> - the number of calls remaining in this minute, reduces with each call.
-      </li>
-      <li>
-        <code>Retry-After</code> - when locked out this is the number of seconds until the timer is reset. Subsequent calls within this time will all result in 429 errors.
-      </li>
+    <flux:heading size="lg" level="2" class="mt-8">Rate Limiting</flux:heading>
+    <flux:text class="mt-2">All API requests are rate limited. The limits are approximately 60 calls per minute, after which users will receive a 429 "Too many requests" error and will be unable to make more requests for a minute.</flux:text>
+    <flux:text class="mt-2">The following headers are sent to assist users</flux:text>
+    <ul class="mt-2 space-y-1 text-sm text-zinc-700 dark:text-zinc-300 list-disc ml-5">
+      <li><code class="bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 rounded text-xs">X-RateLimit-Limit</code> — the number of calls allowed in a minute (currently 60)</li>
+      <li><code class="bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 rounded text-xs">X-RateLimit-Remaining</code> — the number of calls remaining in this minute, reduces with each call.</li>
+      <li><code class="bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 rounded text-xs">Retry-After</code> — when locked out this is the number of seconds until the timer is reset.</li>
     </ul>
-    <p>Please contact us using <a href="{{route('feedback')}}">the feedback tool</a> to request an increase in limits.</p>
+    <flux:text class="mt-2">Please contact us using <a href="{{route('feedback')}}" class="underline">the feedback tool</a> to request an increase in limits.</flux:text>
 
-    <h2>Endpoints</h2>
-    <p>All API endpoints begin with the same URL and require your EZ Map registered email address as well as your API key which can be found on your dashboard.</p>
-    <p>All endpoints require a HTTP POST request.</p>
+    <flux:separator class="my-8" />
+
+    <flux:heading size="lg" level="2">Endpoints</flux:heading>
+    <flux:text class="mt-2">All API endpoints begin with the same URL and require your EZ Map registered email address as well as your API key which can be found on your dashboard.</flux:text>
+    <flux:text class="mt-2">All endpoints require a HTTP POST request.</flux:text>
+
     @if(Auth::guest())
-      <p><code>https://ezmap.co/api/{email}/{apikey}</code></p>
+      <pre class="mt-3 p-4 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-sm overflow-x-auto"><code>https://ezmap.co/api/{email}/{apikey}</code></pre>
     @else
-      <p><code>https://ezmap.co/api/{email}/{apikey}</code></p>
-      <p>Example: <code>https://ezmap.co/api/{{ Auth::user()->email }}/{{ Auth::user()->apikey }}</code></p>
+      <pre class="mt-3 p-4 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-sm overflow-x-auto"><code>https://ezmap.co/api/{email}/{apikey}</code></pre>
+      <flux:text class="mt-2">Example: <code class="bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 rounded text-xs">https://ezmap.co/api/{{ Auth::user()->email }}/{{ Auth::user()->apikey }}</code></flux:text>
     @endif
 
-    <ul>
-      <li>
-        <a href="#get-maps">Get Maps JSON</a>
-      </li>
-      <li><a href="#get-map-code">Get Map Code</a></li>
+    <ul class="mt-4 space-y-1 text-sm">
+      <li><a href="#get-maps" class="underline text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white">Get Maps JSON</a></li>
+      <li><a href="#get-map-code" class="underline text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white">Get Map Code</a></li>
     </ul>
 
-    <h3 id="get-maps">Get Maps JSON</h3>
-    <h4>Endpoint</h4>
-    <h5>/getmaps</h5>
-    @if(Auth::guest() || Auth::user()->maps->count() === 0)
-      <p><code>https://ezmap.co/api/{email}/{apikey}/getmaps</code></p>
-      <h4>Response</h4>
-      <p>JSON encoded array of map objects</p>
-      <pre>[{
+    <flux:separator class="my-8" />
+
+    {{-- Get Maps JSON --}}
+    <div id="get-maps">
+      <flux:heading size="lg" level="3">Get Maps JSON</flux:heading>
+      <flux:heading class="mt-3">Endpoint</flux:heading>
+      <pre class="mt-2 p-3 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-sm"><code>/getmaps</code></pre>
+
+      @if(Auth::guest() || Auth::user()->maps->count() === 0)
+        <pre class="mt-3 p-3 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-sm overflow-x-auto"><code>https://ezmap.co/api/{email}/{apikey}/getmaps</code></pre>
+        <flux:heading class="mt-4">Response</flux:heading>
+        <flux:text class="mt-1">JSON encoded array of map objects</flux:text>
+        <pre class="mt-2 p-4 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-sm overflow-x-auto max-h-80"><code>[{
   "id": 1,
   "user_id": 1,
   "title": "My House",
@@ -57,84 +57,59 @@
   "responsiveMap": true,
   "latitude": 56.4778058625534,
   "longitude": -2.86748333610688,
-  "markers": [{
-    "title": "My House",
-    "icon": "https:\/\/ezmap.co\/icons\/svgs\/location-blue.svg",
-    "lat": 56.4778058625534,
-    "lng": -2.86748333610688,
-    "infoWindow": {"content": "…truncated HTML markup…"}
-  }],
-  "mapOptions": {
-    "mapTypeControlStyle": "0",
-    "mapTypeId": "roadmap",
-    "zoomLevel": "11",
-    "showStreetViewControl": "true",
-    "showZoomControl": "true",
-    "showScaleControl": "true",
-    "draggable": "true",
-    "doubleClickZoom": "true",
-    "clickableIcons": "false",
-    "showFullScreenControl": "false",
-    "keyboardShortcuts": "false",
-    "showMapTypeControl": "false",
-    "scrollWheel": "false"
-  },
+  "markers": [{...}],
+  "mapOptions": {...},
   "theme_id": 395,
   "created_at": "2016-05-10 12:59:00",
   "updated_at": "2016-11-17 16:55:50",
   "embeddable": true,
   "deleted_at": null
-},
-{
-…
-}]</pre>
-    @else
-      <p><code>https://ezmap.co/api/{email}/{apikey}/getmaps</code></p>
-      <p>Example: <code>https://ezmap.co/api/{{ Auth::user()->email }}/{{ Auth::user()->apikey }}/getmaps</code></p>
-      <h4>Response</h4>
-      <p>JSON encoded array of map objects</p>
-      <pre>{{ Auth::user()->maps()->limit(2)->get()->toJson(JSON_PRETTY_PRINT) }}</pre>
-    @endif
+}]</code></pre>
+      @else
+        <pre class="mt-3 p-3 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-sm overflow-x-auto"><code>https://ezmap.co/api/{{ Auth::user()->email }}/{{ Auth::user()->apikey }}/getmaps</code></pre>
+        <flux:heading class="mt-4">Response</flux:heading>
+        <flux:text class="mt-1">JSON encoded array of map objects</flux:text>
+        <pre class="mt-2 p-4 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-sm overflow-x-auto max-h-80"><code>{{ Auth::user()->maps()->limit(2)->get()->toJson(JSON_PRETTY_PRINT) }}</code></pre>
+      @endif
+    </div>
 
-    <h3 id="get-map-code">Get Map Code</h3>
-    <h4>Endpoint</h4>
-    <h5>/getmapcode/{mapID}</h5>
-    @if(Auth::guest() || Auth::user()->maps->count() === 0)
-      <p><code>https://ezmap.co/api/{email}/{apikey}/getmapcode/{mapID}</code></p>
-    @else
-      <p><code>https://ezmap.co/api/{email}/{apikey}/getmapcode/{mapID}</code></p>
-      <p>Example:
-        <code>https://ezmap.co/api/{{ Auth::user()->email }}/{{ Auth::user()->apikey }}/getmapcode/{{ Auth::user()->maps->first()->id }}</code>
-      </p>
-    @endif
-    <h4>Response</h4>
-    <p>Raw HTML Markup. This will be similar to the code you would normally paste from the grey box</p>
-    @if(Auth::guest() || Auth::user()->maps->count() === 0)
-      <pre>&lt;!-- Google map code from EZ Map - https://ezmap.co -->
-&lt;script src='https://maps.googleapis.com/maps/api/js?key='>&lt;/script>
-&lt;script>
+    <flux:separator class="my-8" />
+
+    {{-- Get Map Code --}}
+    <div id="get-map-code">
+      <flux:heading size="lg" level="3">Get Map Code</flux:heading>
+      <flux:heading class="mt-3">Endpoint</flux:heading>
+      <pre class="mt-2 p-3 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-sm"><code>/getmapcode/{mapID}</code></pre>
+
+      @if(Auth::guest() || Auth::user()->maps->count() === 0)
+        <pre class="mt-3 p-3 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-sm overflow-x-auto"><code>https://ezmap.co/api/{email}/{apikey}/getmapcode/{mapID}</code></pre>
+      @else
+        <pre class="mt-3 p-3 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-sm overflow-x-auto"><code>https://ezmap.co/api/{{ Auth::user()->email }}/{{ Auth::user()->apikey }}/getmapcode/{{ Auth::user()->maps->first()->id }}</code></pre>
+      @endif
+
+      <flux:heading class="mt-4">Response</flux:heading>
+      <flux:text class="mt-1">Raw HTML Markup. This will be similar to the code you would normally paste from the grey box</flux:text>
+      @if(Auth::guest() || Auth::user()->maps->count() === 0)
+        <pre class="mt-2 p-4 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-sm overflow-x-auto max-h-80"><code>&lt;!-- Google map code from EZ Map - https://ezmap.co --&gt;
+&lt;script src='https://maps.googleapis.com/maps/api/js?key='&gt;&lt;/script&gt;
+&lt;script&gt;
   function init() {
-    var mapOptions = { "center": {  "lat": 56.4778058625534,  "lng": -2.86748333610688 }, "clickableIcons": true, "disableDoubleClickZoom": false, "draggable": true, "fullscreenControl": true, "keyboardShortcuts": true, "mapTypeControl": true, "mapTypeControlOptions": {  "text": "Default (depends on viewport size etc.)",  "style": 0 }, "mapTypeId": "roadmap", "rotateControl": true, "scaleControl": true, "scrollwheel": true, "streetViewControl": true, "styles": false, "zoom": 3, "zoomControl": true};
+    var mapOptions = {...};
     var mapElement = document.getElementById('ez-map');
     var map = new google.maps.Map(mapElement, mapOptions);
-
-    window.addEventListener("resize", function() { var center = map.getCenter(); google.maps.event.trigger(map, "resize"); map.setCenter(center); });
+    ...
   }
   window.addEventListener('load', init);
-&lt;/script>
-&lt;style>
+&lt;/script&gt;
+&lt;style&gt;
   #ez-map{min-height:150px;min-width:150px;height: 420px;width: 100%;}
-  #ez-map .infoTitle{}
-  #ez-map .infoWebsite{}
-  #ez-map .infoEmail{}
-  #ez-map .infoTelephone{}
-  #ez-map .infoDescription{}
-&lt;/style>
-&lt;div id='ez-map'>&lt;/div>
-&lt;!-- End of EZ Map code - https://ezmap.co --></pre>
-    @else
-<pre>{{ (new \App\Http\Controllers\ApiController())->getMapCode(Auth::user()->email,Auth::user()->apikey, Auth::user()->maps->first()) }}</pre>
-    @endif
+&lt;/style&gt;
+&lt;div id='ez-map'&gt;&lt;/div&gt;
+&lt;!-- End of EZ Map code - https://ezmap.co --&gt;</code></pre>
+      @else
+        <pre class="mt-2 p-4 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-sm overflow-x-auto max-h-80"><code>{{ (new \App\Http\Controllers\ApiController())->getMapCode(Auth::user()->email, Auth::user()->apikey, Auth::user()->maps->first()) }}</code></pre>
+      @endif
+    </div>
   </div>
 
 @endsection

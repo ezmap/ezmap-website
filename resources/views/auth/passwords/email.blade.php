@@ -8,9 +8,7 @@
         <flux:subheading>Enter your email and we'll send you a reset link</flux:subheading>
 
         @if (session('status'))
-          <flux:callout variant="success" icon="check-circle" class="mt-4">
-            {{ session('status') }}
-          </flux:callout>
+          <flux:callout variant="success" icon="check-circle" class="mt-4" :text="session('status')" />
         @endif
 
         <form method="POST" action="{{ url('/password/email') }}" class="mt-6 space-y-6">
