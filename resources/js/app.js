@@ -1,0 +1,1 @@
+// EZ Map application JavaScript
