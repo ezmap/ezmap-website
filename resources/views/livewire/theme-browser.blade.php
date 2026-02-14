@@ -9,7 +9,7 @@
     </flux:text>
 
     <div class="mt-4">
-        {{ $themes->links() }}
+        <flux:pagination :paginator="$themes" />
     </div>
 
     <div class="mt-4">
@@ -72,6 +72,6 @@
     </div>
 
     <div class="mt-4">
-        {{ $themes->links() }}
+        <flux:pagination :paginator="$themes" />
     </div>
 </div>

@@ -3,18 +3,15 @@
 namespace App\Livewire;
 
 use App\Models\Theme;
-use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\Features\SupportPagination\WithoutUrlPagination;
 
 class ThemeBrowser extends Component
 {
-    use WithPagination;
+    use WithPagination, WithoutUrlPagination;
 
-    #[Url]
     public string $tag = '';
-
-    #[Url]
     public string $col = '';
 
     public array $tags = ['colorful', 'complex', 'dark', 'greyscale', 'light', 'monochrome', 'no-labels', 'simple', 'two-tone'];
