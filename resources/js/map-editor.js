@@ -47,7 +47,6 @@ document.addEventListener('alpine:init', () => {
         mapOptions: config.mapOptions || {},
         mapOpacity: 1,
         mapBackground: 'none',
-        themes: config.themes || [],
 
         // For new icon form
         newIconName: '',
@@ -220,11 +219,17 @@ document.addEventListener('alpine:init', () => {
                 window._mapEditorInitCallback = () => this.initMap();
             }
 
-            // Listen for theme clicks from snazzymaps partial
+            // Listen for theme selection from Livewire ThemeBrowser component
+            window.addEventListener('theme-selected', (e) => {
+                const { id, json } = e.detail;
+                this.currentTheme = { id: String(id), json: json };
+                this.mapOptions.styles = json;
+                this.themeApplied = true;
+                this.optionschange();
+            });
+
+            // Listen for marker icon clicks
             this.$el.addEventListener('click', (e) => {
-                if (e.target.classList.contains('theme-thumb')) {
-                    this.setTheme(e);
-                }
                 if (e.target.classList.contains('markericon')) {
                     this.setMarkerIcon(e);
                 }
@@ -283,22 +288,6 @@ document.addEventListener('alpine:init', () => {
                     alert('Route failed: ' + status);
                 }
             });
-        },
-
-        setTheme(event) {
-            const element = event.target;
-            if (element.classList.contains('theme-thumb')) {
-                const id = element.dataset.themeId;
-                for (let i = 0; i < this.themes.length; i++) {
-                    const theme = this.themes[i];
-                    if (String(theme.id) === String(id)) {
-                        this.currentTheme = theme;
-                        this.mapOptions.styles = this.currentTheme.json;
-                        this.themeApplied = true;
-                        this.optionschange();
-                    }
-                }
-            }
         },
 
         clearTheme() {

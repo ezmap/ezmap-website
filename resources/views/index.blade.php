@@ -45,11 +45,6 @@
           'zoom' => (int) ($opts->zoomLevel ?? 3),
           'zoomControl' => (bool) ($opts->showZoomControl ?? true),
       ],
-      'themes' => $themes->map(fn($theme) => [
-          'id' => (string) $theme->id,
-          'name' => $theme->name,
-          'json' => json_decode($theme->json, true),
-      ])->values()->toArray(),
       'savedMarkers' => $hasMap ? $map->markers->toArray() : [],
       'savedHeatmap' => $hasMap ? $map->heatmap->toArray() : [],
       'savedHeatmapLayer' => null,
@@ -439,7 +434,7 @@
     {{-- Snazzy Maps Themes --}}
     <flux:separator class="my-8" />
     <div class="max-w-sm">
-      @include('partials.snazzymaps')
+      <livewire:theme-browser />
     </div>
 
   </div>
