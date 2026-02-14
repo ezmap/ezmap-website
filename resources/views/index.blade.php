@@ -226,7 +226,7 @@
 @push('page-scripts')
   @vite('resources/js/map-editor.js')
   <script async
-    src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=visualization&callback=_mapEditorInitCallback">
+    src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google.maps_api_key') }}&libraries=visualization&callback=_mapEditorInitCallback">
   </script>
   <script>
     // Fallback if Google Maps loads before Alpine
