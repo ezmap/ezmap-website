@@ -17,7 +17,7 @@
             </li>
             <li><a href="#faq6" class="text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white">{{ ucwords(EzTrans::translate("zoomLevel")) }}</a></li>
             <li><a href="#faq7" class="text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white">{{ Str::plural(ucwords(EzTrans::translate("marker")),2) }}</a></li>
-            <li><a href="#faq8" class="text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white">{{ ucwords(EzTrans::translate("options.other")) }}</a></li>
+            <li><a href="#faq8" class="text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white">{{ ucwords(EzTrans::translate("mapControls", "Map Controls")) }}</a></li>
             <li><a href="#faq9" class="text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white">{{ ucwords(EzTrans::translate("saveMap")) }}</a></li>
             <li><a href="#faq10" class="text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white">{{ Str::plural(ucwords(EzTrans::help("theme.theme")),2) }}</a></li>
         </ul>

@@ -292,7 +292,7 @@
   {{-- Save / Clone buttons --}}
   @if(Auth::check())
     <div class="mt-6 space-y-2">
-      <flux:button type="submit" variant="primary" icon="check" class="w-full">
+      <flux:button type="submit" variant="primary" color="green" icon="check" class="w-full">
         {{ EzTrans::translate('saveMap', 'save map') }}
       </flux:button>
       @if(!empty($map))

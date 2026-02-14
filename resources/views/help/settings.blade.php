@@ -78,7 +78,7 @@
       </p>
       <p class="mt-1 font-semibold">{{ strtoupper(EzTrans::help('settings.markers.step1.or')) }}</p>
       <p class="mt-1">
-        <flux:button variant="primary" size="sm" icon="map-pin">{{ EzTrans::translate('addMarkerByAddress') }}</flux:button>
+        <flux:button variant="filled" size="sm" icon="map-pin">{{ EzTrans::translate('addMarkerByAddress') }}</flux:button>
         {{ EzTrans::help('settings.markers.step1.button') }}
       </p>
     </li>
@@ -135,7 +135,7 @@
 </div>
 
 <div id="faq8">
-  <flux:heading size="lg">{{ ucwords(EzTrans::translate("options.other")) }}</flux:heading>
+  <flux:heading size="lg">{{ ucwords(EzTrans::translate("mapControls", "Map Controls")) }}</flux:heading>
   <div class="mt-4 space-y-6">
     <div>
       <flux:heading>{{ ucwords(EzTrans::translate("mapType.control")) }}</flux:heading>
@@ -196,7 +196,7 @@
   <flux:heading size="lg">{{ ucwords(EzTrans::translate("saveMap")) }}</flux:heading>
   <div class="mt-2 space-y-3 text-sm text-zinc-700 dark:text-zinc-300">
     <p>
-      <flux:button variant="primary" size="sm" icon="bookmark">{{ ucwords(EzTrans::translate("saveMap")) }}</flux:button>
+      <flux:button variant="primary" color="green" size="sm" icon="check">{{ ucwords(EzTrans::translate("saveMap")) }}</flux:button>
       {{ EzTrans::help('settings.saveMap.intro') }}
     </p>
 
@@ -205,24 +205,24 @@
     <p>{{ EzTrans::help('settings.saveMap.otherButtons') }}</p>
 
     <p>
-      <flux:button variant="primary" size="sm" icon="document-duplicate">{{ EzTrans::translate("cloneMap") }}</flux:button>
+      <flux:button variant="filled" size="sm" icon="document-duplicate">{{ EzTrans::translate("cloneMap") }}</flux:button>
       {{ EzTrans::help('settings.saveMap.clone') }}
     </p>
 
     <p>
-      <flux:button variant="primary" size="sm" icon="photo">{{ EzTrans::translate("getImage") }}</flux:button>
+      <flux:button variant="filled" size="sm" icon="photo">{{ EzTrans::translate("getImage") }}</flux:button>
       {{ EzTrans::help('settings.saveMap.getImage') }}
     </p>
 
     <flux:callout icon="information-circle" :text="EzTrans::help('settings.saveMap.getImageInfo')" />
 
     <p>
-      <flux:button variant="primary" size="sm" icon="arrow-down-tray">{{ EzTrans::translate("exportKml") }}</flux:button>
+      <flux:button variant="filled" size="sm" icon="arrow-down-tray">{{ EzTrans::translate("exportKml") }}</flux:button>
       {{ EzTrans::help('settings.saveMap.exportKml') }}
     </p>
 
     <p>
-      <flux:button variant="primary" size="sm" icon="arrow-down-tray">{{ EzTrans::translate("exportKmz") }}</flux:button>
+      <flux:button variant="filled" size="sm" icon="arrow-down-tray">{{ EzTrans::translate("exportKmz") }}</flux:button>
       {{ EzTrans::help('settings.saveMap.exportKmz') }}
     </p>
 
@@ -244,7 +244,7 @@
   </flux:text>
   <flux:text class="mt-2">{{ EzTrans::help('theme.tryIt') }}</flux:text>
   <p class="mt-3">
-    <flux:button size="sm" icon="x-mark">{{ EzTrans::translate("clearTheme") }}</flux:button>
+    <flux:button variant="filled" size="sm" icon="swatch">{{ EzTrans::translate("clearTheme") }}</flux:button>
     {{ EzTrans::help('theme.clearIt') }}
   </p>
   <flux:separator class="mt-6" />
