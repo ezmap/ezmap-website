@@ -380,7 +380,7 @@
       </div>
 
       {{-- RIGHT PANEL: Preview & Code --}}
-      <div class="lg:col-span-8 space-y-6">
+      <div class="lg:col-span-8 space-y-6 lg:sticky lg:top-4 lg:self-start">
         <flux:heading size="lg" level="3">{{ ucwords(EzTrans::translate('yourMapresult', 'your map result')) }}</flux:heading>
 
         @if (! Auth::check())
