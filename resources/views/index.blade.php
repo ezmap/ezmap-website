@@ -177,7 +177,7 @@
         </div>
 
         @if (! Auth::check())
-          <div class="max-lg:hidden">
+          <div class="lg:hidden">
             @include('partials.notLoggedInWarning')
           </div>
         @endif

@@ -31,7 +31,12 @@
             <flux:input label="{{ ucwords(EzTrans::translate('mapTitle','map title')) }}" name="title" type="text" placeholder="{{ ucwords(EzTrans::translate('myMap','my map')) }}" value="{{ $map->title ?? '' }}" />
           @endif
 
-          <flux:input label="{{ EzTrans::translate('apiKey','API key') }}" name="apiKey" type="text" placeholder="{{ EzTrans::translate('apiKey','Google Maps API key') }}" x-model="apikey" description='<a target="_blank" href="https://developers.google.com/maps/signup" class="underline text-accent-content">{{ ucfirst(EzTrans::translate("getAnApiKey","get an API key")) }}</a>' />
+          <div>
+            <flux:input label="{{ EzTrans::translate('apiKey','API key') }}" name="apiKey" type="text" placeholder="{{ EzTrans::translate('apiKey','Google Maps API key') }}" x-model="apikey" />
+            <flux:text size="sm" class="mt-1">
+              <a target="_blank" href="https://developers.google.com/maps/signup" class="underline text-accent-content">{{ ucfirst(EzTrans::translate("getAnApiKey","get an API key")) }}</a>
+            </flux:text>
+          </div>
 
           <flux:input label="{{ ucwords(EzTrans::translate('mapContainerId','Map Container ID')) }}" name="mapContainer" type="text" placeholder="map" x-model="mapcontainer" />
 
