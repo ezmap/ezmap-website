@@ -15,8 +15,6 @@
     @fluxAppearance
   </head>
   <body class="min-h-screen bg-white dark:bg-zinc-900 @yield('bodyclass')">
-    @fluxScripts
-
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5ESRGRL3QX"></script>
     <script>
@@ -27,37 +25,38 @@
       gtag('config', 'G-5ESRGRL3QX');
     </script>
 
-    {{-- Navigation --}}
-    <flux:header container class="border-b border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-900">
-      <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
+    {{-- Desktop header --}}
+    <flux:header container class="border-b border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
+      <flux:sidebar.toggle class="lg:hidden mr-2" icon="bars-2" inset="left" />
 
-      <flux:brand href="{{ url('/') }}" class="max-lg:hidden">
+      <flux:brand href="{{ url('/') }}">
         <span class="text-xl font-bold bg-gradient-to-r from-indigo-600 to-violet-500 bg-clip-text text-transparent">EZ Map</span>
       </flux:brand>
 
       <flux:navbar class="-mb-px max-lg:hidden ml-8">
-        <flux:navbar.item href="{{ route('help') }}">{{ ucwords(EzTrans::translate("help")) }}</flux:navbar.item>
-        <flux:navbar.item href="{{ route('feedback') }}">{{ ucwords(EzTrans::translate("feedback.feedback")) }}</flux:navbar.item>
-        <flux:navbar.item href="{{ route('api') }}">API</flux:navbar.item>
+        <flux:navbar.item href="{{ url('/') }}" :current="request()->is('/')">Home</flux:navbar.item>
+        <flux:navbar.item href="{{ route('help') }}" :current="request()->is('help*')">{{ ucwords(EzTrans::translate("help")) }}</flux:navbar.item>
+        <flux:navbar.item href="{{ route('feedback') }}" :current="request()->is('feedback')">{{ ucwords(EzTrans::translate("feedback.feedback")) }}</flux:navbar.item>
+        <flux:navbar.item href="{{ route('api') }}" :current="request()->is('api*')">API</flux:navbar.item>
       </flux:navbar>
 
       <flux:spacer />
 
       @auth
         <flux:dropdown position="bottom" align="end">
-          <flux:button variant="ghost" icon:trailing="chevron-down">{{ Auth::user()->name }}</flux:button>
+          <flux:profile :initials="strtoupper(substr(Auth::user()->name, 0, 2))" icon-trailing="chevron-down" />
 
-          <flux:navmenu>
-            <flux:navmenu.item href="{{ url('map') }}" icon="map">My Maps</flux:navmenu.item>
+          <flux:menu>
+            <flux:menu.item href="{{ url('map') }}" icon="map">My Maps</flux:menu.item>
             @if (Auth::user()->isAdmin || session()->has('stealth'))
-              <flux:navmenu.item href="{{ url('admin') }}" icon="cog-6-tooth">Admin</flux:navmenu.item>
+              <flux:menu.item href="{{ url('admin') }}" icon="cog-6-tooth">Admin</flux:menu.item>
             @endif
             @if(session()->has('stealth'))
-              <flux:navmenu.item href="{{ route('unstealth') }}" icon="eye-slash">Un-stealth</flux:navmenu.item>
+              <flux:menu.item href="{{ route('unstealth') }}" icon="eye-slash">Un-stealth</flux:menu.item>
             @endif
-            <flux:navmenu.separator />
-            <flux:navmenu.item href="{{ url('/logout') }}" icon="arrow-right-start-on-rectangle">{{ ucwords(EzTrans::translate("logout")) }}</flux:navmenu.item>
-          </flux:navmenu>
+            <flux:menu.separator />
+            <flux:menu.item href="{{ url('/logout') }}" icon="arrow-right-start-on-rectangle">{{ ucwords(EzTrans::translate("logout")) }}</flux:menu.item>
+          </flux:menu>
         </flux:dropdown>
       @else
         <flux:navbar class="-mb-px max-lg:hidden">
@@ -68,36 +67,35 @@
     </flux:header>
 
     {{-- Mobile sidebar --}}
-    <flux:sidebar stashable sticky class="lg:hidden border-r border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
-      <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
+    <flux:sidebar sticky collapsible="mobile" class="lg:hidden border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
+      <flux:sidebar.header>
+        <flux:brand href="{{ url('/') }}">
+          <span class="text-lg font-bold bg-gradient-to-r from-indigo-600 to-violet-500 bg-clip-text text-transparent">EZ Map</span>
+        </flux:brand>
+        <flux:sidebar.collapse class="lg:hidden" />
+      </flux:sidebar.header>
 
-      <flux:brand href="{{ url('/') }}">
-        <span class="text-lg font-bold bg-gradient-to-r from-indigo-600 to-violet-500 bg-clip-text text-transparent">EZ Map</span>
-      </flux:brand>
-
-      <flux:navlist variant="outline">
-        <flux:navlist.item href="{{ url('/') }}" icon="home">Home</flux:navlist.item>
-        <flux:navlist.item href="{{ route('help') }}" icon="question-mark-circle">{{ ucwords(EzTrans::translate("help")) }}</flux:navlist.item>
-        <flux:navlist.item href="{{ route('feedback') }}" icon="chat-bubble-left-right">{{ ucwords(EzTrans::translate("feedback.feedback")) }}</flux:navlist.item>
-        <flux:navlist.item href="{{ route('api') }}" icon="code-bracket">API</flux:navlist.item>
-      </flux:navlist>
+      <flux:sidebar.nav>
+        <flux:sidebar.item icon="home" href="{{ url('/') }}" :current="request()->is('/')">Home</flux:sidebar.item>
+        <flux:sidebar.item icon="question-mark-circle" href="{{ route('help') }}" :current="request()->is('help*')">{{ ucwords(EzTrans::translate("help")) }}</flux:sidebar.item>
+        <flux:sidebar.item icon="chat-bubble-left-right" href="{{ route('feedback') }}" :current="request()->is('feedback')">{{ ucwords(EzTrans::translate("feedback.feedback")) }}</flux:sidebar.item>
+        <flux:sidebar.item icon="code-bracket" href="{{ route('api') }}" :current="request()->is('api*')">API</flux:sidebar.item>
+      </flux:sidebar.nav>
 
       <flux:spacer />
 
-      @auth
-        <flux:navlist variant="outline">
-          <flux:navlist.item href="{{ url('map') }}" icon="map">My Maps</flux:navlist.item>
+      <flux:sidebar.nav>
+        @auth
+          <flux:sidebar.item icon="map" href="{{ url('map') }}">My Maps</flux:sidebar.item>
           @if (Auth::user()->isAdmin || session()->has('stealth'))
-            <flux:navlist.item href="{{ url('admin') }}" icon="cog-6-tooth">Admin</flux:navlist.item>
+            <flux:sidebar.item icon="cog-6-tooth" href="{{ url('admin') }}">Admin</flux:sidebar.item>
           @endif
-          <flux:navlist.item href="{{ url('/logout') }}" icon="arrow-right-start-on-rectangle">{{ ucwords(EzTrans::translate("logout")) }}</flux:navlist.item>
-        </flux:navlist>
-      @else
-        <flux:navlist variant="outline">
-          <flux:navlist.item href="{{ url('/login') }}" icon="arrow-right-end-on-rectangle">{{ ucwords(EzTrans::translate("login")) }}</flux:navlist.item>
-          <flux:navlist.item href="{{ url('/register') }}" icon="user-plus">{{ ucwords(EzTrans::translate("register")) }}</flux:navlist.item>
-        </flux:navlist>
-      @endauth
+          <flux:sidebar.item icon="arrow-right-start-on-rectangle" href="{{ url('/logout') }}">{{ ucwords(EzTrans::translate("logout")) }}</flux:sidebar.item>
+        @else
+          <flux:sidebar.item icon="arrow-right-end-on-rectangle" href="{{ url('/login') }}">{{ ucwords(EzTrans::translate("login")) }}</flux:sidebar.item>
+          <flux:sidebar.item icon="user-plus" href="{{ url('/register') }}">{{ ucwords(EzTrans::translate("register")) }}</flux:sidebar.item>
+        @endauth
+      </flux:sidebar.nav>
     </flux:sidebar>
 
     {{-- Main Content --}}
@@ -137,5 +135,6 @@
     </flux:footer>
 
     @stack('page-scripts')
+    @fluxScripts
   </body>
 </html>
