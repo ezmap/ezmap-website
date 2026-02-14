@@ -234,19 +234,39 @@ document.addEventListener('alpine:init', () => {
                     this.setMarkerIcon(e);
                 }
             });
+
+            // Watch for dark/light mode changes to update crosshair color
+            new MutationObserver(() => {
+                if (this.mapOpacity === 0.5) {
+                    this._applyCrosshair();
+                }
+            }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+        },
+
+        _applyCrosshair() {
+            const isDark = document.documentElement.classList.contains('dark');
+            const crosshair = isDark ? '/images/crosshairs-white.svg' : '/images/crosshairs.svg';
+            this.mapBackground = `transparent url(${crosshair}) center center no-repeat`;
+            const mapEl = document.getElementById('map');
+            if (mapEl) {
+                mapEl.style.background = this.mapBackground;
+            }
         },
 
         showCenter() {
             this.mapOpacity = this.mapOpacity === 1 ? 0.5 : 1;
-            const isDark = document.documentElement.classList.contains('dark');
-            const crosshair = isDark ? '/images/crosshairs-white.svg' : '/images/crosshairs.svg';
-            this.mapBackground = this.mapOpacity === 0.5 ? `transparent url(${crosshair}) center center no-repeat` : 'none';
+            if (this.mapOpacity === 0.5) {
+                this._applyCrosshair();
+            } else {
+                this.mapBackground = 'none';
+                const mapEl = document.getElementById('map');
+                if (mapEl) {
+                    mapEl.style.background = 'none';
+                }
+            }
             const mapEl = document.getElementById('map');
             if (mapEl && mapEl.firstChild) {
                 mapEl.firstChild.style.opacity = this.mapOpacity;
-            }
-            if (mapEl) {
-                mapEl.style.background = this.mapBackground;
             }
         },
 
