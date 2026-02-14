@@ -1,88 +1,91 @@
 @extends('layouts.master')
 
 @section('content')
-  <div class="container">
-    <div class="row">
-      <div class="col-md-8 col-md-offset-2">
-        <h2>Registration</h2>
-        <p>Registering an account allows you some additional benefits.</p>
-        <ul>
-          <li>Save your maps (unlimited maps)</li>
-          <li>Come back to your saved maps to edit further</li>
-          <li>Duplicate saved maps, to use as your standard starting-point map perhaps.</li>
-          <li>Create your own marker pins and save them for re-use.</li>
-          <li>Place your saved map code once and update your maps on the fly from your EZ Map control panel.</li>
-          <li>...more to come.</li>
-        </ul>
-        <p class="lead">...and best of all it's FREE, forever!</p>
-        <hr>
-        <div class="panel panel-default">
-          <div class="panel-heading">Register</div>
-          <div class="panel-body">
-            <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
-              {!! csrf_field() !!}
+  <div class="flex min-h-[60vh] items-center justify-center">
+    <div class="w-full max-w-lg">
+      <div class="mb-8 text-center">
+        <flux:heading size="xl">Create your free account</flux:heading>
+        <flux:subheading class="mt-2">Unlock the full power of EZ Map</flux:subheading>
+      </div>
 
-              <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                <label for="name-field" class="col-md-4 control-label">Name</label>
-
-                <div class="col-md-6">
-                  <input id="name-field" type="text" class="form-control" name="name" value="{{ old('name') }}">
-
-                  @if ($errors->has('name'))
-                    <span class="help-block"><strong>{{ $errors->first('name') }}</strong></span>
-                  @endif
-                </div>
-              </div>
-
-              <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                <label for="email-field" class="col-md-4 control-label">E-Mail Address</label>
-
-                <div class="col-md-6">
-                  <input id="email-field" type="email" class="form-control" name="email" value="{{ old('email') }}">
-
-                  @if ($errors->has('email'))
-                    <span class="help-block"><strong>{{ $errors->first('email') }}</strong></span>
-                  @endif
-                </div>
-              </div>
-
-              <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                <label for="password-field" class="col-md-4 control-label">Password</label>
-
-                <div class="col-md-6">
-                  <input id="password-field" type="password" class="form-control" name="password">
-
-                  @if ($errors->has('password'))
-                    <span class="help-block"><strong>{{ $errors->first('password') }}</strong></span>
-                  @endif
-                </div>
-              </div>
-
-              <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                <label for="confirm-field" class="col-md-4 control-label">Confirm Password</label>
-                <div class="col-md-6">
-                  <input id="confirm-field" type="password" class="form-control" name="password_confirmation">
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label for="captcha-field" class="col-md-4 control-label">Bot check</label>
-                <div class="col-md-6">
-                  {{-- reCAPTCHA placeholder — will be re-implemented --}}
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-md-6 col-md-offset-4">
-                  <button type="submit" class="btn btn-primary">
-                    <i class="fa fa-btn fa-user"></i> Register
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
+      <div class="mb-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
+        <div class="flex items-start gap-3 rounded-lg border border-zinc-200 p-3 dark:border-zinc-700">
+          <flux:icon name="bookmark" variant="outline" class="mt-0.5 size-5 shrink-0 text-indigo-500" />
+          <flux:text class="text-sm">Save unlimited maps</flux:text>
+        </div>
+        <div class="flex items-start gap-3 rounded-lg border border-zinc-200 p-3 dark:border-zinc-700">
+          <flux:icon name="pencil-square" variant="outline" class="mt-0.5 size-5 shrink-0 text-indigo-500" />
+          <flux:text class="text-sm">Edit maps anytime</flux:text>
+        </div>
+        <div class="flex items-start gap-3 rounded-lg border border-zinc-200 p-3 dark:border-zinc-700">
+          <flux:icon name="document-duplicate" variant="outline" class="mt-0.5 size-5 shrink-0 text-indigo-500" />
+          <flux:text class="text-sm">Duplicate maps as templates</flux:text>
+        </div>
+        <div class="flex items-start gap-3 rounded-lg border border-zinc-200 p-3 dark:border-zinc-700">
+          <flux:icon name="map-pin" variant="outline" class="mt-0.5 size-5 shrink-0 text-indigo-500" />
+          <flux:text class="text-sm">Custom marker pins</flux:text>
         </div>
       </div>
+
+      <flux:card>
+        <flux:heading size="lg">Register</flux:heading>
+
+        <form method="POST" action="{{ url('/register') }}" class="mt-6 space-y-6">
+          @csrf
+
+          <flux:input
+            label="Name"
+            type="text"
+            name="name"
+            value="{{ old('name') }}"
+            required
+            autofocus
+            :invalid="$errors->has('name')"
+          />
+          @error('name')
+            <flux:text class="!mt-1 text-sm text-red-600">{{ $message }}</flux:text>
+          @enderror
+
+          <flux:input
+            label="E-Mail Address"
+            type="email"
+            name="email"
+            value="{{ old('email') }}"
+            required
+            :invalid="$errors->has('email')"
+            placeholder="you@example.com"
+          />
+          @error('email')
+            <flux:text class="!mt-1 text-sm text-red-600">{{ $message }}</flux:text>
+          @enderror
+
+          <flux:input
+            label="Password"
+            type="password"
+            name="password"
+            required
+            :invalid="$errors->has('password')"
+          />
+          @error('password')
+            <flux:text class="!mt-1 text-sm text-red-600">{{ $message }}</flux:text>
+          @enderror
+
+          <flux:input
+            label="Confirm Password"
+            type="password"
+            name="password_confirmation"
+            required
+          />
+
+          {{-- reCAPTCHA placeholder — will be re-implemented --}}
+
+          <flux:button type="submit" variant="primary" class="w-full">Register</flux:button>
+        </form>
+      </flux:card>
+
+      <flux:text class="mt-6 text-center text-sm">
+        Already have an account? <flux:link href="{{ url('/login') }}">Login</flux:link>
+      </flux:text>
     </div>
   </div>
 @endsection

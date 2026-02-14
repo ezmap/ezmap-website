@@ -1,70 +1,53 @@
 @extends('layouts.master')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Reset Password</div>
+  <div class="flex min-h-[60vh] items-center justify-center">
+    <div class="w-full max-w-md">
+      <flux:card>
+        <flux:heading size="lg">Reset Password</flux:heading>
+        <flux:subheading>Choose a new password for your account</flux:subheading>
 
-                <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/password/reset') }}">
-                        {!! csrf_field() !!}
+        <form method="POST" action="{{ url('/password/reset') }}" class="mt-6 space-y-6">
+          @csrf
+          <input type="hidden" name="token" value="{{ $token }}">
 
-                        <input type="hidden" name="token" value="{{ $token }}">
+          <flux:input
+            label="E-Mail Address"
+            type="email"
+            name="email"
+            value="{{ $email ?? old('email') }}"
+            required
+            autofocus
+            :invalid="$errors->has('email')"
+          />
+          @error('email')
+            <flux:text class="!mt-1 text-sm text-red-600">{{ $message }}</flux:text>
+          @enderror
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">E-Mail Address</label>
+          <flux:input
+            label="Password"
+            type="password"
+            name="password"
+            required
+            :invalid="$errors->has('password')"
+          />
+          @error('password')
+            <flux:text class="!mt-1 text-sm text-red-600">{{ $message }}</flux:text>
+          @enderror
 
-                            <div class="col-md-6">
-                                <input type="email" class="form-control" name="email" value="{{ $email ?? old('email') }}">
+          <flux:input
+            label="Confirm Password"
+            type="password"
+            name="password_confirmation"
+            required
+          />
+          @error('password_confirmation')
+            <flux:text class="!mt-1 text-sm text-red-600">{{ $message }}</flux:text>
+          @enderror
 
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input type="password" class="form-control" name="password">
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Confirm Password</label>
-                            <div class="col-md-6">
-                                <input type="password" class="form-control" name="password_confirmation">
-
-                                @if ($errors->has('password_confirmation'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password_confirmation') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-refresh"></i> Reset Password
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+          <flux:button type="submit" variant="primary" icon="arrow-path">Reset Password</flux:button>
+        </form>
+      </flux:card>
     </div>
-</div>
+  </div>
 @endsection

@@ -1,62 +1,52 @@
 @extends('layouts.master')
 
 @section('content')
-  <div class="container">
-    <div class="row">
-      <div class="col-md-8 col-md-offset-2">
-        <div class="panel panel-default">
-          <div class="panel-heading">Login</div>
-          <div class="panel-body">
-            <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
-              {!! csrf_field() !!}
+  <div class="flex min-h-[60vh] items-center justify-center">
+    <div class="w-full max-w-md">
+      <flux:card>
+        <flux:heading size="lg">Login</flux:heading>
+        <flux:subheading>Sign in to manage your maps</flux:subheading>
 
-              <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                <label for="email-field" class="col-md-4 control-label">E-Mail Address</label>
+        <form method="POST" action="{{ url('/login') }}" class="mt-6 space-y-6">
+          @csrf
 
-                <div class="col-md-6">
-                  <input id="email-field" type="email" class="form-control" name="email" value="{{ old('email') }}">
+          <flux:input
+            label="E-Mail Address"
+            type="email"
+            name="email"
+            value="{{ old('email') }}"
+            required
+            autofocus
+            :invalid="$errors->has('email')"
+            placeholder="you@example.com"
+          />
+          @error('email')
+            <flux:text class="!mt-1 text-sm text-red-600">{{ $message }}</flux:text>
+          @enderror
 
-                  @if ($errors->has('email'))
-                    <span class="help-block"><strong>{{ $errors->first('email') }}</strong></span>
-                  @endif
-                </div>
-              </div>
+          <flux:input
+            label="Password"
+            type="password"
+            name="password"
+            required
+            :invalid="$errors->has('password')"
+          />
+          @error('password')
+            <flux:text class="!mt-1 text-sm text-red-600">{{ $message }}</flux:text>
+          @enderror
 
-              <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                <label for="password-field" class="col-md-4 control-label">Password</label>
+          <flux:checkbox name="remember" label="Remember me" />
 
-                <div class="col-md-6">
-                  <input id="password-field" type="password" class="form-control" name="password">
-
-                  @if ($errors->has('password'))
-                    <span class="help-block"><strong>{{ $errors->first('password') }}</strong></span>
-                  @endif
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-md-6 col-md-offset-4">
-                  <div class="checkbox">
-                    <label>
-                      <input type="checkbox" name="remember"> Remember Me
-                    </label>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-md-6 col-md-offset-4">
-                  <button type="submit" class="btn btn-primary">
-                    <i class="fa fa-btn fa-sign-in"></i> Login
-                  </button>
-
-                  <a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a>
-                </div>
-              </div>
-            </form>
+          <div class="flex items-center justify-between pt-2">
+            <flux:button type="submit" variant="primary">Login</flux:button>
+            <flux:link href="{{ url('/password/reset') }}" class="text-sm">Forgot your password?</flux:link>
           </div>
-        </div>
-      </div>
+        </form>
+      </flux:card>
+
+      <flux:text class="mt-6 text-center text-sm">
+        Don't have an account? <flux:link href="{{ url('/register') }}">Register for free</flux:link>
+      </flux:text>
     </div>
   </div>
 @endsection
