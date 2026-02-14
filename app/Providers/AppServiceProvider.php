@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Map;
 use App\Models\Theme;
-use Illuminate\Pagination\Paginator;
+use App\Policies\MapPolicy;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -17,7 +19,10 @@ class AppServiceProvider extends ServiceProvider
    */
   public function register()
   {
-    //
+    $this->app->booting(function () {
+      $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+      $loader->alias('EzTrans', \App\Facades\EzTranslator::class);
+    });
   }
 
   /**
@@ -27,7 +32,7 @@ class AppServiceProvider extends ServiceProvider
    */
   public function boot()
   {
-    Paginator::useBootstrap();
+    Gate::policy(Map::class, MapPolicy::class);
 
     if (Schema::hasTable('themes'))
     {

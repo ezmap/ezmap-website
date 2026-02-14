@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Auth;
 */
 
 
-Route::get('/', [GeneralController::class, "index"])->middleware(['guest', 'pjax'])->name('index');
+Route::get('/', [GeneralController::class, "index"])->middleware(['guest'])->name('index');
 Route::get('feedback', function () {
   return view('feedback');
 });

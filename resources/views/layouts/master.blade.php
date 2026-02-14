@@ -7,8 +7,8 @@
 
     <link rel="icon" type="image/png" href="{{ url('favicon.png') }}"/>
     <link href='https://fonts.googleapis.com/css?family=Roboto%7CNoto+Sans%7CNoto+Serif%7CKanit%7CCutive+Mono%7CMaterial+Icons' rel='stylesheet' type='text/css'>
-    {!! htmlScriptTagJsApi() !!}
-    <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
+    {!! '' !!}{{-- recaptcha script tag placeholder --}}
+    <link rel="stylesheet" href="/css/app.css">
 
   </head>
   <!-- Google tag (gtag.js) -->
@@ -101,7 +101,7 @@
         "/js/jquery.min.js",
         "/js/vue.min.js",
         "/js/keen-ui.min.js",
-        "{{ mix('/js/all.js') }}",
+        "/js/all.js",
         "/js/jquery-unveil.js",
         function () {
           go();
@@ -115,7 +115,7 @@
           $(window).scroll();
         });
         $('img').unveil(200);
-        @include('Alerts::alerts')
+        {{-- alerts placeholder --}}
       }
     </script>
 

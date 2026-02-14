@@ -1,0 +1,5 @@
+integrations:
+  forge:
+    ezmap.co:
+      server-id: 327847
+      site-id: 882624

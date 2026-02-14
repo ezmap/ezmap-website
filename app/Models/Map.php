@@ -32,9 +32,8 @@ class Map extends Model
       'heatmapLayer'  => 'object',
       'responsiveMap' => 'boolean',
       'embeddable'    => 'boolean',
+      'deleted_at'    => 'datetime',
   ];
-
-  protected $dates = ['deleted_at'];
 
   public function user()
   {
