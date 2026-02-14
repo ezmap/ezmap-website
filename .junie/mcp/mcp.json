@@ -1,0 +1,11 @@
+{
+    "mcpServers": {
+        "laravel-boost": {
+            "command": "/Users/billythekid/Library/Application Support/Herd/bin/php84",
+            "args": [
+                "/Users/billythekid/github/ezmap-website/artisan",
+                "boost:mcp"
+            ]
+        }
+    }
+}

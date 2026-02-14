@@ -1,47 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>{{ $exception->getStatusCode() }}</title>
-
-    <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
-
-    <style>
-        html, body {
-            height: 100%;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            color: #B0BEC5;
-            display: table;
-            font-weight: 100;
-            font-family: 'Lato', sans-serif;
-        }
-
-        .container {
-            text-align: center;
-            display: table-cell;
-            vertical-align: middle;
-        }
-
-        .content {
-            text-align: center;
-            display: inline-block;
-        }
-
-        .title {
-            font-size: 72px;
-            margin-bottom: 40px;
-        }
-    </style>
-</head>
-<body>
-<div class="container">
-    <div class="content">
-        <div class="title">{{ $exception->getMessage() }}</div>
-    </div>
-</div>
-</body>
-</html>
+@extends('layouts.master')
+@section('title', 'Server Error')
+@section('content')
+  <div class="flex flex-col items-center justify-center py-24 text-center">
+    <flux:heading size="xl" class="text-6xl! font-bold text-zinc-300 dark:text-zinc-700">500</flux:heading>
+    <flux:heading size="lg" class="mt-4">Something went wrong</flux:heading>
+    <flux:text class="mt-2">We're working on fixing this. Please try again later.</flux:text>
+    <flux:button variant="primary" href="{{ url('/') }}" class="mt-8">Go Home</flux:button>
+  </div>
+@endsection

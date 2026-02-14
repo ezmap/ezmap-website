@@ -13,8 +13,8 @@ return new class extends Migration {
   public function up()
   {
     Schema::table('maps', function (Blueprint $table) {
-      $table->longText('heatmap');
-      $table->longText('heatmapLayer');
+      $table->longText('heatmap')->default('[]');
+      $table->longText('heatmapLayer')->default('{}');
     });
   }
 

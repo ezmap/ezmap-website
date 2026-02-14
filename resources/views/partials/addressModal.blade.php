@@ -1,27 +1,10 @@
-<div class="modal fade modal-primary modal-scrollable" id="geocodemodal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">{{ ucwords(EzTrans::translate('addMarkerByAddress','add a marker by address')) }}</h4>
-            </div>
-            <div class="modal-body">
-                <div class="col-xs-12">
-                        <div class="form-group">
-                            <label for="address"></label>
-                            <textarea id="geocodeAddress" name="address" class="form-control" placeholder="{{ EzTrans::translate('addressOrPostcode',"Address/Postal Code etc.") }}" rows="6"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <ui-button icon="add" color="primary" v-on:click="geocodeAddress">{{ EzTrans::translate('addMarker',"add marker") }}</ui-button>
-                        </div>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-        </div>
+<flux:modal name="geocode-address" class="max-w-md">
+    <flux:heading>{{ ucwords(EzTrans::translate('addMarkerByAddress','add a marker by address')) }}</flux:heading>
+    <div class="mt-4 space-y-4">
+        <flux:textarea id="geocodeAddress" label="{{ ucwords(EzTrans::translate('address', 'Address')) }}" rows="4" placeholder="{{ EzTrans::translate('addressOrPostcode','Address/Postal Code etc.') }}" x-model="geocodeAddressText" />
     </div>
-</div>
-
-@push('scripts')
-@include('partials.scripts.geocodeform-js')
-@endpush
+    <div class="mt-6 flex justify-end gap-2">
+        <flux:button @click="Flux.modal('geocode-address').close()">{{ EzTrans::translate('cancel', 'Cancel') }}</flux:button>
+        <flux:button variant="primary" icon="plus" @click="geocodeAddress()">{{ EzTrans::translate('addMarker','add marker') }}</flux:button>
+    </div>
+</flux:modal>

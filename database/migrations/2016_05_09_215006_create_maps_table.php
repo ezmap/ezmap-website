@@ -16,7 +16,7 @@ return new class extends Migration {
       $table->increments('id');
       $table->integer('user_id')->unsigned()->index();
       $table->string('title')->default('Untitled');
-      $table->string('apiKey');
+      $table->string('apiKey')->default('');
       $table->string('mapContainer');
       $table->integer('width');
       $table->integer('height');

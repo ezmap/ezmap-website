@@ -1,71 +1,70 @@
-<p class="lead">{{ ucwords(EzTrans::help('howDoI.howDoI')) }}…</p>
-<ul class="list-unstyled">
-    <li id="hdi1">
-        <p class="lead">…{{ EzTrans::help('howDoI.findCoordinates') }}</p>
-        <p>
-            <ui-button raised color="primary" icon="add_location">
-                {{ EzTrans::translate('dropMarker') }}
-            </ui-button>
+<div class="mt-8">
+<flux:heading size="lg">{{ ucwords(EzTrans::help('howDoI.howDoI')) }}…</flux:heading>
+
+<div class="mt-6 space-y-8">
+    <div id="hdi1">
+        <flux:heading>…{{ EzTrans::help('howDoI.findCoordinates') }}</flux:heading>
+        <div class="mt-2 space-y-2 text-sm text-zinc-700 dark:text-zinc-300">
+          <p>
+            <flux:button variant="primary" size="sm" icon="map-pin">{{ EzTrans::translate('dropMarker') }}</flux:button>
             {{ EzTrans::help('howDoI.coordSteps.step1') }}
-        </p>
-        <p>
-            <ui-icon-button color="accent" icon="my_location"></ui-icon-button>
+          </p>
+          <p>
+            <flux:button size="xs" icon="viewfinder-circle" />
             {{ EzTrans::help('howDoI.coordSteps.step2') }}
-        </p>
-        <hr>
-    </li>
-    <li id="hdi2">
-        <p class="lead">…{{ EzTrans::help('howDoI.removeBrokenIcon') }}</p>
-        <p>{{ EzTrans::help('howDoI.brokenSteps.intro') }}
-        <ul>
+          </p>
+        </div>
+        <flux:separator class="mt-6" />
+    </div>
+    <div id="hdi2">
+        <flux:heading>…{{ EzTrans::help('howDoI.removeBrokenIcon') }}</flux:heading>
+        <flux:text class="mt-2">{{ EzTrans::help('howDoI.brokenSteps.intro') }}</flux:text>
+        <ul class="mt-2 space-y-2 text-sm text-zinc-700 dark:text-zinc-300 list-disc ml-5">
             <li>
-                <ui-icon-button color="accent" icon="place"></ui-icon-button>
+                <flux:button size="xs" icon="map-pin" />
                 {{ EzTrans::help('howDoI.brokenSteps.step1') }}
             </li>
             <li>
-                <ui-button color="danger" icon="delete">{{ EzTrans::translate('deleteIcon') }}</ui-button>
+                <flux:button variant="danger" size="sm" icon="trash">{{ EzTrans::translate('deleteIcon') }}</flux:button>
                 {{ EzTrans::help('howDoI.brokenSteps.step2') }}
             </li>
         </ul>
-        </p>
-        <hr>
-    </li>
-    <li id="hdi3">
-        <p class="lead">…{{ EzTrans::help('howDoI.reportBug') }}</p>
-        <p>{{ EzTrans::help('howDoI.bugIntro') }}</p>
-        @include('partials.feedbackForm')
-        <hr>
-    </li>
-    <li id="hdi4">
-        <p class="lead">…{{ EzTrans::help('howDoI.designTheme') }}</p>
-        <p><a href="https://snazzymaps.com/editor">Snazzy Maps {{ EzTrans::help('howDoI.design') }}</a></p>
-        <hr>
-    </li>
-    <li id="hdi5">
-        <p class="lead">…{{ EzTrans::help('howDoI.styleInfoWindow') }}</p>
-        <p>{{ EzTrans::help('howDoI.style.intro') }}</p>
-        <pre><code>/* --- */
-&lt;style>
-  #ez-map{min-height:150px;min-width:150px;height: 420px;width: 100%;}
+        <flux:separator class="mt-6" />
+    </div>
+    <div id="hdi3">
+        <flux:heading>…{{ EzTrans::help('howDoI.reportBug') }}</flux:heading>
+        <flux:text class="mt-2">{{ EzTrans::help('howDoI.bugIntro') }}</flux:text>
+        <div class="mt-4">
+          @include('partials.feedbackForm')
+        </div>
+        <flux:separator class="mt-6" />
+    </div>
+    <div id="hdi4">
+        <flux:heading>…{{ EzTrans::help('howDoI.designTheme') }}</flux:heading>
+        <flux:text class="mt-2"><a href="https://snazzymaps.com/editor" class="underline">Snazzy Maps {{ EzTrans::help('howDoI.design') }}</a></flux:text>
+        <flux:separator class="mt-6" />
+    </div>
+    <div id="hdi5">
+        <flux:heading>…{{ EzTrans::help('howDoI.styleInfoWindow') }}</flux:heading>
+        <flux:text class="mt-2">{{ EzTrans::help('howDoI.style.intro') }}</flux:text>
+        <pre class="mt-3 p-4 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-sm overflow-x-auto"><code>&lt;style&gt;
   #ez-map .infoTitle{}
   #ez-map .infoWebsite{}
   #ez-map .infoEmail{}
   #ez-map .infoTelephone{}
   #ez-map .infoDescription{}
-&lt;/style>
-/* --- */
-</code></pre>
-        <p>…{{ EzTrans::help('howDoI.style.description') }}</p>
-        <div class="col-xs-offset-1">
-            <ul class="list-unstyled">
-                <li>infoTitle: h3</li>
-                <li>infoWebsite: span ({{ EzTrans::help('howDoI.style.containsAnchor') }})</li>
-                <li>infoEmail: span ({{ EzTrans::help('howDoI.style.containsAnchor') }})</li>
-                <li>infoTelephone: span</li>
-                <li>infoDescription: p</li>
+&lt;/style&gt;</code></pre>
+        <flux:text class="mt-2">…{{ EzTrans::help('howDoI.style.description') }}</flux:text>
+        <div class="ml-6 mt-2">
+            <ul class="space-y-1 text-sm text-zinc-600 dark:text-zinc-400">
+                <li><code class="text-xs">infoTitle</code>: h3</li>
+                <li><code class="text-xs">infoWebsite</code>: span ({{ EzTrans::help('howDoI.style.containsAnchor') }})</li>
+                <li><code class="text-xs">infoEmail</code>: span ({{ EzTrans::help('howDoI.style.containsAnchor') }})</li>
+                <li><code class="text-xs">infoTelephone</code>: span</li>
+                <li><code class="text-xs">infoDescription</code>: p</li>
             </ul>
         </div>
-
-        <hr>
-    </li>
-</ul>
+        <flux:separator class="mt-6" />
+    </div>
+</div>
+</div>

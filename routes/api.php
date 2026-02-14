@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,5 +16,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::post('api/{email}/{apikey}/getmaps', 'ApiController@getMaps')->name('api.getMaps');
-Route::post('api/{email}/{apikey}/getmapcode/{map}', 'ApiController@getMapCode')->name('api.getMap');
+Route::post('{email}/{apikey}/getmaps', [ApiController::class, 'getMaps'])->name('api.getMaps');
+Route::post('{email}/{apikey}/getmapcode/{map}', [ApiController::class, 'getMapCode'])->name('api.getMap');

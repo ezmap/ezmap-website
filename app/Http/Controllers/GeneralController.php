@@ -21,7 +21,6 @@ class GeneralController extends Controller
             'email'                => 'required|email',
             'feedback'             => 'required',
             'subject'              => 'required',
-            'g-recaptcha-response' => 'required|recaptcha',
         ]);
 
         $name     = $request->input('name');
@@ -39,7 +38,7 @@ class GeneralController extends Controller
         {
             return response()->json(['type' => 'success', 'title' => 'Thank You', 'text' => "Your feedback was sent."]);
         }
-        alert()->success('Thank You', "Your feedback was sent.");
+        session()->flash('success', 'Thank you! Your feedback was sent.');
 
         return redirect()->back();
     }
