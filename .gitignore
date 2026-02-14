@@ -13,3 +13,4 @@ yarn-error.log
 .env.backup
 .phpunit.result.cache
 auth.json
+.vite/
