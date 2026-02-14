@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-Kh8PpNVQ.css",
+    "file": "assets/app-uvu7N_Dg.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -8,6 +8,12 @@
     "file": "assets/app-l0sNRNKZ.js",
     "name": "app",
     "src": "resources/js/app.js",
+    "isEntry": true
+  },
+  "resources/js/map-editor.js": {
+    "file": "assets/map-editor-DPh9nnc5.js",
+    "name": "map-editor",
+    "src": "resources/js/map-editor.js",
     "isEntry": true
   }
 }

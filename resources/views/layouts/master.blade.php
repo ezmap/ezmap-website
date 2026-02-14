@@ -45,19 +45,19 @@
 
       @auth
         <flux:dropdown position="bottom" align="end">
-          <flux:button variant="ghost" icon-trailing="chevron-down">{{ Auth::user()->name }}</flux:button>
+          <flux:button variant="ghost" icon:trailing="chevron-down">{{ Auth::user()->name }}</flux:button>
 
-          <flux:menu>
-            <flux:menu.item href="{{ url('map') }}" icon="map">My Maps</flux:menu.item>
+          <flux:navmenu>
+            <flux:navmenu.item href="{{ url('map') }}" icon="map">My Maps</flux:navmenu.item>
             @if (Auth::user()->isAdmin || session()->has('stealth'))
-              <flux:menu.item href="{{ url('admin') }}" icon="cog-6-tooth">Admin</flux:menu.item>
+              <flux:navmenu.item href="{{ url('admin') }}" icon="cog-6-tooth">Admin</flux:navmenu.item>
             @endif
             @if(session()->has('stealth'))
-              <flux:menu.item href="{{ route('unstealth') }}" icon="eye-slash">Un-stealth</flux:menu.item>
+              <flux:navmenu.item href="{{ route('unstealth') }}" icon="eye-slash">Un-stealth</flux:navmenu.item>
             @endif
-            <flux:menu.separator />
-            <flux:menu.item href="{{ url('/logout') }}" icon="arrow-right-start-on-rectangle">{{ ucwords(EzTrans::translate("logout")) }}</flux:menu.item>
-          </flux:menu>
+            <flux:navmenu.separator />
+            <flux:navmenu.item href="{{ url('/logout') }}" icon="arrow-right-start-on-rectangle">{{ ucwords(EzTrans::translate("logout")) }}</flux:navmenu.item>
+          </flux:navmenu>
         </flux:dropdown>
       @else
         <flux:navbar class="-mb-px max-lg:hidden">
@@ -87,6 +87,9 @@
       @auth
         <flux:navlist variant="outline">
           <flux:navlist.item href="{{ url('map') }}" icon="map">My Maps</flux:navlist.item>
+          @if (Auth::user()->isAdmin || session()->has('stealth'))
+            <flux:navlist.item href="{{ url('admin') }}" icon="cog-6-tooth">Admin</flux:navlist.item>
+          @endif
           <flux:navlist.item href="{{ url('/logout') }}" icon="arrow-right-start-on-rectangle">{{ ucwords(EzTrans::translate("logout")) }}</flux:navlist.item>
         </flux:navlist>
       @else
@@ -97,69 +100,41 @@
       @endauth
     </flux:sidebar>
 
-    {{-- Flash messages --}}
-    @if(session('success'))
-      <div class="mx-auto max-w-7xl px-4 pt-4">
-        <flux:callout variant="success" icon="check-circle" class="mb-0" :text="session('success')" />
-      </div>
-    @endif
-    @if(session('error'))
-      <div class="mx-auto max-w-7xl px-4 pt-4">
-        <flux:callout variant="danger" icon="exclamation-triangle" class="mb-0" :text="session('error')" />
-      </div>
-    @endif
-
     {{-- Main Content --}}
-    <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <flux:main container>
+      {{-- Flash messages --}}
+      @if(session('success'))
+        <flux:callout variant="success" icon="check-circle" class="mb-6" :text="session('success')" />
+      @endif
+      @if(session('error'))
+        <flux:callout variant="danger" icon="exclamation-triangle" class="mb-6" :text="session('error')" />
+      @endif
+
       <div id="app">
         @yield('appcontent')
       </div>
       @yield('content')
-    </main>
+    </flux:main>
 
     {{-- Footer --}}
-    <footer class="border-t border-zinc-200 dark:border-zinc-700 mt-auto">
-      <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-        <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p class="text-sm text-zinc-500 dark:text-zinc-400">
-            &copy; {{ date('Y') }}
-            <a target="_blank" href="//billyfagan.co.uk" class="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400">Billy Fagan</a>.
-            This tool abides by Google's
-            <a target="_blank" href="https://www.google.co.uk/permissions/geoguidelines.html" class="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400">Permissions Guidelines</a>.
-          </p>
-          <div class="flex items-center gap-4">
-            <a target="_blank" href="https://twitter.com/ez_map" class="text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors">
-              <svg class="size-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-            </a>
-            <a target="_blank" href="https://github.com/ezmap/" class="text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors">
-              <svg class="size-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"/></svg>
-            </a>
-          </div>
+    <flux:footer container class="border-t border-zinc-200 dark:border-zinc-700">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 py-6">
+        <p class="text-sm text-zinc-500 dark:text-zinc-400">
+          &copy; {{ date('Y') }}
+          <a target="_blank" href="//billyfagan.co.uk" class="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400">Billy Fagan</a>.
+          This tool abides by Google's
+          <a target="_blank" href="https://www.google.co.uk/permissions/geoguidelines.html" class="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400">Permissions Guidelines</a>.
+        </p>
+        <div class="flex items-center gap-4">
+          <a target="_blank" href="https://twitter.com/ez_map" class="text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors">
+            <svg class="size-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a target="_blank" href="https://github.com/ezmap/" class="text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors">
+            <svg class="size-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"/></svg>
+          </a>
         </div>
       </div>
-    </footer>
-
-    {{-- Legacy script loading for map editor pages --}}
-    @hasSection('mapscripts')
-      <script type="text/javascript" src="/js/head.min.js"></script>
-      <script>
-        head.js("https://maps.googleapis.com/maps/api/js?key={{ env("GOOGLE_MAPS_API_KEY") }}&libraries=visualization",
-          "/js/jquery.min.js",
-          "/js/vue.min.js",
-          "/js/keen-ui.min.js",
-          "/js/all.js",
-          "/js/jquery-unveil.js",
-          function () {
-            go();
-          });
-      </script>
-      <script>
-        function go() {
-          @stack('scripts')
-          $('img').unveil(200);
-        }
-      </script>
-    @endif
+    </flux:footer>
 
     @stack('page-scripts')
   </body>
