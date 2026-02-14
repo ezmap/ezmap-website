@@ -187,36 +187,30 @@
           <div id="map" x-show="show" :style="{ height: styleObject.height, width: styleObject.width }"></div>
         </div>
 
-        {{-- Code output + copy --}}
-        <flux:accordion transition>
-          <flux:accordion.item>
-            <flux:accordion.heading>
-              <div class="flex items-center gap-2">
+        {{-- Code output --}}
+        <div class="space-y-3">
+          <div class="flex items-center gap-3">
+            <flux:heading size="base" level="3">
+              <span class="flex items-center gap-2">
                 <flux:icon.code-bracket variant="mini" class="text-zinc-400" />
                 {{ ucfirst(EzTrans::translate('mapCodeHeading', 'your map code')) }}
-              </div>
-            </flux:accordion.heading>
-            <flux:accordion.content>
-              <div class="space-y-3 py-2">
-                <div class="flex items-center gap-2">
-                  <flux:button variant="primary" size="sm" icon="clipboard-document" @click="copied()">
-                    {{ EzTrans::translate('copyCode', 'copy code') }}
-                  </flux:button>
-                  <template x-if="codeCopied">
-                    <flux:badge color="green" size="sm">
-                      <flux:icon.check variant="mini" class="mr-1" /> {{ ucfirst(EzTrans::translate('copySuccess', 'copied!')) }}
-                    </flux:badge>
-                  </template>
-                </div>
-                <pre class="resultcode rounded-lg bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 p-4 text-xs font-mono overflow-auto max-h-64 cursor-pointer select-none" @click="copied()" x-text="displayedCode"></pre>
-                <flux:text size="sm">
-                  {{ ucfirst(EzTrans::translate('testCode', "you can test your code is working by pasting it into")) }}
-                  <a target="_blank" href="http://codepen.io/pen/?editors=1001" class="text-accent-content underline">{{ EzTrans::translate("newCodePen", "a new HTML CodePen") }}</a>.
-                </flux:text>
-              </div>
-            </flux:accordion.content>
-          </flux:accordion.item>
-        </flux:accordion>
+              </span>
+            </flux:heading>
+            <flux:button variant="primary" size="sm" icon="clipboard-document" @click="copied()">
+              {{ EzTrans::translate('copyCode', 'copy code') }}
+            </flux:button>
+            <template x-if="codeCopied">
+              <flux:badge color="green" size="sm">
+                <flux:icon.check variant="mini" class="mr-1" /> {{ ucfirst(EzTrans::translate('copySuccess', 'copied!')) }}
+              </flux:badge>
+            </template>
+          </div>
+          <pre class="resultcode rounded-lg bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 p-4 text-xs font-mono overflow-auto max-h-64 cursor-pointer select-none" @click="copied()" x-text="displayedCode"></pre>
+          <flux:text size="sm">
+            {{ ucfirst(EzTrans::translate('testCode', "you can test your code is working by pasting it into")) }}
+            <a target="_blank" href="http://codepen.io/pen/?editors=1001" class="text-accent-content underline">{{ EzTrans::translate("newCodePen", "a new HTML CodePen") }}</a>.
+          </flux:text>
+        </div>
 
         {{-- Mobile-only theme browser --}}
         <div class="lg:hidden">
