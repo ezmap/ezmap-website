@@ -10,19 +10,19 @@
 
       <div class="mb-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
         <div class="flex items-start gap-3 rounded-lg border border-zinc-200 p-3 dark:border-zinc-700">
-          <flux:icon name="bookmark" variant="outline" class="mt-0.5 size-5 shrink-0 text-indigo-500" />
+          <flux:icon name="bookmark" variant="outline" class="mt-0.5 size-5 shrink-0 text-accent" />
           <flux:text class="text-sm">Save unlimited maps</flux:text>
         </div>
         <div class="flex items-start gap-3 rounded-lg border border-zinc-200 p-3 dark:border-zinc-700">
-          <flux:icon name="pencil-square" variant="outline" class="mt-0.5 size-5 shrink-0 text-indigo-500" />
+          <flux:icon name="pencil-square" variant="outline" class="mt-0.5 size-5 shrink-0 text-accent" />
           <flux:text class="text-sm">Edit maps anytime</flux:text>
         </div>
         <div class="flex items-start gap-3 rounded-lg border border-zinc-200 p-3 dark:border-zinc-700">
-          <flux:icon name="document-duplicate" variant="outline" class="mt-0.5 size-5 shrink-0 text-indigo-500" />
+          <flux:icon name="document-duplicate" variant="outline" class="mt-0.5 size-5 shrink-0 text-accent" />
           <flux:text class="text-sm">Duplicate maps as templates</flux:text>
         </div>
         <div class="flex items-start gap-3 rounded-lg border border-zinc-200 p-3 dark:border-zinc-700">
-          <flux:icon name="map-pin" variant="outline" class="mt-0.5 size-5 shrink-0 text-indigo-500" />
+          <flux:icon name="map-pin" variant="outline" class="mt-0.5 size-5 shrink-0 text-accent" />
           <flux:text class="text-sm">Custom marker pins</flux:text>
         </div>
       </div>

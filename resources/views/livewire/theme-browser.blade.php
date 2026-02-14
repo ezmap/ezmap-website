@@ -4,7 +4,7 @@
     <flux:text class="mt-1">
         {{ ucfirst(EzTrans::help("theme.showing")) }} {{ $themes->count() }} {{ EzTrans::help("theme.of") }} {{ $totalThemes }} {{ Str::plural(EzTrans::help("theme.theme"), $totalThemes) }}.
         @if($tag !== '' || $col !== '')
-            <button wire:click="clearFilters" class="underline text-indigo-600 hover:text-indigo-500 dark:text-indigo-400">{{ ucfirst(EzTrans::help("theme.all")) }}</button>
+            <button wire:click="clearFilters" class="underline text-accent-content hover:opacity-80">{{ ucfirst(EzTrans::help("theme.all")) }}</button>
         @endif
     </flux:text>
 
@@ -21,7 +21,7 @@
                 @if($tag !== $t)
                     <button wire:click="setTag('{{ $t }}')" class="text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white underline">{{ $t }}</button>
                 @else
-                    <span class="font-semibold text-indigo-600 dark:text-indigo-400">{{ $t }}</span>
+                    <span class="font-semibold text-accent-content">{{ $t }}</span>
                 @endif
                 @if(!$loop->last)
                     <span class="text-zinc-300 dark:text-zinc-700">|</span>
@@ -34,7 +34,7 @@
                 @if($col !== $c)
                     <button wire:click="setColor('{{ $c }}')" class="text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white underline">{{ $c }}</button>
                 @else
-                    <span class="font-semibold text-indigo-600 dark:text-indigo-400">{{ $c }}</span>
+                    <span class="font-semibold text-accent-content">{{ $c }}</span>
                 @endif
                 @if(!$loop->last)
                     <span class="text-zinc-300 dark:text-zinc-700">|</span>

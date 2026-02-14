@@ -22,7 +22,7 @@
           <flux:button type="submit" variant="ghost" icon="arrow-path" size="sm">Renew</flux:button>
         </div>
         <flux:text class="mt-2 text-xs text-zinc-500">
-          <strong>Note:</strong> This is NOT your <a href="/help#faq1" class="text-indigo-600 hover:text-indigo-500">Google Maps API Key</a>.
+          <strong>Note:</strong> This is NOT your <a href="/help#faq1" class="text-accent-content hover:underline">Google Maps API Key</a>.
           Renewing will disconnect existing external integrations.
         </flux:text>
       </form>
@@ -34,9 +34,9 @@
         <flux:heading size="lg">Saved Maps</flux:heading>
         <div class="mt-4 space-y-3">
           @forelse($maps as $map)
-            <div class="flex items-center gap-3 rounded-lg border border-zinc-200 bg-white p-4 transition-colors hover:border-indigo-300 dark:border-zinc-700 dark:bg-zinc-800 dark:hover:border-indigo-600">
-              <flux:icon name="map" class="size-5 shrink-0 text-indigo-500" />
-              <a href="{{ route('map.edit', $map) }}" class="flex-1 font-medium text-zinc-900 hover:text-indigo-600 dark:text-zinc-100 dark:hover:text-indigo-400">
+            <div class="flex items-center gap-3 rounded-lg border border-zinc-200 bg-white p-4 transition-colors hover:border-accent dark:border-zinc-700 dark:bg-zinc-800 dark:hover:border-accent">
+              <flux:icon name="map" class="size-5 shrink-0 text-accent" />
+              <a href="{{ route('map.edit', $map) }}" class="flex-1 font-medium text-zinc-900 hover:text-accent-content dark:text-zinc-100 dark:hover:text-accent-content">
                 {{ $map->title }}
               </a>
               <form action="{{ route('map.destroy', $map) }}" method="POST" onsubmit="return confirm('Delete this map?')">
