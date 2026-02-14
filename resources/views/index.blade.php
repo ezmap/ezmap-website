@@ -377,6 +377,10 @@
             </form>
           </div>
         @endif
+
+        {{-- Snazzy Maps Themes --}}
+        <flux:separator class="my-6" />
+        <livewire:theme-browser />
       </div>
 
       {{-- RIGHT PANEL: Preview & Code --}}
@@ -429,12 +433,6 @@
           </flux:text>
         </div>
       </div>
-    </div>
-
-    {{-- Snazzy Maps Themes --}}
-    <flux:separator class="my-8" />
-    <div class="max-w-sm">
-      <livewire:theme-browser />
     </div>
 
   </div>
