@@ -30,7 +30,7 @@
       <flux:sidebar.toggle class="lg:hidden mr-2" icon="bars-2" inset="left" />
 
       <flux:brand href="{{ url('/') }}">
-        <span class="text-xl font-bold bg-gradient-to-r from-fuchsia-600 to-pink-500 bg-clip-text text-transparent">EZ Map</span>
+        <span class="text-xl font-bold bg-gradient-to-r from-pink-500 to-fuchsia-500 bg-clip-text text-transparent">EZ Map</span>
       </flux:brand>
 
       <flux:navbar class="-mb-px max-lg:hidden ml-8">
@@ -70,7 +70,7 @@
     <flux:sidebar sticky collapsible="mobile" class="lg:hidden border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
       <flux:sidebar.header>
         <flux:brand href="{{ url('/') }}">
-          <span class="text-lg font-bold bg-gradient-to-r from-fuchsia-600 to-pink-500 bg-clip-text text-transparent">EZ Map</span>
+          <span class="text-lg font-bold bg-gradient-to-r from-pink-500 to-fuchsia-500 bg-clip-text text-transparent">EZ Map</span>
         </flux:brand>
         <flux:sidebar.collapse class="lg:hidden" />
       </flux:sidebar.header>
