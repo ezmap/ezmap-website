@@ -5,6 +5,18 @@
 
 @theme {
   --font-sans: 'Inter', sans-serif;
+
+  --color-accent: var(--color-fuchsia-500);
+  --color-accent-content: var(--color-fuchsia-600);
+  --color-accent-foreground: var(--color-white);
+}
+
+@layer theme {
+  .dark {
+    --color-accent: var(--color-fuchsia-500);
+    --color-accent-content: var(--color-fuchsia-400);
+    --color-accent-foreground: var(--color-white);
+  }
 }
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';

@@ -30,7 +30,7 @@
       <flux:sidebar.toggle class="lg:hidden mr-2" icon="bars-2" inset="left" />
 
       <flux:brand href="{{ url('/') }}">
-        <span class="text-xl font-bold bg-gradient-to-r from-indigo-600 to-violet-500 bg-clip-text text-transparent">EZ Map</span>
+        <span class="text-xl font-bold bg-gradient-to-r from-fuchsia-600 to-pink-500 bg-clip-text text-transparent">EZ Map</span>
       </flux:brand>
 
       <flux:navbar class="-mb-px max-lg:hidden ml-8">
@@ -70,7 +70,7 @@
     <flux:sidebar sticky collapsible="mobile" class="lg:hidden border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
       <flux:sidebar.header>
         <flux:brand href="{{ url('/') }}">
-          <span class="text-lg font-bold bg-gradient-to-r from-indigo-600 to-violet-500 bg-clip-text text-transparent">EZ Map</span>
+          <span class="text-lg font-bold bg-gradient-to-r from-fuchsia-600 to-pink-500 bg-clip-text text-transparent">EZ Map</span>
         </flux:brand>
         <flux:sidebar.collapse class="lg:hidden" />
       </flux:sidebar.header>
@@ -119,9 +119,9 @@
       <div class="flex flex-col sm:flex-row items-center justify-between gap-4 py-6">
         <p class="text-sm text-zinc-500 dark:text-zinc-400">
           &copy; {{ date('Y') }}
-          <a target="_blank" href="//billyfagan.co.uk" class="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400">Billy Fagan</a>.
+          <a target="_blank" href="//billyfagan.co.uk" class="text-accent-content hover:text-fuchsia-500 dark:text-accent-content">Billy Fagan</a>.
           This tool abides by Google's
-          <a target="_blank" href="https://www.google.co.uk/permissions/geoguidelines.html" class="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400">Permissions Guidelines</a>.
+          <a target="_blank" href="https://www.google.co.uk/permissions/geoguidelines.html" class="text-accent-content hover:text-fuchsia-500 dark:text-accent-content">Permissions Guidelines</a>.
         </p>
         <div class="flex items-center gap-4">
           <flux:dropdown position="top" align="end">
