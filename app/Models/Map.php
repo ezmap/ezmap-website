@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Services\MapCodeGenerator;
 
 class Map extends Model
 {
@@ -96,7 +97,7 @@ class Map extends Model
 
   public function code()
   {
-    return (new \App\Services\MapCodeGenerator($this))->generate();
+    return (new MapCodeGenerator($this))->generate();
   }
 
   public function getImage($extension = "png", $theme = null)

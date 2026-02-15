@@ -193,9 +193,16 @@ class MapCodeGenerator
             $lines[] = "  var marker{$i} = new google.maps.Marker({$markerJson});";
 
             if (!empty($marker->infoWindow->content)) {
-                $infoOpts = json_encode(['content' => $marker->infoWindow->content], JSON_UNESCAPED_SLASHES);
-                $lines[] = "  var infowindow{$i} = new google.maps.InfoWindow({$infoOpts});";
+                $infoOpts = [
+                    'content' => $marker->infoWindow->content,
+                    'map' => '%%RAW:map%%',
+                ];
+                $infoJson = json_encode($infoOpts, JSON_UNESCAPED_SLASHES);
+                $infoJson = preg_replace('/"%%RAW:(.+?)%%"/', '$1', $infoJson);
+
+                $lines[] = "  var infowindow{$i} = new google.maps.InfoWindow({$infoJson});";
                 $lines[] = "  marker{$i}.addListener('click', function() { infowindow{$i}.open(map, marker{$i}); });";
+                $lines[] = "  infowindow{$i}.close();";
             }
         }
 
