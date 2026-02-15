@@ -97,7 +97,7 @@ class Map extends Model
     $disableDoubleClickZoom = $this->mapOptions->doubleClickZoom ? 'false' : 'true';
     $hasGoogleMapId         = !empty($this->google_map_id);
     $styles                 = (!$hasGoogleMapId && $this->theme_id > 0) ? ",\n                \"styles\": " . $this->theme->json : '';
-    $googleMapId            = $hasGoogleMapId ? ",\n                \"mapId\": \"{$this->google_map_id}\"" : '';
+    $googleMapId            = $hasGoogleMapId ? ",\n                \"mapId\": \"{$this->google_map_id}\",\n                \"colorScheme\": \"FOLLOW_SYSTEM\"" : '';
     $output                 = "
     function init{$this->id}() {
             var mapOptions = {

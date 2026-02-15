@@ -45,6 +45,7 @@ document.addEventListener('alpine:init', () => {
         width: config.width ?? 560,
         themeApplied: config.themeApplied ?? false,
         googleMapId: config.googleMapId || '',
+        colorScheme: config.colorScheme || 'FOLLOW_SYSTEM',
         mapOptions: config.mapOptions || {},
         mapOpacity: 1,
         mapBackground: 'none',
@@ -171,6 +172,7 @@ document.addEventListener('alpine:init', () => {
             }
             if (this.googleMapId) {
                 optsClean.mapId = this.googleMapId;
+                optsClean.colorScheme = this.colorScheme;
             }
 
             const optsJson = JSON.stringify(optsClean);
@@ -330,7 +332,6 @@ document.addEventListener('alpine:init', () => {
         },
 
         googleMapIdChanged() {
-            console.log('googleMapIdChanged:', this.googleMapId);
             if (this.googleMapId) {
                 // Cloud styling overrides Snazzy themes
                 this.mapOptions.styles = [];
@@ -706,9 +707,9 @@ document.addEventListener('alpine:init', () => {
             const initOpts = { ...this.mapOptions };
             if (this.googleMapId) {
                 initOpts.mapId = this.googleMapId;
+                initOpts.colorScheme = this.colorScheme;
                 delete initOpts.styles;
             }
-            console.log('initMap with mapId:', this.googleMapId, 'opts:', JSON.stringify({mapId: initOpts.mapId, hasStyles: !!initOpts.styles}));
             this.map = new google.maps.Map(document.getElementById('map'), initOpts);
             this.geocoder = new google.maps.Geocoder();
             this.mapLoaded = true;

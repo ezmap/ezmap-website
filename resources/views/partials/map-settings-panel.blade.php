@@ -47,6 +47,14 @@
             </flux:text>
           </div>
 
+          <template x-if="googleMapId">
+            <flux:select label="Color Scheme" x-model="colorScheme" @change="googleMapIdChanged()">
+              <flux:select.option value="FOLLOW_SYSTEM">Follow System</flux:select.option>
+              <flux:select.option value="LIGHT">Light</flux:select.option>
+              <flux:select.option value="DARK">Dark</flux:select.option>
+            </flux:select>
+          </template>
+
           @if(!empty($map))
             <div class="flex items-center gap-2">
               <flux:switch name="embeddable" x-model="embeddable" x-on:change="optionschange()" label="{{ ucwords(EzTrans::translate('automaticUpdates','Automatic Updates')) }}" />
