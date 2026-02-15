@@ -23,6 +23,8 @@
             <li><a href="#faq8c" class="text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white">Gesture Handling</a></li>
             <li><a href="#faq8d" class="text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white">Advanced Options</a></li>
             <li><a href="#faq8e" class="text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white">Container Styling</a></li>
+            <li><a href="#faq8f" class="text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white">Data Import (KML/GeoJSON)</a></li>
+            <li><a href="#faq7a" class="text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white">Marker Clustering</a></li>
             <li><a href="#faq9" class="text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white">{{ ucwords(EzTrans::translate("saveMap")) }}</a></li>
             <li><a href="#faq10" class="text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white">{{ Str::plural(ucwords(EzTrans::help("theme.theme")),2) }}</a></li>
             <li><a href="#faq11" class="text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white">Cloud Styling</a></li>
