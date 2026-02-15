@@ -63,7 +63,7 @@
                 <img
                     src="{{ $theme->imageUrl }}"
                     alt="{{ $theme->name }}"
-                    @click="$dispatch('theme-selected', { id: '{{ $theme->id }}', json: {{ $theme->json }} })"
+                    onclick="window.dispatchEvent(new CustomEvent('theme-selected', { detail: { id: '{{ $theme->id }}', json: {{ $theme->json }} } }))"
                     class="mt-1 w-full rounded-lg border border-zinc-200 dark:border-zinc-700 cursor-pointer hover:ring-2 hover:ring-blue-500"
                     loading="lazy"
                 >
