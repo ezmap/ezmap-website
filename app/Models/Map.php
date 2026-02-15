@@ -24,6 +24,7 @@ class Map extends Model
       'mapOptions',
       'theme_id',
       'embeddable',
+      'google_map_id',
   ];
 
   protected $casts = [
@@ -94,7 +95,9 @@ class Map extends Model
   public function code()
   {
     $disableDoubleClickZoom = $this->mapOptions->doubleClickZoom ? 'false' : 'true';
-    $styles                 = ($this->theme_id > 0) ? ",\n                \"styles\": " . $this->theme->json : '';
+    $hasGoogleMapId         = !empty($this->google_map_id);
+    $styles                 = (!$hasGoogleMapId && $this->theme_id > 0) ? ",\n                \"styles\": " . $this->theme->json : '';
+    $googleMapId            = $hasGoogleMapId ? ",\n                \"mapId\": \"{$this->google_map_id}\"" : '';
     $output                 = "
     function init{$this->id}() {
             var mapOptions = {
@@ -112,7 +115,7 @@ class Map extends Model
                 \"scrollwheel\": {$this->mapOptions->scrollWheel},
                 \"streetViewControl\": {$this->mapOptions->showStreetViewControl},
                 \"zoom\": {$this->mapOptions->zoomLevel},
-                \"zoomControl\": {$this->mapOptions->showZoomControl}{$styles}
+                \"zoomControl\": {$this->mapOptions->showZoomControl}{$styles}{$googleMapId}
             };
       var mapElement = document.getElementById('{$this->mapContainer}');
       var map = new google.maps.Map(mapElement, mapOptions);";

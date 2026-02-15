@@ -49,6 +49,7 @@
       'savedHeatmap' => $hasMap ? $map->heatmap->toArray() : [],
       'savedHeatmapLayer' => null,
       'mapId' => $hasMap ? $map->id : null,
+      'googleMapId' => $hasMap ? ($map->google_map_id ?? '') : '',
       'storeUrl' => route('map.store'),
       'imageUrl' => ($hasMap && !empty($map->apiKey)) ? route('map.image', $map) : '',
       'kmlUrl' => $hasMap ? route('map.kml', $map) : '',
@@ -111,7 +112,14 @@
 
         {{-- Theme browser in left column on desktop --}}
         <flux:separator class="my-4" />
-        <livewire:theme-browser />
+        <template x-if="googleMapId">
+          <flux:callout variant="info" icon="information-circle" class="mb-3">
+            <flux:callout.text>Snazzy Maps themes are disabled while a Google Cloud Map ID is set. Remove the Map ID to use themes.</flux:callout.text>
+          </flux:callout>
+        </template>
+        <div :class="{ 'opacity-40 pointer-events-none': googleMapId }">
+          <livewire:theme-browser />
+        </div>
       </div>
 
       {{-- RIGHT PANEL: Map preview, toolbar, code --}}
@@ -215,7 +223,14 @@
         {{-- Mobile-only theme browser --}}
         <div class="lg:hidden">
           <flux:separator class="my-4" />
-          <livewire:theme-browser />
+          <template x-if="googleMapId">
+            <flux:callout variant="info" icon="information-circle" class="mb-3">
+              <flux:callout.text>Snazzy Maps themes are disabled while a Google Cloud Map ID is set.</flux:callout.text>
+            </flux:callout>
+          </template>
+          <div :class="{ 'opacity-40 pointer-events-none': googleMapId }">
+            <livewire:theme-browser />
+          </div>
         </div>
       </div>
     </div>

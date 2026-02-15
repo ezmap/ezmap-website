@@ -40,6 +40,13 @@
 
           <flux:input label="{{ ucwords(EzTrans::translate('mapContainerId','Map Container ID')) }}" name="mapContainer" type="text" placeholder="map" x-model="mapcontainer" />
 
+          <div>
+            <flux:input label="Google Cloud Map ID" name="google_map_id" type="text" placeholder="{{ EzTrans::translate('optional','Optional') }}" x-model="googleMapId" @change="googleMapIdChanged()" />
+            <flux:text size="sm" class="mt-1">
+              Apply a <a target="_blank" href="https://developers.google.com/maps/documentation/javascript/cloud-customization/map-styles" class="underline text-accent-content">cloud-based style</a> from your Google Cloud Console. Overrides Snazzy Maps themes.
+            </flux:text>
+          </div>
+
           @if(!empty($map))
             <div class="flex items-center gap-2">
               <flux:switch name="embeddable" x-model="embeddable" x-on:change="optionschange()" label="{{ ucwords(EzTrans::translate('automaticUpdates','Automatic Updates')) }}" />

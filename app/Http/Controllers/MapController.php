@@ -131,6 +131,7 @@ class MapController extends Controller
     $map->responsiveMap = $request->has('responsiveMap');
     $map->embeddable    = $request->has('embeddable');
     $map->theme_id      = $request->has('theme_id') ? $request->theme_id : $map->theme_id;
+    $map->google_map_id = $request->input('google_map_id') ?: null;
 
     $options         = (array)$map->mapOptions;
     $options         = $this->cleanMapOptions($request, $options);

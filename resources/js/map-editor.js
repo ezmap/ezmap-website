@@ -44,6 +44,7 @@ document.addEventListener('alpine:init', () => {
         show: true,
         width: config.width ?? 560,
         themeApplied: config.themeApplied ?? false,
+        googleMapId: config.googleMapId || '',
         mapOptions: config.mapOptions || {},
         mapOpacity: 1,
         mapBackground: 'none',
@@ -163,10 +164,13 @@ document.addEventListener('alpine:init', () => {
                 zoomControl: this.mapOptions.zoomControl
             };
 
-            // Remove styles if false
+            // Remove styles if false or if using cloud-based mapId
             const optsClean = { ...opts };
-            if (!optsClean.styles) {
+            if (!optsClean.styles || this.googleMapId) {
                 delete optsClean.styles;
+            }
+            if (this.googleMapId) {
+                optsClean.mapId = this.googleMapId;
             }
 
             const optsJson = JSON.stringify(optsClean);
@@ -225,6 +229,12 @@ document.addEventListener('alpine:init', () => {
                 this.currentTheme = { id: String(id), json: json };
                 this.mapOptions.styles = json;
                 this.themeApplied = true;
+                // Cloud Map ID and Snazzy themes are mutually exclusive
+                if (this.googleMapId) {
+                    this.googleMapId = '';
+                    this.initMap();
+                    return;
+                }
                 this.optionschange();
             });
 
@@ -317,6 +327,16 @@ document.addEventListener('alpine:init', () => {
             this.currentTheme = { id: '0' };
             this.themeApplied = false;
             this.optionschange();
+        },
+
+        googleMapIdChanged() {
+            if (this.googleMapId) {
+                // Cloud styling overrides Snazzy themes
+                this.mapOptions.styles = [];
+                this.currentTheme = { id: '0' };
+                this.themeApplied = false;
+            }
+            this.initMap();
         },
 
         markersLoop() {
@@ -682,7 +702,12 @@ document.addEventListener('alpine:init', () => {
 
         initMap() {
             this.mapOptions.center = new google.maps.LatLng(this.lat, this.lng);
-            this.map = new google.maps.Map(document.getElementById('map'), this.mapOptions);
+            const initOpts = { ...this.mapOptions };
+            if (this.googleMapId) {
+                initOpts.mapId = this.googleMapId;
+                delete initOpts.styles;
+            }
+            this.map = new google.maps.Map(document.getElementById('map'), initOpts);
             this.geocoder = new google.maps.Geocoder();
             this.mapLoaded = true;
             this.mapmoved();
