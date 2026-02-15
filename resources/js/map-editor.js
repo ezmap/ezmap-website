@@ -504,9 +504,6 @@ document.addEventListener('alpine:init', () => {
                 setOpts.restriction = null;
             }
 
-            // Clean up internal-only props before passing to Google
-            delete setOpts.backgroundColor;
-
             if (setOpts.controlSize) setOpts.controlSize = parseInt(setOpts.controlSize);
             if (setOpts.minZoom !== null && setOpts.minZoom !== '' && setOpts.minZoom !== undefined) {
                 setOpts.minZoom = parseInt(setOpts.minZoom);
@@ -811,35 +808,43 @@ document.addEventListener('alpine:init', () => {
 
             this.map = new google.maps.Map(document.getElementById('map'), initOpts);
             this.geocoder = new google.maps.Geocoder();
+            const isFirstLoad = !this.mapLoaded;
             this.mapLoaded = true;
             this.mapmoved();
 
-            // Load saved markers
-            if (this.savedMarkers && this.savedMarkers.length) {
-                for (let i = 0; i < this.savedMarkers.length; i++) {
-                    const savedMarker = this.savedMarkers[i];
-                    const marker = new google.maps.Marker({
-                        icon: savedMarker.icon,
-                        position: new google.maps.LatLng(savedMarker.lat, savedMarker.lng),
-                        map: this.map,
-                        draggable: true,
-                        title: savedMarker.title,
-                        infoWindow: savedMarker.infoWindow
-                    });
-                    if (savedMarker.infoWindow && savedMarker.infoWindow.content) {
-                        const infowindow = new google.maps.InfoWindow(savedMarker.infoWindow);
-                        this.addSavedInfoWindow(marker, infowindow);
+            if (isFirstLoad) {
+                // First load: create markers from saved data
+                if (this.savedMarkers && this.savedMarkers.length) {
+                    for (let i = 0; i < this.savedMarkers.length; i++) {
+                        const savedMarker = this.savedMarkers[i];
+                        const marker = new google.maps.Marker({
+                            icon: savedMarker.icon,
+                            position: new google.maps.LatLng(savedMarker.lat, savedMarker.lng),
+                            map: this.map,
+                            draggable: true,
+                            title: savedMarker.title,
+                            infoWindow: savedMarker.infoWindow
+                        });
+                        if (savedMarker.infoWindow && savedMarker.infoWindow.content) {
+                            const infowindow = new google.maps.InfoWindow(savedMarker.infoWindow);
+                            this.addSavedInfoWindow(marker, infowindow);
+                        }
+                        this.markers.push(marker);
                     }
-                    this.markers.push(marker);
                 }
-            }
 
-            // Load saved heatmap data
-            if (this.savedHeatmap && this.savedHeatmap.length) {
-                this.heatMapData = this.savedHeatmap;
-            }
-            if (this.savedHeatmapLayer) {
-                this.heatmapLayer = this.savedHeatmapLayer;
+                // Load saved heatmap data
+                if (this.savedHeatmap && this.savedHeatmap.length) {
+                    this.heatMapData = this.savedHeatmap;
+                }
+                if (this.savedHeatmapLayer) {
+                    this.heatmapLayer = this.savedHeatmapLayer;
+                }
+            } else {
+                // Re-init: re-attach existing markers to the new map instance
+                for (let i = 0; i < this.markers.length; i++) {
+                    this.markers[i].setMap(this.map);
+                }
             }
 
             // Initialize heatmap layer

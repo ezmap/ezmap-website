@@ -191,7 +191,7 @@
           </div>
 
           <div>
-            <flux:input label="Control Size" name="mapOptions[controlSize]" type="number" min="0" step="1" x-model="mapOptions.controlSize" @change="initMap()" description="Size of default UI controls in pixels. Leave at 0 for default." />
+            <flux:input label="Control Size" name="mapOptions[controlSize]" type="number" min="0" step="1" x-model="mapOptions.controlSize" @change="optionschange()" description="Size of default UI controls in pixels. Leave at 0 for default." />
           </div>
         </div>
       </flux:accordion.content>
@@ -297,7 +297,7 @@
           <flux:separator />
 
           <div>
-            <flux:input label="Background Color" name="mapOptions[backgroundColor]" type="text" x-model="mapOptions.backgroundColor" @change="initMap()" placeholder="#f0f0f0" description="Color shown while map tiles load." />
+            <flux:input label="Background Color" name="mapOptions[backgroundColor]" type="text" x-model="mapOptions.backgroundColor" @change="optionschange()" placeholder="#f0f0f0" description="Color shown while map tiles load." />
           </div>
 
           <flux:separator />
