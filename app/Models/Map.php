@@ -181,6 +181,18 @@ class Map extends Model
             };
       var mapElement = document.getElementById('{$this->mapContainer}');
       var map = new google.maps.Map(mapElement, mapOptions);";
+
+    // Data layers
+    if (filter_var($this->mapOptions->trafficLayer ?? false, FILTER_VALIDATE_BOOLEAN)) {
+        $output .= "\n      new google.maps.TrafficLayer().setMap(map);";
+    }
+    if (filter_var($this->mapOptions->transitLayer ?? false, FILTER_VALIDATE_BOOLEAN)) {
+        $output .= "\n      new google.maps.TransitLayer().setMap(map);";
+    }
+    if (filter_var($this->mapOptions->bicyclingLayer ?? false, FILTER_VALIDATE_BOOLEAN)) {
+        $output .= "\n      new google.maps.BicyclingLayer().setMap(map);";
+    }
+
     $output                 .= $this->markersLoop();
     $output                 .= $this->heatMapLoop();
     $output                 .= "\n      window.addEventListener('resize', function() { 

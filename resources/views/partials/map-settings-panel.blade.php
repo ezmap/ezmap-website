@@ -315,6 +315,15 @@
 
           <flux:separator />
 
+          <flux:subheading>Data Layers</flux:subheading>
+          <div class="grid grid-cols-1 gap-3">
+            <flux:switch name="mapOptions[trafficLayer]" x-model="mapOptions.trafficLayer" x-on:change="toggleLayer('traffic')" label="Traffic Layer" />
+            <flux:switch name="mapOptions[transitLayer]" x-model="mapOptions.transitLayer" x-on:change="toggleLayer('transit')" label="Transit Layer" />
+            <flux:switch name="mapOptions[bicyclingLayer]" x-model="mapOptions.bicyclingLayer" x-on:change="toggleLayer('bicycling')" label="Bicycling Layer" />
+          </div>
+
+          <flux:separator />
+
           <div>
             <input type="hidden" name="mapOptions[gestureHandling]" :value="mapOptions.gestureHandling">
             <flux:select label="Gesture Handling" x-model="mapOptions.gestureHandling" x-on:change="optionschange()" description="Controls how the map responds to touch/scroll gestures.">

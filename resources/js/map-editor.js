@@ -54,6 +54,11 @@ document.addEventListener('alpine:init', () => {
         containerBorderRadius: config.containerBorderRadius || '0',
         containerBorder: config.containerBorder || '',
 
+        // Data layers
+        trafficLayer: null,
+        transitLayer: null,
+        bicyclingLayer: null,
+
         // For new icon form
         newIconName: '',
         newIconUrl: '',
@@ -233,6 +238,10 @@ document.addEventListener('alpine:init', () => {
             if (optsClean.gestureHandling === 'auto') delete optsClean.gestureHandling;
             if (optsClean.heading === 0) delete optsClean.heading;
             if (optsClean.tilt === 0) delete optsClean.tilt;
+            // Layer toggles are handled separately, not as MapOptions
+            delete optsClean.trafficLayer;
+            delete optsClean.transitLayer;
+            delete optsClean.bicyclingLayer;
 
             let optsJson = JSON.stringify(optsClean);
             // Convert position strings to Google Maps enum references
@@ -249,6 +258,9 @@ document.addEventListener('alpine:init', () => {
             code += `    var mapOptions = ${optsJson};\n`;
             code += `    var mapElement = document.getElementById('${this.mapcontainer}');\n`;
             code += `    var map = new google.maps.Map(mapElement, mapOptions);\n`;
+            if (this.mapOptions.trafficLayer) code += `    new google.maps.TrafficLayer().setMap(map);\n`;
+            if (this.mapOptions.transitLayer) code += `    new google.maps.TransitLayer().setMap(map);\n`;
+            if (this.mapOptions.bicyclingLayer) code += `    new google.maps.BicyclingLayer().setMap(map);\n`;
             code += `    ${this.markersLoop()}${this.heatmapLoop()}\n`;
             code += `    ${this.responsiveOutput()}\n`;
             code += `  }\n`;
@@ -512,6 +524,24 @@ document.addEventListener('alpine:init', () => {
             this.lng = this.mapOptions.center.lng();
         },
 
+        toggleLayer(layerType) {
+            if (!this.mapLoaded) return;
+            const prop = layerType + 'Layer';
+            if (this.mapOptions[layerType + 'Layer']) {
+                if (!this[prop]) {
+                    const LayerClass = {
+                        traffic: google.maps.TrafficLayer,
+                        transit: google.maps.TransitLayer,
+                        bicycling: google.maps.BicyclingLayer,
+                    }[layerType];
+                    this[prop] = new LayerClass();
+                }
+                this[prop].setMap(this.map);
+            } else {
+                if (this[prop]) this[prop].setMap(null);
+            }
+        },
+
         mapzoomed() {
             this.mapOptions.zoom = this.map.getZoom();
         },
@@ -563,6 +593,11 @@ document.addEventListener('alpine:init', () => {
                 setOpts.mapTypeControlOptions = { style: setOpts.mapTypeControlOptions?.style ?? 0 };
             }
             delete setOpts.mapTypeControlPosition;
+
+            // Remove layer toggles — not valid MapOptions
+            delete setOpts.trafficLayer;
+            delete setOpts.transitLayer;
+            delete setOpts.bicyclingLayer;
 
             if (setOpts.controlSize) setOpts.controlSize = parseInt(setOpts.controlSize);
             if (setOpts.minZoom !== null && setOpts.minZoom !== '' && setOpts.minZoom !== undefined) {
@@ -882,6 +917,11 @@ document.addEventListener('alpine:init', () => {
             }
             delete initOpts.mapTypeControlPosition;
 
+            // Remove layer toggles — not valid MapOptions
+            delete initOpts.trafficLayer;
+            delete initOpts.transitLayer;
+            delete initOpts.bicyclingLayer;
+
             // Clean up optional numeric values
             if (initOpts.controlSize) initOpts.controlSize = parseInt(initOpts.controlSize);
             else delete initOpts.controlSize;
@@ -942,6 +982,10 @@ document.addEventListener('alpine:init', () => {
             this.heatmap.setOptions(this.heatmapLayer);
             this.heatmap.setMap(this.map);
 
+            // Activate data layers if enabled
+            for (const layerType of ['traffic', 'transit', 'bicycling']) {
+                this.toggleLayer(layerType);
+            }
             // Map event listeners
             google.maps.event.addListener(this.map, 'resize', () => this.centerchanged());
             google.maps.event.addListener(this.map, 'center_changed', () => this.mapmoved());
