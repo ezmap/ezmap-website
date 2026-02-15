@@ -197,6 +197,9 @@ class MapController extends Controller
     $options['trafficLayer']          = $request->has("mapOptions.trafficLayer") ? 'true' : 'false';
     $options['transitLayer']          = $request->has("mapOptions.transitLayer") ? 'true' : 'false';
     $options['bicyclingLayer']        = $request->has("mapOptions.bicyclingLayer") ? 'true' : 'false';
+    $options['kmlUrl']                = $request->input("mapOptions.kmlUrl", '');
+    $options['geoJsonUrl']            = $request->input("mapOptions.geoJsonUrl", '');
+    $options['markerClustering']      = $request->has("mapOptions.markerClustering") ? 'true' : 'false';
     $options['gestureHandling']       = $request->input("mapOptions.gestureHandling", 'auto');
     $options['controlSize']           = (int) $request->input("mapOptions.controlSize", 0);
     $options['minZoom']               = $request->input("mapOptions.minZoom", '');

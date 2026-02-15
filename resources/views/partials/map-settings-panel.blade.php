@@ -324,6 +324,21 @@
 
           <flux:separator />
 
+          <flux:subheading>Data Import</flux:subheading>
+          <div class="grid grid-cols-1 gap-3">
+            <flux:input label="KML/KMZ File URL" name="mapOptions[kmlUrl]" type="url" x-model="mapOptions.kmlUrl" @change="loadKmlLayer()" placeholder="https://example.com/data.kml" description="Public URL to a KML or KMZ file. Must be accessible by Google's servers." />
+            <flux:input label="GeoJSON File URL" name="mapOptions[geoJsonUrl]" type="url" x-model="mapOptions.geoJsonUrl" @change="loadGeoJsonLayer()" placeholder="https://example.com/data.geojson" description="URL to a GeoJSON file. Must be CORS-enabled or on the same domain." />
+          </div>
+
+          <flux:separator />
+
+          <flux:subheading>Marker Options</flux:subheading>
+          <div class="grid grid-cols-1 gap-3">
+            <flux:switch name="mapOptions[markerClustering]" x-model="mapOptions.markerClustering" label="Marker Clustering" description="Group nearby markers into clusters at lower zoom levels." />
+          </div>
+
+          <flux:separator />
+
           <div>
             <input type="hidden" name="mapOptions[gestureHandling]" :value="mapOptions.gestureHandling">
             <flux:select label="Gesture Handling" x-model="mapOptions.gestureHandling" x-on:change="optionschange()" description="Controls how the map responds to touch/scroll gestures.">

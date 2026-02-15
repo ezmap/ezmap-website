@@ -90,7 +90,7 @@ test('MapCodeGenerator and map-editor.js support the same data layers', function
     $php = getPhpSource();
     $js = getGeneratedCodeBlock();
 
-    $layers = ['TrafficLayer', 'TransitLayer', 'BicyclingLayer'];
+    $layers = ['TrafficLayer', 'TransitLayer', 'BicyclingLayer', 'KmlLayer', 'loadGeoJson', 'MarkerClusterer'];
 
     $missingInPhp = [];
     $missingInJs = [];
