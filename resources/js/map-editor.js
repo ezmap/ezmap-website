@@ -540,33 +540,28 @@ document.addEventListener('alpine:init', () => {
                 setOpts.restriction = null;
             }
 
-            // Resolve control position strings to enum values
+            // Resolve control position strings to enum values, or null to reset to default
             const resolvePos = (pos) => pos ? google.maps.ControlPosition[pos] : undefined;
-            if (this.mapOptions.fullscreenControlPosition) {
-                setOpts.fullscreenControlOptions = { position: resolvePos(this.mapOptions.fullscreenControlPosition) };
-            }
-            if (this.mapOptions.zoomControlPosition) {
-                setOpts.zoomControlOptions = { position: resolvePos(this.mapOptions.zoomControlPosition) };
-            }
-            if (this.mapOptions.streetViewControlPosition) {
-                setOpts.streetViewControlOptions = { position: resolvePos(this.mapOptions.streetViewControlPosition) };
-            }
-            if (this.mapOptions.rotateControlPosition) {
-                setOpts.rotateControlOptions = { position: resolvePos(this.mapOptions.rotateControlPosition) };
-            }
-            if (this.mapOptions.cameraControlPosition) {
-                setOpts.cameraControlOptions = { position: resolvePos(this.mapOptions.cameraControlPosition) };
+            const controlPairs = [
+                ['fullscreenControlPosition', 'fullscreenControlOptions'],
+                ['streetViewControlPosition', 'streetViewControlOptions'],
+                ['zoomControlPosition', 'zoomControlOptions'],
+                ['rotateControlPosition', 'rotateControlOptions'],
+                ['cameraControlPosition', 'cameraControlOptions'],
+            ];
+            for (const [posProp, optsProp] of controlPairs) {
+                if (this.mapOptions[posProp]) {
+                    setOpts[optsProp] = { position: resolvePos(this.mapOptions[posProp]) };
+                } else {
+                    setOpts[optsProp] = null;
+                }
+                delete setOpts[posProp];
             }
             if (this.mapOptions.mapTypeControlPosition) {
                 setOpts.mapTypeControlOptions = { ...setOpts.mapTypeControlOptions, position: resolvePos(this.mapOptions.mapTypeControlPosition) };
+            } else {
+                setOpts.mapTypeControlOptions = { style: setOpts.mapTypeControlOptions?.style ?? 0 };
             }
-
-            // Remove raw position strings — Google Maps only understands *ControlOptions
-            delete setOpts.fullscreenControlPosition;
-            delete setOpts.zoomControlPosition;
-            delete setOpts.streetViewControlPosition;
-            delete setOpts.rotateControlPosition;
-            delete setOpts.cameraControlPosition;
             delete setOpts.mapTypeControlPosition;
 
             if (setOpts.controlSize) setOpts.controlSize = parseInt(setOpts.controlSize);
