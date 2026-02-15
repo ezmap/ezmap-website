@@ -63,6 +63,7 @@ document.addEventListener('alpine:init', () => {
 
         // Reactive version counter — bump to trigger generatedCode re-evaluation
         _markerVersion: 0,
+        _clusterer: null,
 
         // For new icon form
         newIconName: '',
@@ -742,6 +743,7 @@ document.addEventListener('alpine:init', () => {
         removeMarker(item) {
             Alpine.raw(this.markers[item]).setMap(null);
             this.markers.splice(item, 1);
+            this.updateClustering();
         },
 
         removeAllMarkers() {
@@ -750,6 +752,25 @@ document.addEventListener('alpine:init', () => {
                     Alpine.raw(this.markers[i]).setMap(null);
                 }
                 this.markers = [];
+                this.updateClustering();
+            }
+        },
+
+        updateClustering() {
+            const map = Alpine.raw(this.map);
+            if (this._clusterer) {
+                const rawClusterer = Alpine.raw(this._clusterer);
+                rawClusterer.setMap(null);
+                this._clusterer = null;
+                // Clusterer's setMap(null) hides markers — force them all back
+                this.markers.forEach(m => Alpine.raw(m).setMap(map));
+            }
+            if (this.mapOptions.markerClustering && this.markers.length > 1 && typeof markerClusterer !== 'undefined') {
+                const rawMarkers = this.markers.map(m => Alpine.raw(m));
+                this._clusterer = new markerClusterer.MarkerClusterer({
+                    markers: rawMarkers,
+                    map: map,
+                });
             }
         },
 
@@ -826,6 +847,7 @@ document.addEventListener('alpine:init', () => {
                     endsRoutes: []
                 });
                 this.markers.push(marker);
+                this.updateClustering();
                 this.infoTitle = '';
                 this.infoEmail = '';
                 this.infoWebsite = '';
@@ -1020,6 +1042,7 @@ document.addEventListener('alpine:init', () => {
                         this.markers.push(marker);
                     }
                 }
+                this.updateClustering();
 
                 // Load saved heatmap data
                 if (this.savedHeatmap && this.savedHeatmap.length) {
@@ -1033,6 +1056,7 @@ document.addEventListener('alpine:init', () => {
                 for (let i = 0; i < this.markers.length; i++) {
                     Alpine.raw(this.markers[i]).setMap(this.map);
                 }
+                this.updateClustering();
             }
 
             // Initialize heatmap layer

@@ -481,7 +481,7 @@
                   <flux:button variant="danger" size="xs" icon="trash" @click.prevent="removeAllMarkers()">
                     {{ EzTrans::translate('deleteAllMarkers', 'delete all') }}
                   </flux:button>
-                  <flux:switch name="mapOptions[markerClustering]" x-model="mapOptions.markerClustering" label="Marker Clustering" description="Group nearby markers into clusters at lower zoom levels." />
+                  <flux:switch name="mapOptions[markerClustering]" x-model="mapOptions.markerClustering" @change="updateClustering()" label="Marker Clustering" description="Group nearby markers into clusters at lower zoom levels." />
                 </div>
               </template>
             </div>

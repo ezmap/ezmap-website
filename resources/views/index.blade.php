@@ -277,6 +277,7 @@
 
 @push('page-scripts')
   @vite('resources/js/map-editor.js')
+  <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
   <script async
     src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google.maps_api_key') }}&libraries=visualization&callback=_mapEditorInitCallback">
   </script>
