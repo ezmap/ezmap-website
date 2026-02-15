@@ -1,5 +1,35 @@
 {{-- Settings panel content — included in both mobile drawer and desktop inline --}}
 
+@php
+  // Determine which accordion sections have non-default values and should be expanded
+  $hasMap = isset($map) && $map->exists;
+
+  $dimNonDefault = $hasMap && (
+      $map->width != 560 ||
+      $map->height != 420 ||
+      !$map->responsiveMap ||
+      ($map->mapOptions->mapTypeId ?? 'roadmap') !== 'roadmap' ||
+      ($map->mapOptions->zoomLevel ?? 3) != 3
+  );
+
+  $controlsNonDefault = $hasMap && (
+      !($map->mapOptions->showMapTypeControl ?? true) ||
+      !($map->mapOptions->showFullScreenControl ?? true) ||
+      !($map->mapOptions->showStreetViewControl ?? true) ||
+      !($map->mapOptions->showZoomControl ?? true) ||
+      !($map->mapOptions->showScaleControl ?? true) ||
+      !($map->mapOptions->draggable ?? true) ||
+      !($map->mapOptions->doubleClickZoom ?? true) ||
+      !($map->mapOptions->scrollWheel ?? true) ||
+      !($map->mapOptions->keyboardShortcuts ?? true) ||
+      !($map->mapOptions->clickableIcons ?? true)
+  );
+
+  $hasMarkers = $hasMap && $map->markers && count($map->markers) > 0;
+  $hasCloudStyle = $hasMap && !empty($map->google_map_id);
+  $hasHeatmap = $hasMap && $map->heatmap && count($map->heatmap) > 0;
+@endphp
+
 @if (! Auth::check())
   <div class="mt-4 lg:mt-0">
     @include('partials.notLoggedInWarning')
@@ -57,7 +87,7 @@
     </flux:accordion.item>
 
     {{-- ====== DIMENSIONS & POSITION ====== --}}
-    <flux:accordion.item>
+    <flux:accordion.item :expanded="$dimNonDefault">
       <flux:accordion.heading>
         <div class="flex items-center gap-2">
           <flux:icon.arrows-pointing-out variant="mini" class="text-zinc-400" />
@@ -97,7 +127,7 @@
     </flux:accordion.item>
 
     {{-- ====== MAP CONTROLS ====== --}}
-    <flux:accordion.item>
+    <flux:accordion.item :expanded="$controlsNonDefault">
       <flux:accordion.heading>
         <div class="flex items-center gap-2">
           <flux:icon.adjustments-horizontal variant="mini" class="text-zinc-400" />
@@ -139,7 +169,7 @@
     </flux:accordion.item>
 
     {{-- ====== MARKERS ====== --}}
-    <flux:accordion.item>
+    <flux:accordion.item :expanded="$hasMarkers">
       <flux:accordion.heading>
         <div class="flex items-center gap-2">
           <flux:icon.map-pin variant="mini" class="text-zinc-400" />
@@ -210,7 +240,7 @@
     </flux:accordion.item>
 
     {{-- ====== CLOUD STYLING ====== --}}
-    <flux:accordion.item>
+    <flux:accordion.item :expanded="$hasCloudStyle">
       <flux:accordion.heading>
         <div class="flex items-center gap-2">
           <flux:icon.cloud variant="mini" class="text-zinc-400" />
@@ -241,7 +271,7 @@
     </flux:accordion.item>
 
     {{-- ====== HEATMAP ====== --}}
-    <flux:accordion.item>
+    <flux:accordion.item :expanded="$hasHeatmap">
       <flux:accordion.heading>
         <div class="flex items-center gap-2">
           <flux:icon.fire variant="mini" class="text-zinc-400" />
