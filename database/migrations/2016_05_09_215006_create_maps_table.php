@@ -14,7 +14,7 @@ return new class extends Migration {
   {
     Schema::create('maps', function (Blueprint $table) {
       $table->increments('id');
-      $table->integer('user_id')->unsigned()->index();
+      $table->foreignId('user_id')->constrained()->cascadeOnDelete();
       $table->string('title')->default('Untitled');
       $table->string('apiKey')->default('');
       $table->string('mapContainer');
@@ -27,10 +27,6 @@ return new class extends Migration {
       $table->text('mapOptions');
       $table->integer('theme_id')->default(0);
       $table->timestamps();
-
-      $table->foreign('user_id')
-          ->references('id')->on('users')
-          ->onDelete('cascade');
 
 
     });

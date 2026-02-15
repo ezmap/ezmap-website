@@ -10,7 +10,7 @@ if (firstLoad)
 
   head.appendChild(gmapscript);
 }
-var css = '#{{ $map->mapContainer }}{min-height: 150px;min-width: 150px;width: {{ $map->responsiveMap ? "100%" : "{$map->width}px"}};height: {{ $map->height }}px;}';
+var css = '#{{ $map->mapContainer }}{min-height: 150px;min-width: 150px;width: {{ $map->responsiveMap ? "100%" : "{$map->width}px"}};height: {{ $map->height }}px;{{ ($map->container_border_radius ?? '0') !== '0' ? "border-radius: {$map->container_border_radius}px; overflow: hidden;" : '' }}{{ !empty($map->container_border) ? "border: {$map->container_border};" : '' }}';
 var style = document.createElement('style');
 style.type = 'text/css';
 if (style.styleSheet){

@@ -8,7 +8,7 @@
   $config = [
       'apikey' => $hasMap ? ($map->apiKey ?? '') : '',
       'currentTheme' => ['id' => (string) ($hasMap ? ($map->theme_id ?? '0') : '0')],
-      'doubleClickZoom' => (bool) ($opts->doubleClickZoom ?? true),
+      'doubleClickZoom' => filter_var($opts->doubleClickZoom ?? true, FILTER_VALIDATE_BOOLEAN),
       'embeddable' => $hasMap && $map->embeddable,
       'height' => (int) ($hasMap ? ($map->height ?? 420) : 420),
       'width' => (int) ($hasMap ? ($map->width ?? 560) : 560),
@@ -29,26 +29,52 @@
           ['mapTypeId' => 'hybrid', 'text' => ucwords(EzTrans::translate('mapType.hybrid', 'satellite with labels'))],
       ],
       'mapOptions' => [
-          'clickableIcons' => (bool) ($opts->clickableIcons ?? true),
-          'disableDoubleClickZoom' => !(bool) ($opts->doubleClickZoom ?? true),
-          'draggable' => (bool) ($opts->draggable ?? true),
-          'fullscreenControl' => (bool) ($opts->showFullScreenControl ?? true),
-          'keyboardShortcuts' => (bool) ($opts->keyboardShortcuts ?? true),
-          'mapTypeControl' => (bool) ($opts->showMapTypeControl ?? true),
+          'backgroundColor' => $opts->backgroundColor ?? '',
+          'clickableIcons' => filter_var($opts->clickableIcons ?? true, FILTER_VALIDATE_BOOLEAN),
+          'controlSize' => (int) ($opts->controlSize ?? 0),
+          'disableDoubleClickZoom' => !filter_var($opts->doubleClickZoom ?? true, FILTER_VALIDATE_BOOLEAN),
+          'draggable' => filter_var($opts->draggable ?? true, FILTER_VALIDATE_BOOLEAN),
+          'fullscreenControl' => filter_var($opts->showFullScreenControl ?? true, FILTER_VALIDATE_BOOLEAN),
+          'gestureHandling' => $opts->gestureHandling ?? 'auto',
+          'heading' => (int) ($opts->heading ?? 0),
+          'keyboardShortcuts' => filter_var($opts->keyboardShortcuts ?? true, FILTER_VALIDATE_BOOLEAN),
+          'mapTypeControl' => filter_var($opts->showMapTypeControl ?? true, FILTER_VALIDATE_BOOLEAN),
           'mapTypeControlOptions' => ['style' => (int) ($opts->mapTypeControlStyle ?? 0)],
           'mapTypeId' => $opts->mapTypeId ?? 'roadmap',
-          'rotateControl' => true,
-          'scaleControl' => (bool) ($opts->showScaleControl ?? true),
-          'scrollwheel' => (bool) ($opts->scrollWheel ?? true),
-          'streetViewControl' => (bool) ($opts->showStreetViewControl ?? true),
+          'maxZoom' => isset($opts->maxZoom) && $opts->maxZoom !== '' ? (int) $opts->maxZoom : null,
+          'minZoom' => isset($opts->minZoom) && $opts->minZoom !== '' ? (int) $opts->minZoom : null,
+          'restriction' => [
+              'enabled' => filter_var($opts->restrictionEnabled ?? false, FILTER_VALIDATE_BOOLEAN),
+              'strictBounds' => filter_var($opts->restrictionStrictBounds ?? false, FILTER_VALIDATE_BOOLEAN),
+              'south' => $opts->restrictionSouth ?? '',
+              'west' => $opts->restrictionWest ?? '',
+              'north' => $opts->restrictionNorth ?? '',
+              'east' => $opts->restrictionEast ?? '',
+          ],
+          'fullscreenControlPosition' => $opts->fullscreenControlPosition ?? '',
+          'zoomControlPosition' => $opts->zoomControlPosition ?? '',
+          'streetViewControlPosition' => $opts->streetViewControlPosition ?? '',
+          'rotateControlPosition' => $opts->rotateControlPosition ?? '',
+          'cameraControlPosition' => $opts->cameraControlPosition ?? '',
+          'mapTypeControlPosition' => $opts->mapTypeControlPosition ?? '',
+          'rotateControl' => filter_var($opts->rotateControl ?? true, FILTER_VALIDATE_BOOLEAN),
+          'cameraControl' => filter_var($opts->cameraControl ?? true, FILTER_VALIDATE_BOOLEAN),
+          'scaleControl' => filter_var($opts->showScaleControl ?? true, FILTER_VALIDATE_BOOLEAN),
+          'scrollwheel' => filter_var($opts->scrollWheel ?? true, FILTER_VALIDATE_BOOLEAN),
+          'streetViewControl' => filter_var($opts->showStreetViewControl ?? true, FILTER_VALIDATE_BOOLEAN),
           'styles' => ($hasMap && $map->theme_id != '0' && $map->theme) ? json_decode($map->theme->json, true) : false,
+          'tilt' => (int) ($opts->tilt ?? 0),
           'zoom' => (int) ($opts->zoomLevel ?? 3),
-          'zoomControl' => (bool) ($opts->showZoomControl ?? true),
+          'zoomControl' => filter_var($opts->showZoomControl ?? true, FILTER_VALIDATE_BOOLEAN),
       ],
       'savedMarkers' => $hasMap ? $map->markers->toArray() : [],
       'savedHeatmap' => $hasMap ? $map->heatmap->toArray() : [],
       'savedHeatmapLayer' => null,
       'mapId' => $hasMap ? $map->id : null,
+      'googleMapId' => $hasMap ? ($map->google_map_id ?? '') : '',
+      'colorScheme' => $hasMap ? ($opts->colorScheme ?? 'FOLLOW_SYSTEM') : 'FOLLOW_SYSTEM',
+      'containerBorderRadius' => $hasMap ? ($map->container_border_radius ?? '0') : '0',
+      'containerBorder' => $hasMap ? ($map->container_border ?? '') : '',
       'storeUrl' => route('map.store'),
       'imageUrl' => ($hasMap && !empty($map->apiKey)) ? route('map.image', $map) : '',
       'kmlUrl' => $hasMap ? route('map.kml', $map) : '',
@@ -111,7 +137,14 @@
 
         {{-- Theme browser in left column on desktop --}}
         <flux:separator class="my-4" />
-        <livewire:theme-browser />
+        <template x-if="googleMapId">
+          <flux:callout variant="info" icon="information-circle" class="mb-3">
+            <flux:callout.text>Snazzy Maps themes are disabled while a Google Cloud Map ID is set. Remove the Map ID to use themes.</flux:callout.text>
+          </flux:callout>
+        </template>
+        <div :class="{ 'opacity-40 pointer-events-none': googleMapId }">
+          <livewire:theme-browser />
+        </div>
       </div>
 
       {{-- RIGHT PANEL: Map preview, toolbar, code --}}
@@ -183,8 +216,14 @@
         @endif
 
         {{-- Map Preview --}}
-        <div id="map-container" class="rounded-xl border border-zinc-200 dark:border-zinc-700 overflow-hidden shadow-sm">
-          <div id="map" x-show="show" :style="{ height: styleObject.height, width: styleObject.width }"></div>
+        <div id="map-container" class="overflow-x-auto">
+          <div id="map" x-show="show" :style="{
+            height: styleObject.height,
+            width: styleObject.width,
+            overflow: 'hidden',
+            borderRadius: (containerBorderRadius && containerBorderRadius !== '0') ? containerBorderRadius + 'px' : '',
+            border: containerBorder || '',
+          }"></div>
         </div>
 
         {{-- Code output --}}
@@ -215,7 +254,14 @@
         {{-- Mobile-only theme browser --}}
         <div class="lg:hidden">
           <flux:separator class="my-4" />
-          <livewire:theme-browser />
+          <template x-if="googleMapId">
+            <flux:callout variant="info" icon="information-circle" class="mb-3">
+              <flux:callout.text>Snazzy Maps themes are disabled while a Google Cloud Map ID is set.</flux:callout.text>
+            </flux:callout>
+          </template>
+          <div :class="{ 'opacity-40 pointer-events-none': googleMapId }">
+            <livewire:theme-browser />
+          </div>
         </div>
       </div>
     </div>

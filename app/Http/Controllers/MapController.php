@@ -131,6 +131,9 @@ class MapController extends Controller
     $map->responsiveMap = $request->has('responsiveMap');
     $map->embeddable    = $request->has('embeddable');
     $map->theme_id      = $request->has('theme_id') ? $request->theme_id : $map->theme_id;
+    $map->google_map_id = $request->input('google_map_id') ?: null;
+    $map->container_border_radius = $request->input('containerBorderRadius', '0');
+    $map->container_border = $request->input('containerBorder', '');
 
     $options         = (array)$map->mapOptions;
     $options         = $this->cleanMapOptions($request, $options);
@@ -189,6 +192,28 @@ class MapController extends Controller
     $options['scrollWheel']           = $request->has("mapOptions.scrollWheel") ? 'true' : 'false';
     $options['showStreetViewControl'] = $request->has("mapOptions.showStreetViewControl") ? 'true' : 'false';
     $options['showZoomControl']       = $request->has("mapOptions.showZoomControl") ? 'true' : 'false';
+    $options['rotateControl']         = $request->has("mapOptions.rotateControl") ? 'true' : 'false';
+    $options['cameraControl']         = $request->has("mapOptions.cameraControl") ? 'true' : 'false';
+    $options['gestureHandling']       = $request->input("mapOptions.gestureHandling", 'auto');
+    $options['controlSize']           = (int) $request->input("mapOptions.controlSize", 0);
+    $options['minZoom']               = $request->input("mapOptions.minZoom", '');
+    $options['maxZoom']               = $request->input("mapOptions.maxZoom", '');
+    $options['heading']               = (int) $request->input("mapOptions.heading", 0);
+    $options['tilt']                  = (int) $request->input("mapOptions.tilt", 0);
+    $options['backgroundColor']       = $request->input("mapOptions.backgroundColor", '');
+    $options['restrictionEnabled']    = $request->has("mapOptions.restrictionEnabled") ? true : false;
+    $options['restrictionStrictBounds'] = $request->has("mapOptions.restrictionStrictBounds") ? true : false;
+    $options['restrictionSouth']      = $request->input("mapOptions.restrictionSouth", '');
+    $options['restrictionWest']       = $request->input("mapOptions.restrictionWest", '');
+    $options['restrictionNorth']      = $request->input("mapOptions.restrictionNorth", '');
+    $options['restrictionEast']       = $request->input("mapOptions.restrictionEast", '');
+    $options['fullscreenControlPosition'] = $request->input("mapOptions.fullscreenControlPosition", '');
+    $options['zoomControlPosition']       = $request->input("mapOptions.zoomControlPosition", '');
+    $options['streetViewControlPosition'] = $request->input("mapOptions.streetViewControlPosition", '');
+    $options['rotateControlPosition']     = $request->input("mapOptions.rotateControlPosition", '');
+    $options['cameraControlPosition']     = $request->input("mapOptions.cameraControlPosition", '');
+    $options['mapTypeControlPosition']    = $request->input("mapOptions.mapTypeControlPosition", '');
+    $options['colorScheme']               = $request->input("mapOptions.colorScheme", 'FOLLOW_SYSTEM');
 
     return $options;
   }

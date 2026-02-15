@@ -24,6 +24,9 @@ class Map extends Model
       'mapOptions',
       'theme_id',
       'embeddable',
+      'google_map_id',
+      'container_border_radius',
+      'container_border',
   ];
 
   protected $casts = [
@@ -93,8 +96,69 @@ class Map extends Model
 
   public function code()
   {
-    $disableDoubleClickZoom = $this->mapOptions->doubleClickZoom ? 'false' : 'true';
-    $styles                 = ($this->theme_id > 0) ? ",\n                \"styles\": " . $this->theme->json : '';
+    $disableDoubleClickZoom = filter_var($this->mapOptions->doubleClickZoom, FILTER_VALIDATE_BOOLEAN) ? 'false' : 'true';
+    $hasGoogleMapId         = !empty($this->google_map_id);
+    $styles                 = (!$hasGoogleMapId && $this->theme_id > 0) ? ",\n                \"styles\": " . $this->theme->json : '';
+    $colorScheme            = $this->mapOptions->colorScheme ?? 'FOLLOW_SYSTEM';
+    $googleMapId            = $hasGoogleMapId ? ",\n                \"mapId\": \"{$this->google_map_id}\",\n                \"colorScheme\": \"{$colorScheme}\"" : '';
+
+    // Optional advanced settings
+    $gestureHandling = ($this->mapOptions->gestureHandling ?? 'auto') !== 'auto'
+        ? ",\n                \"gestureHandling\": \"{$this->mapOptions->gestureHandling}\""
+        : '';
+    $controlSize = ($this->mapOptions->controlSize ?? 0) > 0
+        ? ",\n                \"controlSize\": {$this->mapOptions->controlSize}"
+        : '';
+    $minZoom = isset($this->mapOptions->minZoom) && $this->mapOptions->minZoom !== ''
+        ? ",\n                \"minZoom\": {$this->mapOptions->minZoom}"
+        : '';
+    $maxZoom = isset($this->mapOptions->maxZoom) && $this->mapOptions->maxZoom !== ''
+        ? ",\n                \"maxZoom\": {$this->mapOptions->maxZoom}"
+        : '';
+    $heading = ($this->mapOptions->heading ?? 0) != 0
+        ? ",\n                \"heading\": {$this->mapOptions->heading}"
+        : '';
+    $tilt = ($this->mapOptions->tilt ?? 0) != 0
+        ? ",\n                \"tilt\": {$this->mapOptions->tilt}"
+        : '';
+    $bgColor = !empty($this->mapOptions->backgroundColor ?? '')
+        ? ",\n                \"backgroundColor\": \"{$this->mapOptions->backgroundColor}\""
+        : '';
+    $rotateControl = filter_var($this->mapOptions->rotateControl ?? true, FILTER_VALIDATE_BOOLEAN) ? 'true' : 'false';
+    $cameraControl = filter_var($this->mapOptions->cameraControl ?? true, FILTER_VALIDATE_BOOLEAN) ? 'true' : 'false';
+
+    $restriction = '';
+    if (!empty($this->mapOptions->restrictionEnabled) &&
+        ($this->mapOptions->restrictionSouth ?? '') !== '' &&
+        ($this->mapOptions->restrictionWest ?? '') !== '' &&
+        ($this->mapOptions->restrictionNorth ?? '') !== '' &&
+        ($this->mapOptions->restrictionEast ?? '') !== '') {
+        $strictBounds = !empty($this->mapOptions->restrictionStrictBounds) ? 'true' : 'false';
+        $restriction = ",\n                \"restriction\": {\"latLngBounds\": {\"south\": {$this->mapOptions->restrictionSouth}, \"west\": {$this->mapOptions->restrictionWest}, \"north\": {$this->mapOptions->restrictionNorth}, \"east\": {$this->mapOptions->restrictionEast}}, \"strictBounds\": {$strictBounds}}";
+    }
+
+    // Control position options
+    $controlPositions = '';
+    $positionMap = [
+        'fullscreenControlPosition' => 'fullscreenControlOptions',
+        'zoomControlPosition' => 'zoomControlOptions',
+        'streetViewControlPosition' => 'streetViewControlOptions',
+        'rotateControlPosition' => 'rotateControlOptions',
+        'cameraControlPosition' => 'cameraControlOptions',
+    ];
+    foreach ($positionMap as $prop => $optKey) {
+        $pos = $this->mapOptions->$prop ?? '';
+        if (!empty($pos)) {
+            $controlPositions .= ",\n                \"{$optKey}\": {\"position\": google.maps.ControlPosition.{$pos}}";
+        }
+    }
+
+    // mapTypeControlOptions already has style, so merge position into it
+    $mapTypePos = $this->mapOptions->mapTypeControlPosition ?? '';
+    $mapTypeControlOptions = !empty($mapTypePos)
+        ? "{ \"style\" : {$this->mapOptions->mapTypeControlStyle}, \"position\": google.maps.ControlPosition.{$mapTypePos} }"
+        : "{ \"style\" : {$this->mapOptions->mapTypeControlStyle} }";
+
     $output                 = "
     function init{$this->id}() {
             var mapOptions = {
@@ -105,14 +169,15 @@ class Map extends Model
                 \"fullscreenControl\": {$this->mapOptions->showFullScreenControl},
                 \"keyboardShortcuts\": {$this->mapOptions->keyboardShortcuts},
                 \"mapTypeControl\": {$this->mapOptions->showMapTypeControl},
-                \"mapTypeControlOptions\": { style : {$this->mapOptions->mapTypeControlStyle} },
+                \"mapTypeControlOptions\": {$mapTypeControlOptions},
                 \"mapTypeId\": \"{$this->mapOptions->mapTypeId}\",
-                \"rotateControl\": true,
+                \"rotateControl\": {$rotateControl},
+                \"cameraControl\": {$cameraControl},
                 \"scaleControl\": {$this->mapOptions->showScaleControl},
                 \"scrollwheel\": {$this->mapOptions->scrollWheel},
                 \"streetViewControl\": {$this->mapOptions->showStreetViewControl},
                 \"zoom\": {$this->mapOptions->zoomLevel},
-                \"zoomControl\": {$this->mapOptions->showZoomControl}{$styles}
+                \"zoomControl\": {$this->mapOptions->showZoomControl}{$styles}{$googleMapId}{$gestureHandling}{$controlSize}{$minZoom}{$maxZoom}{$heading}{$tilt}{$bgColor}{$restriction}{$controlPositions}
             };
       var mapElement = document.getElementById('{$this->mapContainer}');
       var map = new google.maps.Map(mapElement, mapOptions);";

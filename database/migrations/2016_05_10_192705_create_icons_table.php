@@ -14,14 +14,10 @@ return new class extends Migration {
   {
     Schema::create('icons', function (Blueprint $table) {
       $table->increments('id');
-      $table->integer('user_id')->unsigned()->index()->default(1);
+      $table->foreignId('user_id')->default(1)->constrained()->cascadeOnDelete();
       $table->string('name');
       $table->string('url');
       $table->timestamps();
-
-      $table->foreign('user_id')
-          ->references('id')->on('users')
-          ->onDelete('cascade');
 
     });
   }
