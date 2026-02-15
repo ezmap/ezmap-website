@@ -13,7 +13,7 @@
     @endif
   >
     @csrf
-    <input type="hidden" name="subject" value="Bug Report">
+    <input type="hidden" name="subject" value="{{ $subject ?? 'Bug Report' }}">
     <input type="hidden" name="recaptcha_token" value="">
     <flux:input label="Your name" name="name" type="text" placeholder="Please enter your name" :value="old('name', Auth::check() ? Auth::user()->name : '')" required />
     <flux:input label="Your email" name="email" type="email" placeholder="Please enter your email address" :value="old('email', Auth::check() ? Auth::user()->email : '')" required />

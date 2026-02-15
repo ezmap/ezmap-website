@@ -26,14 +26,20 @@ class RecaptchaV3 implements ValidationRule
             return;
         }
 
-        $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
-            'secret'   => $secretKey,
-            'response' => $value,
-        ]);
+        try {
+            $response = Http::timeout(5)->asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+                'secret'   => $secretKey,
+                'response' => $value,
+            ]);
+        } catch (\Throwable) {
+            $fail('reCAPTCHA verification failed. Please try again.');
+            return;
+        }
 
         $result = $response->json();
 
-        if (!($result['success'] ?? false)
+        if (!is_array($result)
+            || !($result['success'] ?? false)
             || ($result['action'] ?? '') !== $this->action
             || ($result['score'] ?? 0) < $this->threshold
         ) {
