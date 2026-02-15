@@ -1,1 +1,0 @@
-{{-- Feedback form JavaScript removed — form now uses standard POST with Flux UI components --}}

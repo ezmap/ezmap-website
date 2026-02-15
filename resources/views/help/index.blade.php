@@ -17,7 +17,3 @@
       </div>
     </div>
 @endsection
-
-@push('page-scripts')
-@include('partials.scripts.feedbackform-js')
-@endpush
