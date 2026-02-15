@@ -13,7 +13,7 @@
         <div class="mt-3 grid grid-cols-4 gap-3">
             @foreach($userIcons as $icon)
                 <div id="youricon{{ $icon->id }}" class="text-center">
-                    <img class="w-full max-w-[64px] mx-auto rounded border border-zinc-200 dark:border-zinc-700 cursor-pointer hover:ring-2 hover:ring-blue-500 markericon" src="{{ $icon->url }}" alt="{{ $icon->name }}" title="{{ $icon->name }}" data-for-marker="0">
+                    <img class="w-full max-w-[64px] mx-auto rounded border border-zinc-200 dark:border-zinc-700 cursor-pointer hover:ring-2 hover:ring-blue-500 markericon" src="{{ $icon->url }}" alt="{{ $icon->name }}" title="{{ $icon->name }}" data-for-marker="0" @click="setMarkerIcon($event)">
                     <form action="{{ route('deleteIcon') }}" method="POST" class="mt-1">
                         @csrf
                         <input type="hidden" name="icon-id" value="{{ $icon->id }}">
@@ -29,11 +29,11 @@
     <flux:heading level="4">{{ ucwords(EzTrans::translate('ourIcons','our icons')) }}</flux:heading>
     <div class="mt-3 grid grid-cols-4 gap-3">
         <div class="text-center">
-            <img class="w-full max-w-[64px] mx-auto rounded border border-zinc-200 dark:border-zinc-700 cursor-pointer hover:ring-2 hover:ring-blue-500 markericon" src="https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi.png" alt="Standard Marker" data-for-marker="0">
+            <img class="w-full max-w-[64px] mx-auto rounded border border-zinc-200 dark:border-zinc-700 cursor-pointer hover:ring-2 hover:ring-blue-500 markericon" src="https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi.png" alt="Standard Marker" data-for-marker="0" @click="setMarkerIcon($event)">
         </div>
         @foreach($siteIcons as $icon)
             <div class="text-center">
-                <img class="w-full max-w-[64px] mx-auto rounded border border-zinc-200 dark:border-zinc-700 cursor-pointer hover:ring-2 hover:ring-blue-500 markericon" src="{{ $icon->url }}" alt="{{ $icon->name }}" title="{{ $icon->name }}" data-for-marker="0">
+                <img class="w-full max-w-[64px] mx-auto rounded border border-zinc-200 dark:border-zinc-700 cursor-pointer hover:ring-2 hover:ring-blue-500 markericon" src="{{ $icon->url }}" alt="{{ $icon->name }}" title="{{ $icon->name }}" data-for-marker="0" @click="setMarkerIcon($event)">
             </div>
         @endforeach
     </div>
