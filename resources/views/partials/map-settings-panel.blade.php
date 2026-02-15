@@ -9,7 +9,10 @@
       $map->height != 420 ||
       !$map->responsiveMap ||
       ($map->mapOptions->mapTypeId ?? 'roadmap') !== 'roadmap' ||
-      ($map->mapOptions->zoomLevel ?? 3) != 3
+      ($map->mapOptions->zoomLevel ?? 3) != 3 ||
+      ($map->container_border_radius ?? '0') !== '0' ||
+      !empty($map->container_border ?? '') ||
+      ($map->container_shadow ?? 'none') !== 'none'
   );
 
   $controlsNonDefault = $hasMap && (
@@ -133,6 +136,24 @@
               </flux:select>
             </div>
             <flux:input label="{{ ucwords(EzTrans::translate('zoomLevel','zoom level')) }}" name="mapOptions[zoomLevel]" type="number" placeholder="Zoom" x-model="mapOptions.zoom" @change="zoomchanged()" @keyup="debouncedCenterChanged()" />
+          </div>
+
+          <flux:separator />
+
+          <flux:subheading>Container Styling</flux:subheading>
+          <div class="grid grid-cols-3 gap-3">
+            <flux:input label="Border Radius" name="containerBorderRadius" type="number" min="0" step="1" x-model="containerBorderRadius" description="px" />
+            <div>
+              <input type="hidden" name="containerShadow" :value="containerShadow">
+              <flux:select label="Shadow" x-model="containerShadow">
+                <flux:select.option value="none">None</flux:select.option>
+                <flux:select.option value="sm">Small</flux:select.option>
+                <flux:select.option value="md">Medium</flux:select.option>
+                <flux:select.option value="lg">Large</flux:select.option>
+                <flux:select.option value="xl">X-Large</flux:select.option>
+              </flux:select>
+            </div>
+            <flux:input label="Border" name="containerBorder" type="text" x-model="containerBorder" placeholder="1px solid #ccc" />
           </div>
         </div>
       </flux:accordion.content>

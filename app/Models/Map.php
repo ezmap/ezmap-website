@@ -25,6 +25,9 @@ class Map extends Model
       'theme_id',
       'embeddable',
       'google_map_id',
+      'container_border_radius',
+      'container_border',
+      'container_shadow',
   ];
 
   protected $casts = [

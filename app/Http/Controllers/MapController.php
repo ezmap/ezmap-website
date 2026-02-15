@@ -132,6 +132,9 @@ class MapController extends Controller
     $map->embeddable    = $request->has('embeddable');
     $map->theme_id      = $request->has('theme_id') ? $request->theme_id : $map->theme_id;
     $map->google_map_id = $request->input('google_map_id') ?: null;
+    $map->container_border_radius = $request->input('containerBorderRadius', '0');
+    $map->container_border = $request->input('containerBorder', '');
+    $map->container_shadow = $request->input('containerShadow', 'none');
 
     $options         = (array)$map->mapOptions;
     $options         = $this->cleanMapOptions($request, $options);
