@@ -18,7 +18,7 @@ test('container styling is saved on update', function () {
             'markers' => json_encode([]),
             'heatmap' => json_encode([]),
             'heatmapLayer' => json_encode((object) []),
-            'mapOptions' => json_encode(['zoom' => 10, 'mapTypeId' => 'roadmap']),
+            'mapOptions' => ['zoom' => 10, 'mapTypeId' => 'roadmap'],
             'containerBorderRadius' => '12',
             'containerBorder' => '2px solid #333',
         ])->assertRedirect();
@@ -47,7 +47,7 @@ test('container styling defaults when not provided', function () {
             'markers' => json_encode([]),
             'heatmap' => json_encode([]),
             'heatmapLayer' => json_encode((object) []),
-            'mapOptions' => json_encode(['zoom' => 10, 'mapTypeId' => 'roadmap']),
+            'mapOptions' => ['zoom' => 10, 'mapTypeId' => 'roadmap'],
         ])->assertRedirect();
 
     $map->refresh();
@@ -101,7 +101,7 @@ test('google map id can be cleared', function () {
             'markers' => json_encode([]),
             'heatmap' => json_encode([]),
             'heatmapLayer' => json_encode((object) []),
-            'mapOptions' => json_encode(['zoom' => 10, 'mapTypeId' => 'roadmap']),
+            'mapOptions' => ['zoom' => 10, 'mapTypeId' => 'roadmap'],
             'google_map_id' => '',
         ])->assertRedirect();
 
@@ -215,7 +215,7 @@ test('advanced map options are saved correctly', function () {
                 'minZoom' => '3',
                 'maxZoom' => '18',
                 'heading' => '45',
-                'tilt' => '30',
+                'tilt' => '45',
                 'backgroundColor' => '#ff0000',
                 'fullscreenControlPosition' => 'TOP_RIGHT',
                 'zoomControlPosition' => 'LEFT_BOTTOM',
@@ -228,7 +228,7 @@ test('advanced map options are saved correctly', function () {
     expect($map->mapOptions->minZoom)->toBe('3');
     expect($map->mapOptions->maxZoom)->toBe('18');
     expect($map->mapOptions->heading)->toBe(45);
-    expect($map->mapOptions->tilt)->toBe(30);
+    expect($map->mapOptions->tilt)->toBe(45);
     expect($map->mapOptions->backgroundColor)->toBe('#ff0000');
     expect($map->mapOptions->fullscreenControlPosition)->toBe('TOP_RIGHT');
     expect($map->mapOptions->zoomControlPosition)->toBe('LEFT_BOTTOM');
