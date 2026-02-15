@@ -200,6 +200,10 @@
           <flux:separator />
 
           <flux:subheading>Control Positions</flux:subheading>
+          <p class="text-xs text-zinc-500 dark:text-zinc-400">
+            <flux:icon.information-circle variant="mini" class="inline size-3.5 -mt-0.5" />
+            Google requires its logo and copyright to remain visible at the bottom-left of the map. Controls placed at bottom-left may be offset slightly.
+          </p>
           <div class="grid grid-cols-2 gap-3">
             <template x-if="mapOptions.mapTypeControl">
               <div>
