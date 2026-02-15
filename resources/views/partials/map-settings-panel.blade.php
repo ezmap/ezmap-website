@@ -260,7 +260,7 @@
           </div>
 
           <template x-if="googleMapId">
-            <flux:select label="Color Scheme" x-model="colorScheme" @change="googleMapIdChanged()" description="This controls the Google Map's color scheme, independent of EZ Map's own theme.">
+            <flux:select label="Color Scheme" x-model="colorScheme" @change="googleMapIdChanged()" description="This controls the Google Map's color scheme, independent of your EZ Map appearance setting.">
               <flux:select.option value="FOLLOW_SYSTEM">Follow System</flux:select.option>
               <flux:select.option value="LIGHT">Light</flux:select.option>
               <flux:select.option value="DARK">Dark</flux:select.option>
