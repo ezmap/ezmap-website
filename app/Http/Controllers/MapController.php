@@ -224,7 +224,7 @@ class MapController extends Controller
     return $options;
   }
 
-  protected function sanitizeUrl(string $url): string
+  protected function sanitizeUrl(?string $url): string
   {
     $url = trim($url);
     if ($url === '') return '';
