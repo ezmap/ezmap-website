@@ -222,67 +222,93 @@
       </flux:accordion.heading>
       <flux:accordion.content>
         <div class="space-y-3 py-2">
-          <template x-if="heatMapData.length > 0">
-            <div class="space-y-3">
-              <flux:subheading>{{ ucwords(EzTrans::translate('heatmapLayerOptions.options', 'heatmap options')) }}</flux:subheading>
-              <div class="grid grid-cols-3 gap-2 items-end">
-                <flux:switch name="heatmapLayer[dissipating]" x-model="heatmapLayer.dissipating" x-on:change="heatmapChange()" label="{{ EzTrans::translate('heatmapLayerOptions.dissipating', 'dissipate') }}" />
-                <flux:input label="{{ EzTrans::translate('opacity') }}" name="heatmapLayer[opacity]" type="number" step="0.1" min="0.0" max="1.0" x-model="heatmapLayer.opacity" @change="heatmapChange()" />
-                <flux:input label="{{ EzTrans::translate('radius') }}" name="heatmapLayer[radius]" type="number" step="1" min="1" x-model="heatmapLayer.radius" @change="heatmapChange()" />
-              </div>
-              <flux:separator />
-            </div>
-          </template>
 
-          <flux:button variant="primary" size="sm" icon="fire" @click.prevent="addingHotSpot = true">
-            {{ EzTrans::translate('addHotSpot', 'add a hot spot') }}
-          </flux:button>
+          @php
+            $heatmapCutoff = new \DateTime('2027-02-01');
+            $heatmapDisabled = now() >= $heatmapCutoff;
+          @endphp
 
-          <template x-if="addingHotSpot">
-            <flux:callout variant="info" icon="information-circle" class="!py-2 !text-xs">
-              <flux:callout.text>{{ EzTrans::translate('dropHotSpot', "Click the map where you want your hot spot!") }}</flux:callout.text>
+          @if($heatmapDisabled)
+            <flux:callout variant="danger" icon="exclamation-triangle">
+              <flux:callout.heading>Heatmap No Longer Available</flux:callout.heading>
+              <flux:callout.text>
+                Google has removed the Heatmap Layer from the Maps JavaScript API as of February 2027.
+                Existing maps with heatmap data will no longer display heatmaps.
+              </flux:callout.text>
             </flux:callout>
-          </template>
+          @else
+            <flux:callout variant="warning" icon="exclamation-triangle">
+              <flux:callout.heading>Heatmap Deprecation Notice</flux:callout.heading>
+              <flux:callout.text>
+                Google is removing the Heatmap Layer from the Maps JavaScript API.
+                This feature will stop working in February 2027.
+                <a href="https://developers.google.com/maps/documentation/javascript/heatmaplayer" target="_blank" class="underline">Learn more</a>
+              </flux:callout.text>
+            </flux:callout>
 
-          <template x-if="heatMapData.length > 0">
-            <div class="space-y-2">
-              <div class="overflow-x-auto">
-                <table class="w-full text-sm">
-                  <thead>
-                    <tr class="border-b border-zinc-200 dark:border-zinc-700">
-                      <th class="text-left py-1.5 pr-1 text-xs font-medium text-zinc-500">{{ EzTrans::translate('hotTitle', 'title') }}</th>
-                      <th class="text-left py-1.5 px-1 text-xs font-medium text-zinc-500">{{ EzTrans::translate('locationWeight', 'wt') }}</th>
-                      <th class="text-center py-1.5 px-1 text-xs font-medium text-zinc-500">⊕</th>
-                      <th class="text-center py-1.5 px-1 text-xs font-medium text-zinc-500">✕</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <template x-for="(hotspot, index) in heatMapData" :key="index">
-                      <tr class="border-b border-zinc-100 dark:border-zinc-800">
-                        <td class="py-1.5 pr-1">
-                          <input type="text" x-model="hotspot.title" class="w-full rounded border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-800 px-2 py-1 text-xs">
-                        </td>
-                        <td class="py-1.5 px-1">
-                          <input type="number" min="0" x-model="hotspot.weightedLocation.weight" @change="heatmapChange()" class="w-14 rounded border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-800 px-2 py-1 text-xs">
-                        </td>
-                        <td class="text-center py-1.5 px-1">
-                          <flux:button variant="ghost" size="xs" icon="viewfinder-circle" @click.prevent="centerOnHotSpot(index)" />
-                        </td>
-                        <td class="text-center py-1.5 px-1">
-                          <flux:button variant="danger" size="xs" icon="trash" @click.prevent="removeHotSpot(index)" />
-                        </td>
-                      </tr>
-                    </template>
-                  </tbody>
-                </table>
+            <template x-if="heatMapData.length > 0">
+              <div class="space-y-3">
+                <flux:subheading>{{ ucwords(EzTrans::translate('heatmapLayerOptions.options', 'heatmap options')) }}</flux:subheading>
+                <div class="grid grid-cols-3 gap-2 items-end">
+                  <flux:switch name="heatmapLayer[dissipating]" x-model="heatmapLayer.dissipating" x-on:change="heatmapChange()" label="{{ EzTrans::translate('heatmapLayerOptions.dissipating', 'dissipate') }}" />
+                  <flux:input label="{{ EzTrans::translate('opacity') }}" name="heatmapLayer[opacity]" type="number" step="0.1" min="0.0" max="1.0" x-model="heatmapLayer.opacity" @change="heatmapChange()" />
+                  <flux:input label="{{ EzTrans::translate('radius') }}" name="heatmapLayer[radius]" type="number" step="1" min="1" x-model="heatmapLayer.radius" @change="heatmapChange()" />
+                </div>
+                <flux:separator />
               </div>
-              <template x-if="heatMapData.length > 1">
-                <flux:button variant="danger" size="xs" icon="trash" @click.prevent="removeAllHotSpots()">
-                  {{ EzTrans::translate('deleteAllHotSpots', 'delete all') }}
-                </flux:button>
-              </template>
-            </div>
-          </template>
+            </template>
+
+            <flux:button variant="primary" size="sm" icon="fire" @click.prevent="addingHotSpot = true">
+              {{ EzTrans::translate('addHotSpot', 'add a hot spot') }}
+            </flux:button>
+
+            <template x-if="addingHotSpot">
+              <flux:callout variant="info" icon="information-circle" class="!py-2 !text-xs">
+                <flux:callout.text>{{ EzTrans::translate('dropHotSpot', "Click the map where you want your hot spot!") }}</flux:callout.text>
+              </flux:callout>
+            </template>
+
+            <template x-if="heatMapData.length > 0">
+              <div class="space-y-2">
+                <div class="overflow-x-auto">
+                  <table class="w-full text-sm">
+                    <thead>
+                      <tr class="border-b border-zinc-200 dark:border-zinc-700">
+                        <th class="text-left py-1.5 pr-1 text-xs font-medium text-zinc-500">{{ EzTrans::translate('hotTitle', 'title') }}</th>
+                        <th class="text-left py-1.5 px-1 text-xs font-medium text-zinc-500">{{ EzTrans::translate('locationWeight', 'wt') }}</th>
+                        <th class="text-center py-1.5 px-1 text-xs font-medium text-zinc-500">⊕</th>
+                        <th class="text-center py-1.5 px-1 text-xs font-medium text-zinc-500">✕</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <template x-for="(hotspot, index) in heatMapData" :key="index">
+                        <tr class="border-b border-zinc-100 dark:border-zinc-800">
+                          <td class="py-1.5 pr-1">
+                            <input type="text" x-model="hotspot.title" class="w-full rounded border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-800 px-2 py-1 text-xs">
+                          </td>
+                          <td class="py-1.5 px-1">
+                            <input type="number" min="0" x-model="hotspot.weightedLocation.weight" @change="heatmapChange()" class="w-14 rounded border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-800 px-2 py-1 text-xs">
+                          </td>
+                          <td class="text-center py-1.5 px-1">
+                            <flux:button variant="ghost" size="xs" icon="viewfinder-circle" @click.prevent="centerOnHotSpot(index)" />
+                          </td>
+                          <td class="text-center py-1.5 px-1">
+                            <flux:button variant="danger" size="xs" icon="trash" @click.prevent="removeHotSpot(index)" />
+                          </td>
+                        </tr>
+                      </template>
+                    </tbody>
+                  </table>
+                </div>
+                <template x-if="heatMapData.length > 1">
+                  <flux:button variant="danger" size="xs" icon="trash" @click.prevent="removeAllHotSpots()">
+                    {{ EzTrans::translate('deleteAllHotSpots', 'delete all') }}
+                  </flux:button>
+                </template>
+              </div>
+            </template>
+          @endif
+
         </div>
       </flux:accordion.content>
     </flux:accordion.item>
