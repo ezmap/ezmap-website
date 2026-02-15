@@ -58,9 +58,12 @@ document.addEventListener('alpine:init', () => {
         trafficLayer: null,
         transitLayer: null,
         bicyclingLayer: null,
+        kmlLayerObj: null,
+        geoJsonLoaded: false,
 
         // Reactive version counter — bump to trigger generatedCode re-evaluation
         _markerVersion: 0,
+        _clusterer: null,
 
         // For new icon form
         newIconName: '',
@@ -246,10 +249,13 @@ document.addEventListener('alpine:init', () => {
             if (optsClean.gestureHandling === 'auto') delete optsClean.gestureHandling;
             if (optsClean.heading === 0) delete optsClean.heading;
             if (optsClean.tilt === 0) delete optsClean.tilt;
-            // Layer toggles are handled separately, not as MapOptions
+            // Layer toggles and import URLs are handled separately, not as MapOptions
             delete optsClean.trafficLayer;
             delete optsClean.transitLayer;
             delete optsClean.bicyclingLayer;
+            delete optsClean.kmlUrl;
+            delete optsClean.geoJsonUrl;
+            delete optsClean.markerClustering;
 
             let optsJson = JSON.stringify(optsClean);
             // Convert position strings to Google Maps enum references
@@ -258,9 +264,13 @@ document.addEventListener('alpine:init', () => {
             // Convert mapTypeControlOptions.style from JSON string to numeric value
             optsJson = optsJson.replace(/"style":(\d+)/g, '"style":$1');
             const libs = this.heatMapData.length ? '&libraries=visualization' : '';
+            const clusterCdn = this.mapOptions.markerClustering && this.markers.length
+                ? `<script src='https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js'><\/script>\n`
+                : '';
 
             let code = `<!-- Google map code from EZ Map - https://ezmap.co -->\n`;
             code += `<script src='https://maps.googleapis.com/maps/api/js?key=${this.apikey}${libs}'><\/script>\n`;
+            code += clusterCdn;
             code += `<script>\n`;
             code += `  function init() {\n`;
             code += `    var mapOptions = ${optsJson};\n`;
@@ -269,7 +279,12 @@ document.addEventListener('alpine:init', () => {
             if (this.mapOptions.trafficLayer) code += `    new google.maps.TrafficLayer().setMap(map);\n`;
             if (this.mapOptions.transitLayer) code += `    new google.maps.TransitLayer().setMap(map);\n`;
             if (this.mapOptions.bicyclingLayer) code += `    new google.maps.BicyclingLayer().setMap(map);\n`;
+            if (this.mapOptions.kmlUrl) code += `    new google.maps.KmlLayer({url: ${JSON.stringify(this.mapOptions.kmlUrl)}, map: map}).setMap(map);\n`;
+            if (this.mapOptions.geoJsonUrl) code += `    map.data.loadGeoJson(${JSON.stringify(this.mapOptions.geoJsonUrl)});\n`;
             code += `    ${this.markersLoop()}${this.heatmapLoop()}\n`;
+            if (this.mapOptions.markerClustering && this.markers.length > 1) {
+                code += `    new markerClusterer.MarkerClusterer({markers: [${this.markers.map((_, i) => 'marker' + i).join(', ')}], map: map});\n`;
+            }
             code += `    ${this.responsiveOutput()}\n`;
             code += `  }\n`;
             code += `window.addEventListener('load', init);\n`;
@@ -554,6 +569,32 @@ document.addEventListener('alpine:init', () => {
             }
         },
 
+        loadKmlLayer() {
+            if (!this.mapLoaded) return;
+            if (this.kmlLayerObj) {
+                this.kmlLayerObj.setMap(null);
+                this.kmlLayerObj = null;
+            }
+            if (this.mapOptions.kmlUrl) {
+                this.kmlLayerObj = new google.maps.KmlLayer({
+                    url: this.mapOptions.kmlUrl,
+                    map: this.map,
+                });
+            }
+        },
+
+        loadGeoJsonLayer() {
+            if (!this.mapLoaded) return;
+            if (this.geoJsonLoaded) {
+                this.map.data.forEach(feature => this.map.data.remove(feature));
+                this.geoJsonLoaded = false;
+            }
+            if (this.mapOptions.geoJsonUrl) {
+                this.map.data.loadGeoJson(this.mapOptions.geoJsonUrl);
+                this.geoJsonLoaded = true;
+            }
+        },
+
         mapzoomed() {
             this.mapOptions.zoom = this.map.getZoom();
         },
@@ -606,10 +647,13 @@ document.addEventListener('alpine:init', () => {
             }
             delete setOpts.mapTypeControlPosition;
 
-            // Remove layer toggles — not valid MapOptions
+            // Remove layer toggles and import URLs — not valid MapOptions
             delete setOpts.trafficLayer;
             delete setOpts.transitLayer;
             delete setOpts.bicyclingLayer;
+            delete setOpts.kmlUrl;
+            delete setOpts.geoJsonUrl;
+            delete setOpts.markerClustering;
 
             if (setOpts.controlSize) setOpts.controlSize = parseInt(setOpts.controlSize);
             if (setOpts.minZoom !== null && setOpts.minZoom !== '' && setOpts.minZoom !== undefined) {
@@ -699,6 +743,7 @@ document.addEventListener('alpine:init', () => {
         removeMarker(item) {
             Alpine.raw(this.markers[item]).setMap(null);
             this.markers.splice(item, 1);
+            this.updateClustering();
         },
 
         removeAllMarkers() {
@@ -707,6 +752,25 @@ document.addEventListener('alpine:init', () => {
                     Alpine.raw(this.markers[i]).setMap(null);
                 }
                 this.markers = [];
+                this.updateClustering();
+            }
+        },
+
+        updateClustering() {
+            const map = Alpine.raw(this.map);
+            if (this._clusterer) {
+                const rawClusterer = Alpine.raw(this._clusterer);
+                rawClusterer.setMap(null);
+                this._clusterer = null;
+                // Clusterer's setMap(null) hides markers — force them all back
+                this.markers.forEach(m => Alpine.raw(m).setMap(map));
+            }
+            if (this.mapOptions.markerClustering && this.markers.length > 1 && typeof markerClusterer !== 'undefined') {
+                const rawMarkers = this.markers.map(m => Alpine.raw(m));
+                this._clusterer = new markerClusterer.MarkerClusterer({
+                    markers: rawMarkers,
+                    map: map,
+                });
             }
         },
 
@@ -783,6 +847,7 @@ document.addEventListener('alpine:init', () => {
                     endsRoutes: []
                 });
                 this.markers.push(marker);
+                this.updateClustering();
                 this.infoTitle = '';
                 this.infoEmail = '';
                 this.infoWebsite = '';
@@ -930,10 +995,13 @@ document.addEventListener('alpine:init', () => {
             }
             delete initOpts.mapTypeControlPosition;
 
-            // Remove layer toggles — not valid MapOptions
+            // Remove layer toggles and import URLs — not valid MapOptions
             delete initOpts.trafficLayer;
             delete initOpts.transitLayer;
             delete initOpts.bicyclingLayer;
+            delete initOpts.kmlUrl;
+            delete initOpts.geoJsonUrl;
+            delete initOpts.markerClustering;
 
             // Clean up optional numeric values
             if (initOpts.controlSize) initOpts.controlSize = parseInt(initOpts.controlSize);
@@ -974,6 +1042,7 @@ document.addEventListener('alpine:init', () => {
                         this.markers.push(marker);
                     }
                 }
+                this.updateClustering();
 
                 // Load saved heatmap data
                 if (this.savedHeatmap && this.savedHeatmap.length) {
@@ -987,6 +1056,7 @@ document.addEventListener('alpine:init', () => {
                 for (let i = 0; i < this.markers.length; i++) {
                     Alpine.raw(this.markers[i]).setMap(this.map);
                 }
+                this.updateClustering();
             }
 
             // Initialize heatmap layer
@@ -999,6 +1069,8 @@ document.addEventListener('alpine:init', () => {
             for (const layerType of ['traffic', 'transit', 'bicycling']) {
                 this.toggleLayer(layerType);
             }
+            this.loadKmlLayer();
+            this.loadGeoJsonLayer();
             // Map event listeners
             google.maps.event.addListener(this.map, 'resize', () => this.centerchanged());
             google.maps.event.addListener(this.map, 'center_changed', () => this.mapmoved());

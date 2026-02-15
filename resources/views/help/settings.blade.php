@@ -134,6 +134,18 @@
   <flux:separator class="mt-6" />
 </div>
 
+<div id="faq7a">
+  <flux:heading size="lg">Marker Clustering</flux:heading>
+  <flux:text class="mt-2">When you have two or more markers on your map, a "Marker Clustering" toggle appears in the Markers section. Enabling this groups nearby markers into numbered clusters at lower zoom levels, making dense maps much easier to read.</flux:text>
+  <div class="mt-4 space-y-3">
+    <flux:text>Clusters automatically split apart as users zoom in, revealing individual markers. The cluster icon displays the number of markers it contains.</flux:text>
+    <flux:callout icon="information-circle">
+      <flux:callout.text>Clustering uses the Google Maps MarkerClusterer library. The required script is automatically included in your generated map code when clustering is enabled.</flux:callout.text>
+    </flux:callout>
+  </div>
+  <flux:separator class="mt-6" />
+</div>
+
 <div id="faq8">
   <flux:heading size="lg">{{ ucwords(EzTrans::translate("mapControls", "Map Controls")) }}</flux:heading>
   <div class="mt-4 space-y-6">
@@ -268,6 +280,25 @@
     <div>
       <flux:heading>Map Restriction</flux:heading>
       <flux:text class="mt-1">Locks the map to a specific geographic area. Users cannot pan or zoom outside the defined bounds. Use the "Use current viewport" button to quickly set the bounds to whatever area is currently visible on the map. Enable "Strict Bounds" to prevent zooming out beyond the restricted area.</flux:text>
+    </div>
+  </div>
+  <flux:separator class="mt-6" />
+</div>
+
+<div id="faq8f">
+  <flux:heading size="lg">Data Import (KML/GeoJSON)</flux:heading>
+  <flux:text class="mt-2">Import external geographic data onto your map using KML or GeoJSON files. These options are found under the Advanced accordion in the settings panel.</flux:text>
+  <div class="mt-4 space-y-4">
+    <div>
+      <flux:heading>KML/KMZ File URL</flux:heading>
+      <flux:text class="mt-1">Enter the public URL to a KML or KMZ file. The file must be publicly accessible — Google's servers fetch it directly. KML files can contain points, lines, polygons, and other geographic data created in tools like Google Earth.</flux:text>
+      <flux:callout icon="information-circle" class="mt-2">
+        <flux:callout.text>The KML file must be hosted on a public URL. Files on localhost or behind authentication will not work.</flux:callout.text>
+      </flux:callout>
+    </div>
+    <div>
+      <flux:heading>GeoJSON File URL</flux:heading>
+      <flux:text class="mt-1">Enter the URL to a GeoJSON file. The file must be CORS-enabled or hosted on the same domain as your map. GeoJSON is a standard format for encoding geographic data structures and is widely supported by mapping tools.</flux:text>
     </div>
   </div>
   <flux:separator class="mt-6" />

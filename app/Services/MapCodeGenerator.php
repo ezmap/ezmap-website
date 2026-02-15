@@ -29,8 +29,28 @@ class MapCodeGenerator
             }
         }
 
+        // KML Layer
+        $kmlUrl = $this->opt('kmlUrl');
+        if (!empty($kmlUrl)) {
+            $kmlUrlJson = json_encode($kmlUrl, JSON_UNESCAPED_SLASHES);
+            $lines[] = "  new google.maps.KmlLayer({url: {$kmlUrlJson}, map: map}).setMap(map);";
+        }
+
+        // GeoJSON Layer
+        $geoJsonUrl = $this->opt('geoJsonUrl');
+        if (!empty($geoJsonUrl)) {
+            $geoJsonUrlJson = json_encode($geoJsonUrl, JSON_UNESCAPED_SLASHES);
+            $lines[] = "  map.data.loadGeoJson({$geoJsonUrlJson});";
+        }
+
         // Markers
         $lines = array_merge($lines, $this->markerLines());
+
+        // Marker Clustering
+        if ($this->bool($this->opt('markerClustering'), false) && $this->map->markers->count() > 1) {
+            $markerVars = implode(', ', array_map(fn ($i) => "marker{$i}", range(0, $this->map->markers->count() - 1)));
+            $lines[] = "  new markerClusterer.MarkerClusterer({markers: [{$markerVars}], map: map});";
+        }
 
         // Heatmap
         $lines = array_merge($lines, $this->heatmapLines());

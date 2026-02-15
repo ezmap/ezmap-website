@@ -196,3 +196,73 @@ test('generated code uses json_encode for marker info window content', function 
         ->toContain('new google.maps.InfoWindow(')
         ->toContain('addListener');
 });
+
+test('generated code includes KML layer when URL provided', function () {
+    $user = User::factory()->create();
+    $map = Map::factory()->create(['user_id' => $user->id]);
+
+    $map->mapOptions = array_merge(
+        (array) $map->mapOptions,
+        ['kmlUrl' => 'https://example.com/data.kml']
+    );
+    $map->save();
+    $map->refresh();
+
+    $code = (new MapCodeGenerator($map))->generate();
+
+    expect($code)
+        ->toContain('new google.maps.KmlLayer(')
+        ->toContain('https://example.com/data.kml');
+});
+
+test('generated code includes GeoJSON loading when URL provided', function () {
+    $user = User::factory()->create();
+    $map = Map::factory()->create(['user_id' => $user->id]);
+
+    $map->mapOptions = array_merge(
+        (array) $map->mapOptions,
+        ['geoJsonUrl' => 'https://example.com/data.geojson']
+    );
+    $map->save();
+    $map->refresh();
+
+    $code = (new MapCodeGenerator($map))->generate();
+
+    expect($code)
+        ->toContain('map.data.loadGeoJson(')
+        ->toContain('https://example.com/data.geojson');
+});
+
+test('generated code includes MarkerClusterer when enabled with markers', function () {
+    $user = User::factory()->create();
+    $map = Map::factory()->create(['user_id' => $user->id]);
+
+    $map->markers = json_encode([
+        ['title' => 'A', 'icon' => '', 'lat' => 51.5, 'lng' => -0.1, 'infoWindow' => ['content' => '']],
+        ['title' => 'B', 'icon' => '', 'lat' => 51.6, 'lng' => -0.2, 'infoWindow' => ['content' => '']],
+    ]);
+    $map->mapOptions = array_merge(
+        (array) $map->mapOptions,
+        ['markerClustering' => 'true']
+    );
+    $map->save();
+    $map->refresh();
+
+    $code = (new MapCodeGenerator($map))->generate();
+
+    expect($code)
+        ->toContain('MarkerClusterer')
+        ->toContain('marker0, marker1');
+});
+
+test('generated code omits KML GeoJSON and clustering when not set', function () {
+    $user = User::factory()->create();
+    $map = Map::factory()->create(['user_id' => $user->id]);
+
+    $code = (new MapCodeGenerator($map))->generate();
+
+    expect($code)
+        ->not->toContain('KmlLayer')
+        ->not->toContain('loadGeoJson')
+        ->not->toContain('MarkerClusterer');
+});

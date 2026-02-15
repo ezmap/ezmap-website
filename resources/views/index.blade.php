@@ -62,6 +62,9 @@
           'trafficLayer' => filter_var($opts->trafficLayer ?? false, FILTER_VALIDATE_BOOLEAN),
           'transitLayer' => filter_var($opts->transitLayer ?? false, FILTER_VALIDATE_BOOLEAN),
           'bicyclingLayer' => filter_var($opts->bicyclingLayer ?? false, FILTER_VALIDATE_BOOLEAN),
+          'kmlUrl' => $opts->kmlUrl ?? '',
+          'geoJsonUrl' => $opts->geoJsonUrl ?? '',
+          'markerClustering' => filter_var($opts->markerClustering ?? false, FILTER_VALIDATE_BOOLEAN),
           'scaleControl' => filter_var($opts->showScaleControl ?? true, FILTER_VALIDATE_BOOLEAN),
           'scrollwheel' => filter_var($opts->scrollWheel ?? true, FILTER_VALIDATE_BOOLEAN),
           'streetViewControl' => filter_var($opts->showStreetViewControl ?? true, FILTER_VALIDATE_BOOLEAN),
@@ -274,6 +277,7 @@
 
 @push('page-scripts')
   @vite('resources/js/map-editor.js')
+  <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
   <script async
     src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google.maps_api_key') }}&libraries=visualization&callback=_mapEditorInitCallback">
   </script>

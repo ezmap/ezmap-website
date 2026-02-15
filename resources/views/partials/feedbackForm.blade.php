@@ -21,3 +21,9 @@
     <flux:button type="submit" variant="primary" icon="paper-airplane">Send Feedback</flux:button>
   </form>
 </div>
+
+@pushOnce('recaptcha')
+@if(config('services.recaptcha.site_key'))
+<script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
+@endif
+@endPushOnce

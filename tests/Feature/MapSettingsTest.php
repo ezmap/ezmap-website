@@ -269,3 +269,96 @@ test('restriction bounds are saved correctly', function () {
     expect($map->mapOptions->restrictionNorth)->toBe('-33.7');
     expect($map->mapOptions->restrictionEast)->toBe('151.3');
 });
+
+test('valid http/https URLs are saved for KML and GeoJSON', function () {
+    $user = User::factory()->create();
+    $map = Map::factory()->create(['user_id' => $user->id]);
+
+    $this->actingAs($user)
+        ->put(route('map.update', $map), [
+            'title' => $map->title,
+            'mapContainer' => 'map',
+            'width' => 600,
+            'height' => 400,
+            'latitude' => $map->latitude,
+            'longitude' => $map->longitude,
+            'markers' => json_encode([]),
+            'heatmap' => json_encode([]),
+            'heatmapLayer' => json_encode((object) []),
+            'mapOptions' => [
+                'zoom' => 10,
+                'mapTypeId' => 'roadmap',
+                'kmlUrl' => 'https://example.com/data.kml',
+                'geoJsonUrl' => 'http://example.com/data.geojson',
+            ],
+        ])->assertRedirect();
+
+    $map->refresh();
+    expect($map->mapOptions->kmlUrl)->toBe('https://example.com/data.kml');
+    expect($map->mapOptions->geoJsonUrl)->toBe('http://example.com/data.geojson');
+});
+
+test('invalid and dangerous URLs are rejected for KML and GeoJSON', function () {
+    $user = User::factory()->create();
+    $map = Map::factory()->create(['user_id' => $user->id]);
+
+    $cases = [
+        'javascript:alert(1)',
+        'file:///etc/passwd',
+        'data:text/html,<script>alert(1)</script>',
+        'not-a-url',
+        'ftp://example.com/file.kml',
+    ];
+
+    foreach ($cases as $badUrl) {
+        $this->actingAs($user)
+            ->put(route('map.update', $map), [
+                'title' => $map->title,
+                'mapContainer' => 'map',
+                'width' => 600,
+                'height' => 400,
+                'latitude' => $map->latitude,
+                'longitude' => $map->longitude,
+                'markers' => json_encode([]),
+                'heatmap' => json_encode([]),
+                'heatmapLayer' => json_encode((object) []),
+                'mapOptions' => [
+                    'zoom' => 10,
+                    'mapTypeId' => 'roadmap',
+                    'kmlUrl' => $badUrl,
+                    'geoJsonUrl' => $badUrl,
+                ],
+            ])->assertRedirect();
+
+        $map->refresh();
+        expect($map->mapOptions->kmlUrl)->toBe('', "kmlUrl should be empty for: {$badUrl}");
+        expect($map->mapOptions->geoJsonUrl)->toBe('', "geoJsonUrl should be empty for: {$badUrl}");
+    }
+});
+
+test('null and empty URLs are handled for KML and GeoJSON', function () {
+    $user = User::factory()->create();
+    $map = Map::factory()->create(['user_id' => $user->id]);
+
+    $this->actingAs($user)
+        ->put(route('map.update', $map), [
+            'title' => $map->title,
+            'mapContainer' => 'map',
+            'width' => 600,
+            'height' => 400,
+            'latitude' => $map->latitude,
+            'longitude' => $map->longitude,
+            'markers' => json_encode([]),
+            'heatmap' => json_encode([]),
+            'heatmapLayer' => json_encode((object) []),
+            'mapOptions' => [
+                'zoom' => 10,
+                'mapTypeId' => 'roadmap',
+                // kmlUrl and geoJsonUrl not provided (null from request)
+            ],
+        ])->assertRedirect();
+
+    $map->refresh();
+    expect($map->mapOptions->kmlUrl)->toBe('');
+    expect($map->mapOptions->geoJsonUrl)->toBe('');
+});
