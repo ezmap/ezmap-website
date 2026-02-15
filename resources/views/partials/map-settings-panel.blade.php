@@ -197,6 +197,72 @@
       </flux:accordion.content>
     </flux:accordion.item>
 
+    {{-- ====== ADVANCED ====== --}}
+    <flux:accordion.item :expanded="$advancedNonDefault">
+      <flux:accordion.heading>
+        <div class="flex items-center gap-2">
+          <flux:icon.wrench-screwdriver variant="mini" class="text-zinc-400" />
+          Advanced
+        </div>
+      </flux:accordion.heading>
+      <flux:accordion.content>
+        <div class="space-y-4 py-2">
+          <div class="grid grid-cols-2 gap-3">
+            <flux:input label="Min Zoom" name="mapOptions[minZoom]" type="number" min="0" max="22" x-model="mapOptions.minZoom" @change="optionschange()" placeholder="None" />
+            <flux:input label="Max Zoom" name="mapOptions[maxZoom]" type="number" min="0" max="22" x-model="mapOptions.maxZoom" @change="optionschange()" placeholder="None" />
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <flux:input label="Heading" name="mapOptions[heading]" type="number" min="0" max="360" step="1" x-model="mapOptions.heading" @change="optionschange()" description="Camera heading (0–360°)" />
+            <div>
+              <input type="hidden" name="mapOptions[tilt]" :value="mapOptions.tilt">
+              <flux:select label="Tilt" x-model="mapOptions.tilt" x-on:change="optionschange()" description="Camera angle">
+                <flux:select.option value="0">0° (top-down)</flux:select.option>
+                <flux:select.option value="45">45° (oblique)</flux:select.option>
+              </flux:select>
+            </div>
+          </div>
+
+          <flux:separator />
+
+          <div>
+            <flux:input label="Background Color" name="mapOptions[backgroundColor]" type="text" x-model="mapOptions.backgroundColor" @change="optionschange()" placeholder="#f0f0f0" description="Color shown while map tiles load." />
+          </div>
+
+          <flux:separator />
+
+          <div class="space-y-3">
+            <flux:switch name="mapOptions[restrictionEnabled]" x-model="mapOptions.restriction.enabled" x-on:change="optionschange()" label="Restrict Map Bounds" />
+            <template x-if="mapOptions.restriction.enabled">
+              <div class="space-y-3">
+                <flux:text size="sm">Restrict the map to a geographic area. Users won't be able to pan or zoom outside these bounds.</flux:text>
+                <div class="grid grid-cols-2 gap-3">
+                  <flux:input label="South (lat)" name="mapOptions[restrictionSouth]" type="number" step="any" x-model="mapOptions.restriction.south" @change="optionschange()" placeholder="-90" />
+                  <flux:input label="West (lng)" name="mapOptions[restrictionWest]" type="number" step="any" x-model="mapOptions.restriction.west" @change="optionschange()" placeholder="-180" />
+                  <flux:input label="North (lat)" name="mapOptions[restrictionNorth]" type="number" step="any" x-model="mapOptions.restriction.north" @change="optionschange()" placeholder="90" />
+                  <flux:input label="East (lng)" name="mapOptions[restrictionEast]" type="number" step="any" x-model="mapOptions.restriction.east" @change="optionschange()" placeholder="180" />
+                </div>
+                <flux:button variant="filled" size="xs" @click.prevent="
+                  if (mapLoaded) {
+                    let bounds = map.getBounds();
+                    if (bounds) {
+                      mapOptions.restriction.south = bounds.getSouthWest().lat().toFixed(6);
+                      mapOptions.restriction.west = bounds.getSouthWest().lng().toFixed(6);
+                      mapOptions.restriction.north = bounds.getNorthEast().lat().toFixed(6);
+                      mapOptions.restriction.east = bounds.getNorthEast().lng().toFixed(6);
+                      optionschange();
+                    }
+                  }
+                " icon="viewfinder-circle">
+                  Use current viewport
+                </flux:button>
+              </div>
+            </template>
+          </div>
+        </div>
+      </flux:accordion.content>
+    </flux:accordion.item>
+
     {{-- ====== MARKERS ====== --}}
     <flux:accordion.item :expanded="$hasMarkers">
       <flux:accordion.heading>
@@ -264,72 +330,6 @@
               </template>
             </div>
           </template>
-        </div>
-      </flux:accordion.content>
-    </flux:accordion.item>
-
-    {{-- ====== ADVANCED ====== --}}
-    <flux:accordion.item :expanded="$advancedNonDefault">
-      <flux:accordion.heading>
-        <div class="flex items-center gap-2">
-          <flux:icon.wrench-screwdriver variant="mini" class="text-zinc-400" />
-          Advanced
-        </div>
-      </flux:accordion.heading>
-      <flux:accordion.content>
-        <div class="space-y-4 py-2">
-          <div class="grid grid-cols-2 gap-3">
-            <flux:input label="Min Zoom" name="mapOptions[minZoom]" type="number" min="0" max="22" x-model="mapOptions.minZoom" @change="optionschange()" placeholder="None" />
-            <flux:input label="Max Zoom" name="mapOptions[maxZoom]" type="number" min="0" max="22" x-model="mapOptions.maxZoom" @change="optionschange()" placeholder="None" />
-          </div>
-
-          <div class="grid grid-cols-2 gap-3">
-            <flux:input label="Heading" name="mapOptions[heading]" type="number" min="0" max="360" step="1" x-model="mapOptions.heading" @change="optionschange()" description="Camera heading (0–360°)" />
-            <div>
-              <input type="hidden" name="mapOptions[tilt]" :value="mapOptions.tilt">
-              <flux:select label="Tilt" x-model="mapOptions.tilt" x-on:change="optionschange()" description="Camera angle">
-                <flux:select.option value="0">0° (top-down)</flux:select.option>
-                <flux:select.option value="45">45° (oblique)</flux:select.option>
-              </flux:select>
-            </div>
-          </div>
-
-          <flux:separator />
-
-          <div>
-            <flux:input label="Background Color" name="mapOptions[backgroundColor]" type="text" x-model="mapOptions.backgroundColor" @change="optionschange()" placeholder="#f0f0f0" description="Color shown while map tiles load." />
-          </div>
-
-          <flux:separator />
-
-          <div class="space-y-3">
-            <flux:switch name="mapOptions[restrictionEnabled]" x-model="mapOptions.restriction.enabled" x-on:change="optionschange()" label="Restrict Map Bounds" />
-            <template x-if="mapOptions.restriction.enabled">
-              <div class="space-y-3">
-                <flux:text size="sm">Restrict the map to a geographic area. Users won't be able to pan or zoom outside these bounds.</flux:text>
-                <div class="grid grid-cols-2 gap-3">
-                  <flux:input label="South (lat)" name="mapOptions[restrictionSouth]" type="number" step="any" x-model="mapOptions.restriction.south" @change="optionschange()" placeholder="-90" />
-                  <flux:input label="West (lng)" name="mapOptions[restrictionWest]" type="number" step="any" x-model="mapOptions.restriction.west" @change="optionschange()" placeholder="-180" />
-                  <flux:input label="North (lat)" name="mapOptions[restrictionNorth]" type="number" step="any" x-model="mapOptions.restriction.north" @change="optionschange()" placeholder="90" />
-                  <flux:input label="East (lng)" name="mapOptions[restrictionEast]" type="number" step="any" x-model="mapOptions.restriction.east" @change="optionschange()" placeholder="180" />
-                </div>
-                <flux:button variant="filled" size="xs" @click.prevent="
-                  if (mapLoaded) {
-                    let bounds = map.getBounds();
-                    if (bounds) {
-                      mapOptions.restriction.south = bounds.getSouthWest().lat().toFixed(6);
-                      mapOptions.restriction.west = bounds.getSouthWest().lng().toFixed(6);
-                      mapOptions.restriction.north = bounds.getNorthEast().lat().toFixed(6);
-                      mapOptions.restriction.east = bounds.getNorthEast().lng().toFixed(6);
-                      optionschange();
-                    }
-                  }
-                " icon="viewfinder-circle">
-                  Use current viewport
-                </flux:button>
-              </div>
-            </template>
-          </div>
         </div>
       </flux:accordion.content>
     </flux:accordion.item>
