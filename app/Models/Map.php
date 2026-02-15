@@ -94,7 +94,7 @@ class Map extends Model
 
   public function code()
   {
-    $disableDoubleClickZoom = $this->mapOptions->doubleClickZoom ? 'false' : 'true';
+    $disableDoubleClickZoom = filter_var($this->mapOptions->doubleClickZoom, FILTER_VALIDATE_BOOLEAN) ? 'false' : 'true';
     $hasGoogleMapId         = !empty($this->google_map_id);
     $styles                 = (!$hasGoogleMapId && $this->theme_id > 0) ? ",\n                \"styles\": " . $this->theme->json : '';
     $googleMapId            = $hasGoogleMapId ? ",\n                \"mapId\": \"{$this->google_map_id}\",\n                \"colorScheme\": \"FOLLOW_SYSTEM\"" : '';
@@ -121,7 +121,7 @@ class Map extends Model
     $bgColor = !empty($this->mapOptions->backgroundColor ?? '')
         ? ",\n                \"backgroundColor\": \"{$this->mapOptions->backgroundColor}\""
         : '';
-    $rotateControl = ($this->mapOptions->rotateControl ?? true) ? 'true' : 'false';
+    $rotateControl = filter_var($this->mapOptions->rotateControl ?? true, FILTER_VALIDATE_BOOLEAN) ? 'true' : 'false';
 
     $restriction = '';
     if (!empty($this->mapOptions->restrictionEnabled) &&

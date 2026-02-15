@@ -13,17 +13,17 @@
   );
 
   $controlsNonDefault = $hasMap && (
-      !($map->mapOptions->showMapTypeControl ?? true) ||
-      !($map->mapOptions->showFullScreenControl ?? true) ||
-      !($map->mapOptions->showStreetViewControl ?? true) ||
-      !($map->mapOptions->showZoomControl ?? true) ||
-      !($map->mapOptions->showScaleControl ?? true) ||
-      !($map->mapOptions->rotateControl ?? true) ||
-      !($map->mapOptions->draggable ?? true) ||
-      !($map->mapOptions->doubleClickZoom ?? true) ||
-      !($map->mapOptions->scrollWheel ?? true) ||
-      !($map->mapOptions->keyboardShortcuts ?? true) ||
-      !($map->mapOptions->clickableIcons ?? true) ||
+      !filter_var($map->mapOptions->showMapTypeControl ?? true, FILTER_VALIDATE_BOOLEAN) ||
+      !filter_var($map->mapOptions->showFullScreenControl ?? true, FILTER_VALIDATE_BOOLEAN) ||
+      !filter_var($map->mapOptions->showStreetViewControl ?? true, FILTER_VALIDATE_BOOLEAN) ||
+      !filter_var($map->mapOptions->showZoomControl ?? true, FILTER_VALIDATE_BOOLEAN) ||
+      !filter_var($map->mapOptions->showScaleControl ?? true, FILTER_VALIDATE_BOOLEAN) ||
+      !filter_var($map->mapOptions->rotateControl ?? true, FILTER_VALIDATE_BOOLEAN) ||
+      !filter_var($map->mapOptions->draggable ?? true, FILTER_VALIDATE_BOOLEAN) ||
+      !filter_var($map->mapOptions->doubleClickZoom ?? true, FILTER_VALIDATE_BOOLEAN) ||
+      !filter_var($map->mapOptions->scrollWheel ?? true, FILTER_VALIDATE_BOOLEAN) ||
+      !filter_var($map->mapOptions->keyboardShortcuts ?? true, FILTER_VALIDATE_BOOLEAN) ||
+      !filter_var($map->mapOptions->clickableIcons ?? true, FILTER_VALIDATE_BOOLEAN) ||
       ($map->mapOptions->gestureHandling ?? 'auto') !== 'auto' ||
       ($map->mapOptions->controlSize ?? 0) > 0
   );
