@@ -142,7 +142,13 @@
 
           <flux:subheading>Container Styling</flux:subheading>
           <div class="grid grid-cols-3 gap-3">
-            <flux:input label="Border Radius" name="containerBorderRadius" type="number" min="0" step="1" x-model="containerBorderRadius" description="px" />
+            <div>
+              <flux:label>Border Radius</flux:label>
+              <flux:input.group class="mt-1">
+                <flux:input name="containerBorderRadius" type="number" min="0" step="1" x-model="containerBorderRadius" />
+                <flux:input.group.suffix>px</flux:input.group.suffix>
+              </flux:input.group>
+            </div>
             <div>
               <input type="hidden" name="containerShadow" :value="containerShadow">
               <flux:select label="Shadow" x-model="containerShadow">
