@@ -209,10 +209,10 @@
                 </flux:select>
               </div>
             </template>
-            <template x-if="mapOptions.zoomControl">
+            <template x-if="mapOptions.streetViewControl">
               <div>
-                <input type="hidden" name="mapOptions[zoomControlPosition]" :value="mapOptions.zoomControlPosition || ''">
-                <flux:select label="Zoom" x-model="mapOptions.zoomControlPosition" x-on:change="optionschange()" size="sm">
+                <input type="hidden" name="mapOptions[streetViewControlPosition]" :value="mapOptions.streetViewControlPosition || ''">
+                <flux:select label="Street View" x-model="mapOptions.streetViewControlPosition" x-on:change="optionschange()" size="sm">
                   <flux:select.option value="">Default</flux:select.option>
                   <flux:select.option value="TOP_LEFT">Top Left</flux:select.option>
                   <flux:select.option value="TOP_CENTER">Top Center</flux:select.option>
@@ -225,10 +225,10 @@
                 </flux:select>
               </div>
             </template>
-            <template x-if="mapOptions.streetViewControl">
+            <template x-if="mapOptions.zoomControl">
               <div>
-                <input type="hidden" name="mapOptions[streetViewControlPosition]" :value="mapOptions.streetViewControlPosition || ''">
-                <flux:select label="Street View" x-model="mapOptions.streetViewControlPosition" x-on:change="optionschange()" size="sm">
+                <input type="hidden" name="mapOptions[zoomControlPosition]" :value="mapOptions.zoomControlPosition || ''">
+                <flux:select label="Zoom" x-model="mapOptions.zoomControlPosition" x-on:change="optionschange()" size="sm">
                   <flux:select.option value="">Default</flux:select.option>
                   <flux:select.option value="TOP_LEFT">Top Left</flux:select.option>
                   <flux:select.option value="TOP_CENTER">Top Center</flux:select.option>
