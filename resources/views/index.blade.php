@@ -56,6 +56,7 @@
           'streetViewControlPosition' => $opts->streetViewControlPosition ?? '',
           'rotateControlPosition' => $opts->rotateControlPosition ?? '',
           'cameraControlPosition' => $opts->cameraControlPosition ?? '',
+          'mapTypeControlPosition' => $opts->mapTypeControlPosition ?? '',
           'rotateControl' => filter_var($opts->rotateControl ?? true, FILTER_VALIDATE_BOOLEAN),
           'cameraControl' => filter_var($opts->cameraControl ?? true, FILTER_VALIDATE_BOOLEAN),
           'scaleControl' => filter_var($opts->showScaleControl ?? true, FILTER_VALIDATE_BOOLEAN),

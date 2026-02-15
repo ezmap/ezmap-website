@@ -218,6 +218,9 @@ document.addEventListener('alpine:init', () => {
             if (this.mapOptions.cameraControlPosition) {
                 opts.cameraControlOptions = { position: this.mapOptions.cameraControlPosition };
             }
+            if (this.mapOptions.mapTypeControlPosition) {
+                opts.mapTypeControlOptions = { ...opts.mapTypeControlOptions, position: this.mapOptions.mapTypeControlPosition };
+            }
             const optsClean = { ...opts };
             if (!optsClean.styles || this.googleMapId) {
                 delete optsClean.styles;
@@ -554,6 +557,9 @@ document.addEventListener('alpine:init', () => {
             if (this.mapOptions.cameraControlPosition) {
                 setOpts.cameraControlOptions = { position: resolvePos(this.mapOptions.cameraControlPosition) };
             }
+            if (this.mapOptions.mapTypeControlPosition) {
+                setOpts.mapTypeControlOptions = { ...setOpts.mapTypeControlOptions, position: resolvePos(this.mapOptions.mapTypeControlPosition) };
+            }
 
             // Remove raw position strings — Google Maps only understands *ControlOptions
             delete setOpts.fullscreenControlPosition;
@@ -561,6 +567,7 @@ document.addEventListener('alpine:init', () => {
             delete setOpts.streetViewControlPosition;
             delete setOpts.rotateControlPosition;
             delete setOpts.cameraControlPosition;
+            delete setOpts.mapTypeControlPosition;
 
             if (setOpts.controlSize) setOpts.controlSize = parseInt(setOpts.controlSize);
             if (setOpts.minZoom !== null && setOpts.minZoom !== '' && setOpts.minZoom !== undefined) {
@@ -875,6 +882,10 @@ document.addEventListener('alpine:init', () => {
                 initOpts.cameraControlOptions = { position: resolvePos(initOpts.cameraControlPosition) };
             }
             delete initOpts.cameraControlPosition;
+            if (initOpts.mapTypeControlPosition) {
+                initOpts.mapTypeControlOptions = { ...initOpts.mapTypeControlOptions, position: resolvePos(initOpts.mapTypeControlPosition) };
+            }
+            delete initOpts.mapTypeControlPosition;
 
             // Clean up optional numeric values
             if (initOpts.controlSize) initOpts.controlSize = parseInt(initOpts.controlSize);

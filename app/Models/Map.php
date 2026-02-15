@@ -153,6 +153,12 @@ class Map extends Model
         }
     }
 
+    // mapTypeControlOptions already has style, so merge position into it
+    $mapTypePos = $this->mapOptions->mapTypeControlPosition ?? '';
+    $mapTypeControlOptions = !empty($mapTypePos)
+        ? "{ \"style\" : {$this->mapOptions->mapTypeControlStyle}, \"position\": google.maps.ControlPosition.{$mapTypePos} }"
+        : "{ \"style\" : {$this->mapOptions->mapTypeControlStyle} }";
+
     $output                 = "
     function init{$this->id}() {
             var mapOptions = {
@@ -163,7 +169,7 @@ class Map extends Model
                 \"fullscreenControl\": {$this->mapOptions->showFullScreenControl},
                 \"keyboardShortcuts\": {$this->mapOptions->keyboardShortcuts},
                 \"mapTypeControl\": {$this->mapOptions->showMapTypeControl},
-                \"mapTypeControlOptions\": { style : {$this->mapOptions->mapTypeControlStyle} },
+                \"mapTypeControlOptions\": {$mapTypeControlOptions},
                 \"mapTypeId\": \"{$this->mapOptions->mapTypeId}\",
                 \"rotateControl\": {$rotateControl},
                 \"cameraControl\": {$cameraControl},

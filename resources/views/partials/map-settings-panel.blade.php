@@ -201,6 +201,22 @@
 
           <flux:subheading>Control Positions</flux:subheading>
           <div class="grid grid-cols-2 gap-3">
+            <template x-if="mapOptions.mapTypeControl">
+              <div>
+                <input type="hidden" name="mapOptions[mapTypeControlPosition]" :value="mapOptions.mapTypeControlPosition || ''">
+                <flux:select label="Map Type" x-model="mapOptions.mapTypeControlPosition" x-on:change="optionschange()" size="sm">
+                  <flux:select.option value="">Default</flux:select.option>
+                  <flux:select.option value="TOP_LEFT">Top Left</flux:select.option>
+                  <flux:select.option value="TOP_CENTER">Top Center</flux:select.option>
+                  <flux:select.option value="TOP_RIGHT">Top Right</flux:select.option>
+                  <flux:select.option value="LEFT_CENTER">Left Center</flux:select.option>
+                  <flux:select.option value="RIGHT_CENTER">Right Center</flux:select.option>
+                  <flux:select.option value="BOTTOM_LEFT">Bottom Left</flux:select.option>
+                  <flux:select.option value="BOTTOM_CENTER">Bottom Center</flux:select.option>
+                  <flux:select.option value="BOTTOM_RIGHT">Bottom Right</flux:select.option>
+                </flux:select>
+              </div>
+            </template>
             <template x-if="mapOptions.fullscreenControl">
               <div>
                 <input type="hidden" name="mapOptions[fullscreenControlPosition]" :value="mapOptions.fullscreenControlPosition || ''">
