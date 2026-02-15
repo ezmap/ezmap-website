@@ -9,13 +9,17 @@ if (firstLoad)
   gmapscript.src = "https://maps.googleapis.com/maps/api/js?key={{ $map->apiKey }}{{ $map->heatmap ? "&libraries=visualization" : "" }}";
 
   head.appendChild(gmapscript);
+}
 
-  @if(filter_var($map->mapOptions->markerClustering ?? false, FILTER_VALIDATE_BOOLEAN) && $map->markers->count() > 0)
+@if(filter_var($map->mapOptions->markerClustering ?? false, FILTER_VALIDATE_BOOLEAN) && $map->markers->count() > 0)
+var needsCluster = (document.getElementById("ezmap-cluster-script") === null);
+if (needsCluster) {
   var clusterScript = document.createElement('script');
+  clusterScript.id = "ezmap-cluster-script";
   clusterScript.src = "https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js";
   head.appendChild(clusterScript);
-  @endif
 }
+@endif
 var css = '#{{ $map->mapContainer }}{min-height: 150px;min-width: 150px;width: {{ $map->responsiveMap ? "100%" : "{$map->width}px"}};height: {{ $map->height }}px;{{ ($map->container_border_radius ?? '0') !== '0' ? "border-radius: {$map->container_border_radius}px; overflow: hidden;" : '' }}{{ !empty($map->container_border) ? "border: {$map->container_border};" : '' }}';
 var style = document.createElement('style');
 style.type = 'text/css';
@@ -44,9 +48,22 @@ function doMap{{ $map->id }}() {
     {!! $map->code() !!}
 }
 
+@if(filter_var($map->mapOptions->markerClustering ?? false, FILTER_VALIDATE_BOOLEAN) && $map->markers->count() > 0)
+function tryRun{{ $map->id }}() {
+  if (typeof google !== 'undefined' && typeof markerClusterer !== 'undefined') {
+    doMap{{ $map->id }}();
+  } else {
+    setTimeout(tryRun{{ $map->id }}, 50);
+  }
+}
+gmapscript.addEventListener('load', function(){ tryRun{{ $map->id }}(); });
+if (!firstLoad) tryRun{{ $map->id }}();
+@else
 gmapscript.addEventListener('load', function(){
   doMap{{ $map->id }}();
 });
+if (!firstLoad) doMap{{ $map->id }}();
+@endif
 
 
 })();

@@ -278,8 +278,8 @@ document.addEventListener('alpine:init', () => {
             if (this.mapOptions.trafficLayer) code += `    new google.maps.TrafficLayer().setMap(map);\n`;
             if (this.mapOptions.transitLayer) code += `    new google.maps.TransitLayer().setMap(map);\n`;
             if (this.mapOptions.bicyclingLayer) code += `    new google.maps.BicyclingLayer().setMap(map);\n`;
-            if (this.mapOptions.kmlUrl) code += `    new google.maps.KmlLayer({url: '${this.mapOptions.kmlUrl}', map: map}).setMap(map);\n`;
-            if (this.mapOptions.geoJsonUrl) code += `    map.data.loadGeoJson('${this.mapOptions.geoJsonUrl}');\n`;
+            if (this.mapOptions.kmlUrl) code += `    new google.maps.KmlLayer({url: ${JSON.stringify(this.mapOptions.kmlUrl)}, map: map}).setMap(map);\n`;
+            if (this.mapOptions.geoJsonUrl) code += `    map.data.loadGeoJson(${JSON.stringify(this.mapOptions.geoJsonUrl)});\n`;
             code += `    ${this.markersLoop()}${this.heatmapLoop()}\n`;
             if (this.mapOptions.markerClustering && this.markers.length) {
                 code += `    new markerClusterer.MarkerClusterer({markers: [${this.markers.map((_, i) => 'marker' + i).join(', ')}], map: map});\n`;

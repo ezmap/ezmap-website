@@ -197,8 +197,8 @@ class MapController extends Controller
     $options['trafficLayer']          = $request->has("mapOptions.trafficLayer") ? 'true' : 'false';
     $options['transitLayer']          = $request->has("mapOptions.transitLayer") ? 'true' : 'false';
     $options['bicyclingLayer']        = $request->has("mapOptions.bicyclingLayer") ? 'true' : 'false';
-    $options['kmlUrl']                = $request->input("mapOptions.kmlUrl", '');
-    $options['geoJsonUrl']            = $request->input("mapOptions.geoJsonUrl", '');
+    $options['kmlUrl']                = $this->sanitizeUrl($request->input("mapOptions.kmlUrl", ''));
+    $options['geoJsonUrl']            = $this->sanitizeUrl($request->input("mapOptions.geoJsonUrl", ''));
     $options['markerClustering']      = $request->has("mapOptions.markerClustering") ? 'true' : 'false';
     $options['gestureHandling']       = $request->input("mapOptions.gestureHandling", 'auto');
     $options['controlSize']           = (int) $request->input("mapOptions.controlSize", 0);
@@ -222,6 +222,17 @@ class MapController extends Controller
     $options['colorScheme']               = $request->input("mapOptions.colorScheme", 'FOLLOW_SYSTEM');
 
     return $options;
+  }
+
+  protected function sanitizeUrl(string $url): string
+  {
+    $url = trim($url);
+    if ($url === '') return '';
+    if (strlen($url) > 2048) return '';
+    if (!filter_var($url, FILTER_VALIDATE_URL)) return '';
+    $scheme = strtolower((string) parse_url($url, PHP_URL_SCHEME));
+    if (!in_array($scheme, ['http', 'https'], true)) return '';
+    return $url;
   }
 
   protected function cleanHeatmapLayer(Request $request, $heatmapLayer)
