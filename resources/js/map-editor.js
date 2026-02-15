@@ -59,6 +59,9 @@ document.addEventListener('alpine:init', () => {
         transitLayer: null,
         bicyclingLayer: null,
 
+        // Reactive version counter — bump to trigger generatedCode re-evaluation
+        _markerVersion: 0,
+
         // For new icon form
         newIconName: '',
         newIconUrl: '',
@@ -113,6 +116,7 @@ document.addEventListener('alpine:init', () => {
         },
 
         get markersToString() {
+            void this._markerVersion;
             const out = [];
             for (let i = 0; i < this.markers.length; i++) {
                 const raw = Alpine.raw(this.markers[i]);
@@ -157,6 +161,8 @@ document.addEventListener('alpine:init', () => {
         },
 
         get generatedCode() {
+            // Reference _markerVersion so Alpine re-evaluates when markers change
+            void this._markerVersion;
             const opts = {
                 center: { lat: this.lat, lng: this.lng },
                 clickableIcons: this.mapOptions.clickableIcons,
@@ -674,13 +680,13 @@ document.addEventListener('alpine:init', () => {
             const rawMarker = Alpine.raw(marker);
             const content = this.buildInfoWindowContent();
             const infowindow = new google.maps.InfoWindow({ content: content });
-            marker.infoWindow = infowindow;
-            marker.title = this.infoTitle !== '' ? this.infoTitle : marker.title;
-            rawMarker.setTitle(marker.title);
+            rawMarker.infoWindow = { content: content };
+            rawMarker.setTitle(this.infoTitle !== '' ? this.infoTitle : rawMarker.getTitle());
             const map = this.map;
             rawMarker.addListener('click', () => {
                 infowindow.open(map, rawMarker);
             });
+            this._markerVersion++;
             Flux.modal('marker-info').close();
             this.centerchanged();
         },
@@ -735,7 +741,7 @@ document.addEventListener('alpine:init', () => {
             const markerIndex = this.iconChangeMarkerIndex !== null ? this.iconChangeMarkerIndex : parseInt(newIcon.dataset.forMarker);
             if (this.markers[markerIndex]) {
                 Alpine.raw(this.markers[markerIndex]).setIcon(newIcon.getAttribute('src'));
-                this.markers[markerIndex].icon = newIcon.getAttribute('src');
+                this._markerVersion++;
             }
             Flux.modal('marker-pin').close();
         },
