@@ -115,16 +115,16 @@ document.addEventListener('alpine:init', () => {
         get markersToString() {
             const out = [];
             for (let i = 0; i < this.markers.length; i++) {
-                const marker = this.markers[i];
-                const raw = Alpine.raw(marker);
+                const raw = Alpine.raw(this.markers[i]);
                 const pos = raw.getPosition();
+                const icon = raw.getIcon();
                 out.push({
-                    title: marker.title,
-                    icon: raw.getIcon() || marker.icon,
+                    title: raw.getTitle() || 'No Title',
+                    icon: (typeof icon === 'string') ? icon : (icon?.url || 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi.png'),
                     lat: pos.lat(),
                     lng: pos.lng(),
                     infoWindow: {
-                        content: marker.infoWindow?.content || ''
+                        content: raw.infoWindow?.content || ''
                     }
                 });
             }
@@ -422,12 +422,14 @@ document.addEventListener('alpine:init', () => {
         markersLoop() {
             let str = '';
             for (let i = 0; i < this.markers.length; i++) {
-                const marker = this.markers[i];
-                const raw = Alpine.raw(marker);
+                const raw = Alpine.raw(this.markers[i]);
                 const pos = raw.getPosition();
-                str += 'var marker' + i + ' = new google.maps.Marker({title: "' + marker.title + '", icon: "' + (raw.getIcon() || marker.icon) + '", position: new google.maps.LatLng(' + pos.lat() + ', ' + pos.lng() + '), map: map});\n';
-                if (marker.infoWindow.content) {
-                    str += 'var infowindow' + i + ' = new google.maps.InfoWindow({content: ' + JSON.stringify(marker.infoWindow.content) + ',map: map});\n';
+                const icon = raw.getIcon();
+                const iconUrl = (typeof icon === 'string') ? icon : (icon?.url || 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi.png');
+                const title = raw.getTitle() || 'No Title';
+                str += 'var marker' + i + ' = new google.maps.Marker({title: "' + title + '", icon: "' + iconUrl + '", position: new google.maps.LatLng(' + pos.lat() + ', ' + pos.lng() + '), map: map});\n';
+                if (raw.infoWindow?.content) {
+                    str += 'var infowindow' + i + ' = new google.maps.InfoWindow({content: ' + JSON.stringify(raw.infoWindow.content) + ',map: map});\n';
                     str += 'marker' + i + ".addListener('click', function () { infowindow" + i + '.open(map, marker' + i + ') ;});infowindow' + i + '.close();\n';
                 }
             }
