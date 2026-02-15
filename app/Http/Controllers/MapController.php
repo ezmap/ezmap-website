@@ -134,7 +134,6 @@ class MapController extends Controller
     $map->google_map_id = $request->input('google_map_id') ?: null;
     $map->container_border_radius = $request->input('containerBorderRadius', '0');
     $map->container_border = $request->input('containerBorder', '');
-    $map->container_shadow = $request->input('containerShadow', 'none');
 
     $options         = (array)$map->mapOptions;
     $options         = $this->cleanMapOptions($request, $options);

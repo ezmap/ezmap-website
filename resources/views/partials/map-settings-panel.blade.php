@@ -11,8 +11,7 @@
       ($map->mapOptions->mapTypeId ?? 'roadmap') !== 'roadmap' ||
       ($map->mapOptions->zoomLevel ?? 3) != 3 ||
       ($map->container_border_radius ?? '0') !== '0' ||
-      !empty($map->container_border ?? '') ||
-      ($map->container_shadow ?? 'none') !== 'none'
+      !empty($map->container_border ?? '')
   );
 
   $controlsNonDefault = $hasMap && (
@@ -153,7 +152,7 @@
           <flux:separator />
 
           <flux:subheading>Container Styling</flux:subheading>
-          <div class="grid grid-cols-3 gap-3">
+          <div class="grid grid-cols-2 gap-3">
             <flux:field>
               <flux:label>Border Radius</flux:label>
               <flux:input.group>
@@ -161,16 +160,6 @@
                 <flux:input.group.suffix>px</flux:input.group.suffix>
               </flux:input.group>
             </flux:field>
-            <div>
-              <input type="hidden" name="containerShadow" :value="containerShadow">
-              <flux:select label="Shadow" x-model="containerShadow">
-                <flux:select.option value="none">None</flux:select.option>
-                <flux:select.option value="sm">Small</flux:select.option>
-                <flux:select.option value="md">Medium</flux:select.option>
-                <flux:select.option value="lg">Large</flux:select.option>
-                <flux:select.option value="xl">X-Large</flux:select.option>
-              </flux:select>
-            </div>
             <flux:input label="Border" name="containerBorder" type="text" x-model="containerBorder" placeholder="1px solid #ccc" />
           </div>
         </div>

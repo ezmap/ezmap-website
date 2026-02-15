@@ -27,7 +27,6 @@ class Map extends Model
       'google_map_id',
       'container_border_radius',
       'container_border',
-      'container_shadow',
   ];
 
   protected $casts = [

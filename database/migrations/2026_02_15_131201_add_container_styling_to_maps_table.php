@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::table('maps', function (Blueprint $table) {
             $table->string('container_border_radius', 10)->default('0')->after('google_map_id');
             $table->string('container_border', 50)->default('')->after('container_border_radius');
-            $table->string('container_shadow', 10)->default('none')->after('container_border');
         });
     }
 
@@ -24,7 +23,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('maps', function (Blueprint $table) {
-            $table->dropColumn(['container_border_radius', 'container_border', 'container_shadow']);
+            $table->dropColumn(['container_border_radius', 'container_border']);
         });
     }
 };
