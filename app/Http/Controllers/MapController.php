@@ -194,6 +194,9 @@ class MapController extends Controller
     $options['showZoomControl']       = $request->has("mapOptions.showZoomControl") ? 'true' : 'false';
     $options['rotateControl']         = $request->has("mapOptions.rotateControl") ? 'true' : 'false';
     $options['cameraControl']         = $request->has("mapOptions.cameraControl") ? 'true' : 'false';
+    $options['trafficLayer']          = $request->has("mapOptions.trafficLayer") ? 'true' : 'false';
+    $options['transitLayer']          = $request->has("mapOptions.transitLayer") ? 'true' : 'false';
+    $options['bicyclingLayer']        = $request->has("mapOptions.bicyclingLayer") ? 'true' : 'false';
     $options['gestureHandling']       = $request->input("mapOptions.gestureHandling", 'auto');
     $options['controlSize']           = (int) $request->input("mapOptions.controlSize", 0);
     $options['minZoom']               = $request->input("mapOptions.minZoom", '');
