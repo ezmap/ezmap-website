@@ -41,7 +41,7 @@
           <flux:input label="{{ ucwords(EzTrans::translate('mapContainerId','Map Container ID')) }}" name="mapContainer" type="text" placeholder="map" x-model="mapcontainer" />
 
           <div>
-            <flux:input label="Google Cloud Map ID" name="google_map_id" type="text" placeholder="{{ EzTrans::translate('optional','Optional') }}" x-model.lazy="googleMapId" x-on:change="googleMapIdChanged()" />
+            <flux:input label="Google Cloud Map ID" name="google_map_id" type="text" placeholder="{{ EzTrans::translate('optional','Optional') }}" x-model="googleMapId" x-on:blur="googleMapIdChanged()" />
             <flux:text size="sm" class="mt-1">
               Enter a <a target="_blank" href="https://developers.google.com/maps/documentation/javascript/map-ids/get-map-id" class="underline text-accent-content">Map ID</a> from your Google Cloud Console to apply cloud-based styles. Not the Style ID — you must create a Map ID and associate your style to it. Overrides Snazzy Maps themes.
             </flux:text>

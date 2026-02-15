@@ -330,6 +330,7 @@ document.addEventListener('alpine:init', () => {
         },
 
         googleMapIdChanged() {
+            console.log('googleMapIdChanged:', this.googleMapId);
             if (this.googleMapId) {
                 // Cloud styling overrides Snazzy themes
                 this.mapOptions.styles = [];
@@ -707,6 +708,7 @@ document.addEventListener('alpine:init', () => {
                 initOpts.mapId = this.googleMapId;
                 delete initOpts.styles;
             }
+            console.log('initMap with mapId:', this.googleMapId, 'opts:', JSON.stringify({mapId: initOpts.mapId, hasStyles: !!initOpts.styles}));
             this.map = new google.maps.Map(document.getElementById('map'), initOpts);
             this.geocoder = new google.maps.Geocoder();
             this.mapLoaded = true;
