@@ -116,13 +116,15 @@ document.addEventListener('alpine:init', () => {
             const out = [];
             for (let i = 0; i < this.markers.length; i++) {
                 const marker = this.markers[i];
+                const raw = Alpine.raw(marker);
+                const pos = raw.getPosition();
                 out.push({
                     title: marker.title,
-                    icon: marker.icon,
-                    lat: marker.position.lat(),
-                    lng: marker.position.lng(),
+                    icon: raw.getIcon() || marker.icon,
+                    lat: pos.lat(),
+                    lng: pos.lng(),
                     infoWindow: {
-                        content: marker.infoWindow.content || ''
+                        content: marker.infoWindow?.content || ''
                     }
                 });
             }
@@ -423,7 +425,7 @@ document.addEventListener('alpine:init', () => {
                 const marker = this.markers[i];
                 const raw = Alpine.raw(marker);
                 const pos = raw.getPosition();
-                str += 'var marker' + i + ' = new google.maps.Marker({title: "' + marker.title + '", icon: "' + marker.icon + '", position: new google.maps.LatLng(' + pos.lat() + ', ' + pos.lng() + '), map: map});\n';
+                str += 'var marker' + i + ' = new google.maps.Marker({title: "' + marker.title + '", icon: "' + (raw.getIcon() || marker.icon) + '", position: new google.maps.LatLng(' + pos.lat() + ', ' + pos.lng() + '), map: map});\n';
                 if (marker.infoWindow.content) {
                     str += 'var infowindow' + i + ' = new google.maps.InfoWindow({content: ' + JSON.stringify(marker.infoWindow.content) + ',map: map});\n';
                     str += 'marker' + i + ".addListener('click', function () { infowindow" + i + '.open(map, marker' + i + ') ;});infowindow' + i + '.close();\n';
