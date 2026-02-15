@@ -226,6 +226,7 @@ class MapController extends Controller
 
   protected function sanitizeUrl(?string $url): string
   {
+    if ($url === null) return '';
     $url = trim($url);
     if ($url === '') return '';
     if (strlen($url) > 2048) return '';

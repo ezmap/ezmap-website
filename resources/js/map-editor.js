@@ -282,7 +282,7 @@ document.addEventListener('alpine:init', () => {
             if (this.mapOptions.kmlUrl) code += `    new google.maps.KmlLayer({url: ${JSON.stringify(this.mapOptions.kmlUrl)}, map: map}).setMap(map);\n`;
             if (this.mapOptions.geoJsonUrl) code += `    map.data.loadGeoJson(${JSON.stringify(this.mapOptions.geoJsonUrl)});\n`;
             code += `    ${this.markersLoop()}${this.heatmapLoop()}\n`;
-            if (this.mapOptions.markerClustering && this.markers.length) {
+            if (this.mapOptions.markerClustering && this.markers.length > 1) {
                 code += `    new markerClusterer.MarkerClusterer({markers: [${this.markers.map((_, i) => 'marker' + i).join(', ')}], map: map});\n`;
             }
             code += `    ${this.responsiveOutput()}\n`;

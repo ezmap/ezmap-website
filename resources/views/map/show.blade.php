@@ -4,14 +4,14 @@ var firstLoad =  (document.getElementById("ezmap-gmap-script") === null)
 
 if (firstLoad)
 {
-  gmapscript = document.createElement('script');
+  var gmapscript = document.createElement('script');
   gmapscript.id = "ezmap-gmap-script";
   gmapscript.src = "https://maps.googleapis.com/maps/api/js?key={{ $map->apiKey }}{{ $map->heatmap ? "&libraries=visualization" : "" }}";
 
   head.appendChild(gmapscript);
 }
 
-@if(filter_var($map->mapOptions->markerClustering ?? false, FILTER_VALIDATE_BOOLEAN) && $map->markers->count() > 0)
+@if(filter_var($map->mapOptions->markerClustering ?? false, FILTER_VALIDATE_BOOLEAN) && $map->markers->count() > 1)
 var needsCluster = (document.getElementById("ezmap-cluster-script") === null);
 if (needsCluster) {
   var clusterScript = document.createElement('script');
@@ -48,7 +48,7 @@ function doMap{{ $map->id }}() {
     {!! $map->code() !!}
 }
 
-@if(filter_var($map->mapOptions->markerClustering ?? false, FILTER_VALIDATE_BOOLEAN) && $map->markers->count() > 0)
+@if(filter_var($map->mapOptions->markerClustering ?? false, FILTER_VALIDATE_BOOLEAN) && $map->markers->count() > 1)
 function tryRun{{ $map->id }}() {
   if (typeof google !== 'undefined' && typeof markerClusterer !== 'undefined') {
     doMap{{ $map->id }}();
@@ -56,10 +56,12 @@ function tryRun{{ $map->id }}() {
     setTimeout(tryRun{{ $map->id }}, 50);
   }
 }
-gmapscript.addEventListener('load', function(){ tryRun{{ $map->id }}(); });
+var gscript{{ $map->id }} = document.getElementById("ezmap-gmap-script");
+gscript{{ $map->id }}.addEventListener('load', function(){ tryRun{{ $map->id }}(); });
 if (!firstLoad) tryRun{{ $map->id }}();
 @else
-gmapscript.addEventListener('load', function(){
+var gscript{{ $map->id }} = document.getElementById("ezmap-gmap-script");
+gscript{{ $map->id }}.addEventListener('load', function(){
   doMap{{ $map->id }}();
 });
 if (!firstLoad) doMap{{ $map->id }}();
