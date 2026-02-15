@@ -452,7 +452,7 @@
                     <template x-for="(marker, index) in markers" :key="index">
                       <tr class="border-b border-zinc-100 dark:border-zinc-800">
                         <td class="py-1.5 pr-1">
-                          <input type="text" x-model="marker.title" @keyup="marker.setTitle(marker.title)" class="w-full rounded border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-800 px-2 py-1 text-xs">
+                          <input type="text" x-model="marker.title" @keyup="Alpine.raw(marker).setTitle(marker.title)" class="w-full rounded border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-800 px-2 py-1 text-xs">
                         </td>
                         <td class="text-center py-1.5 px-1">
                           <flux:button variant="ghost" size="xs" icon="map-pin" @click.prevent="changeMarkerIcon(index)" />

@@ -188,6 +188,103 @@
         <img class="rounded-lg shadow-sm border border-zinc-200 dark:border-zinc-700 max-w-[200px]" src="images/clickable-points-of-interest.png" alt="points of interest">
       </div>
     </div>
+    <div>
+      <flux:heading>Rotate Control</flux:heading>
+      <flux:text class="mt-1">Shows or hides the rotate control. This control only appears when 45° oblique imagery is available for the current location and zoom level.</flux:text>
+    </div>
+    <div>
+      <flux:heading>Camera Control</flux:heading>
+      <flux:text class="mt-1">Shows or hides the camera control — a compass-style control that provides both zoom and pan functionality. This is a separate control from the zoom-only buttons.</flux:text>
+    </div>
+  </div>
+  <flux:separator class="mt-6" />
+</div>
+
+<div id="faq8a">
+  <flux:heading size="lg">Control Positions</flux:heading>
+  <flux:text class="mt-2">When a control is enabled, you can choose where it appears on the map. The default position varies by control. Available positions include Top Left, Top Center, Top Right, Left Center, Right Center, Bottom Left, Bottom Center, and Bottom Right.</flux:text>
+  <flux:callout icon="information-circle" class="mt-4">
+    <flux:callout.text>Google requires its logo and copyright to remain visible at the bottom-left of the map. Controls placed at bottom-left may be offset slightly to accommodate this.</flux:callout.text>
+  </flux:callout>
+  <flux:separator class="mt-6" />
+</div>
+
+<div id="faq8b">
+  <flux:heading size="lg">Data Layers</flux:heading>
+  <flux:text class="mt-2">Data layers overlay real-time information from Google onto your map. These are simple toggles — no additional configuration required.</flux:text>
+  <div class="mt-4 space-y-4">
+    <div>
+      <flux:heading>Traffic Layer</flux:heading>
+      <flux:text class="mt-1">Overlays real-time traffic conditions on roads, displayed as colour-coded lines (green for clear, yellow for moderate, red for heavy traffic).</flux:text>
+    </div>
+    <div>
+      <flux:heading>Transit Layer</flux:heading>
+      <flux:text class="mt-1">Shows public transport routes and stations, including bus, rail, and ferry lines.</flux:text>
+    </div>
+    <div>
+      <flux:heading>Bicycling Layer</flux:heading>
+      <flux:text class="mt-1">Displays dedicated bike paths, recommended cycling routes, and other bike-friendly roads.</flux:text>
+    </div>
+  </div>
+  <flux:separator class="mt-6" />
+</div>
+
+<div id="faq8c">
+  <flux:heading size="lg">Gesture Handling</flux:heading>
+  <flux:text class="mt-2">Controls how the map responds to touch and scroll gestures.</flux:text>
+  <ul class="mt-2 list-disc ml-5 text-sm text-zinc-600 dark:text-zinc-400 space-y-1">
+    <li><strong>Auto</strong> (default) — the map chooses the best behavior based on context.</li>
+    <li><strong>Cooperative</strong> — requires two-finger scroll to zoom the map; single-finger scrolls the page. Recommended for maps embedded in content-heavy pages.</li>
+    <li><strong>Greedy</strong> — the map captures all touch/scroll gestures.</li>
+    <li><strong>None</strong> — disables all gestures entirely.</li>
+  </ul>
+  <flux:separator class="mt-6" />
+</div>
+
+<div id="faq8d">
+  <flux:heading size="lg">Advanced Options</flux:heading>
+  <flux:text class="mt-2">These options are found under the Advanced accordion in the settings panel. Most users won't need to change them.</flux:text>
+  <div class="mt-4 space-y-4">
+    <div>
+      <flux:heading>Control Size</flux:heading>
+      <flux:text class="mt-1">Scales the default map UI controls (zoom buttons, etc.) in pixels. Leave at 0 for the Google Maps default size.</flux:text>
+    </div>
+    <div>
+      <flux:heading>Min Zoom / Max Zoom</flux:heading>
+      <flux:text class="mt-1">Restricts the zoom range of the map. Useful for preventing users from zooming too far in or out.</flux:text>
+    </div>
+    <div>
+      <flux:heading>Heading</flux:heading>
+      <flux:text class="mt-1">Sets the compass heading of the map in degrees (0–360). 0 is north, 90 is east, etc.</flux:text>
+    </div>
+    <div>
+      <flux:heading>Tilt</flux:heading>
+      <flux:text class="mt-1">Sets the viewing angle. 0° is straight down, 45° provides an oblique perspective (only available at zoom 18+ in supported areas).</flux:text>
+    </div>
+    <div>
+      <flux:heading>Background Colour</flux:heading>
+      <flux:text class="mt-1">The colour shown behind map tiles while they load. Only visible briefly during panning or on slow connections.</flux:text>
+    </div>
+    <div>
+      <flux:heading>Map Restriction</flux:heading>
+      <flux:text class="mt-1">Locks the map to a specific geographic area. Users cannot pan or zoom outside the defined bounds. Use the "Use current viewport" button to quickly set the bounds to whatever area is currently visible on the map. Enable "Strict Bounds" to prevent zooming out beyond the restricted area.</flux:text>
+    </div>
+  </div>
+  <flux:separator class="mt-6" />
+</div>
+
+<div id="faq8e">
+  <flux:heading size="lg">Container Styling</flux:heading>
+  <flux:text class="mt-2">Customise the appearance of the map container element itself.</flux:text>
+  <div class="mt-4 space-y-4">
+    <div>
+      <flux:heading>Border Radius</flux:heading>
+      <flux:text class="mt-1">Rounds the corners of the map container in pixels. Set to 0 for square corners.</flux:text>
+    </div>
+    <div>
+      <flux:heading>Border</flux:heading>
+      <flux:text class="mt-1">Adds a CSS border around the map container. Use standard CSS border syntax, e.g. "2px solid #333" or "1px dashed red".</flux:text>
+    </div>
   </div>
   <flux:separator class="mt-6" />
 </div>

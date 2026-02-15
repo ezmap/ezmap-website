@@ -421,7 +421,9 @@ document.addEventListener('alpine:init', () => {
             let str = '';
             for (let i = 0; i < this.markers.length; i++) {
                 const marker = this.markers[i];
-                str += 'var marker' + i + ' = new google.maps.Marker({title: "' + marker.title + '", icon: "' + marker.icon + '", position: new google.maps.LatLng(' + marker.position.lat() + ', ' + marker.position.lng() + '), map: map});\n';
+                const raw = Alpine.raw(marker);
+                const pos = raw.getPosition();
+                str += 'var marker' + i + ' = new google.maps.Marker({title: "' + marker.title + '", icon: "' + marker.icon + '", position: new google.maps.LatLng(' + pos.lat() + ', ' + pos.lng() + '), map: map});\n';
                 if (marker.infoWindow.content) {
                     str += 'var infowindow' + i + ' = new google.maps.InfoWindow({content: ' + JSON.stringify(marker.infoWindow.content) + ',map: map});\n';
                     str += 'marker' + i + ".addListener('click', function () { infowindow" + i + '.open(map, marker' + i + ') ;});infowindow' + i + '.close();\n';
@@ -665,14 +667,15 @@ document.addEventListener('alpine:init', () => {
 
         addInfoBox() {
             const marker = this.markers[this.markers.length - 1];
+            const rawMarker = Alpine.raw(marker);
             const content = this.buildInfoWindowContent();
             const infowindow = new google.maps.InfoWindow({ content: content });
             marker.infoWindow = infowindow;
             marker.title = this.infoTitle !== '' ? this.infoTitle : marker.title;
-            marker.setTitle(marker.title);
+            rawMarker.setTitle(marker.title);
             const map = this.map;
-            marker.addListener('click', () => {
-                infowindow.open(map, marker);
+            rawMarker.addListener('click', () => {
+                infowindow.open(map, rawMarker);
             });
             Flux.modal('marker-info').close();
             this.centerchanged();
@@ -684,14 +687,14 @@ document.addEventListener('alpine:init', () => {
         },
 
         removeMarker(item) {
-            this.markers[item].setMap(null);
+            Alpine.raw(this.markers[item]).setMap(null);
             this.markers.splice(item, 1);
         },
 
         removeAllMarkers() {
             if (window.confirm('Are you sure you want to delete the ' + this.markers.length + ' markers from this map?')) {
                 for (let i = 0; i < this.markers.length; i++) {
-                    this.markers[i].setMap(null);
+                    Alpine.raw(this.markers[i]).setMap(null);
                 }
                 this.markers = [];
             }
@@ -705,7 +708,7 @@ document.addEventListener('alpine:init', () => {
         },
 
         centerOnMarker(item) {
-            this.map.setCenter(this.markers[item].position);
+            this.map.setCenter(Alpine.raw(this.markers[item]).getPosition());
         },
 
         centerOnHotSpot(item) {
@@ -727,7 +730,7 @@ document.addEventListener('alpine:init', () => {
             if (!newIcon.classList.contains('markericon')) return;
             const markerIndex = this.iconChangeMarkerIndex !== null ? this.iconChangeMarkerIndex : parseInt(newIcon.dataset.forMarker);
             if (this.markers[markerIndex]) {
-                this.markers[markerIndex].setIcon(newIcon.getAttribute('src'));
+                Alpine.raw(this.markers[markerIndex]).setIcon(newIcon.getAttribute('src'));
                 this.markers[markerIndex].icon = newIcon.getAttribute('src');
             }
             Flux.modal('marker-pin').close();
@@ -972,7 +975,7 @@ document.addEventListener('alpine:init', () => {
             } else {
                 // Re-init: re-attach existing markers to the new map instance
                 for (let i = 0; i < this.markers.length; i++) {
-                    this.markers[i].setMap(this.map);
+                    Alpine.raw(this.markers[i]).setMap(this.map);
                 }
             }
 
