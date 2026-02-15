@@ -250,4 +250,39 @@
   <flux:separator class="mt-6" />
 </div>
 
+<div id="faq11">
+  <flux:heading size="lg">Cloud Styling</flux:heading>
+  <flux:text class="mt-2">
+    If you have a <a href="https://console.cloud.google.com/google/maps-apis/studio/styles" target="_blank" class="underline">Google Cloud Console</a> account, you can use Google's cloud-based map styling to apply custom styles to your maps. This is an advanced feature for users who want more control than Snazzy Maps themes provide.
+  </flux:text>
+
+  <div class="mt-4 space-y-4">
+    <div>
+      <flux:heading>How it works</flux:heading>
+      <ol class="mt-2 list-decimal ml-5 text-sm text-zinc-700 dark:text-zinc-300 space-y-2">
+        <li>Create a map style in the <a href="https://console.cloud.google.com/google/maps-apis/studio/styles" target="_blank" class="underline">Google Cloud Console Style Editor</a>. You can design both light and dark mode versions.</li>
+        <li>Create a <a href="https://developers.google.com/maps/documentation/javascript/map-ids/get-map-id" target="_blank" class="underline">Map ID</a> in the Cloud Console and associate your style to it.</li>
+        <li>Paste the <strong>Map ID</strong> (not the Style ID) into the Cloud Styling section in EZ Map.</li>
+        <li>Choose a <strong>Color Scheme</strong>: Follow System (auto light/dark based on your visitor's device), Light only, or Dark only.</li>
+      </ol>
+    </div>
+
+    <flux:callout variant="warning" icon="exclamation-triangle">
+      <flux:callout.heading>Important notes</flux:callout.heading>
+      <flux:callout.text>
+        <ul class="list-disc ml-4 space-y-1">
+          <li>Cloud styling and Snazzy Maps themes are <strong>mutually exclusive</strong>. Setting a Map ID will disable any applied Snazzy Maps theme, and vice versa.</li>
+          <li>The Map ID must be created in the same Google Cloud project as your API key. Map loads are billed to the account that owns the API key used in your generated code — so your visitors' map loads bill to <strong>your</strong> Google Cloud account, not EZ Map's.</li>
+          <li>Cloud-based map styles support features not available with Snazzy Maps themes, such as zoom-level styling, POI density control, and automatic dark mode.</li>
+        </ul>
+      </flux:callout.text>
+    </flux:callout>
+
+    <flux:text>
+      For full documentation, see Google's <a href="https://developers.google.com/maps/documentation/javascript/cloud-customization/map-styles" target="_blank" class="underline">Cloud-based Map Styling guide</a>.
+    </flux:text>
+  </div>
+  <flux:separator class="mt-6" />
+</div>
+
 </div>
