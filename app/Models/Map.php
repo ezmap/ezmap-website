@@ -125,6 +125,7 @@ class Map extends Model
         ? ",\n                \"backgroundColor\": \"{$this->mapOptions->backgroundColor}\""
         : '';
     $rotateControl = filter_var($this->mapOptions->rotateControl ?? true, FILTER_VALIDATE_BOOLEAN) ? 'true' : 'false';
+    $cameraControl = filter_var($this->mapOptions->cameraControl ?? true, FILTER_VALIDATE_BOOLEAN) ? 'true' : 'false';
 
     $restriction = '';
     if (!empty($this->mapOptions->restrictionEnabled) &&
@@ -143,6 +144,7 @@ class Map extends Model
         'zoomControlPosition' => 'zoomControlOptions',
         'streetViewControlPosition' => 'streetViewControlOptions',
         'rotateControlPosition' => 'rotateControlOptions',
+        'cameraControlPosition' => 'cameraControlOptions',
     ];
     foreach ($positionMap as $prop => $optKey) {
         $pos = $this->mapOptions->$prop ?? '';
@@ -164,6 +166,7 @@ class Map extends Model
                 \"mapTypeControlOptions\": { style : {$this->mapOptions->mapTypeControlStyle} },
                 \"mapTypeId\": \"{$this->mapOptions->mapTypeId}\",
                 \"rotateControl\": {$rotateControl},
+                \"cameraControl\": {$cameraControl},
                 \"scaleControl\": {$this->mapOptions->showScaleControl},
                 \"scrollwheel\": {$this->mapOptions->scrollWheel},
                 \"streetViewControl\": {$this->mapOptions->showStreetViewControl},

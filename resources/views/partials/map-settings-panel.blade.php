@@ -194,6 +194,7 @@
             <flux:switch name="mapOptions[showZoomControl]" x-model="mapOptions.zoomControl" x-on:change="optionschange()" label="{{ ucwords(EzTrans::translate('options.zoom', 'zoom control')) }}" />
             <flux:switch name="mapOptions[showScaleControl]" x-model="mapOptions.scaleControl" x-on:change="optionschange()" label="{{ ucwords(EzTrans::translate('options.scale', 'scale control')) }}" />
             <flux:switch name="mapOptions[rotateControl]" x-model="mapOptions.rotateControl" x-on:change="optionschange()" label="Rotate Control" />
+            <flux:switch name="mapOptions[cameraControl]" x-model="mapOptions.cameraControl" x-on:change="optionschange()" label="Camera Control" />
           </div>
 
           <flux:separator />
@@ -252,6 +253,22 @@
               <div>
                 <input type="hidden" name="mapOptions[rotateControlPosition]" :value="mapOptions.rotateControlPosition || ''">
                 <flux:select label="Rotate" x-model="mapOptions.rotateControlPosition" x-on:change="optionschange()" size="sm">
+                  <flux:select.option value="">Default</flux:select.option>
+                  <flux:select.option value="TOP_LEFT">Top Left</flux:select.option>
+                  <flux:select.option value="TOP_CENTER">Top Center</flux:select.option>
+                  <flux:select.option value="TOP_RIGHT">Top Right</flux:select.option>
+                  <flux:select.option value="LEFT_CENTER">Left Center</flux:select.option>
+                  <flux:select.option value="RIGHT_CENTER">Right Center</flux:select.option>
+                  <flux:select.option value="BOTTOM_LEFT">Bottom Left</flux:select.option>
+                  <flux:select.option value="BOTTOM_CENTER">Bottom Center</flux:select.option>
+                  <flux:select.option value="BOTTOM_RIGHT">Bottom Right</flux:select.option>
+                </flux:select>
+              </div>
+            </template>
+            <template x-if="mapOptions.cameraControl">
+              <div>
+                <input type="hidden" name="mapOptions[cameraControlPosition]" :value="mapOptions.cameraControlPosition || ''">
+                <flux:select label="Camera" x-model="mapOptions.cameraControlPosition" x-on:change="optionschange()" size="sm">
                   <flux:select.option value="">Default</flux:select.option>
                   <flux:select.option value="TOP_LEFT">Top Left</flux:select.option>
                   <flux:select.option value="TOP_CENTER">Top Center</flux:select.option>

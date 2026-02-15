@@ -163,6 +163,7 @@ document.addEventListener('alpine:init', () => {
                 mapTypeControlOptions: { style: this.mapOptions.mapTypeControlOptions ? this.mapOptions.mapTypeControlOptions.style : 0 },
                 mapTypeId: this.mapTypeId.mapTypeId || 'roadmap',
                 rotateControl: this.mapOptions.rotateControl ?? true,
+                cameraControl: this.mapOptions.cameraControl ?? true,
                 scaleControl: this.mapOptions.scaleControl,
                 scrollwheel: this.mapOptions.scrollwheel,
                 streetViewControl: this.mapOptions.streetViewControl,
@@ -214,8 +215,9 @@ document.addEventListener('alpine:init', () => {
             if (this.mapOptions.rotateControlPosition) {
                 opts.rotateControlOptions = { position: this.mapOptions.rotateControlPosition };
             }
-
-            // Remove styles if false or if using cloud-based mapId
+            if (this.mapOptions.cameraControlPosition) {
+                opts.cameraControlOptions = { position: this.mapOptions.cameraControlPosition };
+            }
             const optsClean = { ...opts };
             if (!optsClean.styles || this.googleMapId) {
                 delete optsClean.styles;
@@ -549,12 +551,16 @@ document.addEventListener('alpine:init', () => {
             if (this.mapOptions.rotateControlPosition) {
                 setOpts.rotateControlOptions = { position: resolvePos(this.mapOptions.rotateControlPosition) };
             }
+            if (this.mapOptions.cameraControlPosition) {
+                setOpts.cameraControlOptions = { position: resolvePos(this.mapOptions.cameraControlPosition) };
+            }
 
             // Remove raw position strings — Google Maps only understands *ControlOptions
             delete setOpts.fullscreenControlPosition;
             delete setOpts.zoomControlPosition;
             delete setOpts.streetViewControlPosition;
             delete setOpts.rotateControlPosition;
+            delete setOpts.cameraControlPosition;
 
             if (setOpts.controlSize) setOpts.controlSize = parseInt(setOpts.controlSize);
             if (setOpts.minZoom !== null && setOpts.minZoom !== '' && setOpts.minZoom !== undefined) {
@@ -865,6 +871,10 @@ document.addEventListener('alpine:init', () => {
                 initOpts.rotateControlOptions = { position: resolvePos(initOpts.rotateControlPosition) };
             }
             delete initOpts.rotateControlPosition;
+            if (initOpts.cameraControlPosition) {
+                initOpts.cameraControlOptions = { position: resolvePos(initOpts.cameraControlPosition) };
+            }
+            delete initOpts.cameraControlPosition;
 
             // Clean up optional numeric values
             if (initOpts.controlSize) initOpts.controlSize = parseInt(initOpts.controlSize);

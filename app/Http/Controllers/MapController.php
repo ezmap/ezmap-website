@@ -193,6 +193,7 @@ class MapController extends Controller
     $options['showStreetViewControl'] = $request->has("mapOptions.showStreetViewControl") ? 'true' : 'false';
     $options['showZoomControl']       = $request->has("mapOptions.showZoomControl") ? 'true' : 'false';
     $options['rotateControl']         = $request->has("mapOptions.rotateControl") ? 'true' : 'false';
+    $options['cameraControl']         = $request->has("mapOptions.cameraControl") ? 'true' : 'false';
     $options['gestureHandling']       = $request->input("mapOptions.gestureHandling", 'auto');
     $options['controlSize']           = (int) $request->input("mapOptions.controlSize", 0);
     $options['minZoom']               = $request->input("mapOptions.minZoom", '');
@@ -210,6 +211,7 @@ class MapController extends Controller
     $options['zoomControlPosition']       = $request->input("mapOptions.zoomControlPosition", '');
     $options['streetViewControlPosition'] = $request->input("mapOptions.streetViewControlPosition", '');
     $options['rotateControlPosition']     = $request->input("mapOptions.rotateControlPosition", '');
+    $options['cameraControlPosition']     = $request->input("mapOptions.cameraControlPosition", '');
     $options['colorScheme']               = $request->input("mapOptions.colorScheme", 'FOLLOW_SYSTEM');
 
     return $options;
