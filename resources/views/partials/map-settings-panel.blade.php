@@ -2,7 +2,7 @@
 
 @php
   // Determine which accordion sections have non-default values and should be expanded
-  $hasMap = isset($map) && $map->exists;
+  $hasMap = isset($map) && $map?->exists;
 
   $dimNonDefault = $hasMap && (
       $map->width != 560 ||
@@ -465,7 +465,7 @@
           </div>
 
           <template x-if="googleMapId">
-            <flux:select label="Color Scheme" x-model="colorScheme" @change="googleMapIdChanged()" description="This controls the Google Map's color scheme, independent of your EZ Map appearance setting.">
+            <flux:select label="Color Scheme" name="mapOptions[colorScheme]" x-model="colorScheme" @change="googleMapIdChanged()" description="This controls the Google Map's color scheme, independent of your EZ Map appearance setting.">
               <flux:select.option value="FOLLOW_SYSTEM">Follow System</flux:select.option>
               <flux:select.option value="LIGHT">Light</flux:select.option>
               <flux:select.option value="DARK">Dark</flux:select.option>
@@ -490,8 +490,9 @@
         <div class="space-y-3 py-2">
 
           @php
-            $heatmapCutoff = new \DateTime('2027-02-01');
-            $heatmapDisabled = now() >= $heatmapCutoff;
+            // Google documents removal as "February 2027" only; use the start of the month as an approximate cutoff.
+            $heatmapCutoff = now()->setDate(2027, 2, 1)->startOfMonth();
+            $heatmapDisabled = now()->gte($heatmapCutoff);
           @endphp
 
           @if($heatmapDisabled)

@@ -69,6 +69,7 @@
       'savedHeatmapLayer' => null,
       'mapId' => $hasMap ? $map->id : null,
       'googleMapId' => $hasMap ? ($map->google_map_id ?? '') : '',
+      'colorScheme' => $hasMap ? ($opts->colorScheme ?? 'FOLLOW_SYSTEM') : 'FOLLOW_SYSTEM',
       'containerBorderRadius' => $hasMap ? ($map->container_border_radius ?? '0') : '0',
       'containerBorder' => $hasMap ? ($map->container_border ?? '') : '',
       'containerShadow' => $hasMap ? ($map->container_shadow ?? 'none') : 'none',

@@ -234,7 +234,7 @@ document.addEventListener('alpine:init', () => {
             // Convert position strings to Google Maps enum references
             optsJson = optsJson.replace(/"position":"(TOP_LEFT|TOP_CENTER|TOP_RIGHT|LEFT_TOP|LEFT_CENTER|LEFT_BOTTOM|RIGHT_TOP|RIGHT_CENTER|RIGHT_BOTTOM|BOTTOM_LEFT|BOTTOM_CENTER|BOTTOM_RIGHT)"/g,
                 '"position":google.maps.ControlPosition.$1');
-            // Convert strictBounds from JSON to proper format
+            // Convert mapTypeControlOptions.style from JSON string to numeric value
             optsJson = optsJson.replace(/"style":(\d+)/g, '"style":$1');
             const libs = this.heatMapData.length ? '&libraries=visualization' : '';
 

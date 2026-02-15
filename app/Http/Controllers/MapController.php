@@ -211,6 +211,7 @@ class MapController extends Controller
     $options['zoomControlPosition']       = $request->input("mapOptions.zoomControlPosition", '');
     $options['streetViewControlPosition'] = $request->input("mapOptions.streetViewControlPosition", '');
     $options['rotateControlPosition']     = $request->input("mapOptions.rotateControlPosition", '');
+    $options['colorScheme']               = $request->input("mapOptions.colorScheme", 'FOLLOW_SYSTEM');
 
     return $options;
   }

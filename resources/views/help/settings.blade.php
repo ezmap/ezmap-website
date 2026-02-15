@@ -260,7 +260,7 @@
     <div>
       <flux:heading>How it works</flux:heading>
       <ol class="mt-2 list-decimal ml-5 text-sm text-zinc-700 dark:text-zinc-300 space-y-2">
-        <li>Create a map style in the <a href="https://console.cloud.google.com/google/maps-apis/studio/styles" target="_blank" class="underline">Google Cloud Console Style Editor</a>. You can design both light and dark mode versions.</li>
+        <li>Open the <a href="https://console.cloud.google.com/google/maps-apis/studio/styles" target="_blank" class="underline">Google Cloud Console styles page</a>, then create or edit a map style in the Style Editor. You can design both light and dark mode versions.</li>
         <li>Create a <a href="https://developers.google.com/maps/documentation/javascript/map-ids/get-map-id" target="_blank" class="underline">Map ID</a> in the Cloud Console and associate your style to it.</li>
         <li>Paste the <strong>Map ID</strong> (not the Style ID) into the Cloud Styling section in EZ Map.</li>
         <li>Choose a <strong>Color Scheme</strong>: Follow System (auto light/dark based on your visitor's device), Light only, or Dark only.</li>

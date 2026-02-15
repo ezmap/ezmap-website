@@ -100,7 +100,8 @@ class Map extends Model
     $disableDoubleClickZoom = filter_var($this->mapOptions->doubleClickZoom, FILTER_VALIDATE_BOOLEAN) ? 'false' : 'true';
     $hasGoogleMapId         = !empty($this->google_map_id);
     $styles                 = (!$hasGoogleMapId && $this->theme_id > 0) ? ",\n                \"styles\": " . $this->theme->json : '';
-    $googleMapId            = $hasGoogleMapId ? ",\n                \"mapId\": \"{$this->google_map_id}\",\n                \"colorScheme\": \"FOLLOW_SYSTEM\"" : '';
+    $colorScheme            = $this->mapOptions->colorScheme ?? 'FOLLOW_SYSTEM';
+    $googleMapId            = $hasGoogleMapId ? ",\n                \"mapId\": \"{$this->google_map_id}\",\n                \"colorScheme\": \"{$colorScheme}\"" : '';
 
     // Optional advanced settings
     $gestureHandling = ($this->mapOptions->gestureHandling ?? 'auto') !== 'auto'
