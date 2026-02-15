@@ -437,9 +437,9 @@ document.addEventListener('alpine:init', () => {
         mapStyling() {
             let str = '<style>\n  ';
             str += '#' + this.mapcontainer + ' { ';
-            str += 'min-height:150px; min-width:150px; height: ' + this.styleObject.height + '; width: ' + this.styleObject.width + ';';
+            str += 'min-height:150px; min-width:150px; height: ' + this.styleObject.height + '; width: ' + this.styleObject.width + '; overflow: hidden;';
             if (this.containerBorderRadius && this.containerBorderRadius !== '0') {
-                str += ' border-radius: ' + this.containerBorderRadius + 'px; overflow: hidden;';
+                str += ' border-radius: ' + this.containerBorderRadius + 'px;';
             }
             if (this.containerBorder) {
                 str += ' border: ' + this.containerBorder + ';';
