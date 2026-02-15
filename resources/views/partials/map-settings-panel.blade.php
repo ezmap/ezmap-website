@@ -40,21 +40,6 @@
 
           <flux:input label="{{ ucwords(EzTrans::translate('mapContainerId','Map Container ID')) }}" name="mapContainer" type="text" placeholder="map" x-model="mapcontainer" />
 
-          <div>
-            <flux:input label="Google Cloud Map ID" name="google_map_id" type="text" placeholder="{{ EzTrans::translate('optional','Optional') }}" x-model="googleMapId" x-on:blur="googleMapIdChanged()" />
-            <flux:text size="sm" class="mt-1">
-              Enter a <a target="_blank" href="https://developers.google.com/maps/documentation/javascript/map-ids/get-map-id" class="underline text-accent-content">Map ID</a> from your Google Cloud Console to apply cloud-based styles. Not the Style ID — you must create a Map ID and associate your style to it. Overrides Snazzy Maps themes.
-            </flux:text>
-          </div>
-
-          <template x-if="googleMapId">
-            <flux:select label="Color Scheme" x-model="colorScheme" @change="googleMapIdChanged()">
-              <flux:select.option value="FOLLOW_SYSTEM">Follow System</flux:select.option>
-              <flux:select.option value="LIGHT">Light</flux:select.option>
-              <flux:select.option value="DARK">Dark</flux:select.option>
-            </flux:select>
-          </template>
-
           @if(!empty($map))
             <div class="flex items-center gap-2">
               <flux:switch name="embeddable" x-model="embeddable" x-on:change="optionschange()" label="{{ ucwords(EzTrans::translate('automaticUpdates','Automatic Updates')) }}" />
@@ -219,6 +204,37 @@
                 </flux:button>
               </template>
             </div>
+          </template>
+        </div>
+      </flux:accordion.content>
+    </flux:accordion.item>
+
+    {{-- ====== CLOUD STYLING ====== --}}
+    <flux:accordion.item>
+      <flux:accordion.heading>
+        <div class="flex items-center gap-2">
+          <flux:icon.cloud variant="mini" class="text-zinc-400" />
+          Cloud Styling
+          <template x-if="googleMapId">
+            <flux:badge size="sm" color="sky">active</flux:badge>
+          </template>
+        </div>
+      </flux:accordion.heading>
+      <flux:accordion.content>
+        <div class="space-y-3 py-2">
+          <div>
+            <flux:input label="Google Cloud Map ID" name="google_map_id" type="text" placeholder="{{ EzTrans::translate('optional','Optional') }}" x-model="googleMapId" x-on:blur="googleMapIdChanged()" />
+            <flux:text size="sm" class="mt-1">
+              Enter a <a target="_blank" href="https://developers.google.com/maps/documentation/javascript/map-ids/get-map-id" class="underline text-accent-content">Map ID</a> from your Google Cloud Console to apply cloud-based styles. Not the Style ID — you must create a Map ID and associate your style to it. Overrides Snazzy Maps themes.
+            </flux:text>
+          </div>
+
+          <template x-if="googleMapId">
+            <flux:select label="Color Scheme" x-model="colorScheme" @change="googleMapIdChanged()">
+              <flux:select.option value="FOLLOW_SYSTEM">Follow System</flux:select.option>
+              <flux:select.option value="LIGHT">Light</flux:select.option>
+              <flux:select.option value="DARK">Dark</flux:select.option>
+            </flux:select>
           </template>
         </div>
       </flux:accordion.content>
