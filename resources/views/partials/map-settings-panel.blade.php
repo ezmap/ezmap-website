@@ -119,8 +119,20 @@
             </flux:tooltip>
           </div>
           <div class="grid grid-cols-2 gap-3">
-            <flux:input label="{{ ucwords(EzTrans::translate('width', 'Width')) }}" name="width" type="number" x-model="width" @change="debouncedMapResized()" @keyup="debouncedMapResized()" description="px" />
-            <flux:input label="{{ ucwords(EzTrans::translate('height', 'Height')) }}" name="height" type="number" x-model="height" @change="debouncedMapResized()" @keyup="debouncedMapResized()" description="px" />
+            <flux:field>
+              <flux:label>{{ ucwords(EzTrans::translate('width', 'Width')) }}</flux:label>
+              <flux:input.group>
+                <flux:input name="width" type="number" x-model="width" @change="debouncedMapResized()" @keyup="debouncedMapResized()" />
+                <flux:input.group.suffix>px</flux:input.group.suffix>
+              </flux:input.group>
+            </flux:field>
+            <flux:field>
+              <flux:label>{{ ucwords(EzTrans::translate('height', 'Height')) }}</flux:label>
+              <flux:input.group>
+                <flux:input name="height" type="number" x-model="height" @change="debouncedMapResized()" @keyup="debouncedMapResized()" />
+                <flux:input.group.suffix>px</flux:input.group.suffix>
+              </flux:input.group>
+            </flux:field>
           </div>
           <div class="grid grid-cols-2 gap-3">
             <flux:input label="{{ ucwords(EzTrans::translate('latitude')) }}" name="latitude" type="number" step=".0000000000000001" placeholder="Latitude" x-model="lat" @change="debouncedCenterChanged()" @keyup="debouncedCenterChanged()" />
