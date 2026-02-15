@@ -550,6 +550,12 @@ document.addEventListener('alpine:init', () => {
                 setOpts.rotateControlOptions = { position: resolvePos(this.mapOptions.rotateControlPosition) };
             }
 
+            // Remove raw position strings — Google Maps only understands *ControlOptions
+            delete setOpts.fullscreenControlPosition;
+            delete setOpts.zoomControlPosition;
+            delete setOpts.streetViewControlPosition;
+            delete setOpts.rotateControlPosition;
+
             if (setOpts.controlSize) setOpts.controlSize = parseInt(setOpts.controlSize);
             if (setOpts.minZoom !== null && setOpts.minZoom !== '' && setOpts.minZoom !== undefined) {
                 setOpts.minZoom = parseInt(setOpts.minZoom);
