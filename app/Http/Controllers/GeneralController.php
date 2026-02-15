@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Rules\RecaptchaV3;
 use Illuminate\Support\Facades\Mail;
 use Vluzrmos\LanguageDetector\Facades\LanguageDetector;
 
@@ -16,12 +17,18 @@ class GeneralController extends Controller
 
     public function feedback(Request $request)
     {
-        $this->validate($request, [
-            'name'                 => 'required',
-            'email'                => 'required|email',
-            'feedback'             => 'required',
-            'subject'              => 'required',
-        ]);
+        $rules = [
+            'name'     => 'required',
+            'email'    => 'required|email',
+            'feedback' => 'required',
+            'subject'  => 'required',
+        ];
+
+        if (config('services.recaptcha.secret_key')) {
+            $rules['recaptcha_token'] = ['required', new RecaptchaV3('feedback')];
+        }
+
+        $this->validate($request, $rules);
 
         $name     = $request->input('name');
         $email    = $request->input('email');
