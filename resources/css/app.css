@@ -23,3 +23,8 @@
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
+
+/* Google Maps InfoWindow text must always be dark — the bubble is always white */
+.gm-style .gm-style-iw {
+  color: #1f2937;
+}
