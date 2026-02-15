@@ -34,4 +34,9 @@ return [
     'google' => [
         'maps_api_key' => env('GOOGLE_MAPS_API_KEY', ''),
     ],
+
+    'recaptcha' => [
+        'site_key'   => env('RECAPTCHA_V3_SITE_KEY'),
+        'secret_key' => env('RECAPTCHA_V3_SECRET_KEY'),
+    ],
 ];

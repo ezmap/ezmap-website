@@ -20,6 +20,8 @@ test('password reset page loads', function () {
 });
 
 test('user can register', function () {
+    config(['services.recaptcha.secret_key' => null]);
+
     $this->post('/register', [
         'name' => 'Test User',
         'email' => 'test@example.com',

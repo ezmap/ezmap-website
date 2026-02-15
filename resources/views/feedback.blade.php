@@ -5,9 +5,22 @@
     <flux:subheading class="mt-2">{{ EzTrans::translate('feedback.intro') }}</flux:subheading>
 
     <flux:card class="mt-8">
-      <form method="POST" action="{{ route('feedback') }}" class="space-y-6">
+      <form method="POST" action="{{ route('feedback') }}" class="space-y-6"
+        @if(config('services.recaptcha.site_key'))
+          x-data
+          @submit.prevent="
+            grecaptcha.ready(function() {
+              grecaptcha.execute('{{ config('services.recaptcha.site_key') }}', {action: 'feedback'}).then(function(token) {
+                $el.querySelector('[name=recaptcha_token]').value = token;
+                $el.submit();
+              });
+            });
+          "
+        @endif
+      >
         @csrf
         <input type="hidden" name="subject" value="Feedback">
+        <input type="hidden" name="recaptcha_token" value="">
 
         <flux:input
           label="Your name"
@@ -43,8 +56,6 @@
         @error('feedback')
           <flux:text class="!mt-1 text-sm text-red-600">{{ $message }}</flux:text>
         @enderror
-
-        {{-- reCAPTCHA placeholder — will be re-implemented --}}
 
         <flux:button type="submit" variant="primary" icon="paper-airplane">Submit Feedback</flux:button>
       </form>
