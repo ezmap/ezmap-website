@@ -132,7 +132,23 @@ class Map extends Model
         ($this->mapOptions->restrictionWest ?? '') !== '' &&
         ($this->mapOptions->restrictionNorth ?? '') !== '' &&
         ($this->mapOptions->restrictionEast ?? '') !== '') {
-        $restriction = ",\n                \"restriction\": {\"latLngBounds\": {\"south\": {$this->mapOptions->restrictionSouth}, \"west\": {$this->mapOptions->restrictionWest}, \"north\": {$this->mapOptions->restrictionNorth}, \"east\": {$this->mapOptions->restrictionEast}}}";
+        $strictBounds = !empty($this->mapOptions->restrictionStrictBounds) ? 'true' : 'false';
+        $restriction = ",\n                \"restriction\": {\"latLngBounds\": {\"south\": {$this->mapOptions->restrictionSouth}, \"west\": {$this->mapOptions->restrictionWest}, \"north\": {$this->mapOptions->restrictionNorth}, \"east\": {$this->mapOptions->restrictionEast}}, \"strictBounds\": {$strictBounds}}";
+    }
+
+    // Control position options
+    $controlPositions = '';
+    $positionMap = [
+        'fullscreenControlPosition' => 'fullscreenControlOptions',
+        'zoomControlPosition' => 'zoomControlOptions',
+        'streetViewControlPosition' => 'streetViewControlOptions',
+        'rotateControlPosition' => 'rotateControlOptions',
+    ];
+    foreach ($positionMap as $prop => $optKey) {
+        $pos = $this->mapOptions->$prop ?? '';
+        if (!empty($pos)) {
+            $controlPositions .= ",\n                \"{$optKey}\": {\"position\": google.maps.ControlPosition.{$pos}}";
+        }
     }
 
     $output                 = "
@@ -152,7 +168,7 @@ class Map extends Model
                 \"scrollwheel\": {$this->mapOptions->scrollWheel},
                 \"streetViewControl\": {$this->mapOptions->showStreetViewControl},
                 \"zoom\": {$this->mapOptions->zoomLevel},
-                \"zoomControl\": {$this->mapOptions->showZoomControl}{$styles}{$googleMapId}{$gestureHandling}{$controlSize}{$minZoom}{$maxZoom}{$heading}{$tilt}{$bgColor}{$restriction}
+                \"zoomControl\": {$this->mapOptions->showZoomControl}{$styles}{$googleMapId}{$gestureHandling}{$controlSize}{$minZoom}{$maxZoom}{$heading}{$tilt}{$bgColor}{$restriction}{$controlPositions}
             };
       var mapElement = document.getElementById('{$this->mapContainer}');
       var map = new google.maps.Map(mapElement, mapOptions);";

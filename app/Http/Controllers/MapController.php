@@ -202,10 +202,15 @@ class MapController extends Controller
     $options['tilt']                  = (int) $request->input("mapOptions.tilt", 0);
     $options['backgroundColor']       = $request->input("mapOptions.backgroundColor", '');
     $options['restrictionEnabled']    = $request->has("mapOptions.restrictionEnabled") ? true : false;
+    $options['restrictionStrictBounds'] = $request->has("mapOptions.restrictionStrictBounds") ? true : false;
     $options['restrictionSouth']      = $request->input("mapOptions.restrictionSouth", '');
     $options['restrictionWest']       = $request->input("mapOptions.restrictionWest", '');
     $options['restrictionNorth']      = $request->input("mapOptions.restrictionNorth", '');
     $options['restrictionEast']       = $request->input("mapOptions.restrictionEast", '');
+    $options['fullscreenControlPosition'] = $request->input("mapOptions.fullscreenControlPosition", '');
+    $options['zoomControlPosition']       = $request->input("mapOptions.zoomControlPosition", '');
+    $options['streetViewControlPosition'] = $request->input("mapOptions.streetViewControlPosition", '');
+    $options['rotateControlPosition']     = $request->input("mapOptions.rotateControlPosition", '');
 
     return $options;
   }

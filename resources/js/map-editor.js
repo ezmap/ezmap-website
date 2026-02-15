@@ -197,8 +197,23 @@ document.addEventListener('alpine:init', () => {
                         west: parseFloat(this.mapOptions.restriction.west),
                         north: parseFloat(this.mapOptions.restriction.north),
                         east: parseFloat(this.mapOptions.restriction.east),
-                    }
+                    },
+                    strictBounds: !!this.mapOptions.restriction.strictBounds,
                 };
+            }
+
+            // Add control position options when set
+            if (this.mapOptions.fullscreenControlPosition) {
+                opts.fullscreenControlOptions = { position: this.mapOptions.fullscreenControlPosition };
+            }
+            if (this.mapOptions.zoomControlPosition) {
+                opts.zoomControlOptions = { position: this.mapOptions.zoomControlPosition };
+            }
+            if (this.mapOptions.streetViewControlPosition) {
+                opts.streetViewControlOptions = { position: this.mapOptions.streetViewControlPosition };
+            }
+            if (this.mapOptions.rotateControlPosition) {
+                opts.rotateControlOptions = { position: this.mapOptions.rotateControlPosition };
             }
 
             // Remove styles if false or if using cloud-based mapId
@@ -215,7 +230,12 @@ document.addEventListener('alpine:init', () => {
             if (optsClean.heading === 0) delete optsClean.heading;
             if (optsClean.tilt === 0) delete optsClean.tilt;
 
-            const optsJson = JSON.stringify(optsClean);
+            let optsJson = JSON.stringify(optsClean);
+            // Convert position strings to Google Maps enum references
+            optsJson = optsJson.replace(/"position":"(TOP_LEFT|TOP_CENTER|TOP_RIGHT|LEFT_TOP|LEFT_CENTER|LEFT_BOTTOM|RIGHT_TOP|RIGHT_CENTER|RIGHT_BOTTOM|BOTTOM_LEFT|BOTTOM_CENTER|BOTTOM_RIGHT)"/g,
+                '"position":google.maps.ControlPosition.$1');
+            // Convert strictBounds from JSON to proper format
+            optsJson = optsJson.replace(/"style":(\d+)/g, '"style":$1');
             const libs = this.heatMapData.length ? '&libraries=visualization' : '';
 
             let code = `<!-- Google map code from EZ Map - https://ezmap.co -->\n`;
@@ -520,10 +540,26 @@ document.addEventListener('alpine:init', () => {
                         west: parseFloat(this.mapOptions.restriction.west),
                         north: parseFloat(this.mapOptions.restriction.north),
                         east: parseFloat(this.mapOptions.restriction.east),
-                    }
+                    },
+                    strictBounds: !!this.mapOptions.restriction.strictBounds,
                 };
             } else {
                 setOpts.restriction = null;
+            }
+
+            // Resolve control position strings to enum values
+            const resolvePos = (pos) => pos ? google.maps.ControlPosition[pos] : undefined;
+            if (this.mapOptions.fullscreenControlPosition) {
+                setOpts.fullscreenControlOptions = { position: resolvePos(this.mapOptions.fullscreenControlPosition) };
+            }
+            if (this.mapOptions.zoomControlPosition) {
+                setOpts.zoomControlOptions = { position: resolvePos(this.mapOptions.zoomControlPosition) };
+            }
+            if (this.mapOptions.streetViewControlPosition) {
+                setOpts.streetViewControlOptions = { position: resolvePos(this.mapOptions.streetViewControlPosition) };
+            }
+            if (this.mapOptions.rotateControlPosition) {
+                setOpts.rotateControlOptions = { position: resolvePos(this.mapOptions.rotateControlPosition) };
             }
 
             if (setOpts.controlSize) setOpts.controlSize = parseInt(setOpts.controlSize);
@@ -800,20 +836,41 @@ document.addEventListener('alpine:init', () => {
             }
 
             // Apply restriction bounds if enabled
-            if (initOpts.restriction?.enabled &&
-                initOpts.restriction.south !== '' && initOpts.restriction.west !== '' &&
-                initOpts.restriction.north !== '' && initOpts.restriction.east !== '') {
+            const restrictionData = initOpts.restriction;
+            if (restrictionData?.enabled &&
+                restrictionData.south !== '' && restrictionData.west !== '' &&
+                restrictionData.north !== '' && restrictionData.east !== '') {
                 initOpts.restriction = {
                     latLngBounds: {
-                        south: parseFloat(initOpts.restriction.south),
-                        west: parseFloat(initOpts.restriction.west),
-                        north: parseFloat(initOpts.restriction.north),
-                        east: parseFloat(initOpts.restriction.east),
-                    }
+                        south: parseFloat(restrictionData.south),
+                        west: parseFloat(restrictionData.west),
+                        north: parseFloat(restrictionData.north),
+                        east: parseFloat(restrictionData.east),
+                    },
+                    strictBounds: !!restrictionData.strictBounds,
                 };
             } else {
                 delete initOpts.restriction;
             }
+
+            // Resolve control position strings to enum values
+            const resolvePos = (pos) => pos ? google.maps.ControlPosition[pos] : undefined;
+            if (initOpts.fullscreenControlPosition) {
+                initOpts.fullscreenControlOptions = { position: resolvePos(initOpts.fullscreenControlPosition) };
+            }
+            delete initOpts.fullscreenControlPosition;
+            if (initOpts.zoomControlPosition) {
+                initOpts.zoomControlOptions = { position: resolvePos(initOpts.zoomControlPosition) };
+            }
+            delete initOpts.zoomControlPosition;
+            if (initOpts.streetViewControlPosition) {
+                initOpts.streetViewControlOptions = { position: resolvePos(initOpts.streetViewControlPosition) };
+            }
+            delete initOpts.streetViewControlPosition;
+            if (initOpts.rotateControlPosition) {
+                initOpts.rotateControlOptions = { position: resolvePos(initOpts.rotateControlPosition) };
+            }
+            delete initOpts.rotateControlPosition;
 
             // Clean up optional numeric values
             if (initOpts.controlSize) initOpts.controlSize = parseInt(initOpts.controlSize);

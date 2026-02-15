@@ -191,6 +191,76 @@
 
           <flux:separator />
 
+          <flux:subheading>Control Positions</flux:subheading>
+          <div class="grid grid-cols-2 gap-3">
+            <template x-if="mapOptions.fullscreenControl">
+              <div>
+                <input type="hidden" name="mapOptions[fullscreenControlPosition]" :value="mapOptions.fullscreenControlPosition || ''">
+                <flux:select label="Fullscreen" x-model="mapOptions.fullscreenControlPosition" x-on:change="optionschange()" size="sm">
+                  <flux:select.option value="">Default</flux:select.option>
+                  <flux:select.option value="TOP_LEFT">Top Left</flux:select.option>
+                  <flux:select.option value="TOP_CENTER">Top Center</flux:select.option>
+                  <flux:select.option value="TOP_RIGHT">Top Right</flux:select.option>
+                  <flux:select.option value="LEFT_CENTER">Left Center</flux:select.option>
+                  <flux:select.option value="RIGHT_CENTER">Right Center</flux:select.option>
+                  <flux:select.option value="BOTTOM_LEFT">Bottom Left</flux:select.option>
+                  <flux:select.option value="BOTTOM_CENTER">Bottom Center</flux:select.option>
+                  <flux:select.option value="BOTTOM_RIGHT">Bottom Right</flux:select.option>
+                </flux:select>
+              </div>
+            </template>
+            <template x-if="mapOptions.zoomControl">
+              <div>
+                <input type="hidden" name="mapOptions[zoomControlPosition]" :value="mapOptions.zoomControlPosition || ''">
+                <flux:select label="Zoom" x-model="mapOptions.zoomControlPosition" x-on:change="optionschange()" size="sm">
+                  <flux:select.option value="">Default</flux:select.option>
+                  <flux:select.option value="TOP_LEFT">Top Left</flux:select.option>
+                  <flux:select.option value="TOP_CENTER">Top Center</flux:select.option>
+                  <flux:select.option value="TOP_RIGHT">Top Right</flux:select.option>
+                  <flux:select.option value="LEFT_CENTER">Left Center</flux:select.option>
+                  <flux:select.option value="RIGHT_CENTER">Right Center</flux:select.option>
+                  <flux:select.option value="BOTTOM_LEFT">Bottom Left</flux:select.option>
+                  <flux:select.option value="BOTTOM_CENTER">Bottom Center</flux:select.option>
+                  <flux:select.option value="BOTTOM_RIGHT">Bottom Right</flux:select.option>
+                </flux:select>
+              </div>
+            </template>
+            <template x-if="mapOptions.streetViewControl">
+              <div>
+                <input type="hidden" name="mapOptions[streetViewControlPosition]" :value="mapOptions.streetViewControlPosition || ''">
+                <flux:select label="Street View" x-model="mapOptions.streetViewControlPosition" x-on:change="optionschange()" size="sm">
+                  <flux:select.option value="">Default</flux:select.option>
+                  <flux:select.option value="TOP_LEFT">Top Left</flux:select.option>
+                  <flux:select.option value="TOP_CENTER">Top Center</flux:select.option>
+                  <flux:select.option value="TOP_RIGHT">Top Right</flux:select.option>
+                  <flux:select.option value="LEFT_CENTER">Left Center</flux:select.option>
+                  <flux:select.option value="RIGHT_CENTER">Right Center</flux:select.option>
+                  <flux:select.option value="BOTTOM_LEFT">Bottom Left</flux:select.option>
+                  <flux:select.option value="BOTTOM_CENTER">Bottom Center</flux:select.option>
+                  <flux:select.option value="BOTTOM_RIGHT">Bottom Right</flux:select.option>
+                </flux:select>
+              </div>
+            </template>
+            <template x-if="mapOptions.rotateControl">
+              <div>
+                <input type="hidden" name="mapOptions[rotateControlPosition]" :value="mapOptions.rotateControlPosition || ''">
+                <flux:select label="Rotate" x-model="mapOptions.rotateControlPosition" x-on:change="optionschange()" size="sm">
+                  <flux:select.option value="">Default</flux:select.option>
+                  <flux:select.option value="TOP_LEFT">Top Left</flux:select.option>
+                  <flux:select.option value="TOP_CENTER">Top Center</flux:select.option>
+                  <flux:select.option value="TOP_RIGHT">Top Right</flux:select.option>
+                  <flux:select.option value="LEFT_CENTER">Left Center</flux:select.option>
+                  <flux:select.option value="RIGHT_CENTER">Right Center</flux:select.option>
+                  <flux:select.option value="BOTTOM_LEFT">Bottom Left</flux:select.option>
+                  <flux:select.option value="BOTTOM_CENTER">Bottom Center</flux:select.option>
+                  <flux:select.option value="BOTTOM_RIGHT">Bottom Right</flux:select.option>
+                </flux:select>
+              </div>
+            </template>
+          </div>
+
+          <flux:separator />
+
           <div class="grid grid-cols-1 gap-3">
             <flux:switch name="mapOptions[draggable]" x-model="mapOptions.draggable" x-on:change="optionschange()" label="{{ ucwords(EzTrans::translate('options.draggable', 'draggable map')) }}" />
             <flux:switch name="mapOptions[doubleClickZoom]" x-model="doubleClickZoom" x-on:change="optionschange()" label="{{ ucwords(EzTrans::translate('options.doubleclickzoom', 'doubleclick zoom')) }}" />
@@ -277,6 +347,7 @@
                 " icon="viewfinder-circle">
                   Use current viewport
                 </flux:button>
+                <flux:switch name="mapOptions[restrictionStrictBounds]" x-model="mapOptions.restriction.strictBounds" x-on:change="optionschange()" label="Strict Bounds" description="Prevents any area outside the bounds from being visible." />
               </div>
             </template>
           </div>
