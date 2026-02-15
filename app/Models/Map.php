@@ -98,6 +98,40 @@ class Map extends Model
     $hasGoogleMapId         = !empty($this->google_map_id);
     $styles                 = (!$hasGoogleMapId && $this->theme_id > 0) ? ",\n                \"styles\": " . $this->theme->json : '';
     $googleMapId            = $hasGoogleMapId ? ",\n                \"mapId\": \"{$this->google_map_id}\",\n                \"colorScheme\": \"FOLLOW_SYSTEM\"" : '';
+
+    // Optional advanced settings
+    $gestureHandling = ($this->mapOptions->gestureHandling ?? 'auto') !== 'auto'
+        ? ",\n                \"gestureHandling\": \"{$this->mapOptions->gestureHandling}\""
+        : '';
+    $controlSize = ($this->mapOptions->controlSize ?? 0) > 0
+        ? ",\n                \"controlSize\": {$this->mapOptions->controlSize}"
+        : '';
+    $minZoom = isset($this->mapOptions->minZoom) && $this->mapOptions->minZoom !== ''
+        ? ",\n                \"minZoom\": {$this->mapOptions->minZoom}"
+        : '';
+    $maxZoom = isset($this->mapOptions->maxZoom) && $this->mapOptions->maxZoom !== ''
+        ? ",\n                \"maxZoom\": {$this->mapOptions->maxZoom}"
+        : '';
+    $heading = ($this->mapOptions->heading ?? 0) != 0
+        ? ",\n                \"heading\": {$this->mapOptions->heading}"
+        : '';
+    $tilt = ($this->mapOptions->tilt ?? 0) != 0
+        ? ",\n                \"tilt\": {$this->mapOptions->tilt}"
+        : '';
+    $bgColor = !empty($this->mapOptions->backgroundColor ?? '')
+        ? ",\n                \"backgroundColor\": \"{$this->mapOptions->backgroundColor}\""
+        : '';
+    $rotateControl = ($this->mapOptions->rotateControl ?? true) ? 'true' : 'false';
+
+    $restriction = '';
+    if (!empty($this->mapOptions->restrictionEnabled) &&
+        ($this->mapOptions->restrictionSouth ?? '') !== '' &&
+        ($this->mapOptions->restrictionWest ?? '') !== '' &&
+        ($this->mapOptions->restrictionNorth ?? '') !== '' &&
+        ($this->mapOptions->restrictionEast ?? '') !== '') {
+        $restriction = ",\n                \"restriction\": {\"latLngBounds\": {\"south\": {$this->mapOptions->restrictionSouth}, \"west\": {$this->mapOptions->restrictionWest}, \"north\": {$this->mapOptions->restrictionNorth}, \"east\": {$this->mapOptions->restrictionEast}}}";
+    }
+
     $output                 = "
     function init{$this->id}() {
             var mapOptions = {
@@ -110,12 +144,12 @@ class Map extends Model
                 \"mapTypeControl\": {$this->mapOptions->showMapTypeControl},
                 \"mapTypeControlOptions\": { style : {$this->mapOptions->mapTypeControlStyle} },
                 \"mapTypeId\": \"{$this->mapOptions->mapTypeId}\",
-                \"rotateControl\": true,
+                \"rotateControl\": {$rotateControl},
                 \"scaleControl\": {$this->mapOptions->showScaleControl},
                 \"scrollwheel\": {$this->mapOptions->scrollWheel},
                 \"streetViewControl\": {$this->mapOptions->showStreetViewControl},
                 \"zoom\": {$this->mapOptions->zoomLevel},
-                \"zoomControl\": {$this->mapOptions->showZoomControl}{$styles}{$googleMapId}
+                \"zoomControl\": {$this->mapOptions->showZoomControl}{$styles}{$googleMapId}{$gestureHandling}{$controlSize}{$minZoom}{$maxZoom}{$heading}{$tilt}{$bgColor}{$restriction}
             };
       var mapElement = document.getElementById('{$this->mapContainer}');
       var map = new google.maps.Map(mapElement, mapOptions);";

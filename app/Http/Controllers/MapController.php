@@ -190,6 +190,19 @@ class MapController extends Controller
     $options['scrollWheel']           = $request->has("mapOptions.scrollWheel") ? 'true' : 'false';
     $options['showStreetViewControl'] = $request->has("mapOptions.showStreetViewControl") ? 'true' : 'false';
     $options['showZoomControl']       = $request->has("mapOptions.showZoomControl") ? 'true' : 'false';
+    $options['rotateControl']         = $request->has("mapOptions.rotateControl") ? 'true' : 'false';
+    $options['gestureHandling']       = $request->input("mapOptions.gestureHandling", 'auto');
+    $options['controlSize']           = (int) $request->input("mapOptions.controlSize", 0);
+    $options['minZoom']               = $request->input("mapOptions.minZoom", '');
+    $options['maxZoom']               = $request->input("mapOptions.maxZoom", '');
+    $options['heading']               = (int) $request->input("mapOptions.heading", 0);
+    $options['tilt']                  = (int) $request->input("mapOptions.tilt", 0);
+    $options['backgroundColor']       = $request->input("mapOptions.backgroundColor", '');
+    $options['restrictionEnabled']    = $request->has("mapOptions.restrictionEnabled") ? true : false;
+    $options['restrictionSouth']      = $request->input("mapOptions.restrictionSouth", '');
+    $options['restrictionWest']       = $request->input("mapOptions.restrictionWest", '');
+    $options['restrictionNorth']      = $request->input("mapOptions.restrictionNorth", '');
+    $options['restrictionEast']       = $request->input("mapOptions.restrictionEast", '');
 
     return $options;
   }

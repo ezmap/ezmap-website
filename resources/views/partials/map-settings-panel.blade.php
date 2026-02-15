@@ -18,16 +18,28 @@
       !($map->mapOptions->showStreetViewControl ?? true) ||
       !($map->mapOptions->showZoomControl ?? true) ||
       !($map->mapOptions->showScaleControl ?? true) ||
+      !($map->mapOptions->rotateControl ?? true) ||
       !($map->mapOptions->draggable ?? true) ||
       !($map->mapOptions->doubleClickZoom ?? true) ||
       !($map->mapOptions->scrollWheel ?? true) ||
       !($map->mapOptions->keyboardShortcuts ?? true) ||
-      !($map->mapOptions->clickableIcons ?? true)
+      !($map->mapOptions->clickableIcons ?? true) ||
+      ($map->mapOptions->gestureHandling ?? 'auto') !== 'auto' ||
+      ($map->mapOptions->controlSize ?? 0) > 0
   );
 
   $hasMarkers = $hasMap && $map->markers && count($map->markers) > 0;
   $hasCloudStyle = $hasMap && !empty($map->google_map_id);
   $hasHeatmap = $hasMap && $map->heatmap && count($map->heatmap) > 0;
+
+  $advancedNonDefault = $hasMap && (
+      ($map->mapOptions->minZoom ?? '') !== '' ||
+      ($map->mapOptions->maxZoom ?? '') !== '' ||
+      ($map->mapOptions->heading ?? 0) != 0 ||
+      ($map->mapOptions->tilt ?? 0) != 0 ||
+      ($map->mapOptions->restrictionEnabled ?? false) ||
+      !empty($map->mapOptions->backgroundColor ?? '')
+  );
 @endphp
 
 @if (! Auth::check())
@@ -153,6 +165,7 @@
             <flux:switch name="mapOptions[showStreetViewControl]" x-model="mapOptions.streetViewControl" x-on:change="optionschange()" label="{{ ucwords(EzTrans::translate('options.streetview', 'streetview control')) }}" />
             <flux:switch name="mapOptions[showZoomControl]" x-model="mapOptions.zoomControl" x-on:change="optionschange()" label="{{ ucwords(EzTrans::translate('options.zoom', 'zoom control')) }}" />
             <flux:switch name="mapOptions[showScaleControl]" x-model="mapOptions.scaleControl" x-on:change="optionschange()" label="{{ ucwords(EzTrans::translate('options.scale', 'scale control')) }}" />
+            <flux:switch name="mapOptions[rotateControl]" x-model="mapOptions.rotateControl" x-on:change="optionschange()" label="Rotate Control" />
           </div>
 
           <flux:separator />
@@ -163,6 +176,22 @@
             <flux:switch name="mapOptions[scrollWheel]" x-model="mapOptions.scrollwheel" x-on:change="optionschange()" label="{{ ucwords(EzTrans::translate('options.scrollwheel', 'scrollwheel zoom')) }}" />
             <flux:switch name="mapOptions[keyboardShortcuts]" x-model="mapOptions.keyboardShortcuts" x-on:change="optionschange()" label="{{ ucwords(EzTrans::translate('options.keyboard', 'keyboard shortcuts')) }}" />
             <flux:switch name="mapOptions[clickableIcons]" x-model="mapOptions.clickableIcons" x-on:change="optionschange()" label="{{ ucwords(EzTrans::translate('options.poi', 'clickable POIs')) }}" />
+          </div>
+
+          <flux:separator />
+
+          <div>
+            <input type="hidden" name="mapOptions[gestureHandling]" :value="mapOptions.gestureHandling">
+            <flux:select label="Gesture Handling" x-model="mapOptions.gestureHandling" x-on:change="optionschange()" description="Controls how the map responds to touch/scroll gestures.">
+              <flux:select.option value="auto">Auto (default)</flux:select.option>
+              <flux:select.option value="cooperative">Cooperative (two-finger scroll)</flux:select.option>
+              <flux:select.option value="greedy">Greedy (one-finger scroll)</flux:select.option>
+              <flux:select.option value="none">None (no gestures)</flux:select.option>
+            </flux:select>
+          </div>
+
+          <div>
+            <flux:input label="Control Size" name="mapOptions[controlSize]" type="number" min="0" step="1" x-model="mapOptions.controlSize" @change="initMap()" description="Size of default UI controls in pixels. Leave at 0 for default." />
           </div>
         </div>
       </flux:accordion.content>
@@ -235,6 +264,72 @@
               </template>
             </div>
           </template>
+        </div>
+      </flux:accordion.content>
+    </flux:accordion.item>
+
+    {{-- ====== ADVANCED ====== --}}
+    <flux:accordion.item :expanded="$advancedNonDefault">
+      <flux:accordion.heading>
+        <div class="flex items-center gap-2">
+          <flux:icon.wrench-screwdriver variant="mini" class="text-zinc-400" />
+          Advanced
+        </div>
+      </flux:accordion.heading>
+      <flux:accordion.content>
+        <div class="space-y-4 py-2">
+          <div class="grid grid-cols-2 gap-3">
+            <flux:input label="Min Zoom" name="mapOptions[minZoom]" type="number" min="0" max="22" x-model="mapOptions.minZoom" @change="optionschange()" placeholder="None" />
+            <flux:input label="Max Zoom" name="mapOptions[maxZoom]" type="number" min="0" max="22" x-model="mapOptions.maxZoom" @change="optionschange()" placeholder="None" />
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <flux:input label="Heading" name="mapOptions[heading]" type="number" min="0" max="360" step="1" x-model="mapOptions.heading" @change="optionschange()" description="Camera heading (0–360°)" />
+            <div>
+              <input type="hidden" name="mapOptions[tilt]" :value="mapOptions.tilt">
+              <flux:select label="Tilt" x-model="mapOptions.tilt" x-on:change="optionschange()" description="Camera angle">
+                <flux:select.option value="0">0° (top-down)</flux:select.option>
+                <flux:select.option value="45">45° (oblique)</flux:select.option>
+              </flux:select>
+            </div>
+          </div>
+
+          <flux:separator />
+
+          <div>
+            <flux:input label="Background Color" name="mapOptions[backgroundColor]" type="text" x-model="mapOptions.backgroundColor" @change="initMap()" placeholder="#f0f0f0" description="Color shown while map tiles load." />
+          </div>
+
+          <flux:separator />
+
+          <div class="space-y-3">
+            <flux:switch name="mapOptions[restrictionEnabled]" x-model="mapOptions.restriction.enabled" x-on:change="optionschange()" label="Restrict Map Bounds" />
+            <template x-if="mapOptions.restriction.enabled">
+              <div class="space-y-3">
+                <flux:text size="sm">Restrict the map to a geographic area. Users won't be able to pan or zoom outside these bounds.</flux:text>
+                <div class="grid grid-cols-2 gap-3">
+                  <flux:input label="South (lat)" name="mapOptions[restrictionSouth]" type="number" step="any" x-model="mapOptions.restriction.south" @change="optionschange()" placeholder="-90" />
+                  <flux:input label="West (lng)" name="mapOptions[restrictionWest]" type="number" step="any" x-model="mapOptions.restriction.west" @change="optionschange()" placeholder="-180" />
+                  <flux:input label="North (lat)" name="mapOptions[restrictionNorth]" type="number" step="any" x-model="mapOptions.restriction.north" @change="optionschange()" placeholder="90" />
+                  <flux:input label="East (lng)" name="mapOptions[restrictionEast]" type="number" step="any" x-model="mapOptions.restriction.east" @change="optionschange()" placeholder="180" />
+                </div>
+                <flux:button variant="filled" size="xs" @click.prevent="
+                  if (mapLoaded) {
+                    let bounds = map.getBounds();
+                    if (bounds) {
+                      mapOptions.restriction.south = bounds.getSouthWest().lat().toFixed(6);
+                      mapOptions.restriction.west = bounds.getSouthWest().lng().toFixed(6);
+                      mapOptions.restriction.north = bounds.getNorthEast().lat().toFixed(6);
+                      mapOptions.restriction.east = bounds.getNorthEast().lng().toFixed(6);
+                      optionschange();
+                    }
+                  }
+                " icon="viewfinder-circle">
+                  Use current viewport
+                </flux:button>
+              </div>
+            </template>
+          </div>
         </div>
       </flux:accordion.content>
     </flux:accordion.item>

@@ -152,18 +152,49 @@ document.addEventListener('alpine:init', () => {
                 disableDoubleClickZoom: !this.doubleClickZoom,
                 draggable: this.mapOptions.draggable,
                 fullscreenControl: this.mapOptions.fullscreenControl,
+                gestureHandling: this.mapOptions.gestureHandling || 'auto',
+                heading: parseInt(this.mapOptions.heading) || 0,
                 keyboardShortcuts: this.mapOptions.keyboardShortcuts,
                 mapTypeControl: this.mapOptions.mapTypeControl,
                 mapTypeControlOptions: { style: this.mapOptions.mapTypeControlOptions ? this.mapOptions.mapTypeControlOptions.style : 0 },
                 mapTypeId: this.mapTypeId.mapTypeId || 'roadmap',
-                rotateControl: true,
+                rotateControl: this.mapOptions.rotateControl ?? true,
                 scaleControl: this.mapOptions.scaleControl,
                 scrollwheel: this.mapOptions.scrollwheel,
                 streetViewControl: this.mapOptions.streetViewControl,
                 styles: this.mapOptions.styles || false,
+                tilt: parseInt(this.mapOptions.tilt) || 0,
                 zoom: this.mapOptions.zoom,
                 zoomControl: this.mapOptions.zoomControl
             };
+
+            // Add optional numeric options only when set
+            if (this.mapOptions.controlSize > 0) {
+                opts.controlSize = parseInt(this.mapOptions.controlSize);
+            }
+            if (this.mapOptions.minZoom !== null && this.mapOptions.minZoom !== '' && this.mapOptions.minZoom !== undefined) {
+                opts.minZoom = parseInt(this.mapOptions.minZoom);
+            }
+            if (this.mapOptions.maxZoom !== null && this.mapOptions.maxZoom !== '' && this.mapOptions.maxZoom !== undefined) {
+                opts.maxZoom = parseInt(this.mapOptions.maxZoom);
+            }
+            if (this.mapOptions.backgroundColor) {
+                opts.backgroundColor = this.mapOptions.backgroundColor;
+            }
+
+            // Add map restriction if enabled with valid bounds
+            if (this.mapOptions.restriction?.enabled &&
+                this.mapOptions.restriction.south !== '' && this.mapOptions.restriction.west !== '' &&
+                this.mapOptions.restriction.north !== '' && this.mapOptions.restriction.east !== '') {
+                opts.restriction = {
+                    latLngBounds: {
+                        south: parseFloat(this.mapOptions.restriction.south),
+                        west: parseFloat(this.mapOptions.restriction.west),
+                        north: parseFloat(this.mapOptions.restriction.north),
+                        east: parseFloat(this.mapOptions.restriction.east),
+                    }
+                };
+            }
 
             // Remove styles if false or if using cloud-based mapId
             const optsClean = { ...opts };
@@ -174,6 +205,10 @@ document.addEventListener('alpine:init', () => {
                 optsClean.mapId = this.googleMapId;
                 optsClean.colorScheme = this.colorScheme;
             }
+            // Remove defaults to keep generated code clean
+            if (optsClean.gestureHandling === 'auto') delete optsClean.gestureHandling;
+            if (optsClean.heading === 0) delete optsClean.heading;
+            if (optsClean.tilt === 0) delete optsClean.tilt;
 
             const optsJson = JSON.stringify(optsClean);
             const libs = this.heatMapData.length ? '&libraries=visualization' : '';
@@ -450,7 +485,41 @@ document.addEventListener('alpine:init', () => {
             if (!this.mapLoaded) return;
             this.mapOptions.disableDoubleClickZoom = !this.doubleClickZoom;
             this.mapOptions.mapTypeId = this.mapTypeId.mapTypeId || 'roadmap';
-            this.map.setOptions(this.mapOptions);
+
+            const setOpts = { ...this.mapOptions };
+
+            // Apply restriction if enabled
+            if (this.mapOptions.restriction?.enabled &&
+                this.mapOptions.restriction.south !== '' && this.mapOptions.restriction.west !== '' &&
+                this.mapOptions.restriction.north !== '' && this.mapOptions.restriction.east !== '') {
+                setOpts.restriction = {
+                    latLngBounds: {
+                        south: parseFloat(this.mapOptions.restriction.south),
+                        west: parseFloat(this.mapOptions.restriction.west),
+                        north: parseFloat(this.mapOptions.restriction.north),
+                        east: parseFloat(this.mapOptions.restriction.east),
+                    }
+                };
+            } else {
+                setOpts.restriction = null;
+            }
+
+            // Clean up internal-only props before passing to Google
+            delete setOpts.backgroundColor;
+
+            if (setOpts.controlSize) setOpts.controlSize = parseInt(setOpts.controlSize);
+            if (setOpts.minZoom !== null && setOpts.minZoom !== '' && setOpts.minZoom !== undefined) {
+                setOpts.minZoom = parseInt(setOpts.minZoom);
+            } else {
+                delete setOpts.minZoom;
+            }
+            if (setOpts.maxZoom !== null && setOpts.maxZoom !== '' && setOpts.maxZoom !== undefined) {
+                setOpts.maxZoom = parseInt(setOpts.maxZoom);
+            } else {
+                delete setOpts.maxZoom;
+            }
+
+            this.map.setOptions(setOpts);
         },
 
         heatmapChange() {
@@ -710,6 +779,36 @@ document.addEventListener('alpine:init', () => {
                 initOpts.colorScheme = this.colorScheme;
                 delete initOpts.styles;
             }
+
+            // Apply restriction bounds if enabled
+            if (initOpts.restriction?.enabled &&
+                initOpts.restriction.south !== '' && initOpts.restriction.west !== '' &&
+                initOpts.restriction.north !== '' && initOpts.restriction.east !== '') {
+                initOpts.restriction = {
+                    latLngBounds: {
+                        south: parseFloat(initOpts.restriction.south),
+                        west: parseFloat(initOpts.restriction.west),
+                        north: parseFloat(initOpts.restriction.north),
+                        east: parseFloat(initOpts.restriction.east),
+                    }
+                };
+            } else {
+                delete initOpts.restriction;
+            }
+
+            // Clean up optional numeric values
+            if (initOpts.controlSize) initOpts.controlSize = parseInt(initOpts.controlSize);
+            else delete initOpts.controlSize;
+            if (initOpts.minZoom !== null && initOpts.minZoom !== '' && initOpts.minZoom !== undefined) {
+                initOpts.minZoom = parseInt(initOpts.minZoom);
+            } else { delete initOpts.minZoom; }
+            if (initOpts.maxZoom !== null && initOpts.maxZoom !== '' && initOpts.maxZoom !== undefined) {
+                initOpts.maxZoom = parseInt(initOpts.maxZoom);
+            } else { delete initOpts.maxZoom; }
+            if (initOpts.heading) initOpts.heading = parseInt(initOpts.heading);
+            if (initOpts.tilt) initOpts.tilt = parseInt(initOpts.tilt);
+            if (initOpts.backgroundColor === '') delete initOpts.backgroundColor;
+
             this.map = new google.maps.Map(document.getElementById('map'), initOpts);
             this.geocoder = new google.maps.Geocoder();
             this.mapLoaded = true;
