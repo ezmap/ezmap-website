@@ -272,7 +272,7 @@
       <flux:callout.text>
         <ul class="list-disc ml-4 space-y-1">
           <li>Cloud styling and Snazzy Maps themes are <strong>mutually exclusive</strong>. Setting a Map ID will disable any applied Snazzy Maps theme, and vice versa.</li>
-          <li>The Map ID must be created in the same Google Cloud project as your API key. Map loads are billed to the account that owns the API key used in your generated code — so your visitors' map loads bill to <strong>your</strong> Google Cloud account, not EZ Map's.</li>
+          <li>Map loads are billed to the account that owns the API key used in your generated code — make sure the Map ID is created in the same Google Cloud project as your API key.</li>
           <li>Cloud-based map styles support features not available with Snazzy Maps themes, such as zoom-level styling, POI density control, and automatic dark mode.</li>
         </ul>
       </flux:callout.text>
