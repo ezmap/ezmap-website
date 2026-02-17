@@ -75,3 +75,7 @@ Route::delete('deleteaccount', [HomeController::class, 'deleteAccount'])->name('
 Route::get('api', function () {
   return view('api.about');
 })->name('api');
+
+// Blog routes
+Route::get('blog', [\App\Http\Controllers\BlogController::class, 'index'])->name('blog.index');
+Route::get('blog/mapkit-alternative', [\App\Http\Controllers\BlogController::class, 'mapkitAlternative'])->name('blog.mapkit-alternative');
