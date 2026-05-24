@@ -6,7 +6,7 @@ if (firstLoad)
 {
   var gmapscript = document.createElement('script');
   gmapscript.id = "ezmap-gmap-script";
-  gmapscript.src = "https://maps.googleapis.com/maps/api/js?key={{ $map->apiKey }}{{ $map->heatmap ? "&libraries=visualization" : "" }}";
+  gmapscript.src = "https://maps.googleapis.com/maps/api/js?key={{ $map->apiKey }}{{ $map->heatmap && $map->heatmap->count() ? "&v=3.64&libraries=visualization" : "" }}";
 
   head.appendChild(gmapscript);
 }

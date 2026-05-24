@@ -1,5 +1,5 @@
 &lt;!-- Google map code from EZ Map - https://ezmap.co -->
-&lt;script src='https://maps.googleapis.com/maps/api/js?key=@{{ apikey }}@{{ heatMapData ? '&libraries=visualization' : '' }}'>&lt;/script>
+&lt;script src='https://maps.googleapis.com/maps/api/js?key=@{{ apikey }}@{{ heatMapData.length ? '&v=3.64&libraries=visualization' : '' }}'>&lt;/script>
 &lt;script>
   function init() {
     var mapOptions = @{{ mapOptions | json 1 | jsonShrink }};

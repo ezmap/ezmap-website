@@ -263,7 +263,7 @@ document.addEventListener('alpine:init', () => {
                 '"position":google.maps.ControlPosition.$1');
             // Convert mapTypeControlOptions.style from JSON string to numeric value
             optsJson = optsJson.replace(/"style":(\d+)/g, '"style":$1');
-            const libs = this.heatMapData.length ? '&libraries=visualization' : '';
+            const libs = this.heatMapData.length ? '&v=3.64&libraries=visualization' : '';
             const clusterCdn = this.mapOptions.markerClustering && this.markers.length
                 ? `<script src='https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js'><\/script>\n`
                 : '';
@@ -672,6 +672,7 @@ document.addEventListener('alpine:init', () => {
 
         heatmapChange() {
             if (!this.mapLoaded) return;
+            if (!google.maps.visualization || !google.maps.visualization.HeatmapLayer) return;
             if (this.heatmap === null) {
                 this.heatmap = new google.maps.visualization.HeatmapLayer([]);
             }
@@ -681,8 +682,14 @@ document.addEventListener('alpine:init', () => {
                 const weight = this.heatMapData[i].weightedLocation.weight;
                 data.push({ location: new google.maps.LatLng(location.lat, location.lng), weight: weight });
             }
-            this.heatmap.setData(data);
-            this.heatmap.setOptions(this.heatmapLayer);
+            const rawHeatmap = Alpine.raw(this.heatmap);
+            rawHeatmap.setData(data);
+            const opts = Alpine.raw(this.heatmapLayer);
+            rawHeatmap.setOptions({
+                dissipating: Boolean(opts.dissipating),
+                opacity: parseFloat(opts.opacity),
+                radius: parseInt(opts.radius, 10),
+            });
         },
 
         maptypeidchanged() {
@@ -1059,11 +1066,13 @@ document.addEventListener('alpine:init', () => {
                 this.updateClustering();
             }
 
-            // Initialize heatmap layer
-            this.heatmap = new google.maps.visualization.HeatmapLayer([]);
-            this.heatmapChange();
-            this.heatmap.setOptions(this.heatmapLayer);
-            this.heatmap.setMap(this.map);
+            // Initialize heatmap layer (only available on v3.64 with visualization library)
+            if (google.maps.visualization && google.maps.visualization.HeatmapLayer) {
+                this.heatmap = new google.maps.visualization.HeatmapLayer([]);
+                this.heatmapChange();
+                this.heatmap.setOptions(this.heatmapLayer);
+                this.heatmap.setMap(this.map);
+            }
 
             // Activate data layers if enabled
             for (const layerType of ['traffic', 'transit', 'bicycling']) {
@@ -1077,7 +1086,6 @@ document.addEventListener('alpine:init', () => {
             google.maps.event.addListener(this.map, 'zoom_changed', () => this.mapzoomed());
             google.maps.event.addListener(this.map, 'maptypeid_changed', () => this.maptypeidchanged());
             google.maps.event.addListener(this.map, 'click', (e) => this.placeMarker(e));
-            google.maps.event.addListener(this.map, 'click', (e) => this.placeHotSpot(e));
         }
     }));
 });
