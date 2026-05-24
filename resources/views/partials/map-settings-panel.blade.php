@@ -522,6 +522,7 @@
     </flux:accordion.item>
 
     {{-- ====== HEATMAP ====== --}}
+    <template x-if="heatMapData.length > 0">
     <flux:accordion.item :expanded="$hasHeatmap">
       <flux:accordion.heading>
         <div class="flex items-center gap-2">
@@ -536,7 +537,6 @@
         <div class="space-y-3 py-2">
 
           @php
-            // Google documents removal as "February 2027" only; use the start of the month as an approximate cutoff.
             $heatmapCutoff = now()->setDate(2027, 2, 1)->startOfMonth();
             $heatmapDisabled = now()->gte($heatmapCutoff);
           @endphp
@@ -550,17 +550,18 @@
               </flux:callout.text>
             </flux:callout>
           @else
-            <flux:callout variant="warning" icon="exclamation-triangle">
-              <flux:callout.heading>Heatmap Deprecation Notice</flux:callout.heading>
-              <flux:callout.text>
-                Google is removing the Heatmap Layer from the Maps JavaScript API.
-                This feature will stop working in February 2027.
-                <a href="https://developers.google.com/maps/documentation/javascript/heatmaplayer" target="_blank" class="underline">Learn more</a>
-              </flux:callout.text>
-            </flux:callout>
-
             <template x-if="heatMapData.length > 0">
               <div class="space-y-3">
+                <flux:callout variant="warning" icon="exclamation-triangle">
+                  <flux:callout.heading>Heatmap Deprecation Notice</flux:callout.heading>
+                  <flux:callout.text>
+                    Google has removed the Heatmap Layer from the latest Maps JavaScript API (v3.65+).
+                    Your existing heatmap data is pinned to v3.64 which remains available until February 2027.
+                    Adding new heatmap points is no longer possible.
+                    <a href="https://developers.google.com/maps/documentation/javascript/heatmaplayer" target="_blank" class="underline">Learn more</a>
+                  </flux:callout.text>
+                </flux:callout>
+
                 <flux:subheading>{{ ucwords(EzTrans::translate('heatmapLayerOptions.options', 'heatmap options')) }}</flux:subheading>
                 <div class="grid grid-cols-3 gap-2 items-end">
                   <flux:switch name="heatmapLayer[dissipating]" x-model="heatmapLayer.dissipating" x-on:change="heatmapChange()" label="{{ EzTrans::translate('heatmapLayerOptions.dissipating', 'dissipate') }}" />
@@ -570,16 +571,7 @@
                 <flux:separator />
               </div>
             </template>
-
-            <flux:button variant="primary" size="sm" icon="fire" @click.prevent="addingHotSpot = true">
-              {{ EzTrans::translate('addHotSpot', 'add a hot spot') }}
-            </flux:button>
-
-            <template x-if="addingHotSpot">
-              <flux:callout variant="info" icon="information-circle" class="!py-2 !text-xs">
-                <flux:callout.text>{{ EzTrans::translate('dropHotSpot', "Click the map where you want your hot spot!") }}</flux:callout.text>
-              </flux:callout>
-            </template>
+          @endif
 
             <template x-if="heatMapData.length > 0">
               <div class="space-y-2">
@@ -620,11 +612,11 @@
                 </template>
               </div>
             </template>
-          @endif
 
         </div>
       </flux:accordion.content>
     </flux:accordion.item>
+    </template>
 
   </flux:accordion>
 

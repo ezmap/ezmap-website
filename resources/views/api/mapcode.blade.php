@@ -1,6 +1,6 @@
 <!-- Google map code from EZ Map - https://ezmap.co -->
 <div id='{{ $map->mapContainer }}'></div>
-<script src='https://maps.googleapis.com/maps/api/js?key={{ $map->apiKey }}{{ $map->heatmap && $map->heatmap->count() ? "&libraries=visualization" : "" }}'></script>
+<script src='https://maps.googleapis.com/maps/api/js?key={{ $map->apiKey }}{{ $map->heatmap && $map->heatmap->count() ? "&v=3.64&libraries=visualization" : "" }}'></script>
 @if(filter_var($map->mapOptions->markerClustering ?? false, FILTER_VALIDATE_BOOLEAN) && $map->markers->count() > 0)
 <script src='https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js'></script>
 @endif
