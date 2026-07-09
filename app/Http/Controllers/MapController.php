@@ -21,9 +21,16 @@ class MapController extends Controller
    */
   public function index(Request $request)
   {
-    $maps        = $request->user()->maps;
+    $listColumns = ['id', 'user_id', 'title', 'deleted_at', 'created_at', 'updated_at'];
+
+    $maps = $request->user()
+        ->maps()
+        ->select($listColumns)
+        ->get();
+
     $deletedMaps = Map::onlyTrashed()
         ->where('user_id', $request->user()->id)
+        ->select($listColumns)
         ->get();
 
     return view('map.index', compact('maps', 'deletedMaps'));

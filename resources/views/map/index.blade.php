@@ -29,30 +29,28 @@
     </flux:card>
 
     {{-- Saved Maps --}}
-    @if(Auth::user()->maps)
-      <div class="mt-8">
-        <flux:heading size="lg">Saved Maps</flux:heading>
-        <div class="mt-4 space-y-3">
-          @forelse($maps as $map)
-            <div class="flex items-center gap-3 rounded-lg border border-zinc-200 bg-white p-4 transition-colors hover:border-accent dark:border-zinc-700 dark:bg-zinc-800 dark:hover:border-accent">
-              <a href="{{ route('map.edit', $map) }}" class="shrink-0 text-accent hover:text-accent-content">
-                <flux:icon name="map" class="size-5" />
-              </a>
-              <a href="{{ route('map.edit', $map) }}" class="flex-1 font-medium text-zinc-900 hover:text-accent-content dark:text-zinc-100 dark:hover:text-accent-content">
-                {{ $map->title ?: 'Untitled Map #' . $map->id }}
-              </a>
-              <form action="{{ route('map.destroy', $map) }}" method="POST" onsubmit="return confirm('Delete this map?')">
-                @method('DELETE')
-                @csrf
-                <flux:button type="submit" variant="danger" size="sm" icon="trash" />
-              </form>
-            </div>
-          @empty
-            <flux:callout icon="information-circle" text="You haven't created any maps yet. Click &quot;New Map&quot; to get started!" />
-          @endforelse
-        </div>
+    <div class="mt-8">
+      <flux:heading size="lg">Saved Maps</flux:heading>
+      <div class="mt-4 space-y-3">
+        @forelse($maps as $map)
+          <div class="flex items-center gap-3 rounded-lg border border-zinc-200 bg-white p-4 transition-colors hover:border-accent dark:border-zinc-700 dark:bg-zinc-800 dark:hover:border-accent">
+            <a href="{{ route('map.edit', $map) }}" class="shrink-0 text-accent hover:text-accent-content">
+              <flux:icon name="map" class="size-5" />
+            </a>
+            <a href="{{ route('map.edit', $map) }}" class="flex-1 font-medium text-zinc-900 hover:text-accent-content dark:text-zinc-100 dark:hover:text-accent-content">
+              {{ $map->title ?: 'Untitled Map #' . $map->id }}
+            </a>
+            <form action="{{ route('map.destroy', $map) }}" method="POST" onsubmit="return confirm('Delete this map?')">
+              @method('DELETE')
+              @csrf
+              <flux:button type="submit" variant="danger" size="sm" icon="trash" />
+            </form>
+          </div>
+        @empty
+          <flux:callout icon="information-circle" text="You haven't created any maps yet. Click &quot;New Map&quot; to get started!" />
+        @endforelse
       </div>
-    @endif
+    </div>
 
     {{-- Deleted Maps --}}
     @if(count($deletedMaps) > 0)
